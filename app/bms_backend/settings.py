@@ -17,7 +17,6 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = '8c871khoayk8u5d9ayny8rlil0wdd$q28*6e)uvl%z#aob^_qn'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 # AUTH_USER_MODEL = 'system_users.User'
@@ -43,9 +41,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_jwt',
     'rest_framework_swagger',
+    'system_master',
+    'system_users',
 ]
 
-MIDDLEWARE_CLASSES = {
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = {
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-}
+]
 
 ROOT_URLCONF = 'bms_backend.urls'
 
@@ -77,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bms_backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -88,9 +87,12 @@ DATABASES = {
         'USER': os.environ['DB_USERNAME'],
         'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -110,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -124,14 +125,11 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

@@ -1,0 +1,88 @@
+[
+  {
+    "//":"国マスタの追加",
+    "model":"system_master.SystemCountry",
+    "pk":1,
+    "fields": {
+      "id":1,
+      "name":"Japan",
+      "code":"JP",
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "model":"system_master.SystemCountry",
+    "pk":2,
+    "fields": {
+      "id":2,
+      "name":"United States of America",
+      "code":"US",
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "model":"system_master.SystemCountry",
+    "pk":3,
+    "fields": {
+      "id":3,
+      "name":"Indonesia",
+      "code":"ID",
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "//":"通貨マスタの追加",
+    "model":"system_master.SystemCurrency",
+    "pk":1,
+    "fields":{
+      "id":1,
+      "name": "Japanese yen",
+      "code": "JPY",
+      "display": "¥",
+      "decimal_point": 0,
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "model":"system_master.SystemCurrency",
+    "pk":2,
+    "fields":{
+      "id": 2,
+      "name": "United States Dollar",
+      "code": "USD",
+      "display": "$",
+      "decimal_point": 2,
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "model":"system_master.SystemCurrency",
+    "pk":3,
+    "fields":{
+      "id": 3,
+      "name": "Rupiah",
+      "code": "IDR",
+      "display": "Rp",
+      "decimal_point": 2,
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  },
+  {
+    "//":"単位マスタの追加",
+    "model":"system_master.SystemUnitType",
+    "pk":1,
+    "fields":{
+      "id": 1,
+      "name": "quantity",
+      "display": "qty",
+      "created_at":"2018-09-01T12:00:00",
+      "modified_at":"2018-09-01T12:00:00"
+    }
+  }
+]
