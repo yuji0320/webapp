@@ -1,7 +1,7 @@
 from system_master.models import *
-# from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager, BaseUserManager
-# from django.contrib.auth.validators import UnicodeUsernameValidator
-# from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 
@@ -38,8 +38,8 @@ class UserStaff(models.Model):
     date_joined = models.DateField(_('date joined'), blank=True, null=True)  # 入社日
     date_left = models.DateField(_('date left'), blank=True, null=True)  # 退職日
     # 管理者権限 Boolean
-    is_staff = models.BooleanField(
-        _('staff status'),
+    is_login_user = models.BooleanField(
+        _('login status'),
         default=True,
         help_text=_(
             'Designates whether the user can create login user.'),
@@ -64,76 +64,93 @@ class UserStaff(models.Model):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
-
-# class UserAccountManager(BaseUserManager):
-#     def create_user(self, request_data,):
-#         now = timezone.now()
-#         if not request_data['username']:
-#             raise ValueError('Users must have an username.')
-#
-#         user = self.model(
-#             username=request_data['username'],
-#
-#             last_login=now,
-#             is_active=True,
-#             created_at=now,
-#             modified_at=now,
-#         )
-#
-#         user.set_password(request_data['password'])
-#         user.save(using=self._db)
-#         return user
-#
-#     def create_superuser(self, username, email, password, fullname, company, staff_number):
-#         request_data = {
-#             'username': username,
-#             'password': password,
-#
-#         }
-#         user = self.create_user(request_data)
-#         user.is_active = True
-#         user.is_staff = True
-#         user.is_superuser = True
-#         user.save(using=self._db)
-#         return user
+    def __str__(self): return self.full_name
 
 
-# class User(AbstractBaseUser, PermissionsMixin):
-#     """ユーザー AbstractUserをコピペし編集"""
-#
-#     username_validator = UnicodeUsernameValidator()
-#
-#     # ユーザーID
-#     username = models.CharField(
-#         _('username'),
-#         max_length=20,
-#         unique=True,
-#         null=False,
-#         default=None,
-#         help_text=_(
-#             'Required. 20 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-#         validators=[username_validator],
-#         error_messages={
-#             'unique': _("A user with that username already exists."),
-#         },
-#     )
-#     # 有効ユーザー管理
-#     is_active = models.BooleanField(
-#         _('active'),
-#         default=True,
-#         help_text=_(
-#             'Designates whether this user should be treated as active. '
-#             'Unselect this instead of deleting accounts.'
-#         ),
-#     )
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#
-#     objects = UserAccountManager()
-#
-#     USERNAME_FIELD = 'username'
-#
-#     class Meta:
-#         db_table = 'user'
-#         verbose_name = _('user')
-#         verbose_name_plural = _('users')
+class UserAccountManager(BaseUserManager):
+    def create_user(self, request_data,):
+        now = timezone.now()
+        if not request_data['username']:
+            raise ValueError('Users must have an username.')
+
+        staff = UserStaff.objects.get(pk=int(request_data['staff']))
+
+        user = self.model(
+            username=request_data['username'],
+            staff=staff,
+            last_login=now,
+            is_staff=True,
+            is_active=True,
+            created_at=now,
+            modified_at=now,
+        )
+        user.set_password(request_data['password'])
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, password,):
+        request_data = {
+            'username': username,
+            'password': password,
+            'staff': staff
+        }
+        user = self.create_user(request_data)
+        user.is_active = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    """ユーザー AbstractUserをコピペし編集"""
+
+    username_validator = UnicodeUsernameValidator()
+
+    # ユーザーID
+    username = models.CharField(
+        _('username'),
+        max_length=20,
+        unique=True,
+        null=False,
+        default=None,
+        help_text=_(
+            'Required. 20 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
+    staff = models.OneToOneField(
+        UserStaff,
+        on_delete=models.CASCADE,
+    )  # 紐付きユーザー
+    # 管理者権限 Boolean
+    is_staff = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_(
+            'Designates whether the user can log into this admin site.'),
+    )
+    # 有効ユーザー管理
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
+        help_text=_(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
+        ),
+    )
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    objects = UserAccountManager()
+
+    USERNAME_FIELD = 'username'
+
+    REQUIRED_FIELDS = ['staff']
+
+    class Meta:
+        db_table = 'user'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')

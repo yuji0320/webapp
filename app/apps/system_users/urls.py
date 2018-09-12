@@ -6,7 +6,7 @@ from rest_framework import routers
 routeList = (
     (r'user_companies', UserCopmanyAPIView),
     (r'user_staffs', UserStaffAPIView),
-    # (r'users', UserAPIView),
+    (r'users', UserAPIView),
 )
 
 router = routers.DefaultRouter()

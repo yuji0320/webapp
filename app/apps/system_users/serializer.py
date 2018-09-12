@@ -36,25 +36,27 @@ class UserStaffSerializer(serializers.ModelSerializer):
             'date_birth',
             'date_joined',
             'date_left',
-            'is_staff',
+            'is_login_user',
             'created_at',
             'modified_at',
         )
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     password = serializers.CharField(write_only=False, required=False)
-#
-#     class Meta:
-#         model = User
-#         fields = (
-#             'id',
-#             'username',
-#             'password',
-#             'is_active',
-#             'created_at',
-#             'modified_at'
-#         )
-#
-#     def create(self, validated_data):
-#         return User.objects.create_user(request_data=validated_data)
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=False, required=False)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'staff',
+            'username',
+            'password',
+            'is_active',
+            'is_staff',
+            'created_at',
+            'modified_at'
+        )
+
+    def create(self, validated_data):
+        return User.objects.create_user(request_data=validated_data)
