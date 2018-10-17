@@ -1,4 +1,3 @@
-# from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 from .models import *
 
@@ -21,6 +20,8 @@ class UserCopmanySerializer(serializers.ModelSerializer):
 
 
 class UserStaffSerializer(serializers.ModelSerializer):
+    login_user = serializers.SerializerMethodField()
+
     class Meta:
         model = UserStaff
         fields = (
@@ -39,7 +40,18 @@ class UserStaffSerializer(serializers.ModelSerializer):
             'is_login_user',
             'created_at',
             'modified_at',
+            'login_user'
         )
+
+    @staticmethod
+    def get_login_user(obj):
+        login_user = User.objects.all().filter(id=obj.id)
+
+        if login_user:
+            username = login_user.values('username')[0]['username']
+            return username
+        else:
+            return False
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,7 +67,7 @@ class UserSerializer(serializers.ModelSerializer):
             'is_active',
             'is_staff',
             'created_at',
-            'modified_at'
+            'modified_at',
         )
 
     def create(self, validated_data):

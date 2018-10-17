@@ -1,15 +1,13 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from django.urls import path, include
-# from django.conf import settings
-# from django.conf.urls.static import static
 from rest_framework import routers
 from .views import index
 from system_master import urls as system_urls
 from system_users import urls as user_urls
 # 認証情報API
-# from rest_framework_jwt.views import obtain_jwt_token
-# from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
 # Swagger関係(API Lists)
 from rest_framework_swagger.views import get_swagger_view
 
@@ -34,6 +32,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/system_master/', include(system_urls.router.urls)),
     path('api/system_user/', include(user_urls.router.urls)),
+    # 認証関係
+    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-refresh/', refresh_jwt_token),
     # swagger
     path('swagger/', schema_view),
 ]

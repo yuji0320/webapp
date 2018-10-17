@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 if [ $1 ]; then
     case $1 in
         "dev")

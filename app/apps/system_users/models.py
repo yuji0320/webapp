@@ -68,12 +68,13 @@ class UserStaff(models.Model):
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, request_data,):
+    def create_user(self, request_data):
         now = timezone.now()
+
         if not request_data['username']:
             raise ValueError('Users must have an username.')
 
-        staff = UserStaff.objects.get(pk=int(request_data['staff']))
+        staff = request_data['staff']
 
         user = self.model(
             username=request_data['username'],
@@ -88,11 +89,11 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password,):
+    def create_superuser(self, username, password, staff):
         request_data = {
             'username': username,
             'password': password,
-            'staff': staff
+            'staff': UserStaff.objects.get(pk=int(staff))
         }
         user = self.create_user(request_data)
         user.is_active = True
@@ -121,10 +122,11 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': _("A user with that username already exists."),
         },
     )
+    # 紐付きユーザー
     staff = models.OneToOneField(
         UserStaff,
         on_delete=models.CASCADE,
-    )  # 紐付きユーザー
+    )
     # 管理者権限 Boolean
     is_staff = models.BooleanField(
         _('staff status'),
