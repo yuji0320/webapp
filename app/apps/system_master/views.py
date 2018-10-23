@@ -5,7 +5,7 @@ from .serializer import *
 
 class SystemCountryAPIView(viewsets.ModelViewSet):
     permission_classes = (
-        IsAuthenticated,
+        AllowAny,
     )
     serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
@@ -13,7 +13,7 @@ class SystemCountryAPIView(viewsets.ModelViewSet):
 
 class SystemCurrencyAPIView(viewsets.ModelViewSet):
     permission_classes = (
-        IsAuthenticated,
+        AllowAny,
     )
     serializer_class = SystemCurrencySerializer
     queryset = SystemCurrency.objects.all()
@@ -21,7 +21,7 @@ class SystemCurrencyAPIView(viewsets.ModelViewSet):
 
 class SystemUnitTypeAPIView(viewsets.ModelViewSet):
     permission_classes = (
-        IsAuthenticated,
+        AllowAny,
     )
     serializer_class = SystemUnitTypeSerializer
     queryset = SystemUnitType.objects.all()
