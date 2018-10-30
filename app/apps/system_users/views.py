@@ -50,11 +50,12 @@ class UserAPIView(viewsets.ModelViewSet):
 
     # ユーザー情報の確認用API
     @action(methods=['get'], detail=False)
-    def login_user_data(self):
+    def login_user_data(self, request):
         user = self.request.user
 
         return Response(data={
             'id': user.id,
             'username': user.username,
-            'fullname': user.staff.full_name
+            'fullname': user.staff.full_name,
+            'company_name': user.staff.company.name,
         })

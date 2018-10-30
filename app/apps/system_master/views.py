@@ -1,14 +1,24 @@
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializer import *
 
 
+class SystemCountryFilter(filters.FilterSet):
+    name = filters.CharFilter(lookup_expr='contains')
+
+    class Meta:
+        model = SystemCountry
+        fields = ['id', 'name']
+
+
 class SystemCountryAPIView(viewsets.ModelViewSet):
     permission_classes = (
-        AllowAny,
+        IsAuthenticated,
     )
     serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
+    filter_class = SystemCountryFilter
 
 
 class SystemCurrencyAPIView(viewsets.ModelViewSet):
