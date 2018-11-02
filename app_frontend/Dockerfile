@@ -15,5 +15,3 @@ COPY package*.json ./
 
 RUN npm install
 
-#RUN npm run serve
-#CMD [ "http-server", "dist" ]
