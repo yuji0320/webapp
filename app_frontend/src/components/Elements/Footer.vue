@@ -1,6 +1,6 @@
 <!-- フッター -->
 <template>
-    <v-footer :fixed="fixed">
+    <v-footer :absolute=true>
       <v-layout justify-center>
         &copy;2018 — <strong>Shilia</strong>
       </v-layout>

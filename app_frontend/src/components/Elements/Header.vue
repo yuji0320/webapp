@@ -10,18 +10,33 @@
     app
     >
       <v-list>
-        <v-list-tile
-        value="true"
-        v-for="(menu, i) in drawerMenus"
-        :key="i"
+        <!-- サイドバー項目はVuex Steteから取得 -->
+        <v-list-group
+          v-for="menu in menus"
+          :key="menu.title"
+          :prepend-icon="menu.icon"
+          no-action
         >
-          <v-list-tile-action>
-            <v-icon v-html="menu.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="menu.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          <v-list-tile slot="activator">
+            <v-list-tile-content>
+              <v-list-tile-title v-text="menu.title"></v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <!-- サブメニュー -->
+          <v-list-tile
+            v-for="subMenu in menu.subMenus"
+            :key="subMenu.title"
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>{{ subMenu.title }}</v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-icon>{{ subMenu.icon }}</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -38,7 +53,19 @@
         vertical
       ></v-divider>
       <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-divider
+        class="mx-3"
+        inset
+        vertical></v-divider>
+      <!-- ホームボタン -->
+      <v-btn 
+        icon
+        href="/"
+      >
+        <v-icon>home</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
+      <!-- ログインユーザー情報 -->
       <span class="subheading">
         Logged in as {{ loginUserData.fullname }}
       </span>
@@ -78,13 +105,6 @@ export default {
   data() {
     return {
       clipped: false,
-      // drawer: true,
-      drawerMenus: [
-        {
-          icon: "bubble_chart",
-          title: "Menu"
-        }
-      ],
       settingMenus: [
         {
           icon: "settings",
@@ -107,7 +127,8 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemConfig", ["drawerStatus"]),
+    ...mapState("systemConfig", ["drawerStatus", "menus"]),
+    // サイドメニューのステータスをStoreから取得
     drawer: {
       get() {
         return this.drawerStatus;
@@ -116,10 +137,11 @@ export default {
     }
   },
   methods: {
+    // サイドバー開閉ステータスの保存
     ...mapMutations("systemConfig", ["toggleDrawer"])
   },
   mounted: function() {
-    console.log(this.drawer);
+    // console.log(this.menus);
   }
 };
 </script>

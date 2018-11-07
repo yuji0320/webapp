@@ -26,7 +26,7 @@ const router = new Router({
       path: "/",
       name: "Root",
       component: Root,
-      redirect: "/top",
+      redirect: "/bms",
 
       // "login"と"Top"に分け、階層構造を定義する
       children: [
@@ -41,16 +41,16 @@ const router = new Router({
           component: Logout
         },
         {
-          path: "top",
-          name: "top",
+          path: "bms",
+          name: "bms",
           component: Top,
-          redirect: "/top/main",
+          redirect: "/bms/main_menu",
           meta: {
             requiresAuth: true
           },
           children: [
             {
-              path: "main",
+              path: "main_menu",
               name: "main",
               component: Main
             }

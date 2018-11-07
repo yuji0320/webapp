@@ -3,24 +3,34 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column>
 
-        <h1>Welcome!</h1>
+        <h1>Main menu</h1>
 
-        <button @click="ajax">getCountries</button>
-
-        <!-- <button @click="tokentest">Test Token Auth</button> -->
-
+        <!-- メインメニュー -->
         <div>
           <v-card>
-            <v-container grid-list-lg>
+            <v-container
+              fluid
+              grid-list-lg
+              v-for="menu in menus"
+              :key="menu.title"
+            >
               <v-layout row wrap>
-                <v-flex xs4 v-for="data in countries.results" :key="data.id">
-                  <v-card color="primary" class="white--text">
+                <v-flex xs12>
+                  <h2>{{ menu.title }}</h2>
+                </v-flex>
+                <v-flex 
+                  v-for="subMenu in menu.subMenus"
+                  :key="subMenu.title"
+                  xs4
+                >
+                  <v-card color="blue-grey darken-2" class="white--text">
                     <v-card-title primary-title>
-                      <div>{{ data.name }}</div>
+                      <div class="headline">{{ subMenu.title }}</div>
+                      <!-- <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div> -->
                     </v-card-title>
-                    <v-card-text>
-                      <div>{{ data.createdAt|printDate }}</div>
-                    </v-card-text>
+                    <v-card-actions>
+                      <!-- <v-btn flat dark>Listen now</v-btn> -->
+                    </v-card-actions>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -32,6 +42,12 @@
     </v-slide-y-transition>
   </v-container>
 </template>
+
+
+
+
+
+
 
 <style scoped>
 h1,
@@ -55,12 +71,13 @@ a {
 import { mapState, mapActions } from "vuex";
 
 export default {
-  title: "Main",
+  title: "Main menu",
   name: "Main",
   data() {
     return {};
   },
   computed: {
+    ...mapState("systemConfig", ["menus"]),
     ...mapState("systemMasterApi", ["countries"])
   },
   methods: {
@@ -70,6 +87,8 @@ export default {
       // console.log(this.countries);
     }
   },
-  mounted() {}
+  mounted() {
+    // console.log(this.menus + "main");
+  }
 };
 </script>
