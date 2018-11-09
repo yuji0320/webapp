@@ -3,24 +3,34 @@ const systemConfigState = {
   drawerStatus: true,
   menus: [
     {
+      icon: "work",
+      title: "Job order Menu",
+      subMenus: [
+        {
+          icon: "work",
+          title: "Job order",
+          url: ""
+        }
+      ]
+    },
+    {
       icon: "bubble_chart",
       title: "Purchasing Menu",
       subMenus: [
         {
-          icon: "work",
-          title: "Job order"
-        },
-        {
           icon: "list",
-          title: "Bill of material"
+          title: "Bill of material",
+          url: ""
         },
         {
           icon: "send",
-          title: "Order"
+          title: "Order",
+          url: ""
         },
         {
           icon: "move_to_inbox",
-          title: "Purchase"
+          title: "Purchase",
+          url: ""
         }
       ]
     },
@@ -30,13 +40,14 @@ const systemConfigState = {
       subMenus: [
         {
           icon: "access_time",
-          title: "Man Hour"
+          title: "Man Hour",
+          url: ""
         }
       ]
     },
     {
       icon: "search",
-      title: "Investigate",
+      title: "Investigation",
       subMenus: []
     },
     {
@@ -45,19 +56,23 @@ const systemConfigState = {
       subMenus: [
         {
           icon: "domain",
-          title: "Company master"
+          title: "Company master",
+          url: { name: "Company" }
         },
         {
           icon: "",
-          title: "Staff master"
+          title: "Staff master",
+          url: "test"
         },
         {
           icon: "",
-          title: "Client master"
+          title: "Client master",
+          url: ""
         },
         {
           icon: "",
-          title: "Man-hour master"
+          title: "Man-hour master",
+          url: ""
         }
       ]
     }

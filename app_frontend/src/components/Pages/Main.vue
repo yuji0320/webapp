@@ -1,53 +1,50 @@
 <template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column>
-
-        <h1>Main menu</h1>
-
-        <!-- メインメニュー -->
-        <div>
-          <v-card>
-            <v-container
-              fluid
-              grid-list-lg
-              v-for="menu in menus"
-              :key="menu.title"
-            >
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <h2>{{ menu.title }}</h2>
-                </v-flex>
+  <v-container 
+    fluid
+    grid-list-lg
+  >
+    <v-layout row wrap>
+      <v-flex tag="h1" class="headline">Dashbord</v-flex>
+      <v-flex d-flex lg12 order-xs5>
+        <v-layout column>
+          <v-flex
+            v-for="menu in menus"
+            :key="menu.title"
+          >
+            <v-card fluid>
+              <v-container 
+                fluid
+                grid-list-lg
+              >
+              <v-flex xs12>
+                <h2>{{ menu.title }}</h2>
+              </v-flex>
+              <v-layout row wrap offset-xs1>
                 <v-flex 
                   v-for="subMenu in menu.subMenus"
                   :key="subMenu.title"
-                  xs4
+                  xs3
+                  d-flex
                 >
                   <v-card color="blue-grey darken-2" class="white--text">
                     <v-card-title primary-title>
                       <div class="headline">{{ subMenu.title }}</div>
                       <!-- <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div> -->
                     </v-card-title>
-                    <v-card-actions>
-                      <!-- <v-btn flat dark>Listen now</v-btn> -->
+                    <v-card-actions primary>
+                      <v-btn flat dark :to="subMenu.url">Go!</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
-        </div>
-
-      </v-layout>
-    </v-slide-y-transition>
+              </v-layout> 
+              </v-container>          
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
-
-
-
-
-
-
 
 <style scoped>
 h1,

@@ -14,7 +14,7 @@ export default {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         Authorization: "JWT " + token
       },
       proxy: false,

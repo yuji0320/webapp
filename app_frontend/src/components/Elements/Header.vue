@@ -9,7 +9,32 @@
     fixed
     app
     >
+
+      <v-toolbar flat>
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-title class="title text-xs-center">
+              Side Menu
+            </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+
+      <v-divider></v-divider>
+
       <v-list>
+        <v-list-tile 
+          :to="{ name: 'Main'}" 
+        >
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Dashbord
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>   
         <!-- サイドバー項目はVuex Steteから取得 -->
         <v-list-group
           v-for="menu in menus"
@@ -22,11 +47,12 @@
               <v-list-tile-title v-text="menu.title"></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-
+          
           <!-- サブメニュー -->
           <v-list-tile
             v-for="subMenu in menu.subMenus"
             :key="subMenu.title"
+            :to="subMenu.url"
           >
             <v-list-tile-content>
               <v-list-tile-title>{{ subMenu.title }}</v-list-tile-title>
@@ -52,7 +78,7 @@
         inset
         vertical
       ></v-divider>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title v-text="headerTitle"></v-toolbar-title>
       <v-divider
         class="mx-3"
         inset
@@ -60,7 +86,7 @@
       <!-- ホームボタン -->
       <v-btn 
         icon
-        href="/"
+        :to="{ name: 'Main'}"
       >
         <v-icon>home</v-icon>
       </v-btn>
@@ -80,9 +106,9 @@
         </v-toolbar-title>
         <v-list>
           <v-list-tile
-          v-for="(menu, i) in settingMenus"
-          :key="i"
-          :to="menu.url"
+            v-for="(menu, i) in settingMenus"
+            :key="i"
+            :to="menu.url"
           >
             <v-list-tile-action>
               <v-icon v-html="menu.icon"></v-icon>
@@ -119,10 +145,10 @@ export default {
         {
           icon: "exit_to_app",
           title: "Log out",
-          url: "/logout"
+          url: { name: "Logout" }
         }
       ],
-      title: "Business Management System"
+      headerTitle: "Business Management System"
     };
   },
   computed: {

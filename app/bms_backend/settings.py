@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework_jwt',
     'rest_framework_swagger',
     'django_filters',
-    'corsheaders',
+    'corsheaders',  # CROS設定ライブラリ
     'system_master',
     'system_users',
 ]
@@ -55,9 +55,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # CROS設定を追加
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
 ]
 
+# CROS認証を許可
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'bms_backend.urls'
 
 TEMPLATES = [

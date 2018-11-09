@@ -58,4 +58,5 @@ class UserAPIView(viewsets.ModelViewSet):
             'username': user.username,
             'fullname': user.staff.full_name,
             'company_name': user.staff.company.name,
+            'company_id': user.staff.company.id,
         })

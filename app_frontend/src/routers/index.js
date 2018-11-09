@@ -10,6 +10,8 @@ import Login from "@/components/Login.vue";
 import Logout from "@/components/Logout.vue";
 import Top from "@/components/Top.vue";
 import Main from "@/components/Pages/Main.vue";
+import Master from "@/components/Pages/Master/Master.vue";
+import Company from "@/components/Pages/Master/Company.vue";
 
 Vue.use(Router);
 Vue.use(Store);
@@ -32,17 +34,17 @@ const router = new Router({
       children: [
         {
           path: "login",
-          name: "login",
+          name: "Login",
           component: Login
         },
         {
           path: "logout",
-          name: "logout",
+          name: "Logout",
           component: Logout
         },
         {
           path: "bms",
-          name: "bms",
+          name: "Bms",
           component: Top,
           redirect: "/bms/main_menu",
           meta: {
@@ -51,8 +53,20 @@ const router = new Router({
           children: [
             {
               path: "main_menu",
-              name: "main",
+              name: "Main",
               component: Main
+            },
+            {
+              path: "master",
+              name: "Master",
+              component: Master,
+              children: [
+                {
+                  path: "company",
+                  name: "Company",
+                  component: Company
+                }
+              ]
             }
           ]
         }

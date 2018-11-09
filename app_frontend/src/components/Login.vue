@@ -3,9 +3,9 @@
 
     <!-- ヘッダーツールバー -->
     <v-toolbar app >
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title v-text="headerTitle"></v-toolbar-title>
       <v-spacer></v-spacer>
-    </v-toolbar>      
+    </v-toolbar>
 
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
@@ -83,11 +83,11 @@ export default {
     return {
       username: "",
       password: "",
-      title: "Business Management System"
+      headerTitle: "Business Management System"
     };
   },
   computed: {
-    ...mapState("auth", ["responseError"])
+    ...mapState("auth", ["loggedIn", "responseError"])
   },
   methods: {
     ...mapActions("auth", ["login"]),
@@ -104,7 +104,10 @@ export default {
     }
   },
   mounted: function() {
-    // console.log(this.responseError);
+    // もしログイン状態の時はメインメニューにリダイレクト
+    if (this.loggedIn) {
+      this.$router.push({ name: "Main" });
+    }
   }
 };
 </script>
