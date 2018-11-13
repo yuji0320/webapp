@@ -4,7 +4,7 @@ from .models import *
 
 class UserCopmanySerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserCopmany
+        model = UserCompany
         fields = (
             'id',
             'country',

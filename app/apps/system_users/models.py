@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 
 
-class UserCopmany(models.Model):
+class UserCompany(models.Model):
     """ユーザー企業"""
     country = models.ForeignKey('system_master.SystemCountry', on_delete=models.CASCADE)  # 所在国
     name = models.CharField('company name', max_length=255, unique=True)  # 企業名
@@ -26,7 +26,7 @@ class UserCopmany(models.Model):
 
 class UserStaff(models.Model):
     """従業員リスト"""
-    company = models.ForeignKey('UserCopmany', on_delete=models.CASCADE)  # 所属企業
+    company = models.ForeignKey('UserCompany', on_delete=models.CASCADE)  # 所属企業
     staff_number = models.IntegerField(_('staff number'))  # 企業内での従業員番号
     full_name = models.CharField(_('full name'), max_length=150)  # 氏名
     ruby = models.CharField(_('ruby'), max_length=150, blank=True)  # ふりがな

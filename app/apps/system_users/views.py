@@ -6,6 +6,26 @@ from rest_framework.decorators import action
 from .serializer import *
 
 
+class UserCompanyFilter(filters.FilterSet):
+    name = filters.CharFilter(lookup_expr='contains')
+
+    class Meta:
+        model = UserCompany
+        fields = ['id', 'name']
+
+
+class UserCopmanyAPIView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserCopmanySerializer
+    queryset = UserCompany.objects.all()
+    filter_class = UserCompanyFilter
+
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     queryset = UserCopmany.objects.all()
+    #     return queryset.filter(id=user.staff.company.id)
+
+
 class UserStaffFilter(filters.FilterSet):
     full_name = filters.CharFilter(lookup_expr='contains')
     ruby = filters.CharFilter(lookup_expr='contains')
@@ -13,12 +33,6 @@ class UserStaffFilter(filters.FilterSet):
     class Meta:
         model = UserStaff
         fields = ['id', 'full_name', 'ruby']
-
-
-class UserCopmanyAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = UserCopmanySerializer
-    queryset = UserCopmany.objects.all()
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
@@ -33,7 +47,7 @@ class UserStaffAPIView(viewsets.ModelViewSet):
         if user.is_superuser:
             return queryset
         else:
-            return queryset.filter(company=user.staff.company)
+            return queryset.filter(company=user.staff.company.id)
 
 
 class UserAPIView(viewsets.ModelViewSet):

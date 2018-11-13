@@ -20,6 +20,6 @@ class AdminUserAdmin(UserAdmin):
     get_staff.short_description = 'Staff name'
 
 
-admin.site.register(UserCopmany)
+admin.site.register(UserCompany)
 admin.site.register(UserStaff)
 admin.site.register(User, AdminUserAdmin)

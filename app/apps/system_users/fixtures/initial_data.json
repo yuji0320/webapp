@@ -1,6 +1,6 @@
 [
   {
-    "model":"system_users.UserCopmany",
+    "model":"system_users.UserCompany",
     "pk":1,
     "fields": {
       "id":1,
