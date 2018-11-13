@@ -14,7 +14,6 @@ export default {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // "Access-Control-Allow-Origin": "*",
         Authorization: "JWT " + token
       },
       proxy: false,
@@ -37,17 +36,16 @@ export default {
 
     var promise = null;
     url = process.env.VUE_APP_API_BASE_URL + url;
+    console.log(params);
 
     if (method === "get") {
       promise = axios.get(url, params);
-      // console.log(promise);
+      console.log(promise);
     } else if (method === "post") {
       promise = axios.post(url, params);
       // console.log(promise);
     }
-    // promise.catch(function() {
-    //   console.log(promise);
-    // });
+
     return promise;
   },
 

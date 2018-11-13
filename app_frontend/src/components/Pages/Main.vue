@@ -5,6 +5,7 @@
   >
     <v-layout row wrap>
       <v-flex tag="h1" class="headline">Dashbord</v-flex>
+      <v-btn @click=ajax>test</v-btn>
       <v-flex d-flex lg12 order-xs5>
         <v-layout column>
           <v-flex
@@ -86,6 +87,7 @@ export default {
   },
   mounted() {
     // console.log(this.menus + "main");
+    // this.ajax();
   }
 };
 </script>

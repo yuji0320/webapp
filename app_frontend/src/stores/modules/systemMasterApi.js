@@ -15,10 +15,9 @@ export default {
   },
   actions: {
     // API非同期通信処理
-    getCountries({ commit, params }) {
+    getCountries({ commit }, params) {
       api.get("system_master/countries/", params).then(function(response) {
         if (response.data) {
-          // this.results = response.data.results;
           commit("setCountries", response.data);
         } else {
           console.log(response.error);
