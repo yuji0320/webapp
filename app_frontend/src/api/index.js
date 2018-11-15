@@ -36,11 +36,11 @@ export default {
 
     var promise = null;
     url = process.env.VUE_APP_API_BASE_URL + url;
-    console.log(params);
+    // console.log(params);
 
     if (method === "get") {
       promise = axios.get(url, params);
-      console.log(promise);
+      // console.log(promise);
     } else if (method === "post") {
       promise = axios.post(url, params);
       // console.log(promise);
@@ -49,8 +49,26 @@ export default {
     return promise;
   },
 
-  get(url, params) {
-    return this.request("get", url, params);
+  // get2(url, data) {
+  //   data = data || {};
+  //   if (data.detail) {
+  //     url = url + data.detail + "/";
+  //   }
+  //   return this.request("get", url, data);
+  // },
+
+  get({ commit }, url, data, commitName) {
+    data = data || {};
+    if (data.detail) {
+      url = url + data.detail + "/";
+    }
+    return this.request("get", url, data).then(function(response) {
+      if (response.data) {
+        commit(commitName, response.data);
+      } else {
+        console.log(response.error);
+      }
+    });
   },
 
   post(url, params) {

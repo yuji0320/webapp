@@ -58,11 +58,14 @@ export default {
       payload.router.push("/login");
     },
     // ユーザー情報取得
-    userData({ commit }) {
-      api.get("system_user/users/login_user_data/").then(function(response) {
-        commit("userData", response.data);
-        // console.log(response.data);
-      });
+    userData({ commit }, data) {
+      var url = "system_user/users/login_user_data/";
+      var commitName = "userData";
+      api.get({ commit }, url, data, commitName);
+      // api.get("system_user/users/login_user_data/").then(function(response) {
+      //   commit("userData", response.data);
+      //   // console.log(response.data);
+      // });
     }
   }
 };

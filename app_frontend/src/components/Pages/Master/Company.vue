@@ -3,6 +3,7 @@
     fluid
     grid-list-lg
   >
+  {{ countries }}
     <v-card>
       <v-toolbar card>
         <v-icon>domain</v-icon>
@@ -19,33 +20,41 @@
       </v-toolbar>
       <v-card-text>
         <!-- 会社情報表示 -->
-        <v-text-field
+        <!-- <v-text-field
         :disabled="!isEditing"
         label="Counrty"
-        ></v-text-field>
+        v-model="userCompany.country"
+        ></v-text-field> -->
+
         <v-text-field
         :disabled="!isEditing"
         label="Company name"
+        v-model="userCompany.name"
         ></v-text-field>
         <v-text-field
         :disabled="!isEditing"
         label="Postal code"
+        v-model="userCompany.postalCode"
         ></v-text-field>
         <v-text-field
         :disabled="!isEditing"
         label="Address"
+        v-model="userCompany.address"
         ></v-text-field>
         <v-text-field
         :disabled="!isEditing"
         label="Phone"
+        v-model="userCompany.phone"
         ></v-text-field>
         <v-text-field
         :disabled="!isEditing"
         label="Fax"
+        v-model="userCompany.fax"
         ></v-text-field>
         <v-text-field
-        :disabled="!isEditing"
+        :disabled=true
         label="Default currency"
+        v-model="userCompany.defaultCurrency"
         ></v-text-field>
       </v-card-text>
     </v-card>
@@ -66,13 +75,16 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", ["userCompany"])
+    ...mapState("systemUserApi", ["userCompany"]),
+    ...mapState("systemMasterApi", ["countries"])
   },
   methods: {
-    ...mapActions("systemUserApi", ["getCompany"])
+    ...mapActions("systemUserApi", ["getCompany"]),
+    ...mapActions("systemMasterApi", ["getCountries"])
   },
   mounted() {
-    this.getCompany({ID:"1"});
+    this.getCompany({detail:this.loginUserData.companyId});
+    this.getCountries();
     // console.log(params);
   }
 };

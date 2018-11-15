@@ -20,11 +20,6 @@ class UserCopmanyAPIView(viewsets.ModelViewSet):
     queryset = UserCompany.objects.all()
     filter_class = UserCompanyFilter
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     queryset = UserCopmany.objects.all()
-    #     return queryset.filter(id=user.staff.company.id)
-
 
 class UserStaffFilter(filters.FilterSet):
     full_name = filters.CharFilter(lookup_expr='contains')

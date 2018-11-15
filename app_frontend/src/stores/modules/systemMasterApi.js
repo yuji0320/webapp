@@ -15,14 +15,10 @@ export default {
   },
   actions: {
     // API非同期通信処理
-    getCountries({ commit }, params) {
-      api.get("system_master/countries/", params).then(function(response) {
-        if (response.data) {
-          commit("setCountries", response.data);
-        } else {
-          console.log(response.error);
-        }
-      });
+    getCountries({ commit }, data) {
+      let url = "system_master/countries/";
+      let commitName = "setCountries";
+      api.get({ commit }, url, data, commitName);
     }
   }
 };
