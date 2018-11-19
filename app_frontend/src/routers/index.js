@@ -12,6 +12,7 @@ import Top from "@/components/Top.vue";
 import Main from "@/components/Pages/Main.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
+import Staff from "@/components/Pages/Master/Staff.vue";
 
 Vue.use(Router);
 Vue.use(Store);
@@ -65,6 +66,11 @@ const router = new Router({
                   path: "company",
                   name: "Company",
                   component: Company
+                },
+                {
+                  path: "staff",
+                  name: "Staff",
+                  component: Staff
                 }
               ]
             }

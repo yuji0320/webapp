@@ -24,7 +24,7 @@
                 {{ responseError.data.nonFieldErrors[0] }}
               </v-alert>
               <v-text-field 
-                v-model="username" 
+                v-model="username"
                 name="username"
                 v-validate="'required|alpha_dash'"
                 :class="{'has-error': errors.has('username')}"

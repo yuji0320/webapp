@@ -60,9 +60,9 @@ const systemConfigState = {
           url: { name: "Company" }
         },
         {
-          icon: "",
+          icon: "people",
           title: "Staff master",
-          url: "test"
+          url: { name: "Staff" }
         },
         {
           icon: "",
@@ -76,7 +76,13 @@ const systemConfigState = {
         }
       ]
     }
-  ]
+  ],
+  snackbar: {
+    snack: "",
+    color: "",
+    snackbarStatus: false,
+    timeout: 1500
+  }
 };
 
 export default {
@@ -84,9 +90,28 @@ export default {
   state: systemConfigState,
   mutations: {
     // APIデータ更新
+    // サイドバー操作
     toggleDrawer(state) {
       state.drawerStatus = !state.drawerStatus;
+    },
+    // Snackbarステータス操作
+    onSnackbar(state, { snack, color }) {
+      state.snackbar.snackbarStatus = true;
+      state.snackbar.snack = snack;
+      state.snackbar.color = color;
+    },
+    offSnackbar(state) {
+      state.snackbar.snackbarStatus = false;
+      state.snackbar.snack = "";
+      state.snackbar.color = "";
     }
   },
-  actions: {}
+  actions: {
+    showSnackbar({ commit }, { snack, color }) {
+      commit("onSnackbar", { snack: snack, color: color });
+      setTimeout(function() {
+        commit("offSnackbar");
+      }, 1500);
+    }
+  }
 };

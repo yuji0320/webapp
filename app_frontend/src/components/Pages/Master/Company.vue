@@ -3,16 +3,16 @@
     fluid
     grid-list-lg
   >
-  {{ countries }}
     <v-card>
       <v-toolbar card>
         <v-icon>domain</v-icon>
         <v-toolbar-title class="font-weight-light">Company Master</v-toolbar-title>
         <v-spacer></v-spacer>
+        <!-- 編集トグルボタン -->
         <v-btn
           fab
           small
-          @click="isEditing = !isEditing"
+          @click="toggleIsEditing"
         >
           <v-icon v-if="isEditing">close</v-icon>
           <v-icon v-else>edit</v-icon>
@@ -20,43 +20,63 @@
       </v-toolbar>
       <v-card-text>
         <!-- 会社情報表示 -->
-        <!-- <v-text-field
-        :disabled="!isEditing"
-        label="Counrty"
-        v-model="userCompany.country"
-        ></v-text-field> -->
-
+        <v-select
+          :disabled="!isEditing"
+          v-model="userCompany.country"
+          :items="countries.results"
+          item-text="name"
+          item-value="id"
+          label="Country"
+          name="country"
+        ></v-select>
         <v-text-field
-        :disabled="!isEditing"
-        label="Company name"
-        v-model="userCompany.name"
+          :disabled="!isEditing"
+          label="Company name"
+          v-model="userCompany.name"
         ></v-text-field>
         <v-text-field
-        :disabled="!isEditing"
-        label="Postal code"
-        v-model="userCompany.postalCode"
+          :disabled="!isEditing"
+          label="Postal code"
+          v-model="userCompany.postalCode"
         ></v-text-field>
         <v-text-field
-        :disabled="!isEditing"
-        label="Address"
-        v-model="userCompany.address"
+          :disabled="!isEditing"
+          label="Address"
+          v-model="userCompany.address"
         ></v-text-field>
         <v-text-field
-        :disabled="!isEditing"
-        label="Phone"
-        v-model="userCompany.phone"
+          :disabled="!isEditing"
+          label="Phone"
+          v-model="userCompany.phone"
         ></v-text-field>
         <v-text-field
-        :disabled="!isEditing"
-        label="Fax"
-        v-model="userCompany.fax"
+          :disabled="!isEditing"
+          label="Fax"
+          v-model="userCompany.fax"
         ></v-text-field>
-        <v-text-field
-        :disabled=true
-        label="Default currency"
-        v-model="userCompany.defaultCurrency"
-        ></v-text-field>
+        <!-- 通貨情報はあえて変更不可とする -->
+        <v-select
+          :disabled=true
+          v-model="userCompany.defaultCurrency"
+          :items="currencies.results"
+          item-text="name"
+          item-value="id"
+          label="Currency"
+          name="currency"
+        ></v-select>
       </v-card-text>
+      <v-footer 
+        card
+        height="auto"
+      >
+        <v-spacer></v-spacer>
+        <!-- 修正情報反映ボタン -->
+        <v-btn 
+          color="primary"
+          :disabled="!isEditing"
+          @click="updateCompany"
+        >Update</v-btn>
+      </v-footer>
     </v-card>
 
   </v-container>  
@@ -66,7 +86,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  title: "Company",
+  title: "Company master",
   name: "Company",
   data() {
     return {
@@ -76,16 +96,35 @@ export default {
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemUserApi", ["userCompany"]),
-    ...mapState("systemMasterApi", ["countries"])
+    ...mapState("systemMasterApi", ["countries", "currencies"])
   },
   methods: {
-    ...mapActions("systemUserApi", ["getCompany"]),
-    ...mapActions("systemMasterApi", ["getCountries"])
+    ...mapActions("systemUserApi", ["getCompany", "putCompany"]),
+    ...mapActions("systemMasterApi", ["getCountries", "getCurrencies"]),
+    ...mapActions("systemConfig", ["showSnackbar"]),
+    toggleIsEditing: function() {
+      this.isEditing = !this.isEditing;
+      if (!this.isEditing) {
+        // 保存せずに終了する
+        this.getCompany({ detail: this.loginUserData.companyId });
+        this.showSnackbar({ snack: "It was to exit without saving." });
+      }
+    },
+    updateCompany: function() {
+      let self = this; //Promisseのthisスコープ回避のため
+      this.putCompany(this.userCompany).then(function(response) {
+        if (response.data) {
+          // 更新成功を知らせ、編集ステータスを終了する
+          self.showSnackbar({ snack: "Update is success!", color: "success" });
+          self.toggleIsEditing();
+        }
+      });
+    }
   },
   mounted() {
-    this.getCompany({detail:this.loginUserData.companyId});
+    this.getCompany({ detail: this.loginUserData.companyId });
     this.getCountries();
-    // console.log(params);
+    this.getCurrencies();
   }
 };
 </script>

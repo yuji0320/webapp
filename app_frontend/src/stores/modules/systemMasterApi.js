@@ -1,7 +1,8 @@
 import api from "@/api";
 
 const systemMasterState = {
-  countries: {}
+  countries: {},
+  currencies: {}
 };
 
 export default {
@@ -11,6 +12,9 @@ export default {
     // APIデータ更新
     setCountries(state, payload) {
       state.countries = payload;
+    },
+    setCurrencies(state, payload) {
+      state.currencies = payload;
     }
   },
   actions: {
@@ -18,6 +22,11 @@ export default {
     getCountries({ commit }, data) {
       let url = "system_master/countries/";
       let commitName = "setCountries";
+      api.get({ commit }, url, data, commitName);
+    },
+    getCurrencies({ commit }, data) {
+      let url = "system_master/currencies/";
+      let commitName = "setCurrencies";
       api.get({ commit }, url, data, commitName);
     }
   }

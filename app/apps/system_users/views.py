@@ -27,7 +27,7 @@ class UserStaffFilter(filters.FilterSet):
 
     class Meta:
         model = UserStaff
-        fields = ['id', 'full_name', 'ruby']
+        fields = ['id', 'full_name', 'ruby', 'company']
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):

@@ -1,7 +1,8 @@
 import api from "@/api";
 
 const systemUserState = {
-  userCompany: {}
+  userCompany: {},
+  userStaffs: {}
 };
 
 export default {
@@ -11,6 +12,9 @@ export default {
     // APIデータ更新
     setCompany(state, payload) {
       state.userCompany = payload;
+    },
+    setStaffs(state, payload) {
+      state.userStaffs = payload;
     }
   },
   actions: {
@@ -19,13 +23,20 @@ export default {
       let url = "system_user/user_companies/";
       let commitName = "setCompany";
       api.get({ commit }, url, data, commitName);
-      // api.get(url, data).then(function(response) {
-      //   if (response.data) {
-      //     commit(commitName, response.data);
-      //   } else {
-      //     console.log(response.error);
-      //   }
-      // });
+    },
+    putCompany({ commit }, data) {
+      let url = "system_user/user_companies/" + data.id + "/";
+      let commitName = "setCompany";
+      return api
+        .put({ commit }, url, data, commitName)
+        .then(function(response) {
+          return response;
+        });
+    },
+    getStaffs({ commit }, data) {
+      let url = "system_user/user_staffs/";
+      let commitName = "setStaffs";
+      api.get({ commit }, url, data, commitName);
     }
   }
 };

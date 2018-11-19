@@ -34,7 +34,7 @@ export default {
   actions: {
     login({ commit }, payload) {
       api
-        .post("api-token-auth/", {
+        .post_auth("api-token-auth/", {
           username: payload.username,
           password: payload.password
         })
@@ -62,10 +62,6 @@ export default {
       var url = "system_user/users/login_user_data/";
       var commitName = "userData";
       api.get({ commit }, url, data, commitName);
-      // api.get("system_user/users/login_user_data/").then(function(response) {
-      //   commit("userData", response.data);
-      //   // console.log(response.data);
-      // });
     }
   }
 };

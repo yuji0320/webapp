@@ -44,19 +44,14 @@ export default {
     } else if (method === "post") {
       promise = axios.post(url, params);
       // console.log(promise);
+    } else if (method === "put") {
+      promise = axios.put(url, params);
     }
 
     return promise;
   },
 
-  // get2(url, data) {
-  //   data = data || {};
-  //   if (data.detail) {
-  //     url = url + data.detail + "/";
-  //   }
-  //   return this.request("get", url, data);
-  // },
-
+  // get処理
   get({ commit }, url, data, commitName) {
     data = data || {};
     if (data.detail) {
@@ -71,7 +66,18 @@ export default {
     });
   },
 
-  post(url, params) {
+  put({ commit }, url, data, commitName) {
+    return this.request("put", url, data).then(function(response) {
+      if (response.data) {
+        commit(commitName, response.data);
+        return response;
+      } else {
+        console.log(response.error);
+      }
+    });
+  },
+
+  post_auth(url, params) {
     return this.request("post", url, params);
   }
 };

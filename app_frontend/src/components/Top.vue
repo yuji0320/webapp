@@ -2,6 +2,8 @@
   <div>
     <!-- ヘッダー -->
     <app-header></app-header>
+    <!-- グローバルsnackbar -->
+    <app-snackbar></app-snackbar>
     <!-- メインコンテンツ -->
     <router-view></router-view>
     <!-- フッター -->
@@ -13,6 +15,7 @@
 // コンポーネントの読み込み
 import Header from "@/components/Elements/Header.vue";
 import Footer from "@/components/Elements/Footer.vue";
+import Snackbar from "@/components/Module/Snackbar.vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -31,7 +34,8 @@ export default {
   },
   components: {
     "app-header": Header,
-    "app-footer": Footer
+    "app-footer": Footer,
+    "app-snackbar": Snackbar
   }
 };
 </script>

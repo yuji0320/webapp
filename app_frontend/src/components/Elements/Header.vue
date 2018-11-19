@@ -41,6 +41,8 @@
           :key="menu.title"
           :prepend-icon="menu.icon"
           no-action
+          disable-route-watcher 
+          enable-resize-watcher
         >
           <v-list-tile slot="activator">
             <v-list-tile-content>
