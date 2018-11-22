@@ -5,18 +5,7 @@ from .models import *
 class UserCopmanySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCompany
-        fields = (
-            'id',
-            'country',
-            'name',
-            'postal_code',
-            'address',
-            'phone',
-            'fax',
-            'default_currency',
-            'created_at',
-            'modified_at'
-        )
+        fields = ('__all__')
 
 
 class UserStaffSerializer(serializers.ModelSerializer):
@@ -59,16 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'id',
-            'staff',
-            'username',
-            'password',
-            'is_active',
-            'is_staff',
-            'created_at',
-            'modified_at',
-        )
+        fields = ('__all__')
 
     def create(self, validated_data):
         return User.objects.create_user(request_data=validated_data)

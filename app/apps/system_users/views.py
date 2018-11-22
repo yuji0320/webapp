@@ -14,20 +14,20 @@ class UserCompanyFilter(filters.FilterSet):
         fields = ['id', 'name']
 
 
-class UserCopmanyAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = UserCopmanySerializer
-    queryset = UserCompany.objects.all()
-    filter_class = UserCompanyFilter
-
-
 class UserStaffFilter(filters.FilterSet):
     full_name = filters.CharFilter(lookup_expr='contains')
     ruby = filters.CharFilter(lookup_expr='contains')
 
     class Meta:
         model = UserStaff
-        fields = ['id', 'full_name', 'ruby', 'company']
+        fields = ['id', 'full_name', 'ruby', 'company', 'is_login_user']
+
+
+class UserCopmanyAPIView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserCopmanySerializer
+    queryset = UserCompany.objects.all()
+    filter_class = UserCompanyFilter
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):

@@ -79,7 +79,7 @@
       </v-footer>
     </v-card>
 
-  </v-container>  
+  </v-container>
 </template>
 
 <script>
@@ -103,11 +103,12 @@ export default {
     ...mapActions("systemMasterApi", ["getCountries", "getCurrencies"]),
     ...mapActions("systemConfig", ["showSnackbar"]),
     toggleIsEditing: function() {
+      let self = this;
       this.isEditing = !this.isEditing;
       if (!this.isEditing) {
         // 保存せずに終了する
-        this.getCompany({ detail: this.loginUserData.companyId });
-        this.showSnackbar({ snack: "It was to exit without saving." });
+        self.getCompany({ detail: this.loginUserData.companyId });
+        self.showSnackbar({ snack: "It was to exit without saving." });
       }
     },
     updateCompany: function() {
@@ -116,7 +117,7 @@ export default {
         if (response.data) {
           // 更新成功を知らせ、編集ステータスを終了する
           self.showSnackbar({ snack: "Update is success!", color: "success" });
-          self.toggleIsEditing();
+          self.isEditing = false;
         }
       });
     }
