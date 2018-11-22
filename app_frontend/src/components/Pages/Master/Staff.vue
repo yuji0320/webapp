@@ -1,24 +1,86 @@
 <template>
   <v-container 
-      fluid
-      grid-list-lg
-    >
-
+    fluid
+    grid-list-lg
+  >
     <v-card>
       <v-toolbar card>
           <v-icon>people</v-icon>
           <v-toolbar-title class="font-weight-light">Staff Master</v-toolbar-title>
           <v-spacer></v-spacer>
-          <!-- ページネーションコンポーネント -->
-          <app-pagination
-            :length="userStaffs.pages"
-            :count="userStaffs.count"
-            v-on:paginate="changePage"
-          ></app-pagination>
 
-          <v-btn color="primary">New Item</v-btn>
+          <!-- 新規作成/編集モーダル -->
+          <v-dialog v-model="dialog" scrollable max-width="600px">>
+            <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
+            <v-card>
+              <v-card-title>
+                <span class="headline">New Item</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container grid-list-md>
+                  <v-form @submit.prevent="submitStaff" id="staffForm">
+                    <v-layout wrap>
+                      <v-flex xs6>
+                        <v-text-field 
+                          v-validate="'required'"
+                          label="Staff Number*" 
+                          required
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs6>
+                        <v-text-field label="Company*" required></v-text-field>
+                      </v-flex>
+                      <v-flex xs6>
+                        <v-text-field label="Full Name*" required></v-text-field>
+                      </v-flex>
+                      <v-flex xs6>
+                        <v-text-field label="Ruby"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field label="Mobile"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field label="E-mail"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md4>
+                        <v-text-field label="Postal Code"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-textarea label="Address"></v-textarea>
+                      </v-flex>
+                    </v-layout>
+                  </v-form>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
+                <v-btn 
+                  color="blue darken-1"
+                  form="staffForm"
+                  type="submit"
+                  flat
+                  @click="dialog = false"
+                >Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
       </v-toolbar>
 
+      <v-card-title>
+        <!-- ページネーションコンポーネント -->
+        <app-pagination
+          :length="userStaffs.pages"
+          :count="userStaffs.count"
+          v-on:paginate="changePage"
+        ></app-pagination>
+        <v-subheader>
+          Total : {{ userStaffs.count }} items
+        </v-subheader>
+        <v-spacer></v-spacer>
+      </v-card-title>
+      
       <v-data-table
         :headers="headers"
         :items="userStaffs.results"
@@ -58,7 +120,8 @@ export default {
         { text: "Full name", value: "fullName" },
         { text: "E-mail", value: "email" },
         { text: "Mobile", value: "mobile" }
-      ]
+      ],
+      dialog: false
     };
   },
   computed: {
@@ -71,6 +134,9 @@ export default {
       this.getStaffs({
         params: { company: this.loginUserData.companyId, page: page }
       });
+    },
+    submitStaff: function() {
+      console.log("Submit!");
     }
   },
   created() {

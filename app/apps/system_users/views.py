@@ -15,7 +15,7 @@ class UserCompanyFilter(filters.FilterSet):
 
 
 class UserStaffFilter(filters.FilterSet):
-    full_name = filters.CharFilter(lookup_expr='contains')
+    fullName = filters.CharFilter(field_name='full_name', lookup_expr='contains')
     ruby = filters.CharFilter(lookup_expr='contains')
 
     class Meta:
