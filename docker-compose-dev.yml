@@ -21,7 +21,7 @@ dev_app_frontend:
     - dev_app
   volumes:
     - ./app_frontend:/usr/src/app_frontend
-  command: vue ui -p 9100
+  command: npm run serve
 
 
 #dev_nginx:

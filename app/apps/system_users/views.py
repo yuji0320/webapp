@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
@@ -13,6 +13,13 @@ class UserCompanyFilter(filters.FilterSet):
         model = UserCompany
         fields = ['id', 'name']
 
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('name', 'name'),
+            ('created_at', 'created_at'),
+        ),
+    )
+
 
 class UserStaffFilter(filters.FilterSet):
     fullName = filters.CharFilter(field_name='full_name', lookup_expr='contains')
@@ -22,16 +29,23 @@ class UserStaffFilter(filters.FilterSet):
         model = UserStaff
         fields = ['id', 'full_name', 'ruby', 'company', 'is_login_user']
 
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('fullname', 'fullname'),
+            ('created_at', 'created_at'),
+        ),
+    )
+
 
 class UserCopmanyAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny, )
     serializer_class = UserCopmanySerializer
     queryset = UserCompany.objects.all()
     filter_class = UserCompanyFilter
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny, )
     serializer_class = UserStaffSerializer
     queryset = UserStaff.objects.all()
     filter_class = UserStaffFilter
@@ -46,7 +60,7 @@ class UserStaffAPIView(viewsets.ModelViewSet):
 
 
 class UserAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, AllowAny)
     serializer_class = UserSerializer
     queryset = User.objects.all()
 

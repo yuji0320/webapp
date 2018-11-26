@@ -1,8 +1,10 @@
+import uuid
 from django.db import models
 
 
 class SystemCountry(models.Model):
     """国名"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField('country name', max_length=50, unique=True)  # 国名
     code = models.CharField('country code', max_length=2, unique=True)  # 国名コード(ISO 3166-1)
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
@@ -16,6 +18,7 @@ class SystemCountry(models.Model):
 
 class SystemCurrency(models.Model):
     """通貨"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField('currency name', max_length=50, unique=True)  # 通貨名称
     code = models.CharField('currency code', max_length=3, unique=True)  # 通貨コード(ISO 4217)
     display = models.CharField('currency display', max_length=10, unique=True)  # 通貨表示記号
@@ -31,6 +34,7 @@ class SystemCurrency(models.Model):
 
 class SystemUnitType(models.Model):
     """単位"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField('unit type name', max_length=50, unique=True)  # 単位名称
     display = models.CharField('unit type display', max_length=50, unique=True)  # 単位表示記号
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時

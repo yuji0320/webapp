@@ -34,7 +34,7 @@ class UserStaffSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_login_user(obj):
-        login_user = User.objects.all().filter(id=obj.id)
+        login_user = User.objects.all().filter(staff=obj.id)
 
         if login_user:
             username = login_user.values('username')[0]['username']

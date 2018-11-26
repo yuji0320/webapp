@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 
 class UserCompany(models.Model):
     """ユーザー企業"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     country = models.ForeignKey('system_master.SystemCountry', on_delete=models.CASCADE)  # 所在国
     name = models.CharField('company name', max_length=255, unique=True)  # 企業名
     postal_code = models.CharField('postal code', max_length=20)  # 郵便番号
@@ -26,6 +27,7 @@ class UserCompany(models.Model):
 
 class UserStaff(models.Model):
     """従業員リスト"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey('UserCompany', on_delete=models.CASCADE)  # 所属企業
     staff_number = models.IntegerField(_('staff number'))  # 企業内での従業員番号
     full_name = models.CharField(_('full name'), max_length=150)  # 氏名
@@ -93,7 +95,7 @@ class UserAccountManager(BaseUserManager):
         request_data = {
             'username': username,
             'password': password,
-            'staff': UserStaff.objects.get(pk=int(staff))
+            'staff': UserStaff.objects.get(pk=staff)
         }
         user = self.create_user(request_data)
         user.is_active = True
@@ -107,6 +109,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     """ユーザー AbstractUserをコピペし編集"""
 
     username_validator = UnicodeUsernameValidator()
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # ユーザーID
     username = models.CharField(

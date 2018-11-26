@@ -14,7 +14,7 @@ class SystemCountryFilter(filters.FilterSet):
 
 class SystemCountryAPIView(viewsets.ModelViewSet):
     permission_classes = (
-        IsAuthenticated,
+        AllowAny,
     )
     serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
