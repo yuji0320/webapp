@@ -22,8 +22,11 @@
                     <v-layout wrap>
                       <v-flex xs6>
                         <v-text-field 
-                          v-validate="'required'"
-                          label="Staff Number*" 
+                          v-validate="'required|numeric'"
+                          v-model="form.staffNumber.data"
+                          label="form.staffNumber.label"
+                          :error-messages="errors.collect('Staff Number')"
+                          data-vv-name="Staff Number"
                           required
                         ></v-text-field>
                       </v-flex>
@@ -61,7 +64,6 @@
                   form="staffForm"
                   type="submit"
                   flat
-                  @click="dialog = false"
                 >Save</v-btn>
               </v-card-actions>
             </v-card>
@@ -121,7 +123,14 @@ export default {
         { text: "E-mail", value: "email" },
         { text: "Mobile", value: "mobile" }
       ],
-      dialog: false
+      dialog: false,
+      form: {
+        staffNumber:{
+          label: "Staff Number",
+          data: "",
+          name: "staffNumber"
+        }
+      }
     };
   },
   computed: {
@@ -136,7 +145,14 @@ export default {
       });
     },
     submitStaff: function() {
-      console.log("Submit!");
+      this.$validator.validateAll().then(result => {
+        if(result){
+          console.log("Submit!");
+        } else {
+          console.log("There is some validation error!");
+          console.log(this.error);
+        }
+      });
     }
   },
   created() {
