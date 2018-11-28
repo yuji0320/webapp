@@ -5,7 +5,7 @@ import Store from "@/stores";
 const axiosBase = require("axios");
 
 export default {
-  request(method, url, params) {
+  async request(method, url, params) {
     // トークンを取得する
     var token = Store.state.auth.token;
 
@@ -66,6 +66,20 @@ export default {
     });
   },
 
+  // post処理(新規追加、問い合わせ)
+  async post({ commit }, url, data, commitName) {
+    const res = await this.request("post", url, data);
+    if (res.data) {
+      commit(commitName, res.data);
+      commit("error", {});
+      return res;
+    } else {
+      commit("error", res.error.data);
+      return res;
+    }
+  },
+
+  // put処理(更新)
   put({ commit }, url, data, commitName) {
     return this.request("put", url, data).then(function(response) {
       if (response.data) {

@@ -24,15 +24,17 @@ class UserCompanyFilter(filters.FilterSet):
 class UserStaffFilter(filters.FilterSet):
     fullName = filters.CharFilter(field_name='full_name', lookup_expr='contains')
     ruby = filters.CharFilter(lookup_expr='contains')
+    staffNumber = filters.CharFilter(field_name='staff_number', lookup_expr='contains')
 
     class Meta:
         model = UserStaff
-        fields = ['id', 'full_name', 'ruby', 'company', 'is_login_user']
+        fields = ['id', 'company', 'is_login_user', 'staffNumber']
 
     order_by = filters.OrderingFilter(
         fields=(
-            ('fullname', 'fullname'),
             ('created_at', 'created_at'),
+            ('full_name', 'full_name'),
+            ('staff_number', 'staff_number'),
         ),
     )
 
