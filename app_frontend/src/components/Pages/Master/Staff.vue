@@ -29,7 +29,6 @@
                 <v-layout wrap>
                   <v-flex xs12>
                     <v-alert 
-                      :value="true"
                       type="error"
                       v-if="responseError.nonFieldErrors"
                     >
@@ -116,7 +115,7 @@
             >Save</v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>      
+      </v-dialog>
 
       <!-- ページネーションコンポーネント -->
       <span slot="table-pagination">

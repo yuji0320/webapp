@@ -22,17 +22,15 @@ export default {
     length: { required: true },
     count: { required: true },
     // 親のモデル情報を取得する
-    value: {
-      required: true,
-    }
+    value: { required: true }
   },
   updated() {
     // ページ変更時に親のバインドデータを更新する
-    this.$emit("input", this.page)
+    this.$emit("input", this.page);
   },
   mounted() {
     // ページ生成時に親コンポーネントのバインドデータを取得する
-    this.page = this.value
+    this.page = this.value;
   }
 };
 </script>
