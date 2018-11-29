@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
@@ -40,14 +40,14 @@ class UserStaffFilter(filters.FilterSet):
 
 
 class UserCopmanyAPIView(viewsets.ModelViewSet):
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserCopmanySerializer
     queryset = UserCompany.objects.all()
     filter_class = UserCompanyFilter
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserStaffSerializer
     queryset = UserStaff.objects.all()
     filter_class = UserStaffFilter
@@ -62,7 +62,7 @@ class UserStaffAPIView(viewsets.ModelViewSet):
 
 
 class UserAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated, AllowAny)
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
