@@ -56,6 +56,13 @@ export default {
       const res = await api.post({ commit }, url, data, commitName);
       // console.log(res);
       return res;
+    },
+    async clearStaff({ commit }) {
+      commit("setStaff", {});
+      commit("error", {});
+    },
+    async setStaff({ commit }, data) {
+      commit("setStaff", data);
     }
   }
 };

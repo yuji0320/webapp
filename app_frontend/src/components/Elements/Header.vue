@@ -100,7 +100,8 @@
       <v-divider
         class="mx-3"
         inset
-        vertical></v-divider>
+        vertical
+      ></v-divider>
       <!-- 右メニュー -->
       <v-menu offset-y>
         <v-toolbar-title slot="activator">

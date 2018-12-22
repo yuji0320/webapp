@@ -20,6 +20,10 @@ class AdminUserAdmin(UserAdmin):
     get_staff.short_description = 'Staff name'
 
 
+class AdminUserStaff(admin.ModelAdmin):
+    list_display = ('full_name', 'company', 'created_at', 'modified_at')
+
+
 admin.site.register(UserCompany)
-admin.site.register(UserStaff)
+admin.site.register(UserStaff, AdminUserStaff)
 admin.site.register(User, AdminUserAdmin)

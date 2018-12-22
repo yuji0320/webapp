@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <span>
     <v-pagination
       v-model="page"
       :length="length"
       :total-visible="5"
     ></v-pagination>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -23,6 +23,12 @@ export default {
     count: { required: true },
     // 親のモデル情報を取得する
     value: { required: true }
+  },
+  watch: {
+    // 親モデル変更時にデータを反映
+    value() {
+      this.page = this.value;
+    }
   },
   updated() {
     // ページ変更時に親のバインドデータを更新する

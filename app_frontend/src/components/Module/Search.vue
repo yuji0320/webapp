@@ -7,7 +7,7 @@
         :items="incremental.tableSelectItems"
         item-text="text"
         item-value="value"
-        label="Standard"
+        label="Select value"
       ></v-select>
     </v-flex>
     <v-flex xs12 sm8 lg5 d-inline-flex>
@@ -42,6 +42,7 @@ export default {
   mounted() {
     // ページ生成時に親コンポーネントのバインドデータを取得する
     this.incremental = this.value
+    // console.log(this.value)
   }
 };
 </script>

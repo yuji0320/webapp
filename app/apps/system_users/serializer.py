@@ -5,7 +5,7 @@ from .models import *
 class UserCopmanySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCompany
-        fields = ('__all__')
+        fields = '__all__'
 
 
 class UserStaffSerializer(serializers.ModelSerializer):
@@ -13,24 +13,7 @@ class UserStaffSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserStaff
-        fields = (
-            'id',
-            'company',
-            'staff_number',
-            'full_name',
-            'ruby',
-            'mobile',
-            'email',
-            'postal_code',
-            'address',
-            'date_birth',
-            'date_joined',
-            'date_left',
-            'is_login_user',
-            'created_at',
-            'modified_at',
-            'login_user'
-        )
+        fields = '__all__'
 
     @staticmethod
     def get_login_user(obj):
@@ -48,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('__all__')
+        fields = '__all__'
 
     def create(self, validated_data):
         return User.objects.create_user(request_data=validated_data)
