@@ -1,5 +1,4 @@
 <template>
-
   <v-dialog v-model="dialog" scrollable max-width="600px">
     <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
     <v-card>
@@ -80,7 +79,6 @@ export default {
       this.dialog = true;
       this.editedIndex = 0;
     },
-
     // フォームのクリア
     clearForm() {
       this.$emit("clear-form");
@@ -88,6 +86,9 @@ export default {
     // フォームの送信アクション発火
     submitForm() {
       this.$emit("submit-form");
+    },
+    closeDialog() {
+      this.dialog = false;
     }
   }
 };

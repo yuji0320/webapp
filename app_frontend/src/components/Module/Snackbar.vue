@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- <v-card>
-      <v-card-text>
-        <v-btn
-          block
-          color="primary"
-          dark
-          @click="showSnackbar('test')"
-        >
-          Show Snackbar
-        </v-btn>
-      </v-card-text>
-    </v-card> -->
     <v-snackbar
       :top=true
       :value="snackbar.snackbarStatus"

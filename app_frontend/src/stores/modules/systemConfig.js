@@ -65,9 +65,9 @@ const systemConfigState = {
           url: { name: "Staff" }
         },
         {
-          icon: "",
-          title: "Client master",
-          url: ""
+          icon: "people_outline",
+          title: "Partner master",
+          url: { name: "Partner" }
         },
         {
           icon: "",
@@ -81,7 +81,7 @@ const systemConfigState = {
     snack: "",
     color: "",
     snackbarStatus: false,
-    timeout: 1500
+    timeout: 2000
   }
 };
 
@@ -111,7 +111,7 @@ export default {
       commit("onSnackbar", { snack: snack, color: color });
       setTimeout(function() {
         commit("offSnackbar");
-      }, 1500);
+      }, 2000);
     }
   }
 };

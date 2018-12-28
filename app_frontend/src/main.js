@@ -14,6 +14,10 @@ import moment from "moment";
 // バリデーションライブラリのインポート
 import VeeValidate from "vee-validate";
 
+// コンポーネントのグローバル適用
+import Confirm from "@/components/Module/Confirm.vue";
+Vue.component("confirm", Confirm);
+
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 

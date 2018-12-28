@@ -1,53 +1,18 @@
-from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
-
-
-class UserCompanyFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='contains')
-
-    class Meta:
-        model = UserCompany
-        fields = ['id', 'name']
-
-    order_by = filters.OrderingFilter(
-        fields=(
-            ('name', 'name'),
-            ('created_at', 'created_at'),
-        ),
-    )
-
-
-class UserStaffFilter(filters.FilterSet):
-    fullName = filters.CharFilter(field_name='full_name', lookup_expr='contains')
-    ruby = filters.CharFilter(lookup_expr='contains')
-    staffNumber = filters.CharFilter(field_name='staff_number', lookup_expr='contains')
-
-    class Meta:
-        model = UserStaff
-        fields = ['id', 'company', 'is_login_user', 'staffNumber']
-
-    order_by = filters.OrderingFilter(
-        fields=(
-            ('created_at', 'created_at'),
-            ('full_name', 'full_name'),
-            ('staff_number', 'staff_number'),
-        ),
-    )
+from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
 
 
 class UserCopmanyAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated, )
     serializer_class = UserCopmanySerializer
     queryset = UserCompany.objects.all()
     filter_class = UserCompanyFilter
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated, )
     serializer_class = UserStaffSerializer
     queryset = UserStaff.objects.all()
     filter_class = UserStaffFilter
@@ -85,3 +50,17 @@ class UserAPIView(viewsets.ModelViewSet):
             'company_name': user.staff.company.name,
             'company_id': user.staff.company.id,
         })
+
+
+class UserPartnerAPIView(viewsets.ModelViewSet):
+    serializer_class = UserPartnerSerializer
+    queryset = UserPartner.objects.all()
+    filter_class = UserPartnerFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = UserPartner.objects.all()
+        if user.is_superuser:
+            return queryset
+        else:
+            return queryset.filter(company=user.staff.company.id)

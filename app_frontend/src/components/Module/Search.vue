@@ -15,8 +15,9 @@
       <v-text-field
         v-model="incremental.tableSearch"
         append-icon="search"
-        label="Search"
+        label="Search..."
         hide-details
+        clearable
       ></v-text-field>
     </v-flex>
   </v-layout>
@@ -37,11 +38,11 @@ export default {
   },
   updated() {
     // ページ変更時に親のバインドデータを更新する
-    this.$emit("input", this.incremental)
+    this.$emit("input", this.incremental);
   },
   mounted() {
     // ページ生成時に親コンポーネントのバインドデータを取得する
-    this.incremental = this.value
+    this.incremental = this.value;
     // console.log(this.value)
   }
 };

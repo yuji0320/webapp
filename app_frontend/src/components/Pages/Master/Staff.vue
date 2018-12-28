@@ -3,13 +3,15 @@
     fluid
     grid-list-lg
   >
+    <!-- 確認ダイアログ -->
+    <confirm ref="confirm"></confirm>
 
-  <!-- {{ userStaffs.results }} -->
     <!-- カード形式リストコンポーネント -->
     <app-card-table
       :headers="headers"
       :items="userStaffs.results"
       @edit-item="editStaff"
+      @delete-item="deleteStsaff"
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>people</v-icon></span>
@@ -168,6 +170,7 @@ export default {
         { text: "E-mail", value: "email" },
         { text: "Mobile", value: "mobile" },
         { text: "Created At", value: "createdAt" },
+        { text: "Modified At", value: "modifiedAt" },
         { text: "Action", value: "action" }
       ],
       incremental: {
@@ -185,51 +188,83 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", ["userStaffs", "userStaff", "responseError"])
+    ...mapState("systemUserApi", ["userStaffs", "userStaff", "responseError"]),
+    params() {
+      return {
+        company: this.loginUserData.companyId,
+        order_by: this.orderBy
+      };
+    }
   },
   watch: {},
   methods: {
+    ...mapActions("systemConfig", ["showSnackbar"]),
     ...mapActions("systemUserApi", [
-      "getStaffs",
-      "newStaff",
       "clearStaff",
-      "setStaff"
+      "getStaffs",
+      "setStaff",
+      "postStaff",
+      "putStaff",
+      "deleteStaff"
     ]),
+    // 処理結果統合フォーム
+    responseFunction(val) {
+      // リストをリロード
+      this.getStaffs({ params: this.params });
+      // Snackbar表示
+      this.showSnackbar(val.snack);
+    },
     // モーダル関係
     // 編集
     editStaff(val) {
-      // console.log(val);
       this.setStaff(val);
       this.$refs.dialog.editForm();
     },
-
+    // Submit時処理
     async submitStaff() {
       // コンポーネントの編集ステータスに応じて新規と更新を切り替える
+      let res = {};
       if (this.$refs.dialog.editedIndex == -1) {
         // 新規追加時の処理
         this.userStaff.company = this.loginUserData.companyId;
-        var res = await this.newStaff(this.userStaff);
-
-        if (res.data) {
-          // 追加成功時
-          console.log("Ok!");
-          // モーダルを閉じる
-          this.dialog = false;
-          // リストをリロード
-          this.getStaffs({ params: this.params });
-        } else {
-          console.log("No");
-          console.log(this.userStaff);
-        }
-      } else {
-        console.log("edit!");
+        res = await this.postStaff(this.userStaff);
+      } else if (this.$refs.dialog.editedIndex == 0) {
+        // 更新時
+        res = await this.putStaff(this.userStaff);
       }
+      if (res.data) {
+        // 成功時はモーダルを閉じる
+        this.$refs.dialog.closeDialog();
+      } else {
+        // 失敗時
+        console.log("Failed");
+      }
+      this.responseFunction(res);
+    },
+    // 削除処理
+    async deleteStsaff(val) {
+      let res = {};
+      // 削除確認
+      if (
+        await this.$refs.confirm.open(
+          "Delete",
+          "Are you sure delete this data?",
+          { color: "red" }
+        )
+      ) {
+        // Yesの場合は削除処理
+        res = await this.deleteStaff(val);
+      } else {
+        // Noの場合はスナックバーにキャンセルの旨を表示
+        res.snack = { snack: "Delete is cancelled" };
+      }
+      this.responseFunction(res);
     }
   },
   created() {
     // ページ作成時にgetでデータを取得
     this.getStaffs({
-      params: { company: this.loginUserData.companyId, order_by: this.orderBy }
+      params: this.params
     });
   },
   components: {

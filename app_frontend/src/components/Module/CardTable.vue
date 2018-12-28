@@ -41,12 +41,21 @@
           <!-- 最終行のみ挿入可能スロットを追加する -->
           <div v-if="header.value == 'action'">
             <v-layout justify-center>
+              <!-- 編集ボタン -->
               <v-icon
                 small
                 class="mr-2"
                 @click="editItem(props.item)"
               >
                 edit
+              </v-icon>
+              <!-- 削除ボタン -->
+              <v-icon
+                small
+                class="mr-2"
+                @click="deleteItem(props.item)"
+              >
+                delete
               </v-icon>
             </v-layout>
           </div>
@@ -79,6 +88,12 @@ export default {
     editItem(item) {
       // console.log(item);
       this.$emit("edit-item", item);
+    },
+    // データ削除イベントの発火
+    deleteItem(item) {
+      // console.log(item);
+      item.delete = "ture";
+      this.$emit("delete-item", item);
     }
   }
 };

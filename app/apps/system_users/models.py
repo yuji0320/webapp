@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 class UserCompany(models.Model):
     """ユーザー企業"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    country = models.ForeignKey('system_master.SystemCountry', on_delete=models.CASCADE)  # 所在国
+    country = models.ForeignKey('system_master.SystemCountry', on_delete=models.PROTECT)  # 所在国
     name = models.CharField('company name', max_length=255, unique=True)  # 企業名
     postal_code = models.CharField('postal code', max_length=20)  # 郵便番号
     address = models.TextField('physical address')  # 住所
@@ -28,7 +28,7 @@ class UserCompany(models.Model):
 class UserStaff(models.Model):
     """従業員リスト"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company = models.ForeignKey('UserCompany', on_delete=models.CASCADE)  # 所属企業
+    company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 所属企業
     staff_number = models.IntegerField(_('staff number'))  # 企業内での従業員番号
     full_name = models.CharField(_('full name'), max_length=150)  # 氏名
     ruby = models.CharField(_('ruby'), max_length=150, blank=True)  # ふりがな
@@ -129,7 +129,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # 紐付きユーザー
     staff = models.OneToOneField(
         UserStaff,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
     # 管理者権限 Boolean
     is_staff = models.BooleanField(
@@ -160,3 +160,35 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 'user'
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+
+class UserPartner(models.Model):
+    """従業員リスト"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    partner_number = models.IntegerField(_('partner number'))  # 企業内での取引先番号
+    name = models.CharField(_('Partner name'), max_length=150)  # 取引先名
+    abbr = models.CharField(_('Abbreviation'), max_length=150, blank=True)  # 略称
+    phone = models.CharField(_('Phone number'), max_length=15, blank=True)  # 取引先電話番号
+    fax = models.CharField(_('Fax number'), max_length=15, blank=True)  # 取引先FAX番号
+    postal_code = models.CharField(_('Postal code'), max_length=20, blank=True)  # 取引先郵便番号
+    address = models.TextField(_('address'), blank=True)  # 取引先住所
+    note = models.TextField(_('note'), blank=True)  # 備考
+    is_client = models.BooleanField(_('is client'))  # 取引先かどうか
+    is_delivery_destination = models.BooleanField(_('is delivery estination'))  # 取引先かどうか
+    is_supplier = models.BooleanField(_('is supplier'))  # 仕入先かどうか
+    is_manufacturer = models.BooleanField(_('is Manufacturer'))  # メーカーかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    # データ作成者
+    created_by = models.ForeignKey('User', related_name='%(class)s_requests_created', on_delete=models.PROTECT)
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    # データ更新者
+    modified_by = models.ForeignKey('User', related_name='%(class)s_requests_modified', on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = 'Partner'
+        verbose_name = _('partner')
+        verbose_name_plural = _('partners')
+        unique_together = (("company", "partner_number"),)  # 会社ごとの取引先番号ユニーク
+
+    def __str__(self): return self.name

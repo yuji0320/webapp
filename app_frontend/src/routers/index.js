@@ -13,6 +13,7 @@ import Main from "@/components/Pages/Main.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
+import Partner from "@/components/Pages/Master/Partner.vue";
 
 Vue.use(Router);
 Vue.use(Store);
@@ -71,6 +72,11 @@ const router = new Router({
                   path: "staff",
                   name: "Staff",
                   component: Staff
+                },
+                {
+                  path: "partner",
+                  name: "Partner",
+                  component: Partner
                 }
               ]
             }
