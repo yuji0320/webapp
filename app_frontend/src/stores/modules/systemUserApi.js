@@ -4,7 +4,9 @@ const systemUserState = {
   responseError: {},
   userCompany: {},
   userStaffs: {},
-  userStaff: {}
+  userStaff: {},
+  userPartners: {},
+  userPartner: {}
 };
 
 export default {
@@ -24,9 +26,17 @@ export default {
     setStaffs(state, payload) {
       state.userStaffs = payload;
     },
-    // ユーザー情報アップロード
+    // ユーザー情報更新
     setStaff(state, payload) {
       state.userStaff = payload;
+    },
+    // 取引先リスト取得
+    setPartners(state, payload) {
+      state.userPartners = payload;
+    },
+    // 取引先情報更新
+    setPartner(state, payload) {
+      state.userPartner = payload;
     }
   },
   // API非同期通信処理
@@ -82,6 +92,12 @@ export default {
       let commitName = "setStaff";
       const res = await api.delete({ commit }, url, data, commitName);
       return res;
+    },
+    // 取引先リスト取得
+    getPartners({ commit }, data) {
+      let url = "system_user/user_partners/";
+      let commitName = "setPartners";
+      api.get({ commit }, url, data, commitName);
     }
   }
 };

@@ -4,7 +4,7 @@
     grid-list-lg
   >
     <!-- 確認ダイアログ -->
-    <confirm ref="confirm"></confirm>
+    <app-confirm ref="confirm"></app-confirm>
 
     <!-- カード形式リストコンポーネント -->
     <app-card-table
@@ -152,9 +152,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import CardTable from "@/components/Module/CardTable.vue";
-import Dialog from "@/components/Module/Dialog.vue";
-import SearchBar from "@/components/Module/SearchBar.vue";
 
 export default {
   title: "Staff master",
@@ -196,7 +193,6 @@ export default {
       };
     }
   },
-  watch: {},
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
     ...mapActions("systemUserApi", [
@@ -266,11 +262,6 @@ export default {
     this.getStaffs({
       params: this.params
     });
-  },
-  components: {
-    "app-card-table": CardTable,
-    "app-dialog": Dialog,
-    "app-search-bar": SearchBar
   }
 };
 </script>

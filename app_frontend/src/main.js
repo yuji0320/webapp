@@ -16,7 +16,15 @@ import VeeValidate from "vee-validate";
 
 // コンポーネントのグローバル適用
 import Confirm from "@/components/Module/Confirm.vue";
-Vue.component("confirm", Confirm);
+Vue.component("app-confirm", Confirm);
+import ExcelUpload from "@/components/Module/ExcelUpload.vue";
+Vue.component("app-excel-upload", ExcelUpload);
+import SearchBar from "@/components/Module/SearchBar.vue";
+Vue.component("app-search-bar", SearchBar);
+import CardTable from "@/components/Module/CardTable.vue";
+Vue.component("app-card-table", CardTable);
+import Dialog from "@/components/Module/Dialog.vue";
+Vue.component("app-dialog", Dialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
