@@ -64,3 +64,11 @@ $ docker exec -it <dev app container name or id> ./manage.py loaddata initial_da
 ```
 
 5: localhostにアクセス
+
+### メモ
+
+- initial dataのエクスポート
+
+```
+$ docker exec -it <dev app container name or id> ./manage.py dumpdata app名.model名 > 保存場所ファイルパス/ファイル名.json
+```
