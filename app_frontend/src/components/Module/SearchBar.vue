@@ -67,13 +67,20 @@ export default {
     },
     // 頭出し検索反映
     "search.incremental.tableSearch": function(val) {
+      // 検索パラメーターの初期化
+      var len = this.search.incremental.tableSelectItems;
+      for(var i=0; i < len.length; i++) {
+        delete this.params[len[i].value];
+      }
+      // 検索パラメーターの代入
       const keyname = this.search.incremental.tableSelectValue;
       this.params[keyname] = val;
       // 頭出し検索時、強制的にページネーションを1にする
       this.search.page = 1;
       this.params.page = 1;
-      const search = { params: this.params };
+      var search = { params: this.params };
       this.$emit("search-list", search);
+      // console.log(JSON.stringify(search));
     }
   },
   components: {

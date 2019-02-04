@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  title: "Master",
+  // title: "Master",
   name: "Master",
   data() {
     return {};

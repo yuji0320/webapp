@@ -64,3 +64,8 @@ class UserPartnerAPIView(viewsets.ModelViewSet):
             return queryset
         else:
             return queryset.filter(company=user.staff.company.id)
+
+
+class UserExpenseCategoryAPIView(viewsets.ModelViewSet):
+    serializer_class = UserExpenseCategorySerializer
+    queryset = UserExpenseCategory.objects.all()

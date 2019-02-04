@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',  # CROS設定ライブラリ
     'system_master',
     'system_users',
+    'manufacturing_data',
 ]
 
 # Application definition

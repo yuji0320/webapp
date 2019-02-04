@@ -36,7 +36,12 @@ class MyUserAdmin(auth_admin.UserAdmin):
     get_staff.short_description = 'Staff name'
 
 
+class AdminUserExpenseCategory(admin.ModelAdmin):
+    list_display = ('category_name', 'company', 'category_number', 'created_at', 'modified_at')
+
+
 admin.site.register(UserCompany)
 admin.site.register(UserStaff, AdminUserStaff)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(UserPartner)
+admin.site.register(UserExpenseCategory, AdminUserExpenseCategory)

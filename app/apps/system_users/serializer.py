@@ -41,3 +41,9 @@ class UserPartnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPartner
         fields = '__all__'
+
+
+class UserExpenseCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserExpenseCategory
+        fields = '__all__'

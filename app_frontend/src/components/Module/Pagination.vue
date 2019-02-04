@@ -2,7 +2,7 @@
   <span>
     <v-pagination
       v-model="page"
-      :length="length"
+      :length="pageLength"
       :total-visible="5"
     ></v-pagination>
   </span>
@@ -23,6 +23,16 @@ export default {
     count: { required: true },
     // 親のモデル情報を取得する
     value: { required: true }
+  },
+  computed: {
+    // データ数がゼロの場合でもpaginationを一つは表示する
+    pageLength() {
+      let l = 1;
+      if(this.length >= 1) {
+        l = this.length;
+      }
+      return l;
+    }
   },
   watch: {
     // 親モデル変更時にデータを反映

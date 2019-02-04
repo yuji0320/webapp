@@ -17,6 +17,10 @@
         <v-flex sm12 md12 lg12>
           <slot name="search-bar"></slot>
         </v-flex>
+        <v-flex sm12 md12 lg12>
+          <!-- タブ表示用スロット -->
+          <slot name="card-tabs"></slot>
+        </v-flex>
       </v-layout>
     </v-card-title>
 
@@ -37,7 +41,6 @@
           
           {{ props.item[header.value] }}
           
-
           <!-- 最終行のみ挿入可能スロットを追加する -->
           <div v-if="header.value == 'action'">
             <v-layout justify-center>

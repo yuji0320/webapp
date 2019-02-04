@@ -21,6 +21,8 @@ class UserCompany(models.Model):
 
     class Meta:
         db_table = 'user_company'
+        verbose_name = _('User Company')
+        verbose_name_plural = _('User companies')
 
     def __str__(self): return self.name
 
@@ -172,12 +174,12 @@ class UserPartner(models.Model):
     phone = models.CharField(_('Phone number'), max_length=15, blank=True)  # 取引先電話番号
     fax = models.CharField(_('Fax number'), max_length=15, blank=True)  # 取引先FAX番号
     postal_code = models.CharField(_('Postal code'), max_length=20, blank=True)  # 取引先郵便番号
-    address = models.TextField(_('address'), blank=True)  # 取引先住所
-    note = models.TextField(_('note'), blank=True)  # 備考
-    is_client = models.BooleanField(_('is client'))  # 取引先かどうか
-    is_delivery_destination = models.BooleanField(_('is delivery estination'))  # 取引先かどうか
-    is_supplier = models.BooleanField(_('is supplier'))  # 仕入先かどうか
-    is_manufacturer = models.BooleanField(_('is Manufacturer'))  # メーカーかどうか
+    address = models.TextField(_('Address'), blank=True)  # 取引先住所
+    note = models.TextField(_('Note'), blank=True)  # 備考
+    is_client = models.BooleanField(_('is Client'), default=False)  # 取引先かどうか
+    is_delivery_destination = models.BooleanField(_('is Delivery destination'), default=False)  # 取引先かどうか
+    is_supplier = models.BooleanField(_('is Supplier'), default=False)  # 仕入先かどうか
+    is_manufacturer = models.BooleanField(_('is Manufacturer'), default=False)  # メーカーかどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     # データ作成者
     created_by = models.ForeignKey('User', related_name='%(class)s_requests_created', on_delete=models.PROTECT)
@@ -187,8 +189,27 @@ class UserPartner(models.Model):
 
     class Meta:
         db_table = 'Partner'
-        verbose_name = _('partner')
-        verbose_name_plural = _('partners')
+        verbose_name = _('Partner')
+        verbose_name_plural = _('Partners')
         unique_together = (("company", "partner_number"),)  # 会社ごとの取引先番号ユニーク
 
     def __str__(self): return self.name
+
+
+class UserExpenseCategory(models.Model):
+    # 費用項目リスト
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
+    category_number = models.IntegerField(_('Category number'))  # 企業内での項目番号
+    is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    class Meta:
+        db_table = 'expense_category'
+        verbose_name = _('Expense Category')
+        verbose_name_plural = _('Expense Categories')
+        unique_together = (("company", "category_number"),)  # 会社ごとの取引先番号ユニーク
+
+    def __str__(self): return self.category_name

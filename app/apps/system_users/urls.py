@@ -7,6 +7,7 @@ routeList = (
     (r'user_staffs', UserStaffAPIView),
     (r'users', UserAPIView),
     (r'user_partners', UserPartnerAPIView),
+    (r'user_expense_category', UserExpenseCategoryAPIView),
 )
 
 router = routers.DefaultRouter()

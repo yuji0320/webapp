@@ -98,6 +98,36 @@ export default {
       let url = "system_user/user_partners/";
       let commitName = "setPartners";
       api.get({ commit }, url, data, commitName);
+    },
+    // 取引先State情報クリア
+    clearPartner({ commit }) {
+      commit("setPartner", {});
+      commit("error", {});
+    },
+    // 取引先Stateセット
+    setPartner({ commit }, data) {
+      commit("setPartner", data);
+    },
+    // 取引先新規登録
+    async postPartner({ commit }, data) {
+      let url = "system_user/user_partners/";
+      let commitName = "setPartner";
+      const res = await api.post({ commit }, url, data, commitName);
+      return res;
+    },
+    // 取引先情報更新
+    async putPartner({ commit }, data) {
+      let url = "system_user/user_partners/" + data.id + "/";
+      let commitName = "setPartner";
+      const res = await api.put({ commit }, url, data, commitName);
+      return res;
+    },
+    // 取引先削除
+    async deletePartner({ commit }, data) {
+      let url = "system_user/user_partners/" + data.id + "/";
+      let commitName = "setPartner";
+      const res = await api.delete({ commit }, url, data, commitName);
+      return res;
     }
   }
 };
