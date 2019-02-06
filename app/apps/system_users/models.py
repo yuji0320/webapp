@@ -62,7 +62,7 @@ class UserStaff(models.Model):
 
     def clean(self):
         super().clean()
-        self.email = self.__class__.objects.normalize_email(self.email)
+        # self.email = self.__class__.objects.normalize_email(self.email)
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
@@ -165,7 +165,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserPartner(models.Model):
-    """従業員リスト"""
+    """取引先リスト"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
     partner_number = models.IntegerField(_('partner number'))  # 企業内での取引先番号

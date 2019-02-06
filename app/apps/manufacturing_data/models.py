@@ -19,7 +19,8 @@ class JobOrder(models.Model):
     designer = models.ForeignKey('system_users.UserStaff',
                                  related_name='%(class)s_requests_designer',
                                  on_delete=models.PROTECT,
-                                 blank=True)  # 設計者
+                                 blank=True,
+                                 null=True)  # 設計者
     customer = models.ForeignKey('system_users.UserPartner',
                                  related_name='%(class)s_requests_client',
                                  on_delete=models.PROTECT,
