@@ -210,6 +210,6 @@ class UserExpenseCategory(models.Model):
         db_table = 'expense_category'
         verbose_name = _('Expense Category')
         verbose_name_plural = _('Expense Categories')
-        unique_together = (("company", "category_number"),)  # 会社ごとの取引先番号ユニーク
+        unique_together = (("company", "category_number"),)  # 会社ごとのカテゴリ番号ユニーク
 
     def __str__(self): return self.category_name

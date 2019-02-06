@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'django_filters',
     'corsheaders',  # CROS設定ライブラリ
+    'django_extensions',
     'system_master',
     'system_users',
     'manufacturing_data',

@@ -115,6 +115,7 @@ export default {
       let self = this; //Promisseのthisスコープ回避のため
       this.putCompany(this.userCompany).then(function(response) {
         if (response.data) {
+          self.getCompany({ detail: self.loginUserData.companyId });
           // 更新成功を知らせ、編集ステータスを終了する
           self.showSnackbar({ snack: "Update is success!", color: "success" });
           self.isEditing = false;
