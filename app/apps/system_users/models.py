@@ -176,8 +176,8 @@ class UserPartner(models.Model):
     postal_code = models.CharField(_('Postal code'), max_length=20, blank=True)  # 取引先郵便番号
     address = models.TextField(_('Address'), blank=True)  # 取引先住所
     note = models.TextField(_('Note'), blank=True)  # 備考
-    is_client = models.BooleanField(_('is Client'), default=False)  # 取引先かどうか
-    is_delivery_destination = models.BooleanField(_('is Delivery destination'), default=False)  # 取引先かどうか
+    is_customer = models.BooleanField(_('is Customer'), default=False)  # 取引先かどうか
+    is_delivery_destination = models.BooleanField(_('is Delivery destination'), default=False)  # 納入先かどうか
     is_supplier = models.BooleanField(_('is Supplier'), default=False)  # 仕入先かどうか
     is_manufacturer = models.BooleanField(_('is Manufacturer'), default=False)  # メーカーかどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時

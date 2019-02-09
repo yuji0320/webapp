@@ -11,7 +11,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <!-- フォーム内容 -->
-      <v-card-text>
+      <v-card-text id="card-text">
         <v-container grid-list-md>
           <v-form @submit.prevent="submitForm" :id="formName">
 

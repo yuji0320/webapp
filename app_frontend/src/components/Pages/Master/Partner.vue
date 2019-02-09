@@ -110,8 +110,8 @@
               </v-flex>
               <v-flex xs12 lg6>
                 <v-checkbox
-                  label="is client"
-                  v-model="userPartner.isClient"
+                  label="is customer"
+                  v-model="userPartner.isCustomer"
                 ></v-checkbox>
               </v-flex>
               <v-flex xs12 lg6>
@@ -184,7 +184,7 @@ export default {
         { text: "Parnter number", value: "partnerNumber" },
         { text: "Partner name", value: "name" },
         { text: "Abbreviation", value: "abbr" },
-        { text: "is Client", value: "isClient" },
+        { text: "is Customer", value: "isCustomer" },
         { text: "is Delivery Destination", value: "isDeliveryDestination" },
         { text: "is Supplier", value: "isSupplier" },
         { text: "is Manufacturer", value: "isManufacturer" },
@@ -207,7 +207,7 @@ export default {
         params: {},
         items: [
           {title: "All", refine:""},
-          {title: "Client", refine:"is_client"},
+          {title: "Customer", refine:"is_customer"},
           {title: "Delivery Destination", refine:"is_delivery_destination"},
           {title: "Supplier", refine:"is_supplier"},
           {title: "Manufacturer", refine:"is_manufacturer"}
@@ -253,7 +253,6 @@ export default {
         params[this.tabs.refine] = true;
       }
       // 上記指定パラメーターで検索を行う
-      // console.log(JSON.stringify(params));
       this.getPartners({params: params});
     },
     // タブ選択情報を更新
@@ -292,11 +291,11 @@ export default {
       if (res.data) {
         // 成功時はモーダルを閉じる
         this.$refs.dialog.closeDialog();
+        this.responseFunction(res);
       } else {
         // 失敗時
         console.log("Failed");
       }
-      this.responseFunction(res);
     },
     // 削除処理
     async deleteStsaff(val) {

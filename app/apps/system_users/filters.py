@@ -18,8 +18,8 @@ class UserCompanyFilter(filters.FilterSet):
 
 
 class UserStaffFilter(filters.FilterSet):
-    fullName = filters.CharFilter(field_name='full_name', lookup_expr='contains')
-    ruby = filters.CharFilter(lookup_expr='contains')
+    fullName = filters.CharFilter(field_name='full_name', lookup_expr='icontains')
+    ruby = filters.CharFilter(lookup_expr='icontains')
     staffNumber = filters.CharFilter(field_name='staff_number', lookup_expr='contains')
 
     class Meta:
@@ -36,13 +36,13 @@ class UserStaffFilter(filters.FilterSet):
 
 
 class UserPartnerFilter(filters.FilterSet):
-    name = filters.CharFilter(field_name='name', lookup_expr='contains')
-    abbr = filters.CharFilter(lookup_expr='contains')
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+    abbr = filters.CharFilter(lookup_expr='icontains')
     partnerNumber = filters.CharFilter(field_name='partner_number', lookup_expr='contains')
 
     class Meta:
         model = UserPartner
-        fields = ['id', 'company', 'name', 'partnerNumber', 'is_client', 'is_delivery_destination', 'is_supplier',
+        fields = ['id', 'company', 'name', 'partnerNumber', 'is_customer', 'is_delivery_destination', 'is_supplier',
                   'is_manufacturer']
 
     order_by = filters.OrderingFilter(
