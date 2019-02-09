@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/system_master/', include(system_urls.router.urls)),
     path('api/system_user/', include(user_urls.router.urls)),
+    path('api/manufacturing_data/', include(manufacturing_urls.router.urls)),
     # 認証関係
     path('api/api-token-auth/', obtain_jwt_token),
     path('api/api-token-refresh/', refresh_jwt_token),

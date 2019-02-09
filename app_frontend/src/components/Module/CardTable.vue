@@ -37,6 +37,7 @@
         <td 
           v-for="(header, index) in headers"
           :key="index"
+          :class="header.align"
         >
           
           {{ props.item[header.value] }}

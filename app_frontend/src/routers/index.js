@@ -10,6 +10,7 @@ import Login from "@/components/Login.vue";
 import Logout from "@/components/Logout.vue";
 import Top from "@/components/Top.vue";
 import Main from "@/components/Pages/Main.vue";
+import JobOrder from "@/components/Pages/JobOrder/JobOrder.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
@@ -57,6 +58,11 @@ const router = new Router({
               path: "main_menu",
               name: "Main",
               component: Main
+            },
+            {
+              path: "job_order",
+              name: "JobOrder",
+              component: JobOrder
             },
             {
               path: "master",

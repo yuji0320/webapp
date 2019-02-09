@@ -11,6 +11,7 @@ import auth from "./modules/auth";
 // その他API処理読み込み
 import systemMasterApi from "./modules/systemMasterApi.js";
 import systemUserApi from "./modules/systemUserApi.js";
+import jobOrderAPI from "./modules/jobOrder.js";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,8 @@ export default new Vuex.Store({
     systemConfig,
     auth,
     systemMasterApi,
-    systemUserApi
+    systemUserApi,
+    jobOrderAPI
   },
   state: {},
   mutations: {},

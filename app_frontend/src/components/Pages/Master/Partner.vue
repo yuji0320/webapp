@@ -11,7 +11,7 @@
       :headers="headers"
       :items="userPartners.results"
       @edit-item="editPartner"
-      @delete-item="deleteStsaff"
+      @delete-item="deletePartner"
     >
 
       <!-- ヘッダー部分スロット -->
@@ -298,7 +298,7 @@ export default {
       }
     },
     // 削除処理
-    async deleteStsaff(val) {
+    async deletePartner(val) {
       let res = {};
       // 削除確認
       if (

@@ -9,7 +9,7 @@ const systemConfigState = {
         {
           icon: "work",
           title: "Job order",
-          url: ""
+          url: { name: "JobOrder" }
         }
       ]
     },
