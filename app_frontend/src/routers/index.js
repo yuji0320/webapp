@@ -11,6 +11,9 @@ import Logout from "@/components/Logout.vue";
 import Top from "@/components/Top.vue";
 import Main from "@/components/Pages/Main.vue";
 import JobOrder from "@/components/Pages/JobOrder/JobOrder.vue";
+import JobOrderList from "@/components/Pages/JobOrder/JobOrderList.vue";
+import JobOrderDetail from "@/components/Pages/JobOrder/JobOrderDetail.vue";
+import JobOrderEdit from "@/components/Pages/JobOrder/JobOrderEdit.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
@@ -62,7 +65,29 @@ const router = new Router({
             {
               path: "job_order",
               name: "JobOrder",
-              component: JobOrder
+              component: JobOrder,
+              children: [
+                {
+                  path: "list",
+                  name: "JobOrderList",
+                  component: JobOrderList
+                },
+                {
+                  path: "create",
+                  name: "JobOrderCreate",
+                  component: JobOrderEdit
+                },
+                {
+                  path: "detail",
+                  name: "JobOrderDetail",
+                  component: JobOrderDetail
+                },
+                {
+                  path: "edit",
+                  name: "JobOrderEdit",
+                  component: JobOrderEdit
+                }
+              ]
             },
             {
               path: "master",

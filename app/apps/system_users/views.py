@@ -6,8 +6,8 @@ from .serializer import *
 from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
 
 
-class UserCopmanyAPIView(viewsets.ModelViewSet):
-    serializer_class = UserCopmanySerializer
+class UserCompanySerializer(viewsets.ModelViewSet):
+    serializer_class = UserCompanySerializer
     queryset = UserCompany.objects.all()
     filter_class = UserCompanyFilter
 
@@ -49,6 +49,8 @@ class UserAPIView(viewsets.ModelViewSet):
             'fullname': user.staff.full_name,
             'company_name': user.staff.company.name,
             'company_id': user.staff.company.id,
+            'default_currency_code': user.staff.company.default_currency.code,
+            'default_currency_display': user.staff.company.default_currency.display
         })
 
 

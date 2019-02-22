@@ -15,7 +15,8 @@ class JobOrder(models.Model):
     publisher = models.ForeignKey('system_users.UserStaff',
                                   related_name='%(class)s_requests_publisher',
                                   on_delete=models.PROTECT,
-                                  blank=True)  # 作業指図書発行者
+                                  blank=True,
+                                  null=True)  # 作業指図書発行者
     designer = models.ForeignKey('system_users.UserStaff',
                                  related_name='%(class)s_requests_designer',
                                  on_delete=models.PROTECT,

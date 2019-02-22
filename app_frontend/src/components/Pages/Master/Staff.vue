@@ -10,6 +10,7 @@
     <app-card-table
       :headers="headers"
       :items="userStaffs.results"
+      :errorColumn="errorColumn"
       @edit-item="editStaff"
       @delete-item="deleteStsaff"
     >
@@ -102,25 +103,26 @@
                   ></v-textarea>
                 </v-flex>
                 <v-flex xs12 lg6>
-                  <v-text-field 
+                  <app-input-date
                     label="Date birth"
                     v-model="userStaff.dateBirth"
-                    :error-messages="responseError.dateBirth"
-                  ></v-text-field>
+                    :errorMessages="responseError.dateBirth"
+                    ref="inputDate"
+                  ></app-input-date>
                 </v-flex>
                 <v-flex xs12 lg6>
-                  <v-text-field 
+                  <app-input-date
                     label="Date joined"
                     v-model="userStaff.dateJoined"
-                    :error-messages="responseError.dateJoined"
-                  ></v-text-field>
+                    :errorMessages="responseError.dateJoined"
+                  ></app-input-date>
                 </v-flex>
                 <v-flex xs12 lg6>
-                  <v-text-field 
+                  <app-input-date
                     label="Date left"
                     v-model="userStaff.dateLeft"
-                    :error-messages="responseError.dateLeft"
-                  ></v-text-field>
+                    :errorMessages="responseError.dateLeft"
+                  ></app-input-date>
                 </v-flex>
                 <v-flex xs12 lg6>
                   <v-checkbox
@@ -162,23 +164,26 @@ export default {
       // テーブルヘッダー
       headers: [
         { text: "Staff number", value: "staffNumber" },
-        { text: "Login id", value: "isLoginUser" },
+        { text: "is Login User", value: "isLoginUser" },
         { text: "Full name", value: "fullName" },
+        { text: "Ruby", value: "ruby" },
         { text: "E-mail", value: "email" },
         { text: "Mobile", value: "mobile" },
-        { text: "Created At", value: "createdAt" },
-        { text: "Modified At", value: "modifiedAt" },
+        { text: "Date Joined", value: "dateJoined" },
+        // { text: "Created At", value: "createdAt" },
+        // { text: "Modified At", value: "modifiedAt" },
         { text: "Action", value: "action" }
       ],
+      errorColumn: "dateLeft",
       incremental: {
         // 検索カラムリスト
         tableSelectItems: [
-          { text: "Staff Number", value: "staffNumber" },
-          { text: "Full Name", value: "fullName" },
-          { text: "Ruby", value: "ruby" }
+          { label: "Staff Number", value: "staffNumber" },
+          { label: "Full Name", value: "fullName" },
+          { label: "Ruby", value: "ruby" }
         ],
         // 検索数値の初期値および返り値
-        tableSelectValue: "fullName",
+        tableSelectValue: "ruby",
         tableSearch: ""
       }
     };
@@ -198,6 +203,7 @@ export default {
     ...mapActions("systemUserApi", [
       "clearStaff",
       "getStaffs",
+      "getStaff",
       "setStaff",
       "postStaff",
       "putStaff",
@@ -213,7 +219,7 @@ export default {
     // モーダル関係
     // 編集
     editStaff(val) {
-      this.setStaff(val);
+      this.getStaff(val);
       this.$refs.dialog.editForm();
     },
     // Submit時処理

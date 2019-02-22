@@ -10,7 +10,7 @@
     app
     >
 
-      <v-toolbar flat>
+      <!-- <v-toolbar flat>
         <v-list>
           <v-list-tile>
             <v-list-tile-title class="title text-xs-center">
@@ -18,9 +18,9 @@
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
-      </v-toolbar>
+      </v-toolbar> -->
 
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
       <v-list>
         <v-list-tile 
@@ -72,6 +72,9 @@
     <v-toolbar
     app
     :clipped-left="!clipped"
+    dark 
+    color="primary"
+    class="white--text"
     >
       <!-- サイドバー操作 -->
       <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>

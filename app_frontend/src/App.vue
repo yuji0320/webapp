@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="">
     <v-content>
       <router-view/>
     </v-content>
@@ -25,3 +25,19 @@ export default {
   }
 };
 </script>
+
+<style>
+@media print{
+  .no_print{
+    display: none;
+  }
+}
+
+.centered-input input {
+  text-align: center
+}
+
+.right-input input {
+  text-align: right
+}
+</style>

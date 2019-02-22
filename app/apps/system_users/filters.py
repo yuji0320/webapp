@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django_filters import rest_framework as filters
 from .models import *
 
@@ -21,16 +22,29 @@ class UserStaffFilter(filters.FilterSet):
     fullName = filters.CharFilter(field_name='full_name', lookup_expr='icontains')
     ruby = filters.CharFilter(lookup_expr='icontains')
     staffNumber = filters.CharFilter(field_name='staff_number', lookup_expr='contains')
+    incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+    is_tenure = filters.BooleanFilter(field_name='is_retired_filter', method='is_tenure_filter')
+
+    @staticmethod
+    def incremental_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(ruby__icontains=value) | Q(staff_number__icontains=value) | Q(full_name__icontains=value)
+        )
+
+    @staticmethod
+    def is_tenure_filter(queryset, name, value):
+        return queryset.all().filter(date_left__isnull=value)
 
     class Meta:
         model = UserStaff
-        fields = ['id', 'company', 'is_login_user', 'staffNumber']
+        fields = ['id', 'company', 'is_login_user', 'staffNumber', 'is_tenure']
 
     order_by = filters.OrderingFilter(
         fields=(
             ('created_at', 'created_at'),
             ('full_name', 'full_name'),
             ('staff_number', 'staff_number'),
+            ('ruby', 'ruby'),
         ),
     )
 
@@ -39,6 +53,13 @@ class UserPartnerFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     abbr = filters.CharFilter(lookup_expr='icontains')
     partnerNumber = filters.CharFilter(field_name='partner_number', lookup_expr='contains')
+    incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+
+    @staticmethod
+    def incremental_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(abbr__icontains=value) | Q(partner_number__icontains=value) | Q(name__icontains=value)
+        )
 
     class Meta:
         model = UserPartner

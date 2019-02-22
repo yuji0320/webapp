@@ -1,7 +1,8 @@
 <template>
   <div>
+
     <!-- ヘッダー -->
-    <app-header></app-header>
+    <app-header class="no_print"></app-header>
     <!-- グローバルsnackbar -->
     <app-snackbar></app-snackbar>
     <!-- メインコンテンツ -->

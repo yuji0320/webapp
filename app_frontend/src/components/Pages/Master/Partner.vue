@@ -193,9 +193,9 @@ export default {
       incremental: {
         // 検索カラムリスト
         tableSelectItems: [
-          { text: "Partner Number", value: "partnerNumber" },
-          { text: "Partner Name", value: "name" },
-          { text: "Abbreviation", value: "abbr" }
+          { label: "Partner Number", value: "partnerNumber" },
+          { label: "Partner Name", value: "name" },
+          { label: "Abbreviation", value: "abbr" }
         ],
         // 検索数値の初期値および返り値
         tableSelectValue: "name",

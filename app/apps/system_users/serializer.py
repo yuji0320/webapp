@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import *
 
 
-class UserCopmanySerializer(serializers.ModelSerializer):
+class UserCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCompany
         fields = '__all__'
@@ -10,10 +10,13 @@ class UserCopmanySerializer(serializers.ModelSerializer):
 
 class UserStaffSerializer(serializers.ModelSerializer):
     login_user = serializers.SerializerMethodField()
+    incremental_field = serializers.SerializerMethodField()
 
     class Meta:
         model = UserStaff
         fields = '__all__'
+        # idの読み込み専用をオフ
+        extra_kwargs = {'id': {'read_only': False}}
 
     @staticmethod
     def get_login_user(obj):
@@ -24,6 +27,11 @@ class UserStaffSerializer(serializers.ModelSerializer):
             return username
         else:
             return False
+
+    @staticmethod
+    def get_incremental_field(obj):
+        search_field = str(obj.staff_number) + ": " + obj.ruby + "(" + obj.full_name + ")"
+        return search_field
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,6 +46,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserPartnerSerializer(serializers.ModelSerializer):
+    incremental_field = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_incremental_field(obj):
+        search_field = str(obj.partner_number) + ": " + obj.abbr + "(" + obj.name + ")"
+        return search_field
+
     class Meta:
         model = UserPartner
         fields = '__all__'

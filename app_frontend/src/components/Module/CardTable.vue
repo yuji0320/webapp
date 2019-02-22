@@ -9,6 +9,8 @@
       <v-spacer></v-spacer>
       <!-- モーダルの挿入 -->
       <slot name="card-dialog"></slot>
+      <!-- ボタン挿入 -->
+      <slot name="card-header-button"></slot>
     </v-toolbar>
 
     <!-- Cardタイトル -->
@@ -34,36 +36,71 @@
     >
       <!-- headersに格納しているvalueをtdに割り振る -->
       <template slot="items" slot-scope="props">
-        <td 
-          v-for="(header, index) in headers"
-          :key="index"
-          :class="header.align"
+        <!-- 親コンポーネントでしていたカラムが正の時クラスを指定してアクティブに -->
+        <tr 
+          :class="{ 
+            'complete': props.item[completeColumn],
+            'error': props.item[errorColumn]
+          }"
+          @dblclick="editItem(props.item)"
         >
-          
-          {{ props.item[header.value] }}
-          
-          <!-- 最終行のみ挿入可能スロットを追加する -->
-          <div v-if="header.value == 'action'">
-            <v-layout justify-center>
-              <!-- 編集ボタン -->
-              <v-icon
-                small
-                class="mr-2"
-                @click="editItem(props.item)"
-              >
-                edit
-              </v-icon>
-              <!-- 削除ボタン -->
-              <v-icon
-                small
-                class="mr-2"
-                @click="deleteItem(props.item)"
-              >
-                delete
-              </v-icon>
-            </v-layout>
-          </div>
-        </td>
+          <td 
+            v-for="(header, index) in headers"
+            :key="index"
+            :class="header.class"
+          >
+            
+            <!-- 文字列がtrueの場合緑チェック -->
+            <div v-if="props.item[header.value] === true">
+              <v-icon color="green">check</v-icon>
+            </div>
+            <!-- 文字列がtrueの場合赤バツ -->
+            <div v-else-if="props.item[header.value] === false">
+              <v-icon color="red">close</v-icon>
+            </div>
+            <!-- true, false以外の場合はデータを表示 -->
+            <div v-else>
+              <!-- jsonがネストしている場合はデータを抽出 -->
+              <div v-if="header.nest">
+                {{ props.item[header.value][header.nest] }}
+              </div>
+              <div v-else>
+                {{ props.item[header.value] }}
+              </div>
+            </div>
+
+            <!-- 最終行のみ挿入可能スロットを追加する -->
+            <div v-show="header.value == 'action'">
+              <v-layout justify-center>
+                <!-- 閲覧ボタン -->
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="viewItem(props.item)"
+                  v-if="viewIcon"
+                >
+                  visibility
+                </v-icon> 
+                <!-- 編集ボタン -->
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(props.item)"
+                >
+                  edit
+                </v-icon>
+                <!-- 削除ボタン -->
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="deleteItem(props.item)"
+                >
+                  delete
+                </v-icon>
+              </v-layout>
+            </div>
+          </td>
+        </tr>
       </template>
     </v-data-table>
     
@@ -85,9 +122,17 @@ export default {
   props: {
     // テーブル情報表示
     headers: { required: true },
-    items: { required: true }
+    items: { required: true },
+    completeColumn: { required: false },
+    errorColumn: { required: false },
+    viewIcon: { required: false },
   },
   methods: {
+    // データ閲覧イベントの発火
+    viewItem(item) {
+      // console.log(item);
+      this.$emit("view-item", item);
+    },    
     // データ編集イベントの発火
     editItem(item) {
       // console.log(item);
@@ -102,3 +147,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.complete {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.error {
+  background-color: #FB8C00;
+  color: white;
+}
+</style>

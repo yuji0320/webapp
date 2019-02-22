@@ -6,7 +6,9 @@ const systemUserState = {
   userStaffs: {},
   userStaff: {},
   userPartners: {},
-  userPartner: {}
+  userPartner: {},
+  searchUserStaffs: {},
+  searchUserPartners: {}
 };
 
 export default {
@@ -37,6 +39,14 @@ export default {
     // 取引先情報更新
     setPartner(state, payload) {
       state.userPartner = payload;
+    },
+    // 従業員インクリメンタル検索用
+    setSearchUserStaffs(state, payload) {
+      state.searchUserStaffs = payload;
+    },
+    // 取引先インクリメンタル検索用
+    setSearchUserPartners(state, payload) {
+      state.searchUserPartners = payload;
     }
   },
   // API非同期通信処理
@@ -55,6 +65,7 @@ export default {
       return api
         .put({ commit }, url, data, commitName)
         .then(function(response) {
+          console.log(response);
           return response;
         });
     },
@@ -62,6 +73,12 @@ export default {
     getStaffs({ commit }, data) {
       let url = "system_user/user_staffs/";
       let commitName = "setStaffs";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 従業員個別取得
+    getStaff({ commit }, data) {
+      let url = "system_user/user_staffs/" + data.id + "/";
+      let commitName = "setStaff";
       api.get({ commit }, url, data, commitName);
     },
     // 従業員State情報クリア
@@ -129,6 +146,18 @@ export default {
       let commitName = "setPartner";
       const res = await api.delete({ commit }, url, data, commitName);
       return res;
+    },
+    // 従業員インクリメンタル検索用
+    async getSearchUserStaffs({ commit }, data) {
+      let url = "system_user/user_staffs/";
+      let commitName = "setSearchUserStaffs";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 従業員インクリメンタル検索用
+    async getSearchUserPartners({ commit }, data) {
+      let url = "system_user/user_partners/";
+      let commitName = "setSearchUserPartners";
+      api.get({ commit }, url, data, commitName);
     }
   }
 };

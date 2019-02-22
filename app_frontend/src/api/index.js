@@ -64,7 +64,7 @@ export default {
     } else if (method === "delete") {
       promise = axios.delete(url, params);
     }
-
+    // console.log(promise);
     return promise;
   },
 

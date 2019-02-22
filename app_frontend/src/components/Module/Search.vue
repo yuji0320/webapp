@@ -5,10 +5,19 @@
       <v-select
         v-model="incremental.tableSelectValue"
         :items="incremental.tableSelectItems"
-        item-text="text"
+        item-text="label"
         item-value="value"
         label="Select value"
       ></v-select>
+      <!-- Vue Select版 -->
+      <!-- <v-select
+        v-model="incremental.tableSelectValue"
+        :options="incremental.tableSelectItems"
+        :searchable="false"
+        :clearable="false"
+        :append-outer-icon="null"
+        :append-icon="null"
+      ></v-select> -->
     </v-flex>
     <v-flex xs12 sm8 lg5 d-inline-flex>
       <!-- 検索文字列の入力 -->
@@ -24,6 +33,8 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+
 export default {
   name: "search",
   data() {
@@ -47,3 +58,4 @@ export default {
   }
 };
 </script>
+
