@@ -69,7 +69,7 @@ export default {
     "search.incremental.tableSearch": function(val) {
       // 検索パラメーターの初期化
       var len = this.search.incremental.tableSelectItems;
-      for(var i=0; i < len.length; i++) {
+      for (var i = 0; i < len.length; i++) {
         delete this.params[len[i].value];
       }
       // 検索パラメーターの代入

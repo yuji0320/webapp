@@ -3,6 +3,8 @@ import Store from "@/stores";
 
 // axios を require してインスタンスを生成する
 const axiosBase = require("axios");
+// const host = process.env.VUE_APP_API_BASE_URL;
+const host = "https://192.168.1.49/api/";
 
 export default {
   async request(method, url, params) {
@@ -12,6 +14,9 @@ export default {
     // ヘッダー情報を登録する
     const axios = axiosBase.create({
       headers: {
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Headers":
+        //   "Origin, X-Requested-With, Content-Type, Accept",
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "JWT " + token
@@ -19,6 +24,9 @@ export default {
       proxy: false,
       responseType: "json"
     });
+
+    axios.defaults.baseURL = host;
+    axios.defaults.withCredentials = true;
 
     // エラー時のレスポンス処理変更
     axios.interceptors.response.use(
@@ -53,7 +61,7 @@ export default {
     );
 
     var promise = null;
-    url = process.env.VUE_APP_API_BASE_URL + url;
+    // url = process.env.VUE_APP_API_BASE_URL + url;
 
     if (method === "get") {
       promise = axios.get(url, params);
@@ -64,7 +72,7 @@ export default {
     } else if (method === "delete") {
       promise = axios.delete(url, params);
     }
-    // console.log(promise);
+    // console.log(process.env.VUE_APP_API_BASE_URL);
     return promise;
   },
 

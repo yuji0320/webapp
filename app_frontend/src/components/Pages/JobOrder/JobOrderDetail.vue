@@ -198,32 +198,27 @@ export default {
   title: "Job Order Detail",
   name: "JobOrderDetail",
   data() {
-    return {}
+    return {};
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("jobOrderAPI", [
-      "responseError", 
+      "responseError",
       "mfgNo",
-      "jobOrders", 
+      "jobOrders",
       "jobOrder",
-      "jobOrderStatus",
+      "jobOrderStatus"
     ])
   },
   methods: {
-    ...mapActions("jobOrderAPI", [
-      "getJobOrder",
-      "isEdit"
-    ]),
+    ...mapActions("jobOrderAPI", ["getJobOrder", "isEdit"]),
     edit() {
       this.isEdit();
-      this.$router.push({ name: "JobOrderEdit"});
-      // console.log(this.jobOrderStatus);
+      this.$router.push({ name: "JobOrderEdit" });
     }
   },
   mounted() {
-    // console.log(this.mfgNo);
     this.getJobOrder(this.mfgNo);
   }
-}
+};
 </script>

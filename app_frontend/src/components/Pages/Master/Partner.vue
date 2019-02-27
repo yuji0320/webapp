@@ -206,18 +206,22 @@ export default {
         refine: "",
         params: {},
         items: [
-          {title: "All", refine:""},
-          {title: "Customer", refine:"is_customer"},
-          {title: "Delivery Destination", refine:"is_delivery_destination"},
-          {title: "Supplier", refine:"is_supplier"},
-          {title: "Manufacturer", refine:"is_manufacturer"}
+          { title: "All", refine: "" },
+          { title: "Customer", refine: "is_customer" },
+          { title: "Delivery Destination", refine: "is_delivery_destination" },
+          { title: "Supplier", refine: "is_supplier" },
+          { title: "Manufacturer", refine: "is_manufacturer" }
         ]
       }
     };
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", ["userPartners", "userPartner", "responseError"]),
+    ...mapState("systemUserApi", [
+      "userPartners",
+      "userPartner",
+      "responseError"
+    ]),
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -236,28 +240,28 @@ export default {
       "deletePartner"
     ]),
     // タブ絞り込み複合検索関数
-    searchList(val){
+    searchList(val) {
       // 検索情報が入力された場合はdataを更新する
-      if(val) {
+      if (val) {
         this.tabs.params = val.params;
       }
       // paramsを宣言
       var params = this.tabs.params;
       // タブ指定情報を初期化
       var len = this.tabs.items;
-      for(var i=1; i<len.length; i++) {
-        delete this.tabs.params[len[i].refine]
+      for (var i = 1; i < len.length; i++) {
+        delete this.tabs.params[len[i].refine];
       }
       // タブ選択がAll以外の場合は検索要件を追加する
-      if(!this.tabs.refine=="") {
+      if (!this.tabs.refine == "") {
         params[this.tabs.refine] = true;
       }
       // 上記指定パラメーターで検索を行う
-      this.getPartners({params: params});
+      this.getPartners({ params: params });
     },
     // タブ選択情報を更新
     tabClicked(refine) {
-      this.tabs.refine= refine;
+      this.tabs.refine = refine;
       this.searchList();
     },
     // 処理結果統合フォーム
@@ -317,7 +321,5 @@ export default {
       this.responseFunction(res);
     }
   }
-}
+};
 </script>
-
-  

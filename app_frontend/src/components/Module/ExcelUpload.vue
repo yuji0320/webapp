@@ -25,51 +25,51 @@ import XLSX from "xlsx";
 
 export default {
   name: "excelUpload",
-  data: function(){
+  data: function() {
     return {
       dataName: "",
       dataSize: "",
       dataJson: {},
       Datas: {
         // We will make a Workbook contains 2 Worksheets
-        'animals': [
-          {"name": "cat", "category": "animal"},
-          {"name": "dog", "category": "animal"},
-          {"name": "pig", "category": "animal"}
+        animals: [
+          { name: "cat", category: "animal" },
+          { name: "dog", category: "animal" },
+          { name: "pig", category: "animal" }
         ],
-        'pokemons': [
-          {"name": "pikachu", "category": "pokemon"},
-          {"name": "Arbok", "category": "pokemon"},
-          {"name": "Eevee", "category": "pokemon"},
+        pokemons: [
+          { name: "pikachu", category: "pokemon" },
+          { name: "Arbok", category: "pokemon" },
+          { name: "Eevee", category: "pokemon" }
         ]
       }
-    }
+    };
   },
   methods: {
     // エクセル出力
-    onexport () { // On Click Excel download button
-    
+    onexport() {
+      // On Click Excel download button
       // export json to Worksheet of Excel
       // only array possible
-      var animalWS = XLSX.utils.json_to_sheet(this.Datas.animals) 
-      var pokemonWS = XLSX.utils.json_to_sheet(this.Datas.pokemons) 
+      var animalWS = XLSX.utils.json_to_sheet(this.Datas.animals);
+      var pokemonWS = XLSX.utils.json_to_sheet(this.Datas.pokemons);
 
       // A workbook is the name given to an Excel file
-      var wb = XLSX.utils.book_new() // make Workbook of Excel
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
 
       // add Worksheet to Workbook
       // Workbook contains one or more worksheets
-      XLSX.utils.book_append_sheet(wb, animalWS, 'animals') // sheetAName is name of Worksheet
-      XLSX.utils.book_append_sheet(wb, pokemonWS, 'pokemons')   
+      XLSX.utils.book_append_sheet(wb, animalWS, "animals"); // sheetAName is name of Worksheet
+      XLSX.utils.book_append_sheet(wb, pokemonWS, "pokemons");
 
       // export Excel file
-      XLSX.writeFile(wb, 'book.xlsx') // name of the file is 'book.xlsx'
+      XLSX.writeFile(wb, "book.xlsx"); // name of the file is 'book.xlsx'
     },
-    pickFile () {
-        this.$refs.data.click ()
+    pickFile() {
+      this.$refs.data.click();
     },
     // エクセル入力
-    onFilePicked (e) {
+    onFilePicked(e) {
       var files = e.target.files;
       var file = files[0];
       this.dataName = file.name;
@@ -85,8 +85,8 @@ export default {
 
       // ワークブック読み込み
       workbook = XLSX.read(btoa(arr), {
-        type: 'base64',
-        cellDates: true,
+        type: "base64",
+        cellDates: true
       });
 
       var output = "";
@@ -96,21 +96,24 @@ export default {
     },
     // ファイルの読み込み
     fixData(data) {
-      var o = "", l = 0, w = 10240;
-      for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w,
-        l * w + w)));
+      var o = "",
+        l = 0,
+        w = 10240;
+      for (; l < data.byteLength / w; ++l)
+        o += String.fromCharCode.apply(
+          null,
+          new Uint8Array(data.slice(l * w, l * w + w))
+        );
       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
       return o;
     },
     // ワークブックのデータをjsonに変換
     toJson(workbook) {
       var result = {};
-      workbook.SheetNames.forEach(function (sheetName) {
-        var roa = XLSX.utils.sheet_to_json(
-          workbook.Sheets[sheetName],
-          {
-              raw: true,
-          });
+      workbook.SheetNames.forEach(function(sheetName) {
+        var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+          raw: true
+        });
         if (roa.length > 0) {
           result[sheetName] = roa;
         }
@@ -118,7 +121,5 @@ export default {
       return result;
     }
   }
-
-}
+};
 </script>
-

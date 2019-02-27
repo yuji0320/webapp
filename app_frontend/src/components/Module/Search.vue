@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
+// import Multiselect from "vue-multiselect";
 
 export default {
   name: "search",
@@ -58,4 +58,3 @@ export default {
   }
 };
 </script>
-

@@ -125,14 +125,14 @@ export default {
     items: { required: true },
     completeColumn: { required: false },
     errorColumn: { required: false },
-    viewIcon: { required: false },
+    viewIcon: { required: false }
   },
   methods: {
     // データ閲覧イベントの発火
     viewItem(item) {
       // console.log(item);
       this.$emit("view-item", item);
-    },    
+    },
     // データ編集イベントの発火
     editItem(item) {
       // console.log(item);
@@ -149,13 +149,13 @@ export default {
 </script>
 
 <style>
-.complete {
+.complete, .complete * v-icon {
   background-color: #4CAF50;
   color: white;
 }
 
 .error {
-  background-color: #FB8C00;
+  background-color: #fb8c;
   color: white;
 }
 </style>

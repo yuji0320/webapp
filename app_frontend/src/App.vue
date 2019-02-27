@@ -27,17 +27,17 @@ export default {
 </script>
 
 <style>
-@media print{
-  .no_print{
+@media print {
+  .no_print {
     display: none;
   }
 }
 
 .centered-input input {
-  text-align: center
+  text-align: center;
 }
 
 .right-input input {
-  text-align: right
+  text-align: right;
 }
 </style>

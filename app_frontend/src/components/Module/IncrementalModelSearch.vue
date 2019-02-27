@@ -28,7 +28,7 @@ export default {
       isLoading: false,
       model: this.value,
       search: null
-    }
+    };
   },
   props: {
     // 親からの引き継ぎデータ
@@ -39,19 +39,19 @@ export default {
     // 検索先モデル指定
     searchType: { required: true },
     // エラー情報
-    errorMessages: { required: true },
+    errorMessages: { required: true }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["currencies"]),
     ...mapState("systemUserApi", ["searchUserStaffs", "searchUserPartners"]),
     searchItems() {
-      if(this.searchType=="staff") {
-        return this.searchUserStaffs.results
-      } else if(this.searchType=="currency") {
-        return this.currencies.results
-      } else if(this.searchType=="partner") {
-        return this.searchUserPartners.results
+      if (this.searchType == "staff") {
+        return this.searchUserStaffs.results;
+      } else if (this.searchType == "currency") {
+        return this.currencies.results;
+      } else if (this.searchType == "partner") {
+        return this.searchUserPartners.results;
       }
     },
     // データ検索用共通パラメータを格納
@@ -61,30 +61,33 @@ export default {
         order_by: this.orderBy
       };
     },
-    fields () {
-      if (!this.model) return []
+    fields() {
+      if (!this.model) return [];
       return Object.keys(this.model).map(key => {
         return {
           key,
           value: this.model[key] || ""
-        }
-      })
-    },
+        };
+      });
+    }
   },
   methods: {
     ...mapActions("systemMasterApi", ["getCurrencies"]),
-    ...mapActions("systemUserApi", ["getSearchUserStaffs", "getSearchUserPartners"]),
+    ...mapActions("systemUserApi", [
+      "getSearchUserStaffs",
+      "getSearchUserPartners"
+    ]),
     searchData(val) {
       this.params.incremental_field = val;
-      let search = { params: this.params }
+      let search = { params: this.params };
       // 親コンポーネントで指定した種別ごとに検索動作を分岐する
-      if(this.searchType=="staff") {
+      if (this.searchType == "staff") {
         // 退職者は表示しない
         search.params.is_tenure = true;
         this.getSearchUserStaffs(search);
-      } else if(this.searchType=="currency") {
+      } else if (this.searchType == "currency") {
         this.getCurrencies();
-      } else if(this.searchType=="partner") {
+      } else if (this.searchType == "partner") {
         return this.getSearchUserPartners(search);
       } else {
         console.log("Please set vues action!");
@@ -93,12 +96,12 @@ export default {
   },
   watch: {
     // 入力値が変化した場合は検索
-    search (val) {
+    search(val) {
       this.searchData(val);
     },
-    model (val) {
+    model(val) {
       // console.log(val);
-      if(!val) {
+      if (!val) {
         this.$emit("input", "");
       } else {
         this.$emit("input", val);
@@ -106,8 +109,8 @@ export default {
     }
   },
   created() {
-    this.searchData("")
+    this.searchData("");
     // this.model = this.value;
   }
-}
+};
 </script>

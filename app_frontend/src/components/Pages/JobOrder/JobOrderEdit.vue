@@ -21,6 +21,14 @@
           <v-icon>reply</v-icon>
           Back to List
         </v-btn>
+        <!-- 詳細閲覧ボタン -->
+        <v-btn
+          fab
+          small
+          @click="viewDetail"
+        >
+          <v-icon>visibility</v-icon>
+        </v-btn>
       </v-toolbar>
 
       <v-card-text>
@@ -90,7 +98,7 @@
             <!-- 納入先 -->
             <v-flex xs4>
               <app-incremental-model-search
-              label="Delivery　Destination"
+              label="Delivery Destination"
               orderBy="name"
               v-model="jobOrder.deliveryDestination"
               searchType="partner"
@@ -236,24 +244,18 @@ export default {
   name: "JobOrderEdit",
   data() {
     return {
-      // money: {
-      //   decimal: '.',
-      //   thousands: ',',
-      //   prefix: '',
-      //   suffix: '',
-      //   precision: 2
-      // }
-    }
+      newJobOrder: {
+        orderRate: 1,
+        taxPercent: 0,
+        commercialPartsBudget: 0,
+        electricalPartsBudget: 0,
+        processedPartsBudget: 0
+      }
+    };
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("jobOrderAPI", [
-      "responseError", 
-      "jobOrderStatus",
-      // "mfgNo",
-      // "jobOrders", 
-      "jobOrder"
-    ]),
+    ...mapState("jobOrderAPI", ["responseError", "jobOrderStatus", "jobOrder"]),
     reteHelpText() {
       return "1" + this.jobOrder.orderCurrencyData.code + "=";
     }
@@ -261,8 +263,6 @@ export default {
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
     ...mapActions("jobOrderAPI", [
-      // "createNew",
-      // "isEdit",
       "setMfgNo",
       "clearError",
       "getJobOrders",
@@ -281,15 +281,12 @@ export default {
       let res = {};
       if (!this.jobOrderStatus.isEditing) {
         // 新規追加時の処理
-        // console.log("post");
         this.jobOrder.company = this.loginUserData.companyId;
         this.jobOrder.createdBy = this.loginUserData.id;
         this.jobOrder.modifiedBy = this.loginUserData.id;
         res = await this.postJobOrder(this.jobOrder);
       } else {
         // 更新時
-        // console.log("put");
-        // this.jobOrder.completionDate = null;
         this.jobOrder.modifiedBy = this.loginUserData.id;
         res = await this.putJobOrder(this.jobOrder);
       }
@@ -298,18 +295,30 @@ export default {
         this.responseFunction(res);
         this.setJobOrder(res.data);
         this.setMfgNo(res.data.id);
-        this.$router.push({ name: "JobOrderDetail"});
-        // console.log(res.data);
+        this.$router.push({ name: "JobOrderDetail" });
       } else {
         // 失敗時
         this.responseFunction(res);
-        // console.log(res);
       }
+    },
+    viewDetail() {
+      this.$router.push({ name: "JobOrderDetail" });
     }
   },
   created() {
     // 読み込み時にエラーをクリア
     this.clearError();
+    
+    // 編集ステータスに応じてパラメータを設定
+    if (!this.jobOrderStatus.isEditing) {
+      // 新規作成時デフォルトデータを入力
+      this.newJobOrder.publisher = this.loginUserData.staffId;
+      this.newJobOrder.orderCurrency = this.loginUserData.defaultCurrencyId;
+      this.setJobOrder(this.newJobOrder);
+    } else {
+      // 更新時は指図書IDを登録
+      this.setMfgNo(this.jobOrder.id);
+    }
   }
-}
+};
 </script>

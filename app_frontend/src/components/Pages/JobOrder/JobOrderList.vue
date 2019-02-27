@@ -58,11 +58,19 @@ export default {
         { text: "MFG No.", value: "mfgNo" },
         { text: "Product name", value: "name" },
         { text: "Customer", value: "customerData", nest: "abbr" },
-        { text: "Delivery destination", value: "deliveryDestinationData", nest: "abbr" },
+        {
+          text: "Delivery destination",
+          value: "deliveryDestinationData",
+          nest: "abbr"
+        },
         { text: "Order Date", value: "orderDate" },
         { text: "Delivery Date", value: "deliveryDate" },
         { text: "Completion Date", value: "completionDate" },
-        { text: "Order price", value: "defaultCurrencyOrderAmount", class: "text-xs-right" },
+        {
+          text: "Order price",
+          value: "defaultCurrencyOrderAmount",
+          class: "text-xs-right"
+        },
         { text: "Action", value: "action" }
       ],
       // 工事完了時色変更
@@ -76,17 +84,17 @@ export default {
         // 検索数値の初期値および返り値
         tableSelectValue: "name",
         tableSearch: ""
-      },
-    }
+      }
+    };
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("jobOrderAPI", [
-      "responseError", 
+      "responseError",
       "jobOrderStatus",
-      "jobOrders", 
+      "jobOrders",
       "jobOrder"
-      ]),
+    ]),
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -107,26 +115,29 @@ export default {
       // console.log("create new");
       this.setJobOrder({});
       this.createNew();
-      this.$router.push({ name: "JobOrderCreate"});
+      this.$router.push({ name: "JobOrderCreate" });
     },
-    viewJobOrder(val){
+    viewJobOrder(val) {
       this.setMfgNo(val.id);
       this.setJobOrder(val);
       // console.log(val.id);
-      this.$router.push({ name: "JobOrderDetail"});
+      this.$router.push({ name: "JobOrderDetail" });
     },
-    editJobOrder(val){
+    editJobOrder(val) {
       // console.log("edit "+val.name);
       this.setMfgNo(val.id);
       this.setJobOrder(val);
       this.isEdit();
-      this.$router.push({ name: "JobOrderEdit"});
+      this.$router.push({ name: "JobOrderEdit" });
     },
-    deleteJobOrder(val){}
+    deleteJobOrder(val) {
+      console.log(val);
+    }
   },
   created() {
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
-    this.headers[7].text = "Order price" + " (" + this.loginUserData.defaultCurrencyCode + ")"
+    this.headers[7].text =
+      "Order price" + " (" + this.loginUserData.defaultCurrencyCode + ")";
   }
-}
+};
 </script>

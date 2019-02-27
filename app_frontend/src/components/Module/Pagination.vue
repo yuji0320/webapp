@@ -28,7 +28,7 @@ export default {
     // データ数がゼロの場合でもpaginationを一つは表示する
     pageLength() {
       let l = 1;
-      if(this.length >= 1) {
+      if (this.length >= 1) {
         l = this.length;
       }
       return l;

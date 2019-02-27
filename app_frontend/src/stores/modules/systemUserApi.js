@@ -61,11 +61,11 @@ export default {
     putCompany({ commit }, data) {
       let url = "system_user/user_companies/" + data.id + "/";
       let commitName = "setCompany";
-      console.log(data);
+      // console.log(data);
       return api
         .put({ commit }, url, data, commitName)
         .then(function(response) {
-          console.log(response);
+          // console.log(response);
           return response;
         });
     },

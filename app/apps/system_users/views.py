@@ -50,7 +50,9 @@ class UserAPIView(viewsets.ModelViewSet):
             'company_name': user.staff.company.name,
             'company_id': user.staff.company.id,
             'default_currency_code': user.staff.company.default_currency.code,
-            'default_currency_display': user.staff.company.default_currency.display
+            'default_currency_display': user.staff.company.default_currency.display,
+            'default_currency_id': user.staff.company.default_currency.id,
+            'staff_id': user.staff.id
         })
 
 
