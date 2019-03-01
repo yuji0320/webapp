@@ -44,7 +44,7 @@
       disable-initial-sort
     >
       <template slot="items" slot-scope="props">
-        <tr>
+        <tr class="dataList">
           <td 
             v-for="(header, index) in headers"
             :key="index"

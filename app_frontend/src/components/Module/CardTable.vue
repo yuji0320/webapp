@@ -40,7 +40,8 @@
         <tr 
           :class="{ 
             'complete': props.item[completeColumn],
-            'error': props.item[errorColumn]
+            'error': props.item[errorColumn],
+            'dataList': true
           }"
           @dblclick="editItem(props.item)"
         >
@@ -157,5 +158,10 @@ export default {
 .error {
   background-color: #fb8c;
   color: white;
+}
+
+.dataList:hover {
+  background-color: #607d8b;
+  color: black;
 }
 </style>

@@ -73,3 +73,13 @@ class JobOrder(models.Model):
 
     # def __str__(self):
     #     return u"MFG No:{mfg_no}, Product Name:{name}".format(**vars(self))
+
+
+class BillOfMaterial(models.Model):
+    # 部品表
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    class Meta:
+        db_table = 'bill_of_material'
+        verbose_name = _('Bill of Material')
+        verbose_name_plural = _('Bill of Material')
