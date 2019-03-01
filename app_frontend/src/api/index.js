@@ -1,8 +1,9 @@
 // Storeのインポート
 import Store from "@/stores";
+import axios from "axios";
 
 // axios を require してインスタンスを生成する
-const axiosBase = require("axios");
+const axiosBase = axios;
 // const host = process.env.VUE_APP_API_BASE_URL;
 const host = "https://192.168.1.49/api/";
 
@@ -86,7 +87,8 @@ export default {
     if (response.data) {
       commit(commitName, response.data);
     } else {
-      console.log(response.error);
+      // console.log(response.error);
+      return response.error;
     }
   },
 

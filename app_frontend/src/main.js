@@ -51,6 +51,8 @@ import Confirm from "@/components/Module/Confirm.vue";
 Vue.component("app-confirm", Confirm);
 import ExcelUpload from "@/components/Module/ExcelUpload.vue";
 Vue.component("app-excel-upload", ExcelUpload);
+import ExcelDownload from "@/components/Module/ExcelDownload.vue";
+Vue.component("app-excel-download", ExcelDownload);
 import SearchBar from "@/components/Module/SearchBar.vue";
 Vue.component("app-search-bar", SearchBar);
 import CardTable from "@/components/Module/CardTable.vue";

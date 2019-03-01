@@ -92,6 +92,7 @@
               orderBy="name"
               v-model="jobOrder.customer"
               searchType="partner"
+              filter="is_customer"
               :errorMessages="responseError.customer"
               ></app-incremental-model-search>
             </v-flex>
@@ -102,6 +103,7 @@
               orderBy="name"
               v-model="jobOrder.deliveryDestination"
               searchType="partner"
+              filter="is_delivery_destination"
               :errorMessages="responseError.deliveryDestination"
               ></app-incremental-model-search>
             </v-flex>

@@ -21,23 +21,43 @@
       <span slot="card-header-title">Job Order</span>
       <!-- 新規作成ボタン -->
       <span slot="card-header-button">
-        <v-btn
-         color="primary"
-         class="mb-2"
-         dark
-         @click="createJobOrder()"
-        >New Item</v-btn>
+        <v-layout row wrap>
+          <v-btn
+          color="primary"
+          class="mb-2"
+          dark
+          @click="createJobOrder()"
+          >New Item</v-btn>
+
+          <!-- エクセルアップロード -->
+          <v-btn
+            fab
+            small
+            @click="upload"
+          >
+            <v-icon>cloud_upload</v-icon>
+          </v-btn>
+        </v-layout>
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <app-search-bar
-          :length="jobOrders.pages"
-          :count="jobOrders.count"
-          :orderBy="orderBy"
-          :incremental="incremental"
-          @search-list="getJobOrders"
-        ></app-search-bar>
+        <v-layout row wrap>
+          <app-search-bar
+            :length="jobOrders.pages"
+            :count="jobOrders.count"
+            :orderBy="orderBy"
+            :incremental="incremental"
+            @search-list="getJobOrders"
+          ></app-search-bar>
+
+          <!-- excelダウンロード -->
+          <!-- <app-excel-download
+            fileName="job_order"
+            v-model="jobOrders.results"
+          ></app-excel-download> -->
+
+        </v-layout>
       </div>
 
     </app-card-table>
@@ -132,6 +152,9 @@ export default {
     },
     deleteJobOrder(val) {
       console.log(val);
+    },
+    upload() {
+      this.$router.push({ name: "JobOrderUpload" });
     }
   },
   created() {

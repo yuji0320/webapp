@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import process from "process";
 
 // 認証情報のインポート
 import Store from "@/stores";
@@ -14,17 +15,21 @@ import JobOrder from "@/components/Pages/JobOrder/JobOrder.vue";
 import JobOrderList from "@/components/Pages/JobOrder/JobOrderList.vue";
 import JobOrderDetail from "@/components/Pages/JobOrder/JobOrderDetail.vue";
 import JobOrderEdit from "@/components/Pages/JobOrder/JobOrderEdit.vue";
+import JobOrderUpload from "@/components/Pages/JobOrder/JobOrderUpload.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
 import Partner from "@/components/Pages/Master/Partner.vue";
+
+
+import ExcelUpload from "@/components/Module/ExcelUpload.vue";
 
 Vue.use(Router);
 Vue.use(Store);
 
 const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: process.env.VUE_APP_BASE_URL,
   routes: [
     {
       path: "*",
@@ -63,6 +68,11 @@ const router = new Router({
               component: Main
             },
             {
+              path: "excel",
+              name: "excel",
+              component: ExcelUpload
+            },
+            {
               path: "job_order",
               name: "JobOrder",
               component: JobOrder,
@@ -86,6 +96,11 @@ const router = new Router({
                   path: "edit",
                   name: "JobOrderEdit",
                   component: JobOrderEdit
+                },
+                {
+                  path: "upload",
+                  name: "JobOrderUpload",
+                  component: JobOrderUpload
                 }
               ]
             },

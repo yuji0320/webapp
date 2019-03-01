@@ -82,7 +82,8 @@ const systemConfigState = {
     color: "",
     snackbarStatus: false,
     timeout: 2000
-  }
+  },
+  excelJson: []
 };
 
 export default {
@@ -104,6 +105,9 @@ export default {
       state.snackbar.snackbarStatus = false;
       state.snackbar.snack = "";
       state.snackbar.color = "";
+    },
+    setExcelJson(state, payload) {
+      state.excelJson = payload;
     }
   },
   actions: {
@@ -112,6 +116,10 @@ export default {
       setTimeout(function() {
         commit("offSnackbar");
       }, 2000);
-    }
+    },
+    // jsonデータセット
+    setExcelJson({ commit }, data) {
+      commit("setExcelJson", data);
+    },    
   }
 };

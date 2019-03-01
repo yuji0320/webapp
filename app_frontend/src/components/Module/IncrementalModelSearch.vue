@@ -38,6 +38,8 @@ export default {
     value: { required: true },
     // 検索先モデル指定
     searchType: { required: true },
+    // 検索先フィルター
+    filter: { required: false },
     // エラー情報
     errorMessages: { required: true }
   },
@@ -88,6 +90,9 @@ export default {
       } else if (this.searchType == "currency") {
         this.getCurrencies();
       } else if (this.searchType == "partner") {
+        search.params[this.filter] = true;
+        // search.params.is_delivery_destination = "true";
+        // console.log(search.params);
         return this.getSearchUserPartners(search);
       } else {
         console.log("Please set vues action!");
