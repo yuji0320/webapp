@@ -5,7 +5,7 @@ import axios from "axios";
 // axios を require してインスタンスを生成する
 const axiosBase = axios;
 // const host = process.env.VUE_APP_API_BASE_URL;
-const host = "https://192.168.1.49/api/";
+const host = "http://localhost:8000/api/";
 
 export default {
   async request(method, url, params) {
@@ -17,7 +17,7 @@ export default {
       headers: {
         // "Access-Control-Allow-Origin": "*",
         // "Access-Control-Allow-Headers":
-        //   "Origin, X-Requested-With, Content-Type, Accept",
+        // "Origin, X-Requested-With, Content-Type, Accept",
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "JWT " + token

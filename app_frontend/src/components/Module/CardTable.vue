@@ -37,8 +37,8 @@
       <!-- headersに格納しているvalueをtdに割り振る -->
       <template slot="items" slot-scope="props">
         <!-- 親コンポーネントでしていたカラムが正の時クラスを指定してアクティブに -->
-        <tr 
-          :class="{ 
+        <tr
+          :class="{
             'complete': props.item[completeColumn],
             'error': props.item[errorColumn],
             'dataList': true

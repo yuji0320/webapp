@@ -72,26 +72,54 @@ class UserStaff(models.Model):
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, request_data):
+    # use_in_migrations = True
+
+    def _create_user(self, username, password, **extra_fields):
+        """
+        Create and save a user with the given username, and password.
+        """
         now = timezone.now()
-
-        if not request_data['username']:
-            raise ValueError('Users must have an username.')
-
-        staff = request_data['staff']
-
+        if not username:
+            raise ValueError('The given username must be set')
+        username = self.model.normalize_username(username)
         user = self.model(
-            username=request_data['username'],
-            staff=staff,
-            last_login=now,
+            username=username,
+            staff=extra_fields['staff'],
             is_staff=True,
             is_active=True,
+            last_login=now,
             created_at=now,
-            modified_at=now,
+            modified_at=now
         )
-        user.set_password(request_data['password'])
+        user.set_password(password)
         user.save(using=self._db)
         return user
+    #
+    # def create_user(self, username, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', False)
+    #     extra_fields.setdefault('is_superuser', False)
+    #     return self._create_user(username, password, **extra_fields)
+
+    # def create_user(self, request_data):
+    #     now = timezone.now()
+    #
+    #     if not request_data['username']:
+    #         raise ValueError('Users must have an username.')
+    #
+    #     staff = request_data['staff']
+    #
+    #     user = self.model(
+    #         username=request_data['username'],
+    #         staff=staff,
+    #         last_login=now,
+    #         is_staff=True,
+    #         is_active=True,
+    #         created_at=now,
+    #         modified_at=now,
+    #     )
+    #     user.set_password(request_data['password'])
+    #     user.save(using=self._db)
+    #     return user
 
     def create_superuser(self, username, password, staff):
         request_data = {

@@ -4,8 +4,6 @@ from .models import *
 from .forms import UserChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
-# Register your models here.
-
 
 class AdminUserStaff(admin.ModelAdmin):
     list_display = ('full_name', 'company', 'created_at', 'modified_at')
@@ -25,8 +23,9 @@ class MyUserAdmin(auth_admin.UserAdmin):
             'fields': ('username', 'password1', 'password2', 'staff')}
          ),
     )
-    form = UserChangeForm
     add_form = UserCreationForm
+    form = UserChangeForm
+    model = User
     change_password_form = auth_admin.AdminPasswordChangeForm
     list_display = ('username', 'get_staff', 'is_staff')
 
