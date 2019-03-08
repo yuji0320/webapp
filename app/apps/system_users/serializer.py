@@ -16,7 +16,7 @@ class UserStaffSerializer(serializers.ModelSerializer):
         model = UserStaff
         fields = '__all__'
         # idの読み込み専用をオフ
-        extra_kwargs = {'id': {'read_only': False}}
+        # extra_kwargs = {'id': {'read_only': False}}
 
     @staticmethod
     def get_login_user(obj):

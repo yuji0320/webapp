@@ -79,7 +79,7 @@ export default {
         { text: "Product name", value: "name" },
         { text: "Customer", value: "customerData", nest: "abbr" },
         {
-          text: "Delivery destination",
+          text: "Delivery",
           value: "deliveryDestinationData",
           nest: "abbr"
         },

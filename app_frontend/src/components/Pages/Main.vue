@@ -5,7 +5,7 @@
   >
     <v-layout row wrap>
       <v-flex tag="h1" class="headline">Dashbord</v-flex>
-      <v-btn @click=ajax>test</v-btn>
+      <!-- <v-btn @click=ajax>test</v-btn> -->
       <v-flex d-flex lg12 order-xs5>
         <v-layout column>
           <v-flex
@@ -30,7 +30,6 @@
                   <v-card color="blue-grey darken-2" class="white--text">
                     <v-card-title primary-title>
                       <div class="headline">{{ subMenu.title }}</div>
-                      <!-- <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div> -->
                     </v-card-title>
                     <v-card-actions primary>
                       <v-btn flat dark :to="subMenu.url">Go!</v-btn>
@@ -79,11 +78,11 @@ export default {
     ...mapState("systemMasterApi", ["countries"])
   },
   methods: {
-    ...mapActions("systemMasterApi", ["getCountries"]),
-    ajax: function() {
-      this.getCountries();
-      // console.log(this.countries);
-    }
+    ...mapActions("systemMasterApi", ["getCountries"])
+    // ajax: function() {
+    //   this.getCountries();
+    //   // console.log(this.countries);
+    // }
   },
   mounted() {
     // console.log(this.menus + "main");

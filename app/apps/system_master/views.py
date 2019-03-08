@@ -13,25 +13,25 @@ class SystemCountryFilter(filters.FilterSet):
 
 
 class SystemCountryAPIView(viewsets.ModelViewSet):
-    permission_classes = (
-        IsAuthenticated,
-    )
+    # permission_classes = (
+    #     IsAuthenticated,
+    # )
     serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
     filter_class = SystemCountryFilter
 
 
 class SystemCurrencyAPIView(viewsets.ModelViewSet):
-    permission_classes = (
-        IsAuthenticated,
-    )
+    # permission_classes = (
+    #     IsAuthenticated,
+    # )
     serializer_class = SystemCurrencySerializer
     queryset = SystemCurrency.objects.all()
 
 
 class SystemUnitTypeAPIView(viewsets.ModelViewSet):
-    permission_classes = (
-        IsAuthenticated,
-    )
+    # permission_classes = (
+    #     IsAuthenticated,
+    # )
     serializer_class = SystemUnitTypeSerializer
     queryset = SystemUnitType.objects.all()

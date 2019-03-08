@@ -7,7 +7,7 @@
         :search-input.sync="search"
         item-text="incrementalField"
         item-value="id"
-        cache-items
+        :cache-items="true"
         :placeholder="label"
         :label="label"
         clearable
@@ -27,7 +27,8 @@ export default {
       descriptionLimit: 60,
       isLoading: false,
       model: this.value,
-      search: null
+      search: null,
+      items: []
     };
   },
   props: {
@@ -46,14 +47,31 @@ export default {
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["currencies"]),
-    ...mapState("systemUserApi", ["searchUserStaffs", "searchUserPartners"]),
+    ...mapState("systemUserApi", [
+      "searchUserStaffs",
+      "searchUserPartners",
+      "searchPartnerCustomers",
+      "searchPartnerDeliveries"
+    ]),
     searchItems() {
-      if (this.searchType == "staff") {
-        return this.searchUserStaffs.results;
-      } else if (this.searchType == "currency") {
-        return this.currencies.results;
-      } else if (this.searchType == "partner") {
-        return this.searchUserPartners.results;
+      switch(this.searchType) {
+        case "staff":
+          return this.searchUserStaffs.results;
+          break;
+        case "currency":
+          return this.currencies.results;
+          break;
+        case "partner":
+          // return this.searchUserPartners.results;
+          switch(this.filter) {
+            case "customer":
+              return this.searchPartnerCustomers.results;
+              break;
+            case "delivery":
+              return this.searchPartnerDeliveries.results;
+              break;
+          }
+          break;
       }
     },
     // データ検索用共通パラメータを格納
@@ -77,25 +95,35 @@ export default {
     ...mapActions("systemMasterApi", ["getCurrencies"]),
     ...mapActions("systemUserApi", [
       "getSearchUserStaffs",
-      "getSearchUserPartners"
+      "getSearchUserPartners",
+      "getSearchPartnerCustomers",
+      "getSearchPartnerDeliveries"
     ]),
     searchData(val) {
       this.params.incremental_field = val;
       let search = { params: this.params };
-      // 親コンポーネントで指定した種別ごとに検索動作を分岐する
-      if (this.searchType == "staff") {
-        // 退職者は表示しない
-        search.params.is_tenure = true;
-        this.getSearchUserStaffs(search);
-      } else if (this.searchType == "currency") {
-        this.getCurrencies();
-      } else if (this.searchType == "partner") {
-        search.params[this.filter] = true;
-        // search.params.is_delivery_destination = "true";
-        // console.log(search.params);
-        return this.getSearchUserPartners(search);
-      } else {
-        console.log("Please set vues action!");
+      switch(this.searchType) {
+        // 従業員検索
+        case "staff":
+          // 退職者は表示しない
+          search.params.is_tenure = true;
+          this.getSearchUserStaffs(search);
+          break;
+        case "currency":
+          this.getCurrencies();
+          break;
+        case "partner":
+          switch(this.filter) {
+            case "customer":
+              this.getSearchPartnerCustomers(search);
+              break;
+            case "delivery":
+              this.getSearchPartnerDeliveries(search);
+              break;
+          }
+          // search.params[this.filter] = "true";
+          // this.getSearchUserPartners(search);
+          break;
       }
     }
   },
@@ -114,8 +142,8 @@ export default {
     }
   },
   created() {
-    this.searchData("");
-    // this.model = this.value;
+    this.searchData();
+    this.model = this.value;
   }
 };
 </script>

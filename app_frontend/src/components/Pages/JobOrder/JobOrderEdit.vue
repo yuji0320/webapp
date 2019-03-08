@@ -15,9 +15,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <!-- 一覧へ戻る -->
-        <v-btn
-          :to="{ name: 'JobOrderList' }"
-        >
+        <v-btn @click="backToList">
           <v-icon>reply</v-icon>
           Back to List
         </v-btn>
@@ -92,7 +90,7 @@
               orderBy="name"
               v-model="jobOrder.customer"
               searchType="partner"
-              filter="is_customer"
+              filter="customer"
               :errorMessages="responseError.customer"
               ></app-incremental-model-search>
             </v-flex>
@@ -103,7 +101,7 @@
               orderBy="name"
               v-model="jobOrder.deliveryDestination"
               searchType="partner"
-              filter="is_delivery_destination"
+              filter="delivery"
               :errorMessages="responseError.deliveryDestination"
               ></app-incremental-model-search>
             </v-flex>
@@ -305,6 +303,9 @@ export default {
     },
     viewDetail() {
       this.$router.push({ name: "JobOrderDetail" });
+    },
+    backToList() {
+      this.$router.push({ name: "JobOrderList" });
     }
   },
   created() {

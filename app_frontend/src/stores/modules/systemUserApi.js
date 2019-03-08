@@ -8,7 +8,11 @@ const systemUserState = {
   userPartners: {},
   userPartner: {},
   searchUserStaffs: {},
-  searchUserPartners: {}
+  searchUserPartners: {},
+  searchPartnerCustomers: {},
+  searchPartnerDeliveries: {},
+  searchPartnerSupplyers: {},
+  searchPartnerManufacturer: {}
 };
 
 export default {
@@ -47,6 +51,22 @@ export default {
     // 取引先インクリメンタル検索用
     setSearchUserPartners(state, payload) {
       state.searchUserPartners = payload;
+    },
+    // 得意先インクリメンタル検索用
+    setSearchPartnerCustomers(state, payload) {
+      state.searchPartnerCustomers = payload;
+    },
+    // 納入先インクリメンタル検索用
+    setSearchPartnerDeliveries(state, payload) {
+      state.searchPartnerDeliveries = payload;
+    },
+    // 仕入先インクリメンタル検索用
+    setSearchPartnerSuppliers(state, payload) {
+      state.searchPartnerSuppliers = payload;
+    },
+    // メーカーインクリメンタル検索用
+    setSearchPartnerManufacturers(state, payload) {
+      state.searchPartnerManufacturers = payload;
     }
   },
   // API非同期通信処理
@@ -153,10 +173,24 @@ export default {
       let commitName = "setSearchUserStaffs";
       api.get({ commit }, url, data, commitName);
     },
-    // 従業員インクリメンタル検索用
+    // 取引先インクリメンタル検索用
     async getSearchUserPartners({ commit }, data) {
       let url = "system_user/user_partners/";
       let commitName = "setSearchUserPartners";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 得意先インクリメンタル検索用
+    async getSearchPartnerCustomers({ commit }, data) {
+      data.params.is_customer = "true";
+      let url = "system_user/user_partners/";
+      let commitName = "setSearchPartnerCustomers";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 納入先インクリメンタル検索用
+    async getSearchPartnerDeliveries({ commit }, data) {
+      data.params.is_delivery_destination = "true";
+      let url = "system_user/user_partners/";
+      let commitName = "setSearchPartnerDeliveries";
       api.get({ commit }, url, data, commitName);
     }
   }

@@ -19,7 +19,9 @@ import JobOrderUpload from "@/components/Pages/JobOrder/JobOrderUpload.vue";
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
+import StaffUpload from "@/components/Pages/Master/StaffUpload.vue";
 import Partner from "@/components/Pages/Master/Partner.vue";
+import PartnerUpload from "@/components/Pages/Master/PartnerUpload.vue";
 
 
 import ExcelUpload from "@/components/Module/ExcelUpload.vue";
@@ -120,9 +122,19 @@ const router = new Router({
                   component: Staff
                 },
                 {
+                  path: "staff_upload",
+                  name: "StaffUpload",
+                  component: StaffUpload
+                },
+                {
                   path: "partner",
                   name: "Partner",
                   component: Partner
+                },
+                {
+                  path: "partner_upload",
+                  name: "PartnerUpload",
+                  component: PartnerUpload
                 }
               ]
             }

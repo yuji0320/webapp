@@ -136,6 +136,19 @@
         </app-dialog>
       </span>
 
+      <span slot="card-header-button">
+        <v-layout row wrap>
+          <!-- エクセルアップロード -->
+          <v-btn
+            fab
+            small
+            @click="upload"
+          >
+            <v-icon>cloud_upload</v-icon>
+          </v-btn>
+        </v-layout>
+      </span>
+
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
         <app-search-bar
@@ -261,6 +274,9 @@ export default {
         res.snack = { snack: "Delete is cancelled" };
       }
       this.responseFunction(res);
+    },
+    upload() {
+      this.$router.push({ name: "StaffUpload" });
     }
   },
   created() {

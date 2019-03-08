@@ -17,13 +17,13 @@ class UserStaffAPIView(viewsets.ModelViewSet):
     queryset = UserStaff.objects.all()
     filter_class = UserStaffFilter
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = UserStaff.objects.all()
-        if user.is_superuser:
-            return queryset
-        else:
-            return queryset.filter(company=user.staff.company.id)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     queryset = UserStaff.objects.all()
+    #     if user.is_superuser:
+    #         return queryset
+    #     else:
+    #         return queryset.filter(company=user.staff.company.id)
 
 
 class UserAPIView(viewsets.ModelViewSet):

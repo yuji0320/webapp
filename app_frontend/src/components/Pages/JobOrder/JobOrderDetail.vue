@@ -12,9 +12,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <!-- 一覧へ戻る -->
-        <v-btn
-          :to="{ name: 'JobOrderList' }"
-        >
+        <v-btn @click="backToList">
           <v-icon>reply</v-icon>
           Back to List
         </v-btn>
@@ -215,6 +213,9 @@ export default {
     edit() {
       this.isEdit();
       this.$router.push({ name: "JobOrderEdit" });
+    },
+    backToList() {
+      this.$router.push({ name: "JobOrderList" });
     }
   },
   mounted() {

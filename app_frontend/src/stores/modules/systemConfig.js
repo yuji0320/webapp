@@ -4,7 +4,7 @@ const systemConfigState = {
   menus: [
     {
       icon: "work",
-      title: "Job order Menu",
+      title: "Job Order Menu",
       subMenus: [
         {
           icon: "work",

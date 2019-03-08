@@ -72,7 +72,7 @@ class UserStaff(models.Model):
 
 
 class UserAccountManager(BaseUserManager):
-    # use_in_migrations = True
+    use_in_migrations = True
 
     def _create_user(self, username, password, **extra_fields):
         """
@@ -82,9 +82,10 @@ class UserAccountManager(BaseUserManager):
         if not username:
             raise ValueError('The given username must be set')
         username = self.model.normalize_username(username)
+        staff = extra_fields['staff']
         user = self.model(
             username=username,
-            staff=extra_fields['staff'],
+            staff=staff,
             is_staff=True,
             is_active=True,
             last_login=now,
@@ -94,11 +95,11 @@ class UserAccountManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    #
-    # def create_user(self, username, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', False)
-    #     extra_fields.setdefault('is_superuser', False)
-    #     return self._create_user(username, password, **extra_fields)
+
+    def create_user(self, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(username, password, **extra_fields)
 
     # def create_user(self, request_data):
     #     now = timezone.now()
