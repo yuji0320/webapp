@@ -35,6 +35,7 @@ class SystemCurrency(models.Model):
 class SystemUnitType(models.Model):
     """単位"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    number = models.IntegerField('number', unique=True)  # 項目番号
     name = models.CharField('unit type name', max_length=50, unique=True)  # 単位名称
     display = models.CharField('unit type display', max_length=50, unique=True)  # 単位表示記号
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時

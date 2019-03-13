@@ -23,6 +23,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import moment from "moment";
 
 export default {
   title: "Job Order Upload",
@@ -120,6 +121,25 @@ export default {
             val[i].deliveryDestination = "";
           }          
         }
+
+        // 受注日のフォーマット
+        if (val[i].orderDate) {
+          let newDt = moment(val[i].orderDate,"MM/DD/YY")
+          val[i].orderDate = moment(newDt).format('YYYY-MM-DD')
+        }
+
+        // 納入日のフォーマット
+        if (val[i].deliveryDate) {
+          let newDt = moment(val[i].deliveryDate,"MM/DD/YY")
+          val[i].deliveryDate = moment(newDt).format('YYYY-MM-DD')
+        }
+
+        // 工事完了日のフォーマット
+        if (val[i].completionDate) {
+          let newDt = moment(val[i].completionDate,"MM/DD/YY")
+          val[i].completionDate = moment(newDt).format('YYYY-MM-DD')
+        }
+
       }
       // データをVuexに格納
       this.setExcelJson(val);

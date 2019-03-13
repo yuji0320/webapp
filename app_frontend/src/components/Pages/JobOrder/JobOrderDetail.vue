@@ -4,7 +4,6 @@
     grid-list-lg
   >
     <v-card>
-
       <v-toolbar card>
         <v-icon>work</v-icon>
         <v-toolbar-title class="font-weight-light">
@@ -27,7 +26,6 @@
       </v-toolbar>
 
       <v-card-text>
-
         <v-container 
           fluid
           grid-list-lg
@@ -156,7 +154,7 @@
                 </tr>
                 <tr>
                   <td class="text-center">Direct Cost</td>
-                  <td class="text-right">{{ loginUserData.defaultCurrencyDisplay }} {{ jobOrder.costs.directCostBudjet }}</td>
+                  <td class="text-right">{{ loginUserData.defaultCurrencyDisplay }} {{ jobOrder.costs.directCostBudget }}</td>
                   <td class="text-right"></td>
                   <td class="text-right"></td>
                 </tr>
@@ -168,7 +166,7 @@
                 </tr>
                 <tr>
                   <td class="text-center"><strong>Limit Profit Percentage</strong></td>
-                  <td class="text-right"><strong>{{ jobOrder.costs.limitProfitPercentageBudjet }}%</strong></td>
+                  <td class="text-right"><strong>{{ jobOrder.costs.limitProfitPercentageBudget }}%</strong></td>
                   <td class="text-right"></td>
                   <td class="text-right"></td>
                 </tr>

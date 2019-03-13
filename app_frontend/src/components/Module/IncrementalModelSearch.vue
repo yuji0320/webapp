@@ -1,6 +1,6 @@
 <template>
-  <!-- <v-layout row wrap>
-    <v-flex xs6> -->
+  <v-layout row wrap>
+    <v-flex>
       <v-autocomplete
         v-model="model"
         :items="searchItems"
@@ -10,11 +10,15 @@
         :cache-items="true"
         :placeholder="label"
         :label="label"
-        clearable
         :error-messages="errorMessages"
       ></v-autocomplete>
-    <!-- </v-flex>
-  </v-layout> -->
+    </v-flex>
+    <v-flex x1 class="pt-3">
+      <v-btn
+        @click="clearItem"
+      >Clear</v-btn>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -53,6 +57,7 @@ export default {
       "searchPartnerCustomers",
       "searchPartnerDeliveries"
     ]),
+    ...mapState("jobOrderAPI", ["searchJobOrder"]),    
     searchItems() {
       switch(this.searchType) {
         case "staff":
@@ -62,7 +67,6 @@ export default {
           return this.currencies.results;
           break;
         case "partner":
-          // return this.searchUserPartners.results;
           switch(this.filter) {
             case "customer":
               return this.searchPartnerCustomers.results;
@@ -71,6 +75,9 @@ export default {
               return this.searchPartnerDeliveries.results;
               break;
           }
+          break;
+        case "jobOrder":
+          return this.searchJobOrder.results;
           break;
       }
     },
@@ -99,6 +106,7 @@ export default {
       "getSearchPartnerCustomers",
       "getSearchPartnerDeliveries"
     ]),
+    ...mapActions("jobOrderAPI", ["getSearchJobOrder"]),
     searchData(val) {
       this.params.incremental_field = val;
       let search = { params: this.params };
@@ -121,10 +129,15 @@ export default {
               this.getSearchPartnerDeliveries(search);
               break;
           }
-          // search.params[this.filter] = "true";
-          // this.getSearchUserPartners(search);
+          break;
+        case "jobOrder":
+          this.getSearchJobOrder(search);
           break;
       }
+    },
+    clearItem() {
+      this.model = "";
+      this.$emit("clear-item");
     }
   },
   watch: {

@@ -20,7 +20,7 @@ const systemConfigState = {
         {
           icon: "list",
           title: "Bill of material",
-          url: ""
+          url: { name: "BillOfMaterialMenu" }
         },
         {
           icon: "send",

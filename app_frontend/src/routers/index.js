@@ -16,6 +16,10 @@ import JobOrderList from "@/components/Pages/JobOrder/JobOrderList.vue";
 import JobOrderDetail from "@/components/Pages/JobOrder/JobOrderDetail.vue";
 import JobOrderEdit from "@/components/Pages/JobOrder/JobOrderEdit.vue";
 import JobOrderUpload from "@/components/Pages/JobOrder/JobOrderUpload.vue";
+import BillOfMaterial from "@/components/Pages/BillOfMaterial/BillOfMaterial.vue";
+import BillOfMaterialMenu from "@/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue";
+import BillOfMaterialList from "@/components/Pages/BillOfMaterial/BillOfMaterialList.vue";
+
 import Master from "@/components/Pages/Master/Master.vue";
 import Company from "@/components/Pages/Master/Company.vue";
 import Staff from "@/components/Pages/Master/Staff.vue";
@@ -103,6 +107,23 @@ const router = new Router({
                   path: "upload",
                   name: "JobOrderUpload",
                   component: JobOrderUpload
+                }
+              ]
+            },
+            {
+              path: "bill_of_material",
+              name: "BillOfMaterial",
+              component: BillOfMaterial,
+              children: [
+                {
+                  path: "menu",
+                  name: "BillOfMaterialMenu",
+                  component: BillOfMaterialMenu
+                },
+                {
+                  path: "list",
+                  name: "BillOfMaterialList",
+                  component: BillOfMaterialList
                 }
               ]
             },

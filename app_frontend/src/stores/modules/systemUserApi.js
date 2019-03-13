@@ -12,7 +12,10 @@ const systemUserState = {
   searchPartnerCustomers: {},
   searchPartnerDeliveries: {},
   searchPartnerSupplyers: {},
-  searchPartnerManufacturer: {}
+  searchPartnerManufacturer: {},
+  expenseCategories: {},
+  expenseCategory: {},
+  failureCategories: {}
 };
 
 export default {
@@ -67,6 +70,18 @@ export default {
     // メーカーインクリメンタル検索用
     setSearchPartnerManufacturers(state, payload) {
       state.searchPartnerManufacturers = payload;
+    },
+    // 費用種別リスト取得用
+    setExpenseCategories(state, payload) {
+      state.expenseCategories = payload;
+    },
+    // 費用種別取得用
+    setExpenseCategory(state, payload) {
+      state.expenseCategory = payload;
+    },
+    // 仕損費種別取得用
+    setFailureCategories(state, payload) {
+      state.failureCategories = payload;
     }
   },
   // API非同期通信処理
@@ -191,6 +206,24 @@ export default {
       data.params.is_delivery_destination = "true";
       let url = "system_user/user_partners/";
       let commitName = "setSearchPartnerDeliveries";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 費用種別リスト取得用
+    async getExpenseCategories({ commit }, data) {
+      let url = "system_user/user_expense_category/";
+      let commitName = "setExpenseCategories";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 費用種別取得用
+    async getExpenseCategory({ commit }, data) {
+      let url = "system_user/user_expense_category/" + data + "/";
+      let commitName = "setExpenseCategory";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 仕損費種別取得用
+    async getFailureCategories({ commit }, data) {
+      let url = "system_user/user_failure_category/";
+      let commitName = "setFailureCategories";
       api.get({ commit }, url, data, commitName);
     }
   }

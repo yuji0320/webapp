@@ -140,7 +140,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 受注通貨 -->
-            <v-flex xs2>
+            <v-flex xs4>
               <app-incremental-model-search
               label="Order Currency"
               orderBy="id"

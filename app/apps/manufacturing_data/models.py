@@ -23,7 +23,7 @@ class JobOrder(models.Model):
                                  blank=True,
                                  null=True)  # 設計者
     customer = models.ForeignKey('system_users.UserPartner',
-                                 related_name='%(class)s_requests_client',
+                                 related_name='%(class)s_requests_customer',
                                  on_delete=models.PROTECT,
                                  blank=True)  # 取引先
     delivery_destination = models.ForeignKey('system_users.UserPartner',
@@ -78,6 +78,36 @@ class JobOrder(models.Model):
 class BillOfMaterial(models.Model):
     # 部品表
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    type = models.ForeignKey('system_users.UserExpenseCategory', on_delete=models.PROTECT)  # 部品種別
+    name = models.CharField(_('Parts name'), max_length=255)  # 部品名
+    manufacturer = models.ForeignKey('system_users.UserPartner',
+                                     related_name='%(class)s_requests_manufacturer',
+                                     on_delete=models.PROTECT,
+                                     blank=True)  # メーカー
+    standard = models.CharField(_('Standard・Model'), max_length=255, blank=True)  # 規格・型式
+    drawing_number = models.CharField(_('Drawing Number'), max_length=255, blank=True)  # 図面番号
+    material = models.CharField(_('Material'), max_length=255, blank=True)  # 材質
+    surface_treatment = models.CharField(_('Surface treatment'), max_length=255, blank=True)  # 表面加工
+    unit_number = models.CharField(_('Unit Number'), max_length=255, blank=True)  # ユニット番号
+    quantity = models.DecimalField(_('Quantity'), max_digits=17, decimal_places=2, default=1)  # 個数
+    stock_appropriation = models.DecimalField(_('Quantity'), max_digits=17, decimal_places=2, default=0)  # 在庫充当個数
+    unit = models.ForeignKey('system_master.SystemUnitType', on_delete=models.PROTECT)  # 計量単位種別
+    currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
+    rate = models.FloatField(_('Order Rate'), default=1)  # 受注時為替レート
+    unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    desired_delivery_date = models.DateField(_('Desired delivery date'), blank=True, null=True)  # 希望納期
+    failure = models.ForeignKey('system_users.UserFailureCategory', on_delete=models.PROTECT, blank=True)  # 仕損種別
+    is_customer_supplied = models.BooleanField(_('is Customer supplied'), default=False)  # 支給品かどうか
+    is_printed = models.BooleanField(_('is Printed'), default=False)  # 部品表印刷済みかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
 
     class Meta:
         db_table = 'bill_of_material'

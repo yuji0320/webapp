@@ -14,7 +14,7 @@
       :viewIcon="true"
       @view-item="viewJobOrder"
       @edit-item="editJobOrder"
-      @delete-item="deleteJobOrder"
+      @delete-item="deleteJobOrderData"
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>work</v-icon></span>
@@ -129,7 +129,8 @@ export default {
       "isEdit",
       "setMfgNo",
       "getJobOrders",
-      "setJobOrder"
+      "setJobOrder",
+      "deleteJobOrder"
     ]),
     createJobOrder() {
       // console.log("create new");
@@ -150,14 +151,31 @@ export default {
       this.isEdit();
       this.$router.push({ name: "JobOrderEdit" });
     },
-    deleteJobOrder(val) {
-      console.log(val);
+    async deleteJobOrderData(val) {
+      // console.log(val);
+      let res = {};
+      // 削除確認
+      if (
+        await this.$refs.confirm.open(
+          "Delete",
+          "Are you sure delete this data?",
+          { color: "red" }
+        )
+      ) {
+        // Yesの場合は削除処理
+        res = await this.deleteJobOrder(val);
+      } else {
+        // Noの場合はスナックバーにキャンセルの旨を表示
+        res.snack = { snack: "Delete is cancelled" };
+      }
+      this.getJobOrders({params: this.params});
+      this.showSnackbar(res.snack);
     },
     upload() {
       this.$router.push({ name: "JobOrderUpload" });
     }
   },
-  created() {
+  mounted() {
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
     this.headers[7].text =
       "Order price" + " (" + this.loginUserData.defaultCurrencyCode + ")";

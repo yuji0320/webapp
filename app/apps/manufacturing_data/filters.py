@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django_filters import rest_framework as filters
 from .models import *
 
@@ -5,6 +6,13 @@ from .models import *
 class JobOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     mfg_no = filters.CharFilter(field_name='mfg_no', lookup_expr='icontains')
+    incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+
+    @staticmethod
+    def incremental_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(mfg_no__icontains=value) | Q(name__icontains=value)
+        )
 
     class Meta:
         model = JobOrder
@@ -15,5 +23,21 @@ class JobOrderFilter(filters.FilterSet):
             ('created_at', 'created_at'),
             ('name', 'name'),
             ('mfg_no', 'mfg_no'),
+        ),
+    )
+
+
+class BillOfMaterialFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+    standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+
+    class Meta:
+        model = BillOfMaterial
+        fields = ['id', 'company', 'type', 'name', "standard", ]
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('name', 'name'),
         ),
     )

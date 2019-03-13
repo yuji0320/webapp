@@ -138,16 +138,16 @@ export default {
     return {
       clipped: false,
       settingMenus: [
-        {
-          icon: "settings",
-          title: "Setting",
-          url: ""
-        },
-        {
-          icon: "account_circle",
-          title: "User",
-          url: ""
-        },
+        // {
+        //   icon: "settings",
+        //   title: "Setting",
+        //   url: ""
+        // },
+        // {
+        //   icon: "account_circle",
+        //   title: "User",
+        //   url: ""
+        // },
         {
           icon: "exit_to_app",
           title: "Log out",

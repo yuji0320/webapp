@@ -40,6 +40,7 @@ export default {
     agree() {
       this.resolve(true);
       this.dialog = false;
+      // console.log("agree");
     },
     cancel() {
       this.resolve(false);

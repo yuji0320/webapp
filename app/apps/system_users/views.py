@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
-from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
+from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter, UserExpenseCategoryFilter
 
 
 class UserCompanySerializer(viewsets.ModelViewSet):
@@ -17,13 +17,13 @@ class UserStaffAPIView(viewsets.ModelViewSet):
     queryset = UserStaff.objects.all()
     filter_class = UserStaffFilter
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     queryset = UserStaff.objects.all()
-    #     if user.is_superuser:
-    #         return queryset
-    #     else:
-    #         return queryset.filter(company=user.staff.company.id)
+    def get_queryset(self):
+        user = self.request.user
+        queryset = UserStaff.objects.all()
+        if user.is_superuser:
+            return queryset
+        else:
+            return queryset.filter(company=user.staff.company.id)
 
 
 class UserAPIView(viewsets.ModelViewSet):
@@ -73,3 +73,9 @@ class UserPartnerAPIView(viewsets.ModelViewSet):
 class UserExpenseCategoryAPIView(viewsets.ModelViewSet):
     serializer_class = UserExpenseCategorySerializer
     queryset = UserExpenseCategory.objects.all()
+    filter_class = UserExpenseCategoryFilter
+
+
+class UserFailureCategoryAPIView(viewsets.ModelViewSet):
+    serializer_class = UserFailureCategorySerializer
+    queryset = UserFailureCategory.objects.all()

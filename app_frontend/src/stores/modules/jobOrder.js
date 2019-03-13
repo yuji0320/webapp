@@ -7,7 +7,8 @@ const jobOrderState = {
   },
   mfgNo: {},
   jobOrders: {},
-  jobOrder: {}
+  jobOrder: {},
+  searchJobOrder: {}
 };
 
 export default {
@@ -33,6 +34,10 @@ export default {
     // 作業指図書情報更新
     setJobOrder(state, payload) {
       state.jobOrder = payload;
+    },
+    // 作業指図書インクリメンタル検索用
+    setSearchJobOrder(state, payload) {
+      state.searchJobOrder = payload;
     }
   },
   // API非同期通信処理
@@ -87,10 +92,23 @@ export default {
       const res = await api.put({ commit }, url, data, commitName);
       return res;
     },
+    // 作業指図書削除
+    async deleteJobOrder({ commit }, data) {
+      let url = "manufacturing_data/job_order/" + data.id + "/";
+      let commitName = "setJobOrder";
+      const res = await api.delete({ commit }, url, data, commitName);
+      return res;
+    },
     // 取引先State情報クリア
     clearJobOrder({ commit }) {
       commit("setJobOrder", {});
       commit("error", {});
+    },
+    // 作業指図書インクリメンタル検索用
+    async getSearchJobOrder({ commit }, data) {
+      let url = "manufacturing_data/job_order/";
+      let commitName = "setSearchJobOrder";
+      api.get({ commit }, url, data, commitName);
     }
   }
 };

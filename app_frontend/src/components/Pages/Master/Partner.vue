@@ -11,7 +11,7 @@
       :headers="headers"
       :items="userPartners.results"
       @edit-item="editPartner"
-      @delete-item="deletePartner"
+      @delete-item="deletePartnerData"
     >
 
       <!-- ヘッダー部分スロット -->
@@ -315,7 +315,8 @@ export default {
       }
     },
     // 削除処理
-    async deletePartner(val) {
+    async deletePartnerData(val) {
+      // console.log(val);
       let res = {};
       // 削除確認
       if (

@@ -4,6 +4,7 @@ from rest_framework import routers
 
 routeList = (
     (r'job_order', JobOrderAPIView),
+    (r'bill_of_material', BillOfMaterialAPIView),
 )
 
 router = routers.DefaultRouter()

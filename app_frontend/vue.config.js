@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   devServer: {
     // public: "192.168.1.49",

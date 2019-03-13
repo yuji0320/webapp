@@ -12,7 +12,7 @@
       :items="userStaffs.results"
       :errorColumn="errorColumn"
       @edit-item="editStaff"
-      @delete-item="deleteStsaff"
+      @delete-item="deleteStaffData"
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>people</v-icon></span>
@@ -257,7 +257,7 @@ export default {
       this.responseFunction(res);
     },
     // 削除処理
-    async deleteStsaff(val) {
+    async deleteStaffData(val) {
       let res = {};
       // 削除確認
       if (

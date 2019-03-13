@@ -62,3 +62,9 @@ class UserExpenseCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserExpenseCategory
         fields = '__all__'
+
+
+class UserFailureCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFailureCategory
+        fields = '__all__'
