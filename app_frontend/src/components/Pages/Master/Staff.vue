@@ -156,6 +156,7 @@
           :count="userStaffs.count"
           :orderBy="orderBy"
           :incremental="incremental"
+          :params="params"
           @search-list="getStaffs"
         ></app-search-bar>
       </div>

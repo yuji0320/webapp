@@ -75,16 +75,16 @@ class UserPartnerFilter(filters.FilterSet):
     )
 
 
-class UserExpenseCategoryFilter(filters.FilterSet):
-
-    class Meta:
-        model = UserExpenseCategory
-        fields = ['id', 'company', 'category_name', 'category_number', 'is_active']
-
-    order_by = filters.OrderingFilter(
-        fields=(
-            ('created_at', 'created_at'),
-            ('category_name', 'category_name'),
-            ('category_number', 'category_number'),
-        ),
-    )
+# class UserExpenseCategoryFilter(filters.FilterSet):
+#
+#     class Meta:
+#         model = UserExpenseCategory
+#         fields = ['id', 'company', 'category_name', 'category_number', 'is_active']
+#
+#     order_by = filters.OrderingFilter(
+#         fields=(
+#             ('created_at', 'created_at'),
+#             ('category_name', 'category_name'),
+#             ('category_number', 'category_number'),
+#         ),
+#     )

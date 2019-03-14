@@ -42,7 +42,6 @@
               Add or Edit {{ expense.categoryName }}
             </v-btn>
           </v-flex>
-
         </v-layout>
 
 
@@ -79,7 +78,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", ["expenseCategories"]),
+    ...mapState("systemMasterApi", ["expenseCategories"]),
     ...mapState("billOfMaterialAPI", ["jobOrderID", "partsType"]),
     params() {
       return {
@@ -90,7 +89,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemUserApi", ["getExpenseCategories"]),
+    ...mapActions("systemMasterApi", ["getExpenseCategories"]),
     ...mapActions("billOfMaterialAPI", ["setJobOrderID", "setPartsType"]),
     selectParts(val) {
       this.setJobOrderID(this.mfgNo);

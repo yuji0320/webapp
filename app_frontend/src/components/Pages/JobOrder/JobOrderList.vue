@@ -48,6 +48,7 @@
             :count="jobOrders.count"
             :orderBy="orderBy"
             :incremental="incremental"
+            :params="params"
             @search-list="getJobOrders"
           ></app-search-bar>
 

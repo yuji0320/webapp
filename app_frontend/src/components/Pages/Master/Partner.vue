@@ -157,6 +157,7 @@
           :count="userPartners.count"
           :orderBy="orderBy"
           :incremental="incremental"
+          :params="params"
           @search-list="searchList"
         ></app-search-bar>
       </div>

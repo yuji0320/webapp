@@ -110,6 +110,44 @@ class JobOrderSerializer(serializers.ModelSerializer):
 
 # 部品表
 class BillOfMaterialSerializer(serializers.ModelSerializer):
+    default_currency_price = serializers.SerializerMethodField()
+    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
+
+    # デフォルト通貨での価格計算
+    @staticmethod
+    def get_default_currency_price(obj):
+        default_price = obj.unit_price * decimal.Decimal(float(obj.rate))
+        return "{:,.2f}".format(default_price)
+
     class Meta:
         model = BillOfMaterial
-        fields = '__all__'
+        fields = (
+            'id',
+            'company',
+            'job_order',
+            'type',
+            'name',
+            'manufacturer',
+            'standard',
+            'drawing_number',
+            'material',
+            'surface_treatment',
+            'unit_number',
+            'quantity',
+            'stock_appropriation',
+            'unit',
+            'currency',
+            'rate',
+            'unit_price',
+            'desired_delivery_date',
+            'failure',
+            'is_customer_supplied',
+            'is_printed',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'default_currency_price',
+            'manufacturer_data'
+        )

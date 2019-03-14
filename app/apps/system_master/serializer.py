@@ -25,3 +25,15 @@ class SystemUnitTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SystemUnitType
         fields = '__all__'
+
+
+class SystemExpenseCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SystemExpenseCategory
+        fields = '__all__'
+
+
+class SystemFailureCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SystemFailureCategory
+        fields = '__all__'

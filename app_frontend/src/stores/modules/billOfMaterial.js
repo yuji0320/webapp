@@ -39,6 +39,6 @@ export default {
       let url = "manufacturing_data/bill_of_material/";
       let commitName = "setBillOfMaterials";
       api.get({ commit }, url, data, commitName);
-    },
+    }
   }
 }

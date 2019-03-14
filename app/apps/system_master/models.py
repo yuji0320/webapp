@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class SystemCountry(models.Model):
@@ -45,3 +46,38 @@ class SystemUnitType(models.Model):
         db_table = 'system_unit_type'
 
     def __str__(self): return self.name
+
+
+class SystemExpenseCategory(models.Model):
+    # 費用項目リスト
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    category_number = models.IntegerField(_('Category number'), unique=True)  # 項目番号
+    category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
+    is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
+    is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    class Meta:
+        db_table = 'system_expense_categories'
+        verbose_name = _('System Expense Category')
+        verbose_name_plural = _('System Expense Categories')
+
+    def __str__(self): return self.category_name
+
+
+class SystemFailureCategory(models.Model):
+    # 仕損費種別マスタ
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    category_number = models.IntegerField(_('Category number'), unique=True)  # 企業内での項目番号
+    category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
+    is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    class Meta:
+        db_table = 'system_failure_category'
+        verbose_name = _('System Failure Category')
+        verbose_name_plural = _('System Failure Categories')
+
+    def __str__(self): return self.category_name

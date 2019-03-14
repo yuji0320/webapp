@@ -46,17 +46,18 @@ export default {
     length: { required: true },
     count: { required: true },
     orderBy: { required: true },
-    incremental: { required: true }
+    incremental: { required: true },
+    params: { required: true }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     // データ検索用パラメータを格納
-    params() {
-      return {
-        company: this.loginUserData.companyId,
-        order_by: this.orderBy
-      };
-    }
+    // params() {
+    //   return {
+    //     company: this.loginUserData.companyId,
+    //     order_by: this.orderBy
+    //   };
+    // }
   },
   watch: {
     // ページネーション部分検索
