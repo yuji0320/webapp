@@ -3,6 +3,7 @@ import api from "@/api";
 const systemMasterState = {
   countries: {},
   currencies: {},
+  unitTypes: {},
   expenseCategories: {},
   expenseCategory: {},
   failureCategories: {}
@@ -16,9 +17,14 @@ export default {
     setCountries(state, payload) {
       state.countries = payload;
     },
+    // 通貨取得
     setCurrencies(state, payload) {
       state.currencies = payload;
     },
+    // 単位種別リスト取得
+    setUnitTypes(state, payload) {
+      state.unitTypes = payload;
+    },    
     // 費用種別リスト取得用
     setExpenseCategories(state, payload) {
       state.expenseCategories = payload;
@@ -39,9 +45,16 @@ export default {
       let commitName = "setCountries";
       api.get({ commit }, url, data, commitName);
     },
+    // 通貨リスト取得
     getCurrencies({ commit }, data) {
       let url = "system_master/currencies/";
       let commitName = "setCurrencies";
+      api.get({ commit }, url, data, commitName);
+    },
+    // 単位リスト取得
+    getUnitTypes({ commit }, data) {
+      let url = "system_master/unit_types/";
+      let commitName = "setUnitTypes";
       api.get({ commit }, url, data, commitName);
     },
     // 費用種別リスト取得用

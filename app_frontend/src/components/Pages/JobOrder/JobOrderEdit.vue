@@ -255,10 +255,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("jobOrderAPI", ["responseError", "jobOrderStatus", "jobOrder"]),
-    reteHelpText() {
-      return "1" + this.jobOrder.orderCurrencyData.code + "=";
-    }
+    ...mapState("jobOrderAPI", ["responseError", "jobOrderStatus", "jobOrder"])
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
@@ -299,6 +296,7 @@ export default {
       } else {
         // 失敗時
         this.responseFunction(res);
+        console.log(res);
       }
     },
     viewDetail() {

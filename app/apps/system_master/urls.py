@@ -7,7 +7,7 @@ routeList = (
     (r'currencies', SystemCurrencyAPIView),
     (r'unit_types', SystemUnitTypeAPIView),
     (r'expense_categories', SystemExpenseCategoryAPIView),
-    (r'failure_category', SystemFailureCategoryAPIView),
+    (r'failure_categories', SystemFailureCategoryAPIView),
 )
 
 router = routers.DefaultRouter()

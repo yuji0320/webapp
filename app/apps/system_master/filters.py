@@ -3,6 +3,21 @@ from django_filters import rest_framework as filters
 from .models import *
 
 
+class SystemUnitTypeFilter(filters.FilterSet):
+
+    class Meta:
+        model = SystemUnitType
+        fields = ['id', 'number', 'name']
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('name', 'name'),
+            ('number', 'number'),
+        ),
+    )
+
+
 class SystemExpenseCategoryFilter(filters.FilterSet):
 
     class Meta:
@@ -19,10 +34,17 @@ class SystemExpenseCategoryFilter(filters.FilterSet):
 
 
 class SystemFailureCategoryFilter(filters.FilterSet):
+    incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+
+    @staticmethod
+    def incremental_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(category_number__icontains=value) | Q(category_name__icontains=value)
+        )
 
     class Meta:
         model = SystemFailureCategory
-        fields = ['id', 'category_name', 'category_number', 'is_active']
+        fields = ['id', 'category_name', 'category_number', 'is_active', 'incremental_field']
 
     order_by = filters.OrderingFilter(
         fields=(

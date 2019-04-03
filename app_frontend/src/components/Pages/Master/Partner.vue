@@ -158,7 +158,7 @@
           :orderBy="orderBy"
           :incremental="incremental"
           :params="params"
-          @search-list="searchList"
+          @search-list="getList"
         ></app-search-bar>
       </div>
 
@@ -253,6 +253,12 @@ export default {
       "putPartner",
       "deletePartner"
     ]),
+    // リスト検索
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      let list = await this.getPartners(data);
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     // タブ絞り込み複合検索関数
     searchList(val) {
       // 検索情報が入力された場合はdataを更新する

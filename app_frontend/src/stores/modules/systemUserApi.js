@@ -12,10 +12,7 @@ const systemUserState = {
   searchPartnerCustomers: {},
   searchPartnerDeliveries: {},
   searchPartnerSupplyers: {},
-  searchPartnerManufacturer: {}
-  // expenseCategories: {},
-  // expenseCategory: {},
-  // failureCategories: {}
+  searchPartnerManufacturers: {}
 };
 
 export default {
@@ -71,18 +68,6 @@ export default {
     setSearchPartnerManufacturers(state, payload) {
       state.searchPartnerManufacturers = payload;
     }
-    // // 費用種別リスト取得用
-    // setExpenseCategories(state, payload) {
-    //   state.expenseCategories = payload;
-    // },
-    // // 費用種別取得用
-    // setExpenseCategory(state, payload) {
-    //   state.expenseCategory = payload;
-    // },
-    // // 仕損費種別取得用
-    // setFailureCategories(state, payload) {
-    //   state.failureCategories = payload;
-    // }
   },
   // API非同期通信処理
   actions: {
@@ -207,24 +192,13 @@ export default {
       let url = "system_user/user_partners/";
       let commitName = "setSearchPartnerDeliveries";
       api.get({ commit }, url, data, commitName);
+    },
+    // 納入先インクリメンタル検索用
+    async getSearchPartnerManufacturers({ commit }, data) {
+      data.params.is_manufacturer = "true";
+      let url = "system_user/user_partners/";
+      let commitName = "setSearchPartnerManufacturers";
+      api.get({ commit }, url, data, commitName);
     }
-    // // 費用種別リスト取得用
-    // async getExpenseCategories({ commit }, data) {
-    //   let url = "system_user/user_expense_category/";
-    //   let commitName = "setExpenseCategories";
-    //   api.get({ commit }, url, data, commitName);
-    // },
-    // // 費用種別取得用
-    // async getExpenseCategory({ commit }, data) {
-    //   let url = "system_user/user_expense_category/" + data + "/";
-    //   let commitName = "setExpenseCategory";
-    //   api.get({ commit }, url, data, commitName);
-    // },
-    // // 仕損費種別取得用
-    // async getFailureCategories({ commit }, data) {
-    //   let url = "system_user/user_failure_category/";
-    //   let commitName = "setFailureCategories";
-    //   api.get({ commit }, url, data, commitName);
-    // }
   }
 };

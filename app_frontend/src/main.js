@@ -10,10 +10,14 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 // ユーティリティファイルのインポート
 import titleMixin from "./util/title";
 import dateFormetMixin from "./util/dateFormat";
+
+// ライブラリのインポート
 // 時刻データ操作ライブラリのインポート
 import moment from "moment";
 // バリデーションライブラリのインポート
 import VeeValidate from "vee-validate";
+// pdfmakeフォントのインポート
+// import vfs_fonts from "./util/vfs_fonts";
 
 // Bootstrap Vueのインポート
 import BootstrapVue from "bootstrap-vue";

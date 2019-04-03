@@ -42,13 +42,27 @@
               Add or Edit {{ expense.categoryName }}
             </v-btn>
           </v-flex>
+
+          <v-flex xs6>
+            <v-btn 
+              large 
+              block 
+              round
+              color="primary"
+              :disabled = "mfgNo === ''"
+              @click="printButton"
+            >
+              <v-icon>print</v-icon>
+              Print Bill of Material
+            </v-btn>
+          </v-flex>
         </v-layout>
 
 
 
         <!-- {{ expenseCategories }} -->
-        {{ jobOrderID }},
-        {{ partsType }}
+        <!-- {{ jobOrderID }},
+        {{ partsType }} -->
 
 
 
@@ -100,6 +114,10 @@ export default {
       this.mfgNo = "";
       this.setJobOrderID("");
       this.setPartsType("");
+    },
+    printButton() {
+      this.setJobOrderID(this.mfgNo);
+      this.$router.push({ name: "BillOfMaterialPrint" });
     }
   },
   created() {

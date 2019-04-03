@@ -44,14 +44,20 @@
       disable-initial-sort
     >
       <template slot="items" slot-scope="props">
-        <tr class="dataList">
+        <tr 
+          class="dataList"
+          :class="{
+            'complete': props.item.updated,
+            'error': props.item.err
+          }"
+        >
           <td 
             v-for="(header, index) in headers"
             :key="index"
             :class="header.class"
           >
             <template 
-              v-if="header.class==='text-xs-right'"
+              v-if="header.money"
             >
               {{ props.item[header.value] | moneyDelemiter }}
             </template>
@@ -67,6 +73,7 @@
                   @click="upload(props.item)"
                   color="primary"
                   dark
+                  :disabled="props.item.updated"
                 >
                   Upload
                 </v-btn>
@@ -102,7 +109,8 @@ export default {
     };
   },
   props: {
-    headers: { required: true }
+    headers: { required: true },
+    errorColumn: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -192,6 +200,9 @@ export default {
     async upload(item) {
       this.$emit("submit-data", item);
     }
+  },
+  created() {
+    this.clearData();
   }
 };
 </script>
@@ -205,5 +216,10 @@ export default {
 .error {
   background-color: #fb8c;
   color: white;
+}
+
+.dataList:hover {
+  background-color: #607d8b;
+  color: black;
 }
 </style>

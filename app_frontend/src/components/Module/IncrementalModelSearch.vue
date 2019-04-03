@@ -50,12 +50,13 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["currencies"]),
+    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories"]),
     ...mapState("systemUserApi", [
       "searchUserStaffs",
       "searchUserPartners",
       "searchPartnerCustomers",
-      "searchPartnerDeliveries"
+      "searchPartnerDeliveries",
+      "searchPartnerManufacturers"
     ]),
     ...mapState("jobOrderAPI", ["searchJobOrder"]),    
     searchItems() {
@@ -66,6 +67,12 @@ export default {
         case "currency":
           return this.currencies.results;
           break;
+        case "unitType":
+          return this.unitTypes.results;
+          break;
+        case "failure":
+          return this.failureCategories.results;
+          break;   
         case "partner":
           switch(this.filter) {
             case "customer":
@@ -73,6 +80,9 @@ export default {
               break;
             case "delivery":
               return this.searchPartnerDeliveries.results;
+              break;
+            case "manufacturer":
+              return this.searchPartnerManufacturers.results;
               break;
           }
           break;
@@ -99,12 +109,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemMasterApi", ["getCurrencies"]),
+    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories"]),
     ...mapActions("systemUserApi", [
       "getSearchUserStaffs",
       "getSearchUserPartners",
       "getSearchPartnerCustomers",
-      "getSearchPartnerDeliveries"
+      "getSearchPartnerDeliveries",
+      "getSearchPartnerManufacturers"
     ]),
     ...mapActions("jobOrderAPI", ["getSearchJobOrder"]),
     searchData(val) {
@@ -120,6 +131,12 @@ export default {
         case "currency":
           this.getCurrencies();
           break;
+        case "unitType":
+          this.getUnitTypes(search);
+          break;
+        case "failure":
+          this.getFailureCategories(search);
+          break;
         case "partner":
           switch(this.filter) {
             case "customer":
@@ -127,6 +144,9 @@ export default {
               break;
             case "delivery":
               this.getSearchPartnerDeliveries(search);
+              break;
+            case "manufacturer":
+              this.getSearchPartnerManufacturers(search);
               break;
           }
           break;
@@ -138,6 +158,10 @@ export default {
     clearItem() {
       this.model = "";
       this.$emit("clear-item");
+    },
+    setData(val) {
+      this.model = val;
+      // console.log(val);
     }
   },
   watch: {

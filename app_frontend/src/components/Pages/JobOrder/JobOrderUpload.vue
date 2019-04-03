@@ -40,7 +40,7 @@ export default {
         },
         { text: "Order Currency", value: "orderCurrencyCode" },
         { text: "Order Rate", value: "orderRate" },
-        { text: "Order Price", value: "orderPrice", class: "text-xs-right" },
+        { text: "Order Price", value: "orderPrice", class: "text-xs-right", money:true },
         { text: "Order Date", value: "orderDate" },
         { text: "Delivery Date", value: "deliveryDate" },
         { text: "Completion Date", value: "completionDate" },
@@ -61,7 +61,7 @@ export default {
       };
     },
     currencyList() { return this.currencies.results; },
-    partnerList() { return this.userPartners.results; },
+    partnerList() { return this.userPartners.results; }
   },  
   methods: {
     ...mapActions("systemConfig", ["setExcelJson", "showSnackbar"]),
@@ -76,7 +76,10 @@ export default {
 
       for(let i = 0; i < val.length; i++) {
         // オブジェクトのエラーコードを初期値とともに設定
-        val[i].err = true;
+        val[i].err = false;
+
+        // オブジェクトの配列番号をkeyとして設定
+        val[i].key = i;
 
         // ユーザー情報をレコードに挿入
         val[i].company = this.loginUserData.companyId;
@@ -117,7 +120,7 @@ export default {
             }
           }
           // 値が未入力の場合は空データを設定する
-          if(!val[i].orderCurrency) {
+          if(!val[i].deliveryDestination) {
             val[i].deliveryDestination = "";
           }          
         }
@@ -155,6 +158,7 @@ export default {
       } else {
         // 失敗時
         this.showSnackbar(res.snack);
+        // this.excelJson[val.key].err = true;
         console.log(res.error);
       }
     }

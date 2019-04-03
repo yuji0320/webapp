@@ -6,7 +6,7 @@ import axios from "axios";
 const axiosBase = axios;
 // const host = process.env.VUE_APP_API_BASE_URL;
 const host = "http://localhost:8000/api/";
-// const host = "https://192.168.2.124/api/";
+// const host = "https://192.168.2.120/api/";
 
 export default {
   async request(method, url, params) {
@@ -87,6 +87,7 @@ export default {
     const response = await this.request("get", url, data);
     if (response.data) {
       commit(commitName, response.data);
+      return response.data;
     } else {
       // console.log(response.error);
       return response.error;

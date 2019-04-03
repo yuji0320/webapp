@@ -2,7 +2,7 @@ from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializer import *
-from .filters import SystemExpenseCategoryFilter, SystemFailureCategoryFilter
+from .filters import *
 
 
 class SystemCountryFilter(filters.FilterSet):
@@ -36,6 +36,7 @@ class SystemUnitTypeAPIView(viewsets.ModelViewSet):
     # )
     serializer_class = SystemUnitTypeSerializer
     queryset = SystemUnitType.objects.all()
+    filter_class = SystemUnitTypeFilter
 
 
 class SystemExpenseCategoryAPIView(viewsets.ModelViewSet):

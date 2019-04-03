@@ -70,6 +70,9 @@ export default {
       if (!this.dialog) {
         this.clearForm();
         this.editedIndex = -1;
+      } else if (this.dialog && this.editedIndex==-1) {
+        // デフォルト値がある場合はセットする
+        this.$emit("set-default");
       }
     }
   },

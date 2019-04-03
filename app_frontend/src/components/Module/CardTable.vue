@@ -7,6 +7,8 @@
         <slot name="card-header-title"></slot>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- 戻るボタン挿入 -->
+      <slot name="card-header-buck-button"></slot>
       <!-- モーダルの挿入 -->
       <slot name="card-dialog"></slot>
       <!-- ボタン挿入 -->
@@ -33,7 +35,9 @@
       :hide-actions="true"
       class="elevation-1"
       disable-initial-sort
+      :loading="$store.state.systemConfig.loading"
     >
+
       <!-- headersに格納しているvalueをtdに割り振る -->
       <template slot="items" slot-scope="props">
         <!-- 親コンポーネントでしていたカラムが正の時クラスを指定してアクティブに -->
@@ -41,7 +45,8 @@
           :class="{
             'complete': props.item[completeColumn],
             'error': props.item[errorColumn],
-            'dataList': true
+            'dataList': true,
+            'printed': props.item.isPrinted
           }"
           @dblclick="editItem(props.item)"
         >
@@ -52,23 +57,27 @@
           >
             
             <!-- 文字列がtrueの場合緑チェック -->
-            <div v-if="props.item[header.value] === true">
+            <template v-if="props.item[header.value] === true">
               <v-icon color="green">check</v-icon>
-            </div>
+            </template>
             <!-- 文字列がtrueの場合赤バツ -->
-            <div v-else-if="props.item[header.value] === false">
+            <template v-else-if="props.item[header.value] === false">
               <v-icon color="red">close</v-icon>
-            </div>
+            </template>
             <!-- true, false以外の場合はデータを表示 -->
-            <div v-else>
+            <template v-else>
               <!-- jsonがネストしている場合はデータを抽出 -->
-              <div v-if="header.nest">
-                {{ props.item[header.value][header.nest] }}
-              </div>
-              <div v-else>
+              <template v-if="header.nest">
+                <!-- ネスト元データが存在する場合のみ表示 -->
+                <template v-if="props.item[header.value]">
+                  {{ props.item[header.value][header.nest] }}
+                </template>
+              </template>
+              <!-- ネストしていない場合はデータを表示 -->
+              <template v-else>
                 {{ props.item[header.value] }}
-              </div>
-            </div>
+              </template>
+            </template>
 
             <!-- 最終行のみ挿入可能スロットを追加する -->
             <div v-show="header.value == 'action'">
@@ -115,10 +124,15 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "CardTable",
   data() {
-    return {};
+    return {
+      loading: false,
+      expand: false
+    };
   },
   props: {
     // テーブル情報表示
@@ -150,7 +164,7 @@ export default {
 </script>
 
 <style>
-.complete, .complete * v-icon {
+.printed, .complete, .complete * v-icon {
   background-color: #4CAF50;
   color: white;
 }

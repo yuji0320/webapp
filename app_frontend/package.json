@@ -17,6 +17,7 @@
     "jq": "^1.7.2",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.22.2",
+    "pdfmake": "^0.1.54",
     "roboto-fontface": "*",
     "v-money": "^0.8.1",
     "vee-validate": "^2.1.1",

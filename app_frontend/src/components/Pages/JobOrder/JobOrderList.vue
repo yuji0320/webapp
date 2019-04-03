@@ -49,7 +49,7 @@
             :orderBy="orderBy"
             :incremental="incremental"
             :params="params"
-            @search-list="getJobOrders"
+            @search-list="getList"
           ></app-search-bar>
 
           <!-- excelダウンロード -->
@@ -133,6 +133,13 @@ export default {
       "setJobOrder",
       "deleteJobOrder"
     ]),
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      // console.log(this.$store.state.systemConfig.loading);
+      let list = await this.getJobOrders(data);
+      this.$store.commit("systemConfig/setLoading", false);
+      // console.log(this.$store.state.systemConfig.loading);
+    },
     createJobOrder() {
       // console.log("create new");
       this.setJobOrder({});

@@ -1,6 +1,7 @@
 // システムの設定関係の情報を集約する
 const systemConfigState = {
   drawerStatus: true,
+  loading: true,
   menus: [
     {
       icon: "work",
@@ -81,7 +82,7 @@ const systemConfigState = {
     snack: "",
     color: "",
     snackbarStatus: false,
-    timeout: 2000
+    timeout: 1000
   },
   excelJson: []
 };
@@ -108,10 +109,15 @@ export default {
     },
     setExcelJson(state, payload) {
       state.excelJson = payload;
+    },
+    setLoading(state, payload) {
+      state.loading = payload;
     }
   },
   actions: {
     showSnackbar({ commit }, { snack, color }) {
+      clearTimeout();
+      commit("offSnackbar");
       commit("onSnackbar", { snack: snack, color: color });
       setTimeout(function() {
         commit("offSnackbar");

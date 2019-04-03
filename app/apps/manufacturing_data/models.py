@@ -25,11 +25,13 @@ class JobOrder(models.Model):
     customer = models.ForeignKey('system_users.UserPartner',
                                  related_name='%(class)s_requests_customer',
                                  on_delete=models.PROTECT,
-                                 blank=True)  # 取引先
+                                 blank=True,
+                                 null=True)  # 取引先
     delivery_destination = models.ForeignKey('system_users.UserPartner',
                                              related_name='%(class)s_requests_delivery_destination',
                                              on_delete=models.PROTECT,
-                                             blank=True)  # 納入先
+                                             blank=True,
+                                             null=True)  # 納入先
     order_currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 受注通貨
     order_rate = models.FloatField(_('Order Rate'), default=1)  # 受注時為替レート
     order_price = models.DecimalField(_('Order Price'), max_digits=17, decimal_places=2)  # 受注金額
@@ -92,7 +94,7 @@ class BillOfMaterial(models.Model):
     material = models.CharField(_('Material'), max_length=255, blank=True)  # 材質
     surface_treatment = models.CharField(_('Surface treatment'), max_length=255, blank=True)  # 表面加工
     unit_number = models.CharField(_('Unit Number'), max_length=255, blank=True)  # ユニット番号
-    quantity = models.DecimalField(_('Quantity'), max_digits=17, decimal_places=2, default=1)  # 個数
+    amount = models.DecimalField(_('Amount'), max_digits=17, decimal_places=2, default=1)  # 個数
     stock_appropriation = models.DecimalField(
         _('Stock appropriation'),
         max_digits=17,

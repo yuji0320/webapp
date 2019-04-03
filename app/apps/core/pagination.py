@@ -6,7 +6,7 @@ import math
 class CustomPagination(pagination.PageNumberPagination):
     page_size = 50
     page_size_query_param = 'page_size'
-    max_page_size = 1000
+    max_page_size = 5000
 
     def get_paginated_response(self, data):
         pages = math.ceil(self.page.paginator.count / self.page_size)
