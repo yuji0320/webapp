@@ -257,7 +257,7 @@ export default {
       ],
       defaultHeadersEnd: [
         { text: "Amount", value: "amount", class: "text-xs-right" },
-        { text: "Unit Price", value: "defaultCurrencyPrice", class: "text-xs-right" },
+        { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
         { text: "Delivery", value: "desiredDeliveryDate" },
         { text: "Action", value: "action", class: "text-xs-center" }
       ],
@@ -468,11 +468,7 @@ export default {
       this.getJobOrder(this.jobOrderID);
     }
   },
-  mounted() {
-    // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
-    this.headerData[5].text =
-      "Unit Price" + " (" + this.loginUserData.defaultCurrencyCode + ")";
-  }
+  mounted() {}
 }
 </script>
 

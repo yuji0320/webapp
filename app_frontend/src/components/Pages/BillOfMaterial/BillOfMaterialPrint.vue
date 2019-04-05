@@ -130,7 +130,8 @@ export default {
         company: this.loginUserData.companyId,
         job_order: this.jobOrderID,
         is_printed: this.reprint,
-        order_by: this.orderBy
+        order_by: this.orderBy,
+        page_size: 1000
       };
     },
     headerData() {
@@ -159,6 +160,7 @@ export default {
         return headerArray;
       }
     },
+    // 部品種別毎の部品表仕分け
     partsData() {
       // PDF作成用のデータを構築
       return function (val) {

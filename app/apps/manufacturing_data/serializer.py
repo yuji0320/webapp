@@ -111,13 +111,27 @@ class JobOrderSerializer(serializers.ModelSerializer):
 # 部品表
 class BillOfMaterialSerializer(serializers.ModelSerializer):
     default_currency_price = serializers.SerializerMethodField()
+    total_default_currency_price = serializers.SerializerMethodField()
+    display_price = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
 
-    # デフォルト通貨での価格計算
+    # デフォルト通貨での単価計算
     @staticmethod
     def get_default_currency_price(obj):
-        default_price = obj.unit_price * decimal.Decimal(float(obj.rate))
-        return "{:,.2f}".format(default_price)
+        display_price = obj.unit_price * decimal.Decimal(float(obj.rate))
+        return "{:,.2f}".format(display_price)
+
+    # デフォルト通貨での合計価格計算
+    @staticmethod
+    def get_total_default_currency_price(obj):
+        total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        return round(total_price, 2)
+
+    # 表示用単価作成
+    @staticmethod
+    def get_display_price(obj):
+        display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
+        return display_price
 
     class Meta:
         model = BillOfMaterial
@@ -149,5 +163,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'default_currency_price',
+            'total_default_currency_price',
+            'display_price',
             'manufacturer_data'
         )
