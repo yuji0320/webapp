@@ -1,10 +1,10 @@
-import api from "@/api";
+import api from '@/api';
 
 const authState = {
   responseError: {},
   loggedIn: false,
-  token: "token",
-  loginUserData: {}
+  token: 'token',
+  loginUserData: {},
 };
 
 export default {
@@ -20,8 +20,8 @@ export default {
     },
     logout(state) {
       state.loggedIn = false;
-      state.token = "";
-      for (let key in state) {
+      state.token = '';
+      for (const key in state) {
         if (authState.hasOwnProperty(key)) {
           state[key] = authState[key];
         }
@@ -29,39 +29,39 @@ export default {
     },
     userData(state, payload) {
       state.loginUserData = payload;
-    }
+    },
   },
   actions: {
-    login({ commit }, payload) {
+    login({commit}, payload) {
       api
-        .post_auth("api-token-auth/", {
-          username: payload.username,
-          password: payload.password
-        })
-        .then(function(response) {
-          if (response.data) {
+          .post_auth('api-token-auth/', {
+            username: payload.username,
+            password: payload.password,
+          })
+          .then(function(response) {
+            if (response.data) {
             // エラー解除
-            commit("error", {});
-            // トークンを保存
-            commit("login", response.data.token);
-            // ログイン後、リダイレクト
-            payload.router.push("/top");
-          } else {
+              commit('error', {});
+              // トークンを保存
+              commit('login', response.data.token);
+              // ログイン後、リダイレクト
+              payload.router.push('/top');
+            } else {
             // エラー情報を保存
-            commit("error", response.error);
-          }
-        });
+              commit('error', response.error);
+            }
+          });
     },
-    logout({ commit }, payload) {
-      commit("logout");
+    logout({commit}, payload) {
+      commit('logout');
       // ログアウト後リダイレクト
-      payload.router.push("/login");
+      payload.router.push('/login');
     },
     // ユーザー情報取得
-    userData({ commit }, data) {
-      var url = "system_user/users/login_user_data/";
-      var commitName = "userData";
-      api.get({ commit }, url, data, commitName);
-    }
-  }
+    userData({commit}, data) {
+      const url = 'system_user/users/login_user_data/';
+      const commitName = 'userData';
+      api.get({commit}, url, data, commitName);
+    },
+  },
 };

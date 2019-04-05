@@ -4,87 +4,87 @@ const systemConfigState = {
   loading: true,
   menus: [
     {
-      icon: "work",
-      title: "Job Order Menu",
+      icon: 'work',
+      title: 'Job Order Menu',
       subMenus: [
         {
-          icon: "work",
-          title: "Job order",
-          url: { name: "JobOrderList" }
-        }
-      ]
+          icon: 'work',
+          title: 'Job order',
+          url: {name: 'JobOrderList'},
+        },
+      ],
     },
     {
-      icon: "bubble_chart",
-      title: "Purchasing Menu",
+      icon: 'bubble_chart',
+      title: 'Purchasing Menu',
       subMenus: [
         {
-          icon: "list",
-          title: "Bill of material",
-          url: { name: "BillOfMaterialMenu" }
+          icon: 'list',
+          title: 'Bill of material',
+          url: {name: 'BillOfMaterialMenu'},
         },
         {
-          icon: "send",
-          title: "Order",
-          url: ""
+          icon: 'send',
+          title: 'Order',
+          url: '',
         },
         {
-          icon: "move_to_inbox",
-          title: "Purchase",
-          url: ""
-        }
-      ]
+          icon: 'move_to_inbox',
+          title: 'Purchase',
+          url: '',
+        },
+      ],
     },
     {
-      icon: "account_box",
-      title: "Man-hour management",
+      icon: 'account_box',
+      title: 'Man-hour management',
       subMenus: [
         {
-          icon: "access_time",
-          title: "Man Hour",
-          url: ""
-        }
-      ]
+          icon: 'access_time',
+          title: 'Man Hour',
+          url: '',
+        },
+      ],
     },
     {
-      icon: "search",
-      title: "Investigation",
-      subMenus: []
+      icon: 'search',
+      title: 'Investigation',
+      subMenus: [],
     },
     {
-      icon: "settings_applications",
-      title: "Master file",
+      icon: 'settings_applications',
+      title: 'Master file',
       subMenus: [
         {
-          icon: "domain",
-          title: "Company master",
-          url: { name: "Company" }
+          icon: 'domain',
+          title: 'Company master',
+          url: {name: 'Company'},
         },
         {
-          icon: "people",
-          title: "Staff master",
-          url: { name: "Staff" }
+          icon: 'people',
+          title: 'Staff master',
+          url: {name: 'Staff'},
         },
         {
-          icon: "people_outline",
-          title: "Partner master",
-          url: { name: "Partner" }
+          icon: 'people_outline',
+          title: 'Partner master',
+          url: {name: 'Partner'},
         },
         {
-          icon: "",
-          title: "Man-hour master",
-          url: ""
-        }
-      ]
-    }
+          icon: '',
+          title: 'Man-hour master',
+          url: '',
+        },
+      ],
+    },
   ],
   snackbar: {
-    snack: "",
-    color: "",
+    snack: '',
+    color: '',
     snackbarStatus: false,
-    timeout: 1000
+    timeout: 1000,
   },
-  excelJson: []
+  excelJson: [],
 };
 
 export default {
@@ -97,35 +97,35 @@ export default {
       state.drawerStatus = !state.drawerStatus;
     },
     // Snackbarステータス操作
-    onSnackbar(state, { snack, color }) {
+    onSnackbar(state, {snack, color}) {
       state.snackbar.snackbarStatus = true;
       state.snackbar.snack = snack;
       state.snackbar.color = color;
     },
     offSnackbar(state) {
       state.snackbar.snackbarStatus = false;
-      state.snackbar.snack = "";
-      state.snackbar.color = "";
+      state.snackbar.snack = '';
+      state.snackbar.color = '';
     },
     setExcelJson(state, payload) {
       state.excelJson = payload;
     },
     setLoading(state, payload) {
       state.loading = payload;
-    }
+    },
   },
   actions: {
-    showSnackbar({ commit }, { snack, color }) {
+    showSnackbar({commit}, {snack, color}) {
       clearTimeout();
-      commit("offSnackbar");
-      commit("onSnackbar", { snack: snack, color: color });
+      commit('offSnackbar');
+      commit('onSnackbar', {snack: snack, color: color});
       setTimeout(function() {
-        commit("offSnackbar");
+        commit('offSnackbar');
       }, 2000);
     },
     // jsonデータセット
-    setExcelJson({ commit }, data) {
-      commit("setExcelJson", data);
-    },    
-  }
+    setExcelJson({commit}, data) {
+      commit('setExcelJson', data);
+    },
+  },
 };

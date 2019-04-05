@@ -33,7 +33,7 @@ class BillOfMaterialFilter(filters.FilterSet):
 
     class Meta:
         model = BillOfMaterial
-        fields = ['id', 'company', 'job_order', 'type', 'name', "standard", "is_printed",]
+        fields = ['id', 'company', 'job_order', 'type', 'name', "standard", "is_printed"]
 
     order_by = filters.OrderingFilter(
         fields=(

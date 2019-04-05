@@ -43,6 +43,7 @@
             </v-btn>
           </v-flex>
 
+          <!-- 部品表印刷 -->
           <v-flex xs6>
             <v-btn 
               large 
@@ -50,12 +51,28 @@
               round
               color="primary"
               :disabled = "mfgNo === ''"
-              @click="printButton"
+              @click="printBillOfMaterials"
             >
               <v-icon>print</v-icon>
               Print Bill of Material
             </v-btn>
           </v-flex>
+
+          <!-- 部品表際印刷 -->
+          <v-flex xs6>
+            <v-btn 
+              large 
+              block 
+              round
+              color="primary"
+              :disabled = "mfgNo === ''"
+              @click="reprintBillOfMaterials"
+            >
+              <v-icon>print</v-icon>
+              Rerint Bill of Material (ALL)
+            </v-btn>
+          </v-flex>
+
         </v-layout>
 
 
@@ -93,7 +110,7 @@ export default {
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["expenseCategories"]),
-    ...mapState("billOfMaterialAPI", ["jobOrderID", "partsType"]),
+    ...mapState("billOfMaterialAPI", ["jobOrderID", "partsType", "reprint"]),
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -104,7 +121,7 @@ export default {
   },
   methods: {
     ...mapActions("systemMasterApi", ["getExpenseCategories"]),
-    ...mapActions("billOfMaterialAPI", ["setJobOrderID", "setPartsType"]),
+    ...mapActions("billOfMaterialAPI", ["setJobOrderID", "setPartsType", "setReprint"]),
     selectParts(val) {
       this.setJobOrderID(this.mfgNo);
       this.setPartsType(val);
@@ -115,8 +132,15 @@ export default {
       this.setJobOrderID("");
       this.setPartsType("");
     },
-    printButton() {
+    printBillOfMaterials() {
       this.setJobOrderID(this.mfgNo);
+      this.setReprint(false);
+      // console.log(this.reprint);
+      this.$router.push({ name: "BillOfMaterialPrint" });
+    },
+    reprintBillOfMaterials() {
+      this.setJobOrderID(this.mfgNo);
+      this.setReprint(true);
       this.$router.push({ name: "BillOfMaterialPrint" });
     }
   },

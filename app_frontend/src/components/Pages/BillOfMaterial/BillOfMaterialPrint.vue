@@ -8,20 +8,17 @@
       <v-toolbar card>
         <v-icon>print</v-icon>
         <v-toolbar-title class="font-weight-light">
-          Print Bill of Material : "{{ jobOrder.mfgNo }} - {{ jobOrder.name }}"
+          {{ printStatus.cardTitle }}"{{ jobOrder.mfgNo }} - {{ jobOrder.name }}"
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn 
-          @click="pdfgen"
+          @click="print"
           color="primary"
         ><v-icon>print</v-icon> Print Data</v-btn>
       </v-toolbar>
 
-      <!-- {{ headerData("process") }} -->
-      <!-- {{ billOfMaterials }} -->
-      <!-- {{ partsData("2035b693-1834-4939-a06a-c9558e935ef5") }} -->
-      <!-- {{ expenseCategories }} -->
-
+      <!-- 注意書き -->
+      <v-card-text>*{{ printStatus.cardText }}</v-card-text>
 
       <!-- 部品種別毎の未印刷部品リスト -->
       <div
@@ -89,10 +86,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-// pdfmake作成ライブラリの読み込み
-import pdfMake from 'pdfmake/build/pdfmake.min.js'
-import pdfFonts from 'pdfmake/build/vfs_fonts.js'
-pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 export default {
   title: "Print Bill of Material",
@@ -129,13 +122,14 @@ export default {
     ...mapState("billOfMaterialAPI", [
       "jobOrderID", 
       "partsType", 
-      "billOfMaterials"
+      "billOfMaterials",
+      "reprint"
     ]),
     params() {
       return {
         company: this.loginUserData.companyId,
         job_order: this.jobOrderID,
-        is_printed: false,
+        is_printed: this.reprint,
         order_by: this.orderBy
       };
     },
@@ -156,7 +150,11 @@ export default {
       return function (val) {
         let headerArray = [];
         for(let key in val){
-          headerArray.push(val[key].text);
+          let headerCol = {
+            "text": val[key].text,
+            "alignment": "center"
+          }
+          headerArray.push(headerCol);
         }
         return headerArray;
       }
@@ -167,6 +165,21 @@ export default {
         const list = this.billOfMaterials.results.filter(x => x.type === val);
         return list
       }
+    },
+    // 印刷か再印刷で内容が変わる部分を定義
+    printStatus() {
+      let cardTitle = "Print Bill of Material : "
+      let cardText = "You can print unprinted parts list."
+
+      if(this.reprint) {
+        cardTitle = "Rerint Bill of Material (ALL) : "
+        cardText = "You can print all parts list that already prented."
+      }
+      
+      return {
+        "cardTitle": cardTitle,
+        "cardText": cardText
+      }
     }
   },
   methods: {
@@ -175,17 +188,39 @@ export default {
     ...mapActions("billOfMaterialAPI", [
       "setJobOrderID", 
       "setPartsType", 
-      "getBillOfMaterials"
+      "getBillOfMaterials",
+      "putBillOfMaterial"
     ]),
-    // プリント機能関数
-    pdfgen: function () {
+    // プリント実行、データのアップデート
+    async print() {
+      let docDefinition = this.createData();
+      let pdfname = docDefinition.header().text + "_" + new Date();
+
+      let pdfData = {
+        "docDefinition": docDefinition,
+        "pdfName": pdfname
+      }
+
+      // プリントの実行
+      this.pdfgen(pdfData);
+
+      // 際印刷の場合は下記処理を飛ばす
+      if(!this.reprint){
+        // 部品表印刷済みステータスの実行
+        let update = await this.updateIsPrinted();
+        // 部品表リスト再読み込み
+        this.getBillOfMaterials({params: this.params});
+        console.log("reprint is false");
+      }
+    },
+    // PDF出力用データ作成
+    createData() {
       // 汎用変数定義
       let expenseCategoriesList = this.expenseCategories.results;
-
       // ヘッダー用テキストを定義      
       let headerText = "Bill of Material" +" : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
-      // 印刷用データ作成
-      let contentList = []
+      // 印刷用テーブルデータ作成
+      let contentList = [];
       for(let key in expenseCategoriesList) {
         // 部品カテゴリ名設定
         let text = {
@@ -200,7 +235,11 @@ export default {
         tablebody.push(tableHeader);
         // 部品データ構築
         let partsList = this.partsData(expenseCategoriesList[key].id);
+        // 部品個数をゼロとして定義(カウント用)
+        let partsAmount = 0;
         for(let part in partsList) {
+          // 部品個数をカウント
+          partsAmount += 1;
           let partRow = []
           // テーブルヘッダーと同じデータを順番に配列に格納
           for(let h in tableHeaderData) {
@@ -211,7 +250,12 @@ export default {
                 d = d[tableHeaderData[h].nest];
               }
             }
-            // データがみ定義の場合はblankを入力
+            // データが右寄せ(数値)の場合は右寄せ処理
+            if(tableHeaderData[h].class=="text-xs-right") {
+              d = {"text": d, alignment: "right"}
+              // console.log(d);
+            }
+            // データが未定義の場合はblankを入力
             if(!d) { d = ""; }
             partRow.push(d);
           }
@@ -222,13 +266,17 @@ export default {
         let tableData = {
           table: {
             headerRows: 1,
-            widths: [130, 75, 90, 80, 70, 60],
+            widths: [130, 110, 110, 80, 40, 40],
             body: tablebody
           }
         }
         contentList.push(tableData);
         if(partsList.length==0) {
-          contentList.push({"text": "No data available"});
+          contentList.push({"text": "No data available", "alignment": "center"});
+          // console.log(partsList);
+        } else {
+          let itemAmount = "Total " + partsAmount + " items"
+          contentList.push({"text": itemAmount, "alignment": "right"});
           // console.log("test");
         }
         // 最終ページ以外で改ページ
@@ -236,31 +284,6 @@ export default {
           contentList.push({ text: '', pageBreak: 'after'});
         }
       }
-      // console.log(contentList);
-      let pdfName = headerText + "_" + new Date();
-
-      // PDF作成ライブラリの読み込み
-      // var pdfMake = require('pdfmake/build/pdfmake.min.js');
-      // if (pdfMake.vfs == undefined){
-      //   // var pdfFonts = require('pdfmake/build/vfs_fonts.js');
-      //   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-      // }
-      pdfMake.fonts = {
-        // 日本語が使用可能なフォントを設定
-        GenShin: {
-          normal: "GenShinGothic-Bold.ttf",
-          bold: "GenShinGothic-Bold.ttf",
-          italics: "GenShinGothic-Bold.ttf",
-          bolditalics: "GenShinGothic-Bold.ttf"
-        },
-        // デフォルトのフォント
-        Roboto: {
-          normal: 'Roboto-Regular.ttf',
-          bold: 'Roboto-Medium.ttf',
-          italics: 'Roboto-Italic.ttf',
-          bolditalics: 'Roboto-MediumItalic.ttf'
-        }
-      };
       // PDFコンテンツ
       var docDefinition = { 
         // ヘッダー等
@@ -285,12 +308,38 @@ export default {
         pageSize: 'LETTER',
         pageMargins: [20,60,20,50],
         defaultStyle: {
-          font: 'GenShin'
+          font: 'GenShin',
+          fontSize: 8
         }
-      }
-
+      }  
+      return docDefinition;
+    },
+    // プリント機能関数
+    pdfgen(val) {
+      pdfMake.fonts = {
+        // 日本語が使用可能なフォントを設定
+        GenShin: {
+          normal: "GenShinGothic-Normal-Sub.ttf",
+          bold: "GenShinGothic-Normal-Sub.ttf",
+          italics: "GenShinGothic-Normal-Sub.ttf",
+          bolditalics: "GenShinGothic-Normal-Sub.ttf"
+        }
+      };
       // PDF発行
-      pdfMake.createPdf(docDefinition).download(pdfName);
+      pdfMake.createPdf(val.docDefinition).download(val.pdfName);
+    },
+    // 印刷済みステータスの反映
+    async updateIsPrinted() {
+      let partsList = this.billOfMaterials.results;
+
+      // 編集ステータスの変更
+      for(let p in partsList) {
+        partsList[p].isPrinted = true;
+        partsList[p].modifiedBy = this.loginUserData.id;
+
+        // console.log(partsList[p]);
+        let update = await this.putBillOfMaterial(partsList[p]);
+      }
     }
   },
   created() {

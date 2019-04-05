@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
+    <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="フロントエンド&#10;部品表登録機能実装完了&#10;PDF出力部分作成中">
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0011_auto_20190314_2340.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0012_billofmaterial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0013_billofmaterial_job_order.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0014_auto_20190315_0036.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0015_auto_20190315_0545.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/migrations/0016_auto_20190316_0314.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_master/migrations/0002_systemunittype_number.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_master/migrations/0003_systemexpensecategory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_master/migrations/0004_systemfailurecategory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0008_auto_20190109_1814.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0009_auto_20190109_1819.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0010_auto_20190109_1821.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0011_auto_20190109_1823.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0012_auto_20190209_0956.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0013_auto_20190309_2309.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0014_auto_20190309_2312.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0015_auto_20190310_0323.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0016_auto_20190310_0324.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/apps/system_users/migrations/0017_auto_20190315_0001.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/public/pdfmake/pdfmake.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/public/pdfmake/pdfmake.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/public/pdfmake/vfs_fonts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/src/assets/excel_upload_template(BOM).xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/core/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/core/pagination.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_users/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_users/filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/jest.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/CardTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/CardTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/ExcelUpload.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/ExcelUpload.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderUpload.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderUpload.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/plugins/vuetify.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/plugins/vuetify.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/routers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/routers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/billOfMaterial.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/billOfMaterial.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/jobOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/jobOrder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemConfig.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemMasterApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemMasterApi.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemUserApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemUserApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/development.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/util/dateFormat.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/util/dateFormat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/util/title.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/util/title.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/tests/unit/example.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/tests/unit/example.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/vue.config.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,15 +84,15 @@
     <session id="2137708078">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="32" />
+          <entry key="project.closed" value="35" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="9" />
-          <entry key="project.open.time.11" value="6" />
+          <entry key="project.open.time.11" value="7" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="2" />
-          <entry key="project.open.time.16" value="2" />
+          <entry key="project.open.time.16" value="4" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
@@ -79,47 +101,48 @@
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="37" />
+          <entry key="project.opened" value="40" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Django Console" value="86" />
-          <entry key="Dockerfile" value="444" />
+          <entry key="Dockerfile" value="452" />
           <entry key="conf" value="815" />
           <entry key="env" value="6" />
           <entry key="gitignore" value="67" />
           <entry key="js" value="219" />
           <entry key="json" value="1293" />
           <entry key="md" value="2772" />
-          <entry key="py" value="13255" />
+          <entry key="py" value="13258" />
           <entry key="sh" value="4" />
-          <entry key="txt" value="627" />
+          <entry key="txt" value="648" />
           <entry key="vmoptions" value="4" />
           <entry key="vue" value="1" />
-          <entry key="yml" value="790" />
+          <entry key="yml" value="801" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="4" />
           <entry key="DjangoUrlPath" value="1" />
-          <entry key="Dockerfile" value="444" />
+          <entry key="Dockerfile" value="452" />
           <entry key="JSON" value="1294" />
           <entry key="JavaScript" value="219" />
           <entry key="Markdown" value="2771" />
-          <entry key="PLAIN_TEXT" value="1519" />
-          <entry key="Python" value="13340" />
+          <entry key="PLAIN_TEXT" value="1540" />
+          <entry key="Python" value="13343" />
           <entry key="Vue.js" value="1" />
-          <entry key="YAML" value="790" />
+          <entry key="YAML" value="801" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="Dockerfile" value="47" />
+          <entry key="Dockerfile" value="50" />
           <entry key="_bootstrap&gt;" value="11" />
           <entry key="bak" value="4" />
           <entry key="browserslistrc" value="2" />
+          <entry key="cnf" value="1" />
           <entry key="conf" value="23" />
           <entry key="env" value="4" />
           <entry key="gitignore" value="11" />
@@ -130,7 +153,7 @@
           <entry key="png" value="2" />
           <entry key="py" value="259" />
           <entry key="sh" value="6" />
-          <entry key="txt" value="14" />
+          <entry key="txt" value="15" />
           <entry key="vmoptions" value="1" />
           <entry key="vue" value="10" />
           <entry key="xml" value="1" />
@@ -140,13 +163,13 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="5" />
-          <entry key="Dockerfile" value="47" />
+          <entry key="Dockerfile" value="50" />
           <entry key="HTML" value="11" />
           <entry key="Image" value="2" />
           <entry key="JSON" value="35" />
           <entry key="JavaScript" value="21" />
           <entry key="Markdown" value="11" />
-          <entry key="PLAIN_TEXT" value="60" />
+          <entry key="PLAIN_TEXT" value="62" />
           <entry key="PyRemoteDebug" value="11" />
           <entry key="Python" value="259" />
           <entry key="Vue.js" value="10" />
@@ -161,11 +184,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docker-compose-dev.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+            <state relative-caret-position="219">
+              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -195,7 +218,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
+            <state relative-caret-position="1665">
               <caret line="114" selection-start-line="114" selection-end-line="114" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -207,11 +230,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="35" column="89" selection-start-line="35" selection-start-column="89" selection-end-line="35" selection-end-column="89" />
+            <state relative-caret-position="270">
+              <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysql/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="14" selection-start-column="14" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -246,7 +278,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/doc/specs/rdd.md" />
         <option value="$PROJECT_DIR$/doc/specs/external_design_backend.md" />
         <option value="$PROJECT_DIR$/app_frondend/Dockerfile" />
@@ -270,12 +301,10 @@
         <option value="$PROJECT_DIR$/app/apps/system_users/fixtures/system_users_190109.json" />
         <option value="$PROJECT_DIR$/app/bms_backend/settings.py" />
         <option value="$PROJECT_DIR$/app/bms_backend/urls.py" />
-        <option value="$PROJECT_DIR$/docker-compose-dev.yml" />
         <option value="$PROJECT_DIR$/nginx/development.conf.bak" />
         <option value="$PROJECT_DIR$/app/apps/core/multi_create.py" />
         <option value="$PROJECT_DIR$/app/apps/system_users/forms.py" />
         <option value="$PROJECT_DIR$/nginx/nginx.conf" />
-        <option value="$PROJECT_DIR$/app/requirements.txt" />
         <option value="$PROJECT_DIR$/app/apps/system_users/fixtures/user_master_json_ksa.json" />
         <option value="$PROJECT_DIR$/app/apps/system_master/models.py" />
         <option value="$PROJECT_DIR$/app/apps/system_master/admin.py" />
@@ -297,6 +326,9 @@
         <option value="$PROJECT_DIR$/nginx/development.conf" />
         <option value="$PROJECT_DIR$/app/apps/core/pagination.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" />
+        <option value="$PROJECT_DIR$/app/requirements.txt" />
+        <option value="$PROJECT_DIR$/docker-compose-dev.yml" />
+        <option value="$PROJECT_DIR$/mysql/Dockerfile" />
       </list>
     </option>
   </component>
@@ -314,8 +346,8 @@
       <path value="$PROJECT_DIR$/app_frontend/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="203" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
   </component>
@@ -344,7 +376,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -416,12 +447,18 @@
             <path>
               <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="mysql" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="nginx" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -853,7 +890,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552582570097</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="フロントエンド&#10;部品表登録機能実装完了&#10;PDF出力部分作成中">
+      <created>1554325314130</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1554325314131</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -868,7 +912,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49810606" visible="true" weight="0.22889842" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49810606" visible="true" weight="0.23748212" />
       <window_info id="Structure" order="1" sideWeight="0.50189394" side_tool="true" weight="0.21459228" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32960597" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -879,9 +923,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32953367" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4978701" weight="0.32642487" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49356222" visible="true" weight="0.32866243" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.4914163" visible="true" weight="0.32866243" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5064378" side_tool="true" weight="0.32866243" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50858366" side_tool="true" weight="0.32866243" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4941427" weight="0.4101911" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49627262" weight="0.32738853" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -932,7 +976,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="バックエンドModel名スペルミス修正" />
     <MESSAGE value="フロントエンド会社マスタ編集画面作成" />
     <MESSAGE value="git ignore修正" />
     <MESSAGE value="フロントエンドaxios get設定変更" />
@@ -957,23 +1000,10 @@
     <MESSAGE value="バックエンド&#10;ユーザー追加画面(admin)修正" />
     <MESSAGE value="フロントエンド&#10;インクリメンタルサーチ機能更新" />
     <MESSAGE value="バックエンド、フロントエンド&#10;部品表機能作成開始" />
-    <option name="LAST_COMMIT_MESSAGE" value="バックエンド、フロントエンド&#10;部品表機能作成開始" />
+    <MESSAGE value="フロントエンド&#10;部品表登録機能実装完了&#10;PDF出力部分作成中" />
+    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド&#10;部品表登録機能実装完了&#10;PDF出力部分作成中" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_frontend/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_frontend/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/system_users/fixtures/user_data.json" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -1023,13 +1053,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -1084,13 +1107,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1234,10 +1250,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mysql/charset.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docker-compose-dev.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        <state relative-caret-position="219">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/core/pagination.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1252,16 +1296,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/apps/core/pagination.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
+        <state relative-caret-position="1665">
           <caret line="114" selection-start-line="114" selection-end-line="114" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -1274,8 +1311,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="35" column="89" selection-start-line="35" selection-start-column="89" selection-end-line="35" selection-end-column="89" />
+        <state relative-caret-position="270">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>

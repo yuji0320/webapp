@@ -1,4 +1,4 @@
-import api from "@/api";
+import api from '@/api';
 
 const systemMasterState = {
   countries: {},
@@ -6,7 +6,7 @@ const systemMasterState = {
   unitTypes: {},
   expenseCategories: {},
   expenseCategory: {},
-  failureCategories: {}
+  failureCategories: {},
 };
 
 export default {
@@ -24,7 +24,7 @@ export default {
     // 単位種別リスト取得
     setUnitTypes(state, payload) {
       state.unitTypes = payload;
-    },    
+    },
     // 費用種別リスト取得用
     setExpenseCategories(state, payload) {
       state.expenseCategories = payload;
@@ -36,44 +36,44 @@ export default {
     // 仕損費種別取得用
     setFailureCategories(state, payload) {
       state.failureCategories = payload;
-    }
+    },
   },
   actions: {
     // API非同期通信処理
-    getCountries({ commit }, data) {
-      let url = "system_master/countries/";
-      let commitName = "setCountries";
-      api.get({ commit }, url, data, commitName);
+    getCountries({commit}, data) {
+      const url = 'system_master/countries/';
+      const commitName = 'setCountries';
+      api.get({commit}, url, data, commitName);
     },
     // 通貨リスト取得
-    getCurrencies({ commit }, data) {
-      let url = "system_master/currencies/";
-      let commitName = "setCurrencies";
-      api.get({ commit }, url, data, commitName);
+    getCurrencies({commit}, data) {
+      const url = 'system_master/currencies/';
+      const commitName = 'setCurrencies';
+      api.get({commit}, url, data, commitName);
     },
     // 単位リスト取得
-    getUnitTypes({ commit }, data) {
-      let url = "system_master/unit_types/";
-      let commitName = "setUnitTypes";
-      api.get({ commit }, url, data, commitName);
+    getUnitTypes({commit}, data) {
+      const url = 'system_master/unit_types/';
+      const commitName = 'setUnitTypes';
+      api.get({commit}, url, data, commitName);
     },
     // 費用種別リスト取得用
-    async getExpenseCategories({ commit }, data) {
-      let url = "system_master/expense_categories/";
-      let commitName = "setExpenseCategories";
-      api.get({ commit }, url, data, commitName);
+    async getExpenseCategories({commit}, data) {
+      const url = 'system_master/expense_categories/';
+      const commitName = 'setExpenseCategories';
+      api.get({commit}, url, data, commitName);
     },
     // 費用種別取得用
-    async getExpenseCategory({ commit }, data) {
-      let url = "system_master/expense_categories/" + data + "/";
-      let commitName = "setExpenseCategory";
-      api.get({ commit }, url, data, commitName);
+    async getExpenseCategory({commit}, data) {
+      const url = 'system_master/expense_categories/' + data + '/';
+      const commitName = 'setExpenseCategory';
+      api.get({commit}, url, data, commitName);
     },
     // 仕損費種別取得用
-    async getFailureCategories({ commit }, data) {
-      let url = "system_master/failure_categories/";
-      let commitName = "setFailureCategories";
-      api.get({ commit }, url, data, commitName);
-    }
-  }
+    async getFailureCategories({commit}, data) {
+      const url = 'system_master/failure_categories/';
+      const commitName = 'setFailureCategories';
+      api.get({commit}, url, data, commitName);
+    },
+  },
 };

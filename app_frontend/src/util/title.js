@@ -1,9 +1,9 @@
 export default {
   mounted() {
-    let { title } = this.$options;
+    let {title} = this.$options;
     if (title) {
-      title = typeof title === "function" ? title.call(this) : title;
+      title = typeof title === 'function' ? title.call(this) : title;
       document.title = `BMS - ${title}`;
     }
-  }
+  },
 };
