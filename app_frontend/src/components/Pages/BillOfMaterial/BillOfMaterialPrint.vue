@@ -11,6 +11,10 @@
           {{ printStatus.cardTitle }}"{{ jobOrder.mfgNo }} - {{ jobOrder.name }}"
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn @click="backToMenu" >
+          <v-icon>reply</v-icon>
+          Back to Menu
+        </v-btn>
         <v-btn 
           @click="print"
           color="primary"
@@ -342,7 +346,11 @@ export default {
         // console.log(partsList[p]);
         let update = await this.putBillOfMaterial(partsList[p]);
       }
-    }
+    },
+    // メニューに戻る
+    backToMenu() {
+      this.$router.push({ name: "BillOfMaterialMenu" });
+    },
   },
   created() {
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
