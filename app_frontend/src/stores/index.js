@@ -31,7 +31,10 @@ export default new Vuex.Store({
   actions: {},
   plugins: [
     createPersistedState({
-      paths: ['auth', 'systemConfig', 'systemMasterApi', 'jobOrderAPI', 'billOfMaterialAPI'],
+      paths: [
+        'auth', 'systemConfig', 'systemMasterApi', 'jobOrderAPI',
+        'billOfMaterialAPI',
+      ],
       storage: window.sessionStorage,
     }),
   ],

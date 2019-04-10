@@ -21,6 +21,9 @@ import BillOfMaterialMenu from '@/components/Pages/BillOfMaterial/BillOfMaterial
 import BillOfMaterialList from '@/components/Pages/BillOfMaterial/BillOfMaterialList.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialUpload from '@/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialPrint from '@/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue'; /* eslint-disable-line max-len */
+import MakingOrder from '@/components/Pages/MakingOrder/MakingOrder.vue'; /* eslint-disable-line max-len */
+import MakingOrderMenu from '@/components/Pages/MakingOrder/MakingOrderMenu.vue'; /* eslint-disable-line max-len */
+
 
 import Master from '@/components/Pages/Master/Master.vue';
 import Company from '@/components/Pages/Master/Company.vue';
@@ -136,6 +139,18 @@ const router = new Router({
                   path: 'print',
                   name: 'BillOfMaterialPrint',
                   component: BillOfMaterialPrint,
+                },
+              ],
+            },
+            {
+              path: 'making_order',
+              name: 'MakingOrder',
+              component: MakingOrder,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'MakingOrderMenu',
+                  component: MakingOrderMenu,
                 },
               ],
             },

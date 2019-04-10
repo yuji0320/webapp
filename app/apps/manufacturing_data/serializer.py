@@ -167,3 +167,66 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'display_price',
             'manufacturer_data'
         )
+
+
+# 部品表
+class MakingOrderSerializer(serializers.ModelSerializer):
+    total_default_currency_price = serializers.SerializerMethodField()
+    display_price = serializers.SerializerMethodField()
+    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
+
+    # bill_of_material = BillOfMaterialSerializer(source='bill_of_material', read_only=True)
+    # bill_of_material_id = serializers.PrimaryKeyRelatedField(
+    #     queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
+
+    # デフォルト通貨での合計価格計算
+    @staticmethod
+    def get_total_default_currency_price(obj):
+        total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        return round(total_price, 2)
+
+    # 表示用単価作成(通貨記号付き文字列短歌)
+    @staticmethod
+    def get_display_price(obj):
+        display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
+        return display_price
+
+    def validate(self, data):
+        if data['number'] != "":
+            try:
+                data['number'] = MakingOrder.objects.filter(company=data['company']).latest('created_at').number + 1
+            except ValueError:
+                data['number'] = 1
+        return data
+
+    class Meta:
+        model = MakingOrder
+        fields = (
+            'id',
+            'company',
+            'number',
+            # 'bill_of_material_id',
+            'name',
+            'manufacturer',
+            'standard',
+            'unit_number',
+            'drawing_number',
+            'material',
+            'surface_treatment',
+            'amount',
+            'unit',
+            'currency',
+            'rate',
+            'unit_price',
+            'desired_delivery_date',
+            'is_printed',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'bill_of_material',
+            'total_default_currency_price',
+            'display_price',
+            'manufacturer_data'
+        )

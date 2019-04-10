@@ -26,7 +26,7 @@ const systemConfigState = {
         {
           icon: 'send',
           title: 'Order',
-          url: '',
+          url: {name: 'MakingOrderMenu'},
         },
         {
           icon: 'move_to_inbox',

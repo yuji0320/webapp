@@ -90,10 +90,10 @@ class BillOfMaterial(models.Model):
                                      blank=True,
                                      null=True)  # メーカー
     standard = models.CharField(_('Standard・Model'), max_length=255, blank=True)  # 規格・型式
+    unit_number = models.CharField(_('Unit Number'), max_length=255, blank=True)  # ユニット番号
     drawing_number = models.CharField(_('Drawing Number'), max_length=255, blank=True)  # 図面番号
     material = models.CharField(_('Material'), max_length=255, blank=True)  # 材質
     surface_treatment = models.CharField(_('Surface treatment'), max_length=255, blank=True)  # 表面加工
-    unit_number = models.CharField(_('Unit Number'), max_length=255, blank=True)  # ユニット番号
     amount = models.DecimalField(_('Amount'), max_digits=17, decimal_places=2, default=1)  # 個数
     stock_appropriation = models.DecimalField(
         _('Stock appropriation'),
@@ -127,3 +127,53 @@ class BillOfMaterial(models.Model):
         db_table = 'bill_of_material'
         verbose_name = _('Bill of Material')
         verbose_name_plural = _('Bill of Material')
+
+
+# def get_next(data):
+#     try:
+#         return MakingOrder.objects.filter(company=data).letest('created_at').number + 1
+#     except ValueError:
+#         return 1
+
+
+class MakingOrder(models.Model):
+    # 発注ファイル
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    number = models.IntegerField(_('number'))  # 企業内での発注番号
+    bill_of_material = models.ForeignKey('BillOfMaterial', on_delete=models.PROTECT, blank=True, null=True)  # 紐付け部品
+    name = models.CharField(_('Parts name'), max_length=255)  # 部品名
+    manufacturer = models.ForeignKey('system_users.UserPartner',
+                                     related_name='%(class)s_requests_manufacturer',
+                                     on_delete=models.PROTECT,
+                                     blank=True,
+                                     null=True)  # メーカー
+    standard = models.CharField(_('Standard・Model'), max_length=255, blank=True)  # 規格・型式
+    unit_number = models.CharField(_('Unit Number'), max_length=255, blank=True)  # ユニット番号
+    drawing_number = models.CharField(_('Drawing Number'), max_length=255, blank=True)  # 図面番号
+    material = models.CharField(_('Material'), max_length=255, blank=True)  # 材質
+    surface_treatment = models.CharField(_('Surface treatment'), max_length=255, blank=True)  # 表面加工
+    amount = models.DecimalField(_('Amount'), max_digits=17, decimal_places=2, default=1)  # 個数
+    unit = models.ForeignKey('system_master.SystemUnitType', on_delete=models.PROTECT)  # 計量単位種別
+    currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
+    rate = models.FloatField(_('Order Rate'), default=1)  # 受注時為替レート
+    unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    ordered_date = models.DateField(_('PO date'), blank=True, null=True, default=None)  # 発注日
+    desired_delivery_date = models.DateField(_('Desired delivery date'), blank=True, null=True)  # 希望納期
+    is_printed = models.BooleanField(_('is Printed'), default=False)  # 部品表印刷済みかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
+
+    class Meta:
+        db_table = 'making_order'
+        verbose_name = _('Making Order')
+        verbose_name_plural = _('Making Orders')
+        unique_together = (("company", "number"),)  # 会社ごとの工事番号ユニーク
+
+    def __str__(self): return self.name

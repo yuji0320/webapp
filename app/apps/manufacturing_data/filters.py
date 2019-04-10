@@ -41,3 +41,22 @@ class BillOfMaterialFilter(filters.FilterSet):
             ('name', 'name'),
         ),
     )
+
+
+class MakingOrderFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+    standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+
+    class Meta:
+        model = MakingOrder
+        fields = [
+            'id', 'company', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type', 'name',
+            "standard", "is_printed"
+        ]
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('name', 'name'),
+        ),
+    )
