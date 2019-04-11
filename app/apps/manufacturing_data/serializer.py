@@ -1,4 +1,7 @@
 import decimal
+
+from django.forms import IntegerField
+
 from .models import *
 from system_users.serializer import *
 from system_master.serializer import *
@@ -55,7 +58,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
     # 頭出し検索用フィールド
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.mfg_no) + ": " + obj.name
+        search_field = str(obj.mfg_no) + " : " + obj.name
         return search_field
 
     class Meta:
@@ -113,6 +116,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     default_currency_price = serializers.SerializerMethodField()
     total_default_currency_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
+    order_amount = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
 
     # デフォルト通貨での単価計算
@@ -126,6 +130,16 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     def get_total_default_currency_price(obj):
         total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
         return round(total_price, 2)
+
+    # 発注数量計算
+    @staticmethod
+    def get_order_amount(obj):
+        amount = 0.00
+        amount_def = decimal.Decimal(float(obj.amount)) - decimal.Decimal(float(obj.stock_appropriation))
+        if not obj.is_customer_supplied:
+            if amount_def > 0:
+                amount = amount_def
+        return round(amount, 2)
 
     # 表示用単価作成
     @staticmethod
@@ -165,19 +179,24 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'default_currency_price',
             'total_default_currency_price',
             'display_price',
-            'manufacturer_data'
+            'order_amount',
+            'manufacturer_data',
         )
 
 
 # 部品表
 class MakingOrderSerializer(serializers.ModelSerializer):
+    # number = IntegerField(max_value=2147483647, min_value=-2147483648, required=False)
     total_default_currency_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
+    supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
+    # bill_of_material_data = BillOfMaterialSerializer(source='bill_of_material', write_only=True)
 
-    # bill_of_material = BillOfMaterialSerializer(source='bill_of_material', read_only=True)
-    # bill_of_material_id = serializers.PrimaryKeyRelatedField(
-    #     queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
+    bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
+    bill_of_material_id = serializers.PrimaryKeyRelatedField(
+        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
+    # bill_of_material_id = serializers.PrimaryKeyRelatedField(source='bill_of_material', write_only=True)
 
     # デフォルト通貨での合計価格計算
     @staticmethod
@@ -192,12 +211,14 @@ class MakingOrderSerializer(serializers.ModelSerializer):
         return display_price
 
     def validate(self, data):
-        if data['number'] != "":
+        if data['number']:
+            return data
+        else:
             try:
                 data['number'] = MakingOrder.objects.filter(company=data['company']).latest('created_at').number + 1
             except ValueError:
                 data['number'] = 1
-        return data
+            return data
 
     class Meta:
         model = MakingOrder
@@ -205,7 +226,8 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'id',
             'company',
             'number',
-            # 'bill_of_material_id',
+            'bill_of_material',
+            'bill_of_material_id',
             'name',
             'manufacturer',
             'standard',
@@ -218,15 +240,26 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'currency',
             'rate',
             'unit_price',
+            'supplier',
             'desired_delivery_date',
+            'supplier',
             'is_printed',
             'created_at',
             'created_by',
             'modified_at',
             'modified_by',
             # read_only under here
-            'bill_of_material',
+            # 'bill_of_material_data',
             'total_default_currency_price',
             'display_price',
-            'manufacturer_data'
+            'manufacturer_data',
+            'supplier_data'
         )
+
+    # def update(self, instance, validated_data):
+    #     bom = validated_data.bill_of_material
+
+    # def to_representation(self, instance):
+    #     response = super().to_representation(instance)
+    #     response['bill_of_material'] = BillOfMaterialSerializer(instance.bill_of_material).data
+    #     return response

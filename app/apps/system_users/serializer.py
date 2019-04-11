@@ -30,7 +30,7 @@ class UserStaffSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.staff_number) + ": " + obj.ruby + "(" + obj.full_name + ")"
+        search_field = str(obj.staff_number) + " : " + obj.ruby + "(" + obj.full_name + ")"
         return search_field
 
 
@@ -50,7 +50,7 @@ class UserPartnerSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.partner_number) + ": " + obj.abbr + "(" + obj.name + ")"
+        search_field = str(obj.partner_number) + " : " + obj.abbr + "(" + obj.name + ")"
         return search_field
 
     class Meta:

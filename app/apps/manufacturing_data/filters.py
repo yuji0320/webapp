@@ -46,12 +46,14 @@ class BillOfMaterialFilter(filters.FilterSet):
 class MakingOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+    supplier = filters.CharFilter(field_name='supplier', lookup_expr='icontains')
+    no_supplier = filters.BooleanFilter(field_name='supplier', lookup_expr='isnull')
 
     class Meta:
         model = MakingOrder
         fields = [
-            'id', 'company', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type', 'name',
-            "standard", "is_printed"
+            'id', 'number', 'company', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type',
+            'name', 'standard', 'is_printed', 'supplier', 'no_supplier'
         ]
 
     order_by = filters.OrderingFilter(

@@ -140,8 +140,11 @@ class MakingOrder(models.Model):
     # 発注ファイル
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-    number = models.IntegerField(_('number'))  # 企業内での発注番号
-    bill_of_material = models.ForeignKey('BillOfMaterial', on_delete=models.PROTECT, blank=True, null=True)  # 紐付け部品
+    number = models.IntegerField(_('number'), blank=True, null=True)  # 企業内での発注番号
+    bill_of_material = models.OneToOneField('BillOfMaterial',
+                                            on_delete=models.PROTECT,
+                                            blank=True,
+                                            null=True,)  # 紐付け部品
     name = models.CharField(_('Parts name'), max_length=255)  # 部品名
     manufacturer = models.ForeignKey('system_users.UserPartner',
                                      related_name='%(class)s_requests_manufacturer',
@@ -158,6 +161,12 @@ class MakingOrder(models.Model):
     currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
     rate = models.FloatField(_('Order Rate'), default=1)  # 受注時為替レート
     unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    supplier = models.ForeignKey('system_users.UserPartner',
+                                 related_name='%(class)s_requests_supplier',
+                                 on_delete=models.PROTECT,
+                                 blank=True,
+                                 null=True,
+                                 default=None)  # 仕入先
     ordered_date = models.DateField(_('PO date'), blank=True, null=True, default=None)  # 発注日
     desired_delivery_date = models.DateField(_('Desired delivery date'), blank=True, null=True)  # 希望納期
     is_printed = models.BooleanField(_('is Printed'), default=False)  # 部品表印刷済みかどうか

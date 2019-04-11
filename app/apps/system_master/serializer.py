@@ -13,7 +13,7 @@ class SystemCurrencySerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.code) + ": " + obj.name
+        search_field = str(obj.code) + " : " + obj.name
         return search_field
 
     class Meta:
@@ -26,7 +26,7 @@ class SystemUnitTypeSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.number) + ": " + obj.display + "(" + obj.name + ")"
+        search_field = str(obj.number) + " : " + obj.display + "(" + obj.name + ")"
         return search_field
 
     class Meta:
@@ -39,7 +39,7 @@ class SystemExpenseCategorySerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.category_number) + ": " + obj.category_name
+        search_field = str(obj.category_number) + " : " + obj.category_name
         return search_field
 
     class Meta:
@@ -52,7 +52,7 @@ class SystemFailureCategorySerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_incremental_field(obj):
-        search_field = str(obj.category_number) + ": " + obj.category_name
+        search_field = str(obj.category_number) + " : " + obj.category_name
         return search_field
 
     class Meta:
