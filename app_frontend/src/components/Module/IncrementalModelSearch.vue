@@ -56,6 +56,7 @@ export default {
       "searchUserPartners",
       "searchPartnerCustomers",
       "searchPartnerDeliveries",
+      "searchPartnerSuppliers",
       "searchPartnerManufacturers"
     ]),
     ...mapState("jobOrderAPI", ["searchJobOrder"]),    
@@ -80,6 +81,9 @@ export default {
               break;
             case "delivery":
               return this.searchPartnerDeliveries.results;
+              break;
+            case "supplier":
+              return this.searchPartnerSuppliers.results;
               break;
             case "manufacturer":
               return this.searchPartnerManufacturers.results;
@@ -115,6 +119,7 @@ export default {
       "getSearchUserPartners",
       "getSearchPartnerCustomers",
       "getSearchPartnerDeliveries",
+      "getSearchPartnerSuppliers",
       "getSearchPartnerManufacturers"
     ]),
     ...mapActions("jobOrderAPI", ["getSearchJobOrder"]),
@@ -144,6 +149,9 @@ export default {
               break;
             case "delivery":
               this.getSearchPartnerDeliveries(search);
+              break;
+            case "supplier":
+              this.getSearchPartnerSuppliers(search);
               break;
             case "manufacturer":
               this.getSearchPartnerManufacturers(search);

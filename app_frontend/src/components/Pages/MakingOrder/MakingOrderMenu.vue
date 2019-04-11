@@ -5,9 +5,9 @@
   >
     <v-card>
       <v-toolbar card>
-        <v-icon>list</v-icon>
+        <v-icon>send</v-icon>
         <v-toolbar-title class="font-weight-light">
-          Bill of Material
+          Making Order
         </v-toolbar-title>
       </v-toolbar>
 
@@ -21,7 +21,6 @@
           errorMessages=""
           @clear-item="clearJobOrderID"
         ></app-incremental-model-search>
-        
       </v-card-title>
 
       <v-card-text>
@@ -53,10 +52,10 @@
               round
               color="success"
               :disabled = "mfgNo === ''"
-              @click="printBillOfMaterials"
+              @click="printOrder"
             >
               <v-icon>print</v-icon>
-              Print Bill of Material
+              Print Purchase Order
             </v-btn>
           </v-flex>
 
@@ -68,25 +67,17 @@
               round
               color="success"
               :disabled = "mfgNo === ''"
-              @click="reprintBillOfMaterials"
+              @click="reprintOrder"
             >
               <v-icon>print</v-icon>
-              Rerint Bill of Material (ALL)
+              Rerint Purchase Order
             </v-btn>
           </v-flex>
 
+
         </v-layout>
-
-
-
-        <!-- {{ expenseCategories }} -->
-        <!-- {{ jobOrderID }},
-        {{ partsType }} -->
-
-
-
-
       </v-card-text>
+
       <!-- Cardフッター -->
       <v-footer 
         card
@@ -94,15 +85,15 @@
       >
       </v-footer>
     </v-card>
-  </v-container>
+  </v-container>  
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 
 export default {
-  title: "Bill of Material Menu",
-  name: "BillOfMaterialMenu",
+  title: "Making Order Menu",
+  name: "MakingOrderMenu",
   data() {
     return {
       mfgNo: "",
@@ -112,7 +103,7 @@ export default {
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["expenseCategories"]),
-    ...mapState("billOfMaterialAPI", ["jobOrderID", "partsType", "reprint"]),
+    ...mapState("makingOrderAPI", ["jobOrderID", "partsType", "reprint"]),    
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -123,27 +114,27 @@ export default {
   },
   methods: {
     ...mapActions("systemMasterApi", ["getExpenseCategories"]),
-    ...mapActions("billOfMaterialAPI", ["setJobOrderID", "setPartsType", "setReprint"]),
+    ...mapActions("makingOrderAPI", ["setJobOrderID", "setPartsType", "setReprint"]),
     selectParts(val) {
       this.setJobOrderID(this.mfgNo);
       this.setPartsType(val);
-      this.$router.push({ name: "BillOfMaterialList" });
+      this.$router.push({ name: "MakingOrderList" });
     },
     clearJobOrderID() {
       this.mfgNo = "";
       this.setJobOrderID("");
       this.setPartsType("");
     },
-    printBillOfMaterials() {
+    printOrder() {
       this.setJobOrderID(this.mfgNo);
       this.setReprint(false);
       // console.log(this.reprint);
-      this.$router.push({ name: "BillOfMaterialPrint" });
+      this.$router.push({ name: "MakingOrderPrint" });
     },
-    reprintBillOfMaterials() {
+    reprintOrder() {
       this.setJobOrderID(this.mfgNo);
       this.setReprint(true);
-      this.$router.push({ name: "BillOfMaterialPrint" });
+      this.$router.push({ name: "MakingOrderPrint" });
     }
   },
   created() {

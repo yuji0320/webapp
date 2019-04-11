@@ -37,6 +37,7 @@ export default {
           // 削除成功時はdataに空の値を代入する
             response.data = {};
           }
+          // console.log(response);
           return Promise.resolve({
             data: response.data,
           });
@@ -85,6 +86,7 @@ export default {
       url = url + data.detail + '/';
     }
     const response = await this.request('get', url, data);
+    // console.log(response);
     if (response.data) {
       commit(commitName, response.data);
       return response.data;

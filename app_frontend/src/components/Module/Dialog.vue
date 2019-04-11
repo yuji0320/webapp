@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="dialog" scrollable max-width="600px">
-    <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
+  <v-dialog v-model="dialog" scrollable :max-width="width">
+    <v-btn slot="activator" color="primary" dark class="mb-2" v-show="!hideButtons">New Item</v-btn>
     <v-card>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
@@ -13,12 +13,12 @@
       <!-- フォーム内容 -->
       <v-card-text id="card-text">
         <v-container grid-list-md>
-          <v-form @submit.prevent="submitForm" :id="formName">
+          <!-- <v-form @submit.prevent="submitForm" :id="formName"> -->
 
             <!-- フォームコンテンツスロット -->
             <slot name="dialog-contents"></slot>
 
-          </v-form>
+          <!-- </v-form> -->
         </v-container>
       </v-card-text>
       <v-divider></v-divider>
@@ -32,6 +32,7 @@
           color="darken-1"
           outline
           @click="clearForm"
+          v-show="!hideButtons"
         >Clear</v-btn>
 
         <v-btn 
@@ -39,6 +40,7 @@
           color="blue darken-1"
           type="submit"
           outline
+          @click="submitForm"
         >Save</v-btn>
         
       </v-card-actions>
@@ -53,15 +55,28 @@ export default {
   data() {
     return {
       dialog: false,
-      editedIndex: -1
+      editedIndex: -1,
+      defaultWidth: "600px"
     };
   },
   props: {
-    formName: { required: true }
+    formName: { required: true },
+    dialogTitle: { required: false },
+    hideButtons: { required: false },
+    dialogWidth: { required: false },
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      let title = this.editedIndex === -1 ? "New Item" : "Edit Item";
+      if(this.dialogTitle) { title = this.dialogTitle; };
+      return title;
+    },
+    width() {
+      if(this.dialogWidth) {
+        return this.dialogWidth;
+      } else {
+        return this.defaultWidth;
+      }
     }
   },
   watch: {

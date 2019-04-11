@@ -11,7 +11,7 @@ const systemUserState = {
   searchUserPartners: {},
   searchPartnerCustomers: {},
   searchPartnerDeliveries: {},
-  searchPartnerSupplyers: {},
+  searchPartnerSuppliers: {},
   searchPartnerManufacturers: {},
 };
 
@@ -193,11 +193,18 @@ export default {
       const commitName = 'setSearchPartnerDeliveries';
       api.get({commit}, url, data, commitName);
     },
-    // 納入先インクリメンタル検索用
+    // メーカーインクリメンタル検索用
     async getSearchPartnerManufacturers({commit}, data) {
       data.params.is_manufacturer = 'true';
       const url = 'system_user/user_partners/';
       const commitName = 'setSearchPartnerManufacturers';
+      api.get({commit}, url, data, commitName);
+    },
+    // 仕入先インクリメンタル検索用
+    async getSearchPartnerSuppliers({commit}, data) {
+      data.params.is_supplier = 'true';
+      const url = 'system_user/user_partners/';
+      const commitName = 'setSearchPartnerSuppliers';
       api.get({commit}, url, data, commitName);
     },
   },

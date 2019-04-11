@@ -16,7 +16,7 @@
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>list</v-icon></span>
-      <span slot="card-header-title">{{ expenseCategory.categoryName }} : "{{ jobOrder.mfgNo }} - {{ jobOrder.name }}" </span>
+      <span slot="card-header-title">BOM - {{ expenseCategory.categoryName }} : "{{ jobOrder.mfgNo }} - {{ jobOrder.name }}" </span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -53,7 +53,7 @@
                   </li>
                 </v-alert>
               </v-flex>
-              <!-- 取引先フォーム -->
+              <!-- 部品表フォーム -->
               <v-flex xs12>
                 <v-text-field 
                   label="Part Name*"
@@ -187,7 +187,7 @@
               <v-flex xs12 md4>
                 <app-input-date 
                   label="Desired Delivery Date"
-                  v-model="jobOrder.desiredDeliveryDate"
+                  v-model="billOfMaterial.desiredDeliveryDate"
                   :errorMessages="responseError.desiredDeliveryDate"
                 ></app-input-date >
               </v-flex>       
@@ -195,7 +195,8 @@
               <v-flex xs12 md6>
                 <v-checkbox
                   label="is Customer Supplied"
-                  v-model="jobOrder.isCustomerSupplied"
+                  v-model="billOfMaterial.isCustomerSupplied"
+                  :errorMessages="responseError.isCustomerSupplied"
                 ></v-checkbox>
               </v-flex>
               <!-- 仕損費種別 -->

@@ -1,17 +1,17 @@
 import api from '@/api';
 
-const billOfMaterialState = {
+const makingOrderState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
-  billOfMaterials: {},
-  billOfMaterial: {},
+  makingOrders: {},
+  makingOrder: {},
   reprint: false,
 };
 
 export default {
   namespaced: true,
-  state: billOfMaterialState,
+  state: makingOrderState,
   mutations: {
     // エラーハンドリング用
     error(state, payload) {
@@ -26,19 +26,18 @@ export default {
       state.partsType = payload;
     },
     // 部品表リスト取得
-    setBillOfMaterials(state, payload) {
-      state.billOfMaterials = payload;
+    setMakingOrders(state, payload) {
+      state.makingOrders = payload;
     },
     // 部品表単体取得
-    setBillOfMaterial(state, payload) {
-      state.billOfMaterial = payload;
+    setMakingOrder(state, payload) {
+      state.makingOrder = payload;
     },
     // 印刷ステータス登録
     setReprint(state, payload) {
       state.reprint = payload;
     },
   },
-  // API非同期通信処理
   actions: {
     // 作業指図書IDセット
     setJobOrderID({commit}, data) {
@@ -49,42 +48,42 @@ export default {
       commit('setPartsType', data);
     },
     // 部品表リスト取得
-    async getBillOfMaterials({commit}, data) {
-      const url = 'manufacturing_data/bill_of_material/';
-      const commitName = 'setBillOfMaterials';
+    async getMakingOrders({commit}, data) {
+      const url = 'manufacturing_data/making_order/';
+      const commitName = 'setMakingOrders';
       const res = api.get({commit}, url, data, commitName);
       return res;
     },
     // 部品表単体セット
-    setBillOfMaterial({commit}, data) {
-      commit('setBillOfMaterial', data);
+    setMakingOrder({commit}, data) {
+      commit('setMakingOrder', data);
     },
     // 部品表エラーState情報クリア
-    clearBillOfMaterialError({commit}) {
+    clearMakingOrderError({commit}) {
       commit('error', {});
     },
     // 部品表リストセット
-    setBillOfMaterials({commit}, data) {
-      commit('setBillOfMaterials', data);
+    setMakingOrders({commit}, data) {
+      commit('setMakingOrders', data);
     },
     // 部品表新規登録
-    async postBillOfMaterial({commit}, data) {
-      const url = 'manufacturing_data/bill_of_material/';
-      const commitName = 'setBillOfMaterial';
+    async postMakingOrder({commit}, data) {
+      const url = 'manufacturing_data/making_order/';
+      const commitName = 'setMakingOrder';
       const res = await api.post({commit}, url, data, commitName);
       return res;
     },
     // 部品表情報更新
-    async putBillOfMaterial({commit}, data) {
-      const url = 'manufacturing_data/bill_of_material/' + data.id + '/';
-      const commitName = 'setBillOfMaterial';
+    async putMakingOrder({commit}, data) {
+      const url = 'manufacturing_data/making_order/' + data.id + '/';
+      const commitName = 'setMakingOrder';
       const res = await api.put({commit}, url, data, commitName);
       return res;
     },
     // 部品表削除
-    async deleteBillOfMaterial({commit}, data) {
-      const url = 'manufacturing_data/bill_of_material/' + data.id + '/';
-      const commitName = 'setBillOfMaterial';
+    async deleteMakingOrder({commit}, data) {
+      const url = 'manufacturing_data/making_order/' + data.id + '/';
+      const commitName = 'setMakingOrder';
       const res = await api.delete({commit}, url, data, commitName);
       return res;
     },

@@ -13,6 +13,7 @@ import systemMasterApi from './modules/systemMasterApi.js';
 import systemUserApi from './modules/systemUserApi.js';
 import jobOrderAPI from './modules/jobOrder.js';
 import billOfMaterialAPI from './modules/billOfMaterial';
+import makingOrderAPI from './modules/makingOrder';
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     systemUserApi,
     jobOrderAPI,
     billOfMaterialAPI,
+    makingOrderAPI,
   },
   state: {},
   mutations: {},
@@ -33,7 +35,7 @@ export default new Vuex.Store({
     createPersistedState({
       paths: [
         'auth', 'systemConfig', 'systemMasterApi', 'jobOrderAPI',
-        'billOfMaterialAPI',
+        'billOfMaterialAPI', 'makingOrderAPI',
       ],
       storage: window.sessionStorage,
     }),

@@ -4,7 +4,7 @@
       <v-toolbar dark :color="options.color" dense flat>
         <v-toolbar-title class="white--text">{{ title }}</v-toolbar-title>
       </v-toolbar>
-      <v-card-text v-show="!!message">{{ message }}</v-card-text>
+      <v-card-text style="white-space:pre-wrap;" v-show="!!message">{{ message }}</v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
         <v-btn color="primary darken-1" flat="flat" @click.native="agree">Yes</v-btn>
