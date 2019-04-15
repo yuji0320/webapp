@@ -184,19 +184,19 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
         )
 
 
-# 部品表
+# 発注ファイル
 class MakingOrderSerializer(serializers.ModelSerializer):
-    # number = IntegerField(max_value=2147483647, min_value=-2147483648, required=False)
     total_default_currency_price = serializers.SerializerMethodField()
+    total_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
+    display_price_total = serializers.SerializerMethodField()
+    currency_data = SystemCurrencySerializer(source='currency', read_only=True)
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
-    # bill_of_material_data = BillOfMaterialSerializer(source='bill_of_material', write_only=True)
 
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
         queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
-    # bill_of_material_id = serializers.PrimaryKeyRelatedField(source='bill_of_material', write_only=True)
 
     # デフォルト通貨での合計価格計算
     @staticmethod
@@ -204,10 +204,23 @@ class MakingOrderSerializer(serializers.ModelSerializer):
         total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
         return round(total_price, 2)
 
-    # 表示用単価作成(通貨記号付き文字列短歌)
+    # 発注通貨での合計金額
+    @staticmethod
+    def get_total_price(obj):
+        total_price = obj.unit_price * decimal.Decimal(float(obj.amount))
+        return round(total_price, 2)
+
+    # 表示用単価作成(通貨記号付き文字列単価)
     @staticmethod
     def get_display_price(obj):
         display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
+        return display_price
+
+    # 表示用合計金額作成(通貨記号付き文字列合計金額)
+    @staticmethod
+    def get_display_price_total(obj):
+        total_price = round(obj.unit_price * decimal.Decimal(float(obj.amount)), 2)
+        display_price = obj.currency.display + ' ' + "{:,.2f}".format(total_price)
         return display_price
 
     def validate(self, data):
@@ -243,15 +256,18 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'supplier',
             'desired_delivery_date',
             'supplier',
+            'ordered_date',
             'is_printed',
             'created_at',
             'created_by',
             'modified_at',
             'modified_by',
             # read_only under here
-            # 'bill_of_material_data',
             'total_default_currency_price',
+            'total_price',
             'display_price',
+            'display_price_total',
+            'currency_data',
             'manufacturer_data',
             'supplier_data'
         )
@@ -263,3 +279,28 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     #     response = super().to_representation(instance)
     #     response['bill_of_material'] = BillOfMaterialSerializer(instance.bill_of_material).data
     #     return response
+
+
+class ReceivingProcessSerializer(serializers.ModelSerializer):
+    order_data = MakingOrderSerializer(source='order', read_only=True)
+
+    class Meta:
+        model = ReceivingProcess
+        fields = (
+            # 発注ファイル
+            'id',
+            'order',
+            'amount',
+            'unit',
+            'currency',
+            'rate',
+            'unit_price',
+            'received_date',
+            'is_received',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'order_data',
+        )

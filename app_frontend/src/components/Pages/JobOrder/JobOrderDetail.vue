@@ -235,7 +235,7 @@ export default {
       if(limitProfit > 0) {
         limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       } else if(limitProfit < 0) {
-        limitProfitPercentage = Math.round((limitProfit / orderAmount * -100) * 100) / 100;
+        limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       }
       return {
         results: results,

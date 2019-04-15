@@ -4,6 +4,7 @@ const makingOrderState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
+  supplierID: '',
   makingOrders: {},
   makingOrder: {},
   reprint: false,
@@ -24,6 +25,10 @@ export default {
     // 部品種別設定
     setPartsType(state, payload) {
       state.partsType = payload;
+    },
+    // 部品種別設定
+    setSupplierID(state, payload) {
+      state.supplierID = payload;
     },
     // 部品表リスト取得
     setMakingOrders(state, payload) {
@@ -46,6 +51,10 @@ export default {
     // 部品種別IDセット
     setPartsType({commit}, data) {
       commit('setPartsType', data);
+    },
+    // 仕入先IDセット
+    setSupplierID({commit}, data) {
+      commit('setSupplierID', data);
     },
     // 部品表リスト取得
     async getMakingOrders({commit}, data) {

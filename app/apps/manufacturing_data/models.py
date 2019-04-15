@@ -186,3 +186,31 @@ class MakingOrder(models.Model):
         unique_together = (("company", "number"),)  # 会社ごとの工事番号ユニーク
 
     def __str__(self): return self.name
+
+
+class ReceivingProcess(models.Model):
+    # 仕入れファイル
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order = models.OneToOneField('MakingOrder', on_delete=models.PROTECT, blank=True, null=True,)  # 紐付け発注ファイル
+    amount = models.DecimalField(_('Amount'), max_digits=17, decimal_places=2, default=1)  # 個数
+    unit = models.ForeignKey('system_master.SystemUnitType', on_delete=models.PROTECT)  # 計量単位種別
+    currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
+    rate = models.FloatField(_('Rate'), default=1)  # 仕入時為替レート
+    unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    received_date = models.DateField(_('Received date'), blank=True, null=True, default=None)  # 仕入日
+    is_received = models.BooleanField(_('is Received'), default=False)  # 部品表印刷済みかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
+
+    class Meta:
+        db_table = 'receiving_process'
+        verbose_name = _('Receiving Process')
+        verbose_name_plural = _('Receiving Process')
+
+    def __str__(self): return self.order.number

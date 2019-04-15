@@ -210,7 +210,7 @@ export default {
       // プリントの実行
       this.pdfgen(pdfData);
 
-      // 際印刷の場合は下記処理を飛ばす
+      // 再印刷の場合は下記処理を飛ばす
       if(!this.reprint){
         // 部品表印刷済みステータスの実行
         let update = await this.updateIsPrinted();
@@ -246,7 +246,7 @@ export default {
         for(let part in partsList) {
           // 部品個数をカウント
           partsAmount += 1;
-          let partRow = []
+          let partRow = [];
           // テーブルヘッダーと同じデータを順番に配列に格納
           for(let h in tableHeaderData) {
             let d = partsList[part][tableHeaderData[h].value];

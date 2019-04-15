@@ -6,6 +6,7 @@ routeList = (
     (r'job_order', JobOrderAPIView),
     (r'bill_of_material', BillOfMaterialAPIView),
     (r'making_order', MakingOrderAPIView),
+    (r'receiving_process', ReceivingProcessAPIView),
 )
 
 router = routers.DefaultRouter()

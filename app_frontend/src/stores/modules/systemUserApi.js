@@ -146,6 +146,16 @@ export default {
     setPartner({commit}, data) {
       commit('setPartner', data);
     },
+    // 取引先単体取得
+    getPartner({commit}, data) {
+      const url = 'system_user/user_partners/' + data + '/';
+      const commitName = 'setPartner';
+      return api
+          .get({commit}, url, data, commitName)
+          .then(function(response) {
+            return response;
+          });
+    },
     // 取引先新規登録
     async postPartner({commit}, data) {
       const url = 'system_user/user_partners/';

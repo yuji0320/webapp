@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from manufacturing_data.filters import JobOrderFilter, BillOfMaterialFilter, MakingOrderFilter
+from manufacturing_data.filters import JobOrderFilter, BillOfMaterialFilter, MakingOrderFilter, ReceivingProcessFilter
 from .serializer import *
 # from core.multi_create import multi_create
 
@@ -34,3 +34,12 @@ class MakingOrderAPIView(viewsets.ModelViewSet):
     serializer_class = MakingOrderSerializer
     queryset = MakingOrder.objects.all()
     filter_class = MakingOrderFilter
+
+
+class ReceivingProcessAPIView(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = ReceivingProcessSerializer
+    queryset = ReceivingProcess.objects.all()
+    # filter_class = ReceivingProcessFilter

@@ -46,19 +46,37 @@ class BillOfMaterialFilter(filters.FilterSet):
 class MakingOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
-    supplier = filters.CharFilter(field_name='supplier', lookup_expr='icontains')
     no_supplier = filters.BooleanFilter(field_name='supplier', lookup_expr='isnull')
 
     class Meta:
         model = MakingOrder
         fields = [
             'id', 'number', 'company', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type',
-            'name', 'standard', 'is_printed', 'supplier', 'no_supplier'
+            'name', 'standard', 'is_printed', 'supplier', 'no_supplier', 'unit_price'
         ]
 
     order_by = filters.OrderingFilter(
         fields=(
             ('created_at', 'created_at'),
+            ('unit_price', 'unit_price'),
+            ('number', 'number'),
             ('name', 'name'),
+        ),
+    )
+
+
+class ReceivingProcessFilter(filters.FilterSet):
+
+    class Meta:
+        model = ReceivingProcess
+        fields = [
+            'id', 'order__number', 'order__company', 'order__bill_of_material', 'order__bill_of_material__job_order',
+            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price'
+        ]
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('order__number', 'order__number'),
         ),
     )

@@ -393,12 +393,24 @@
               </app-dialog>
             </v-layout>
           </span>
-
-
-          
-
         </app-dialog>
       </span>
+
+
+      <!-- カード上部検索機能コンポーネント -->
+      <div slot="search-bar">
+        <v-layout row wrap>
+          <app-search-bar
+            :length="makingOrders.pages"
+            :count="makingOrders.count"
+            :orderBy="orderBy"
+            :incremental="incremental"
+            :params="params"
+            @search-list="getList"
+          ></app-search-bar>
+        </v-layout>
+      </div>
+
 
     </app-card-table>
   </v-container>
@@ -503,6 +515,11 @@ export default {
       "setJobOrderID", "setPartsType", "getMakingOrders", "setMakingOrder" ,"clearMakingOrderError", "setMakingOrders",
       "postMakingOrder", "putMakingOrder", "deleteMakingOrder"
     ]),
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      let list = await this.getMakingOrders(data);
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     // 配列内のデータ存在チェック
     getHashProperties(array, val){
       const list = array.filter(x => x.billOfMaterial.id === val);

@@ -26,6 +26,7 @@ import MakingOrderMenu from '@/components/Pages/MakingOrder/MakingOrderMenu.vue'
 import MakingOrderList from '@/components/Pages/MakingOrder/MakingOrderList.vue'; /* eslint-disable-line max-len */
 import MakingOrderUpload from '@/components/Pages/MakingOrder/MakingOrderUpload.vue'; /* eslint-disable-line max-len */
 import MakingOrderPrint from '@/components/Pages/MakingOrder/MakingOrderPrint.vue'; /* eslint-disable-line max-len */
+import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.vue'; /* eslint-disable-line max-len */
 
 import Master from '@/components/Pages/Master/Master.vue';
 import Company from '@/components/Pages/Master/Company.vue';
@@ -168,6 +169,11 @@ const router = new Router({
                   path: 'print',
                   name: 'MakingOrderPrint',
                   component: MakingOrderPrint,
+                },
+                {
+                  path: 'notyet',
+                  name: 'MakingOrderNotyet',
+                  component: MakingOrderNotyet,
                 },
               ],
             },
