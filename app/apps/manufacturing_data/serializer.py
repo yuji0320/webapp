@@ -118,6 +118,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     display_price = serializers.SerializerMethodField()
     order_amount = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
+    mfg_no = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -146,6 +147,11 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     def get_display_price(obj):
         display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
         return display_price
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        return obj.job_order.mfg_no
 
     class Meta:
         model = BillOfMaterial
@@ -181,6 +187,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'display_price',
             'order_amount',
             'manufacturer_data',
+            'mfg_no',
         )
 
 
@@ -193,6 +200,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     currency_data = SystemCurrencySerializer(source='currency', read_only=True)
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
+    mfg_no = serializers.SerializerMethodField()
 
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
@@ -222,6 +230,11 @@ class MakingOrderSerializer(serializers.ModelSerializer):
         total_price = round(obj.unit_price * decimal.Decimal(float(obj.amount)), 2)
         display_price = obj.currency.display + ' ' + "{:,.2f}".format(total_price)
         return display_price
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        return obj.bill_of_material.job_order.mfg_no
 
     def validate(self, data):
         if data['number']:
@@ -269,7 +282,8 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'display_price_total',
             'currency_data',
             'manufacturer_data',
-            'supplier_data'
+            'supplier_data',
+            'mfg_no'
         )
 
     # def update(self, instance, validated_data):

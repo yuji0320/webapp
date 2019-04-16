@@ -42,4 +42,4 @@ class ReceivingProcessAPIView(viewsets.ModelViewSet):
     )
     serializer_class = ReceivingProcessSerializer
     queryset = ReceivingProcess.objects.all()
-    # filter_class = ReceivingProcessFilter
+    filter_class = ReceivingProcessFilter

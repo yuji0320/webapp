@@ -27,6 +27,10 @@ import MakingOrderList from '@/components/Pages/MakingOrder/MakingOrderList.vue'
 import MakingOrderUpload from '@/components/Pages/MakingOrder/MakingOrderUpload.vue'; /* eslint-disable-line max-len */
 import MakingOrderPrint from '@/components/Pages/MakingOrder/MakingOrderPrint.vue'; /* eslint-disable-line max-len */
 import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.vue'; /* eslint-disable-line max-len */
+import ReceivingProcess from '@/components/Pages/ReceivingProcess/ReceivingProcess.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
 
 import Master from '@/components/Pages/Master/Master.vue';
 import Company from '@/components/Pages/Master/Company.vue';
@@ -174,6 +178,28 @@ const router = new Router({
                   path: 'notyet',
                   name: 'MakingOrderNotyet',
                   component: MakingOrderNotyet,
+                },
+              ],
+            },
+            {
+              path: 'receiving_process',
+              name: 'ReceivingProcess',
+              component: ReceivingProcess,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'ReceivingProcessMenu',
+                  component: ReceivingProcessMenu,
+                },
+                {
+                  path: 'notyet',
+                  name: 'ReceivingProcessList',
+                  component: ReceivingProcessList,
+                },
+                {
+                  path: 'notyet',
+                  name: 'ReceivingProcessNotyet',
+                  component: ReceivingProcessNotyet,
                 },
               ],
             },

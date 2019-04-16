@@ -28,7 +28,7 @@
         grid-list-lg
       >
         <v-layout row wrap>
-          <v-flex xs12 lg6>
+          <v-flex xs12>
             <v-card>
               <v-toolbar card>
                 <v-toolbar-title class="font-weight-light">
@@ -71,17 +71,15 @@
                 <v-layout row>
                   <v-flex xs12>
                       <!-- 仕入先選択 -->
-                      <v-flex xs12 md8>
-                        <app-incremental-model-search
-                          label="Supplier"
-                          orderBy="name"
-                          v-model="supplier"
-                          searchType="partner"
-                          filter="supplier"
-                          ref="supplier"
-                          :errorMessages="supplier.err"
-                        ></app-incremental-model-search>
-                      </v-flex>
+                      <app-incremental-model-search
+                        label="Supplier"
+                        orderBy="name"
+                        v-model="supplier"
+                        searchType="partner"
+                        filter="supplier"
+                        ref="supplier"
+                        :errorMessages="supplier.err"
+                      ></app-incremental-model-search>
                   </v-flex>
 
                   <!-- 発注書印刷 -->

@@ -263,6 +263,7 @@ export default {
     ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getExpenseCategory"]),
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
+    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "postReceivingProcess"]),    
     ...mapActions("makingOrderAPI", [
       "setJobOrderID", 
       "getMakingOrders",
@@ -324,6 +325,8 @@ export default {
             printedParts: val.printedParts,
             today: today
           }
+
+          let response = await this.createReceiveingProcesses(updateData);
 
           // 更新処理
           let res = await this.updateIsPrinted(updateData);
@@ -686,6 +689,26 @@ export default {
         let update = await this.putMakingOrder(partsList[p]);
       }
     },
+    // 仕入れファイルの作成
+    async createReceiveingProcesses(val) {
+      let partsList = val.printedParts;
+
+      // 仕入れファイルの作成
+      for(let p in partsList) {
+        let receivingProcess = {}
+        receivingProcess.order = partsList[p].id;
+        receivingProcess.unit = partsList[p].unit;
+        receivingProcess.currency = partsList[p].currency;
+        receivingProcess.rate = partsList[p].rate;
+        receivingProcess.createdBy = this.loginUserData.id;
+        receivingProcess.modifiedBy = this.loginUserData.id;
+
+        let res = await this.postReceivingProcess(receivingProcess);
+
+        console.log(res);
+      }
+    },
+    // データの読み込み
     loadData() {
       this.getPartner(this.supplierID);
       this.getExpenseCategories({params: {"order_by": "category_number"}});

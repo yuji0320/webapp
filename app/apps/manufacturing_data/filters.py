@@ -66,17 +66,19 @@ class MakingOrderFilter(filters.FilterSet):
 
 
 class ReceivingProcessFilter(filters.FilterSet):
+    desired_delivery_date = filters.DateFromToRangeFilter(field_name='order__desired_delivery_date')
 
     class Meta:
         model = ReceivingProcess
         fields = [
             'id', 'order__number', 'order__company', 'order__bill_of_material', 'order__bill_of_material__job_order',
-            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price'
+            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date'
         ]
 
     order_by = filters.OrderingFilter(
         fields=(
             ('created_at', 'created_at'),
             ('order__number', 'order__number'),
+            ('order__desired_delivery_date', 'order__desired_delivery_date'),
         ),
     )

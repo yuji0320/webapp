@@ -30,22 +30,22 @@ const systemConfigState = {
         },
         {
           icon: 'move_to_inbox',
-          title: 'Purchase',
-          url: '',
+          title: 'Receive',
+          url: {name: 'ReceivingProcessMenu'},
         },
       ],
     },
-    {
-      icon: 'account_box',
-      title: 'Man-hour management',
-      subMenus: [
-        {
-          icon: 'access_time',
-          title: 'Man Hour',
-          url: '',
-        },
-      ],
-    },
+    // {
+    //   icon: 'account_box',
+    //   title: 'Man-hour management',
+    //   subMenus: [
+    //     {
+    //       icon: 'access_time',
+    //       title: 'Man Hour',
+    //       url: '',
+    //     },
+    //   ],
+    // },
     {
       icon: 'search',
       title: 'Investigation',
@@ -113,6 +113,9 @@ export default {
     setLoading(state, payload) {
       state.loading = payload;
     },
+    setMenus(state, payload) {
+      state.menus = payload;
+    },
   },
   actions: {
     showSnackbar({commit}, {snack, color}) {
@@ -127,5 +130,9 @@ export default {
     setExcelJson({commit}, data) {
       commit('setExcelJson', data);
     },
+    // setMenus({commit}) {
+    //   commit('setMenus', this.systemConfigState.menus);
+    // },
+
   },
 };

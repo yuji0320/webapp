@@ -210,7 +210,7 @@ class ReceivingProcess(models.Model):
 
     class Meta:
         db_table = 'receiving_process'
-        verbose_name = _('Receiving Process')
+        verbose_name = _('Receiving Processes')
         verbose_name_plural = _('Receiving Process')
 
     def __str__(self): return self.order.number

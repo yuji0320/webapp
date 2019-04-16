@@ -170,10 +170,11 @@ export default {
   },
   methods: {
     // サイドバー開閉ステータスの保存
-    ...mapMutations("systemConfig", ["toggleDrawer"])
+    ...mapMutations("systemConfig", ["toggleDrawer", "setMenus"])
   },
   mounted: function() {
     // console.log(this.menus);
+    // this.setMenus();
   }
 };
 </script>

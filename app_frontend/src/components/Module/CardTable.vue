@@ -68,9 +68,16 @@
             <template v-else>
               <!-- jsonがネストしている場合はデータを抽出 -->
               <template v-if="header.nest">
-                <!-- ネスト元データが存在する場合のみ表示 -->
-                <template v-if="props.item[header.value]">
-                  {{ props.item[header.value][header.nest] }}
+                <template v-if="header.nestNest">
+                  <template v-if="props.item[header.value]">
+                    {{ props.item[header.value][header.nest][header.nestNest] }}
+                  </template>
+                </template>
+                <template v-else>
+                  <!-- ネスト元データが存在する場合のみ表示 -->
+                  <template v-if="props.item[header.value]">
+                    {{ props.item[header.value][header.nest] }}
+                  </template>
                 </template>
               </template>
               <!-- ネストしていない場合はデータを表示 -->
