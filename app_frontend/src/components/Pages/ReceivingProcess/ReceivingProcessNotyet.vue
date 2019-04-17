@@ -6,7 +6,7 @@
     >
 
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-title"> Over date list</span>
+      <span slot="card-header-title"> Past due list</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">

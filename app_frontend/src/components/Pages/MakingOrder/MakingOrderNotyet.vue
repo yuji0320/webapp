@@ -132,7 +132,7 @@ export default {
     params() {
       return {
         company: this.loginUserData.companyId,
-        job_order: this.jobOrderID,
+        bill_of_material__job_order: this.jobOrderID,
         is_printed: false,
         order_by: this.orderBy,
         page_size: 1000
