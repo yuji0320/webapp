@@ -5,8 +5,8 @@ import axios from 'axios';
 // axios を require してインスタンスを生成する
 const axiosBase = axios;
 // const host = process.env.VUE_APP_API_BASE_URL;
-const host = 'http://localhost:8000/api/';
-// const host = "https://192.168.2.120/api/";
+
+const host = "https://192.168.2.200/api/";
 
 export default {
   async request(method, url, params) {
