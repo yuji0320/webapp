@@ -44,6 +44,8 @@ dev_nginx:
 dev_mysql:
   build: ./mysql
   restart: always
+  volumes:
+  - ./mysql/backup:/tmp/backup
   ports:
     - "3306:3306"
   volumes_from:
