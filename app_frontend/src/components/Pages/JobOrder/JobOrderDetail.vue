@@ -288,11 +288,11 @@ export default {
       let taxPercent = "(" + this.jobOrder.taxPercent + "%)"
       // 合計金額
       let orderTotal = defaultDisplay + this.jobOrder.costs.orderTotal;
-      let commercialPartsBudget = defaultDisplay + this.jobOrder.commercialPartsBudget;
+      let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
       let commercialPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[0].toFixed(2));
-      let electricalPartsBudget = defaultDisplay + this.jobOrder.electricalPartsBudget;
+      let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
       let electricalPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[1].toFixed(2));
-      let processedPartsBudget = defaultDisplay + this.jobOrder.processedPartsBudget;
+      let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
       let processedPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[2].toFixed(2));
       let directCostBudget = defaultDisplay + this.jobOrder.costs.directCostBudget;
       let directCostResult = defaultDisplay + this.moneyComma(this.drectCosts.drectCost.toFixed(2));
