@@ -3,8 +3,6 @@
     :label="label"
     v-model="internalValue"
     :error-messages="errorMessages"
-    hint="YYYY/MM/DD format"
-    persistent-hint
     type="date"
     min="1900-01-01" 
     max="2100-12-31"

@@ -3,6 +3,7 @@
     fluid
     grid-list-lg
   >
+    <!-- test -->
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
@@ -127,7 +128,7 @@ export default {
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Amount", value: "amount", class: "text-xs-right" },
+        { text: "Qty", value: "amount", class: "text-xs-right" },
         { text: "Unit price", value: "displayPrice", class: "text-xs-right" },
         { text: "Price", value: "displayPriceTotal", class: "text-xs-right" },
         { text: "Delivery", value: "desiredDeliveryDate", class: "text-xs-center"  }
@@ -356,7 +357,7 @@ export default {
         var y = dt.getFullYear();
         var m = ("00" + (dt.getMonth()+1)).slice(-2);
         var d = ("00" + dt.getDate()).slice(-2);
-        var result = d + "/" + m + "/" + y;
+        var result = m + "/" + d + "/" + y;
         return result;
       };
 
@@ -490,9 +491,9 @@ export default {
                   widths: [ 250 ],
                   margin: [ 0, 50, 0, 0 ],
                   body: [
-                    [{text: "Creator : " + user.fullname , bold: true, fontSize: 12 }],
-                    [{text: "Approval :", bold: true, fontSize: 12 }],
-                    [{text: "Approval :", bold: true, fontSize: 12 }],
+                    [{text: "Created by : " + user.fullname , bold: true, fontSize: 12 }],
+                    [{text: "Approved by :", bold: true, fontSize: 12 }],
+                    [{text: "Signature :", bold: true, fontSize: 12 }],
                   ]
                 },
                 layout: {
@@ -510,8 +511,8 @@ export default {
                   headerRows: 0,
                   widths: [ 300 ],
                   body: [
-                    [{text: "  " }],
                     [{text: "seal: " }],
+                    [{text: "  " }],
                     [{text: "  " }],
                   ]
                 },
