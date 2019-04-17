@@ -36,15 +36,18 @@ class JobOrderSerializer(serializers.ModelSerializer):
         # 予算直接原価
         direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget
         limit_profit_budget = order_price - direct_cost_budget
-        if limit_profit_budget > 0:
-            # 限界利益が正の場合
-            limit_profit_percentage = limit_profit_budget / order_price * 100
-        elif limit_profit_budget == 0:
-            # 限界利益がゼロの場合
+        if obj.order_price == 0:
             limit_profit_percentage = 0
         else:
-            # 限界利益が負の場合
-            limit_profit_percentage = (direct_cost_budget - order_price) / order_price * -100
+            if limit_profit_budget > 0:
+                # 限界利益が正の場合
+                limit_profit_percentage = limit_profit_budget / order_price * 100
+            elif limit_profit_budget == 0:
+                # 限界利益がゼロの場合
+                limit_profit_percentage = 0
+            else:
+                # 限界利益が負の場合
+                limit_profit_percentage = (direct_cost_budget - order_price) / order_price * -100
 
         costs = {
             'tax_price': "{:,.2f}".format(tax_price),
