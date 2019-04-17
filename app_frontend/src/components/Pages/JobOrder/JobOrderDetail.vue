@@ -271,6 +271,12 @@ export default {
       // 受注金額
       let orderPriceText = "Order Price (" + this.jobOrder.orderCurrencyData.code + ")";
       let orderPrice = this.jobOrder.orderCurrencyData.display + " " + this.moneyComma(this.jobOrder.orderPrice);
+      let orderDate = "";
+      if(this.jobOrder.orderDate){ orderDate = this.jobOrder.orderDate;};
+      let deliveryDate = "";
+      if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;};
+      let completionDate = "";
+      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;};      
       // レート換算
       // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
       let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
@@ -318,11 +324,11 @@ export default {
         ],
         [
           {text: "Order Date", alignment:"center"},
-          {text: this.jobOrder.orderDate, alignment:"center"},
+          {text: orderDate, alignment:"center"},
           {text: "Delivery Date", alignment:"center"},
-          {text: this.jobOrder.deliveryDate, alignment:"center"},
+          {text: deliveryDate, alignment:"center"},
           {text: "Completion Date", alignment:"center"},
-          {text: this.jobOrder.completionDate, alignment:"center"}
+          {text: completionDate, alignment:"center"}
         ],
         [
           {text: orderPriceText, alignment:"center"},

@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190403.dump" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190403.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190416.dump" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190416_01.dump" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190416_01.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/backup/190416_02.dump" beforeDir="false" />
     </list>
     <ignored path="app/apps/manufacturing_data/fixtures/test.json" />
     <ignored mask="*.dump" />
@@ -79,7 +72,7 @@
           <entry key="md" value="2772" />
           <entry key="py" value="14932" />
           <entry key="sh" value="4" />
-          <entry key="txt" value="768" />
+          <entry key="txt" value="777" />
           <entry key="vmoptions" value="4" />
           <entry key="vue" value="1" />
           <entry key="yml" value="814" />
@@ -93,7 +86,7 @@
           <entry key="JSON" value="1294" />
           <entry key="JavaScript" value="219" />
           <entry key="Markdown" value="2771" />
-          <entry key="PLAIN_TEXT" value="1660" />
+          <entry key="PLAIN_TEXT" value="1669" />
           <entry key="Python" value="15017" />
           <entry key="Vue.js" value="1" />
           <entry key="YAML" value="814" />
@@ -152,15 +145,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="491">
               <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="48" column="2" lean-forward="true" selection-start-line="48" selection-start-column="2" selection-end-line="49" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -305,6 +289,30 @@
             <path>
               <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="system_master" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="bms_backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="mysql" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -412,13 +420,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1535097029012</updated>
-    </task>
-    <task id="LOCAL-00007" summary="フロントエンド開発(ログイン機能実装完了)">
-      <created>1540891990748</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1540891990748</updated>
     </task>
     <task id="LOCAL-00008" summary="フロントエンド開発(ログイン機能実装完了)">
       <created>1541127486820</created>
@@ -756,7 +757,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555348301520</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="サーバー互換性確認">
+      <created>1555523481258</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1555523481258</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -836,7 +844,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="バックエンドID→UUID変更" />
     <MESSAGE value="フロントエンド、テーブル周りコンポーネント割り振り" />
     <MESSAGE value="バックエンド、API認証権限変更" />
     <MESSAGE value="フロントエンド、コード規約修正反映" />
@@ -861,7 +868,8 @@
     <MESSAGE value="バックエンド&#10;発注ファイルAPI微修正" />
     <MESSAGE value="フロントエンド&#10;発注ファイル登録、修正機能実装&#10;発注書印刷機能実装開始" />
     <MESSAGE value="フロントエンド、バックエンド&#10;発注ファイル印刷機能実装" />
-    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド、バックエンド&#10;発注ファイル印刷機能実装" />
+    <MESSAGE value="サーバー互換性確認" />
+    <option name="LAST_COMMIT_MESSAGE" value="サーバー互換性確認" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
