@@ -5,7 +5,6 @@
   >
 
     <v-card>
-
       <v-toolbar card>
         <v-icon>work</v-icon>
         <v-toolbar-title class="font-weight-light">
@@ -178,7 +177,15 @@
                 v-model="jobOrder.notes"
                 :error-messages="responseError.notes"
               ></v-textarea>
-            </v-flex>   
+            </v-flex>
+            <!-- 製品名 -->
+            <v-flex xs12>
+              <v-text-field 
+                label="Related Party MFG No"
+                v-model="jobOrder.relatedPartyMfgNo"
+                :error-messages="responseError.relatedPartyMfgNo"
+              ></v-text-field>
+            </v-flex>
             <!-- 市販部品予算 -->
             <v-flex xs4>
               <v-text-field 

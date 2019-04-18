@@ -210,6 +210,7 @@ class UserPartner(models.Model):
     is_delivery_destination = models.BooleanField(_('is Delivery destination'), default=False)  # 納入先かどうか
     is_supplier = models.BooleanField(_('is Supplier'), default=False)  # 仕入先かどうか
     is_manufacturer = models.BooleanField(_('is Manufacturer'), default=False)  # メーカーかどうか
+    is_related_party = models.BooleanField(_('is Related party'), default=False)  # 関係会社かどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     # データ作成者
     created_by = models.ForeignKey('User', related_name='%(class)s_requests_created', on_delete=models.PROTECT)
@@ -224,42 +225,3 @@ class UserPartner(models.Model):
         unique_together = (("company", "partner_number"),)  # 会社ごとの取引先番号ユニーク
 
     def __str__(self): return self.name
-
-
-# class UserExpenseCategory(models.Model):
-#     # 費用項目リスト
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
-#     category_number = models.IntegerField(_('Category number'))  # 企業内での項目番号
-#     is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
-#     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#
-#     class Meta:
-#         db_table = 'expense_category'
-#         verbose_name = _('Expense Category')
-#         verbose_name_plural = _('Expense Categories')
-#         unique_together = (("company", "category_number"),)  # 会社ごとのカテゴリ番号ユニーク
-#
-#     def __str__(self): return self.category_name
-
-
-# class UserFailureCategory(models.Model):
-#     # 仕損費種別マスタ
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     category_number = models.IntegerField(_('Category number'))  # 企業内での項目番号
-#     category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
-#     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#
-#     class Meta:
-#         db_table = 'failure_category'
-#         verbose_name = _('Failure Category')
-#         verbose_name_plural = _('Failure Categories')
-#         unique_together = (("company", "category_number"),)  # 会社ごとのカテゴリ番号ユニーク
-#
-#     def __str__(self): return self.category_name

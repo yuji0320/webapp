@@ -132,6 +132,12 @@
                   v-model="userPartner.isManufacturer"
                 ></v-checkbox>
               </v-flex>
+              <v-flex xs12 lg6>
+                <v-checkbox
+                  label="is Related party"
+                  v-model="userPartner.isRelatedParty"
+                ></v-checkbox>
+              </v-flex>
             </v-layout>
           </span>
         </app-dialog>

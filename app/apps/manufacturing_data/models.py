@@ -40,6 +40,7 @@ class JobOrder(models.Model):
     delivery_date = models.DateField(_('Delivery Date'), blank=True, null=True)  # 納入日
     completion_date = models.DateField(_('Completion Date'), blank=True, null=True)  # 工事完了日
     notes = models.TextField(_('Notes'), blank=True)  # 備考
+    related_party_mfg_no = models.CharField(_("Related party's MFG No"), max_length=20, blank=True)  # 関係会社工事番号
     commercial_parts_budget = models.DecimalField(
         _('Commercial parts budget'),
         max_digits=17,

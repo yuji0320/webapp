@@ -81,6 +81,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'delivery_date',
             'completion_date',
             'notes',
+            'related_party_mfg_no',
             'commercial_parts_budget',
             'electrical_parts_budget',
             'processed_parts_budget',

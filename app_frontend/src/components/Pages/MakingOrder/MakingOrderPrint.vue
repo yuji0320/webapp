@@ -136,7 +136,7 @@ export default {
       // 市販部品テーブルヘッダー
       commercialHeaders: [
         { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
-        { text: "Standard/Form", value: "standard" },
+        { text: "Part Number", value: "standard" },
         // { text: "Unit number", value: "unit_number" }
       ],
       // 加工部品テーブルヘッダー
@@ -202,10 +202,11 @@ export default {
             "alignment": "center"
           }
           headerArray.push(headerCol);
-          lastkey === key ? headerArray.push({
-            "text": "Note",
-            "alignment": "center"
-          }) : "";
+          // 備考欄の追加
+          // lastkey === key ? headerArray.push({
+          //   "text": "Note",
+          //   "alignment": "center"
+          // }) : "";
         }
         return headerArray;
       }
@@ -348,6 +349,13 @@ export default {
       let selectedData = this.selectedItems;
       let expenseCategoriesList = this.expenseCategories.results;
       let error = [];
+
+      // 関係会社工事番号のチェックおよび表示
+      let mfgNo = jobOrder.mfgNo
+      if(supplier.isRelatedParty && jobOrder.relatedPartyMfgNo != "") {
+        mfgNo = mfgNo + "_" + jobOrder.relatedPartyMfgNo;
+      }
+
       // console.log(company);
 
       let today = changeDateUS(new Date());
@@ -376,6 +384,7 @@ export default {
             let tablebody = [];
             let tableHeaderData = this.headerData(selectedData[key].isProcessedParts);
             let tableHeader = this.headerList(tableHeaderData);
+            console.log(tableHeader);
             tablebody.push(tableHeader);
             // 部品データの入力
             // 部品個数をゼロとして定義(カウント用)
@@ -418,7 +427,7 @@ export default {
                 if(!d) { d = ""; }
                 // 最後の項目では空白を入力
                 partRow.push(d);
-                lastkey === h ? partRow.push(""): "";
+                // lastkey === h ? partRow.push(""): "";
               }
               tablebody.push(partRow);
               // console.log(partRow);
@@ -448,24 +457,23 @@ export default {
             let colSpan = 0;
             let totalRow = [];
             if(selectedData[key].isProcessedParts) {
-              tableWidths = [10 ,80, 50, 50, 50, 30, 60, 60, 40, 40]
+              tableWidths = [10 ,60, 60, 110, 40, 30, 60, 60, 40]
               colSpan = 7
               // 合計金額行を追加
               totalRow = [
                 { colSpan: colSpan, text:"Total : ", alignment:"right" },'','','','','','',
-                { colSpan: 3, text: total_display , alignment:"right", bold:true }, '',''
+                { colSpan: 2, text: total_display , alignment:"right", bold:true }, ''
               ]                  
             } else {
-              tableWidths = [10 ,90, 60, 60, 40, 60, 60, 40, 50]
+              tableWidths = [10 ,90, 60, 130, 30, 60, 60, 40]
               colSpan = 6
               // 合計金額行を追加
               totalRow = [
                 { colSpan: colSpan, text:"Total : ", alignment:"right" },'','','','','',
-                { colSpan: 3, text: total_display , alignment:"right", bold:true }, '',''
+                { colSpan: 2, text: total_display , alignment:"right", bold:true }, ''
               ]
             }
 
-  
             tablebody.push(totalRow);
 
             // テーブル作成
@@ -511,7 +519,7 @@ export default {
                   headerRows: 0,
                   widths: [ 300 ],
                   body: [
-                    [{text: "seal: " }],
+                    [{text: "Note: " }],
                     [{text: "  " }],
                     [{text: "  " }],
                   ]
@@ -578,7 +586,7 @@ export default {
                       [ {text:"Order recipient:", style: 'mdText' }, {text:supplier.name, style: 'mdText' }],
                       [ {text:"Phone : ", style: 'mdText' }, {text:supplier.phone, style: 'mdText' } ],
                       [ {text:"Fax : ", style: 'mdText' }, {text:supplier.fax, style: 'mdText' } ],
-                      [ {text:"Manufacturing number : ", style: 'mdText' }, {text:jobOrder.mfgNo, style: 'mdText' } ],
+                      [ {text:"Manufacturing number : ", style: 'mdText' }, {text:mfgNo, style: 'mdText' } ],
                     ]
                   },
                   layout: {

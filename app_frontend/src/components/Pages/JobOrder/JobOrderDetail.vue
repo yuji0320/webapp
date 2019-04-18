@@ -98,8 +98,12 @@
                   <td colspan="2"></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="text-center">{{ tableData[9][0].text }}</td>
-                  <td colspan="5">{{ tableData[9][1].text }}</td>
+                  <td colspan="2" class="text-center">{{ tableData[9][0].text }}</td>
+                  <td colspan="4">{{ tableData[9][1].text }}</td>
+                </tr>
+                <tr>
+                  <td colspan="1" class="text-center">{{ tableData[10][0].text }}</td>
+                  <td colspan="5">{{ tableData[10][1].text }}</td>
                 </tr>
               </tbody>
             </table>
@@ -107,19 +111,13 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <td class="text-center" style="width : 200px !important;">{{ tableData[10][0].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][3].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][4].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][5].text }}</td>
+                  <td class="text-center" style="width : 200px !important;">{{ tableData[11][0].text }}</td>
+                  <td class="text-center" style="width : 100px !important;">{{ tableData[11][3].text }}</td>
+                  <td class="text-center" style="width : 100px !important;">{{ tableData[11][4].text }}</td>
+                  <td class="text-center" style="width : 100px !important;">{{ tableData[11][5].text }}</td>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="text-center">{{ tableData[11][0].text }}</td>
-                  <td class="text-right">{{ tableData[11][3].text }}</td>
-                  <td class="text-right">{{ tableData[11][4].text }}</td>
-                  <td class="text-right">{{ tableData[11][5].text }}</td>
-                </tr>
                 <tr>
                   <td class="text-center">{{ tableData[12][0].text }}</td>
                   <td class="text-right">{{ tableData[12][3].text }}</td>
@@ -145,10 +143,16 @@
                   <td class="text-right">{{ tableData[15][5].text }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center"><strong>{{ tableData[16][0].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][3].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][4].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][5].text }}</strong></td>
+                  <td class="text-center">{{ tableData[16][0].text }}</td>
+                  <td class="text-right">{{ tableData[16][3].text }}</td>
+                  <td class="text-right">{{ tableData[16][4].text }}</td>
+                  <td class="text-right">{{ tableData[16][5].text }}</td>
+                </tr>
+                <tr>
+                  <td class="text-center"><strong>{{ tableData[17][0].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[17][3].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[17][4].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[17][5].text }}</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -276,7 +280,7 @@ export default {
       let deliveryDate = "";
       if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;};
       let completionDate = "";
-      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;};      
+      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;};
       // レート換算
       // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
       let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
@@ -353,6 +357,10 @@ export default {
           {text: orderTotal, alignment:"right", colSpan: 2},{},
           {text: "", alignment:"left", colSpan: 2},{},
         ],
+        [
+          {text: "Related Party's MFG No", alignment:"center", colSpan: 2},{},
+          {text: this.jobOrder.relatedPartyMfgNo, colSpan: 4},{},{},{}
+        ],  
         [
           {text: "Note", alignment:"center"}, 
           {text: this.jobOrder.notes, colSpan: 5},{},{},{}, {}
