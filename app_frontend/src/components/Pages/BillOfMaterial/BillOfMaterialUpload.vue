@@ -122,7 +122,7 @@ export default {
 
         // メーカー情報の入力
         if(val[i].manufacturerName) {
-          // システム通貨マスタと通貨情報を突合
+          // 取引先マスタとメーカー入力値を突合
           for(let c in this.partnerList) {
             if(val[i].manufacturerName===this.partnerList[c].abbr) {
               val[i].manufacturer = this.partnerList[c].id;
@@ -166,7 +166,7 @@ export default {
               val[i].currency = this.currencyList[c].id;
             }
           }
-          // 値が未入力の場合はデフォルト通過を設定する
+          // 値が未入力の場合はデフォルト通貨を設定する
           if(!val[i].currency) {
             val[i].currency = this.loginUserData.defaultCurrencyId;
             val[i].currencyCode = this.loginUserData.defaultCurrencyCode;
@@ -175,6 +175,9 @@ export default {
 
         // レートが未入力の場合の場合"1"を入力
         if(!val[i].rate) { val[i].rate = 1 }
+
+        // 単価が未入力の場合の場合"0"を入力
+        if(!val[i].unitPrice) { val[i].unitPrice = 0 }
 
       }
       // データをVuexに格納

@@ -157,7 +157,7 @@
           :orderBy="orderBy"
           :incremental="incremental"
           :params="params"
-          @search-list="getStaffs"
+          @search-list="getList"
         ></app-search-bar>
       </div>
 
@@ -223,6 +223,12 @@ export default {
       "putStaff",
       "deleteStaff"
     ]),
+    // リスト検索
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      let list = await this.getStaffs(data);
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     // 処理結果統合フォーム
     responseFunction(val) {
       // リストをリロード

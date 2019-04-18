@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
     </list>
     <ignored path="app/apps/manufacturing_data/fixtures/test.json" />
     <ignored mask="*.dump" />
@@ -40,7 +42,7 @@
     <session id="2137708078">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="38" />
+          <entry key="project.closed" value="39" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="9" />
@@ -70,9 +72,9 @@
           <entry key="js" value="219" />
           <entry key="json" value="1293" />
           <entry key="md" value="2772" />
-          <entry key="py" value="14932" />
+          <entry key="py" value="14999" />
           <entry key="sh" value="4" />
-          <entry key="txt" value="777" />
+          <entry key="txt" value="832" />
           <entry key="vmoptions" value="4" />
           <entry key="vue" value="1" />
           <entry key="yml" value="814" />
@@ -86,8 +88,8 @@
           <entry key="JSON" value="1294" />
           <entry key="JavaScript" value="219" />
           <entry key="Markdown" value="2771" />
-          <entry key="PLAIN_TEXT" value="1669" />
-          <entry key="Python" value="15017" />
+          <entry key="PLAIN_TEXT" value="1724" />
+          <entry key="Python" value="15084" />
           <entry key="Vue.js" value="1" />
           <entry key="YAML" value="814" />
         </counts>
@@ -107,7 +109,7 @@
           <entry key="json" value="35" />
           <entry key="md" value="11" />
           <entry key="png" value="2" />
-          <entry key="py" value="269" />
+          <entry key="py" value="271" />
           <entry key="sh" value="6" />
           <entry key="txt" value="15" />
           <entry key="vmoptions" value="1" />
@@ -127,7 +129,7 @@
           <entry key="Markdown" value="11" />
           <entry key="PLAIN_TEXT" value="62" />
           <entry key="PyRemoteDebug" value="11" />
-          <entry key="Python" value="269" />
+          <entry key="Python" value="271" />
           <entry key="Vue.js" value="10" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="11" />
@@ -140,11 +142,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker-compose-dev.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="491">
               <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="38" column="79" lean-forward="true" selection-start-line="38" selection-start-column="79" selection-end-line="38" selection-end-column="79" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+                <marker date="1555350004349" expanded="true" signature="3899:3904" ph="..." />
+                <marker date="1555350004349" expanded="true" signature="7151:7156" ph="..." />
+                <marker date="1555350004349" expanded="true" signature="7151:7674" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1555539302740" expanded="true" signature="820:826" ph="..." />
+                <marker date="1555539302740" expanded="true" signature="2573:2579" ph="..." />
+                <marker date="1555539302740" expanded="true" signature="5487:5488" ph="..." />
+                <marker date="1555539302740" expanded="true" signature="7876:8276" ph="..." />
+                <marker date="1555539302740" expanded="true" signature="8590:8596" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -228,8 +262,8 @@
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/models.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" />
-        <option value="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" />
         <option value="$PROJECT_DIR$/docker-compose-dev.yml" />
+        <option value="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" />
       </list>
     </option>
   </component>
@@ -296,6 +330,13 @@
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="manufacturing_data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
@@ -420,20 +461,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1535097029012</updated>
-    </task>
-    <task id="LOCAL-00008" summary="フロントエンド開発(ログイン機能実装完了)">
-      <created>1541127486820</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1541127486820</updated>
-    </task>
-    <task id="LOCAL-00009" summary="フロントエンド統合">
-      <created>1541127845840</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1541127845840</updated>
     </task>
     <task id="LOCAL-00010" summary="フロントエンド統合">
       <created>1541129660074</created>
@@ -764,7 +791,21 @@
       <option name="project" value="LOCAL" />
       <updated>1555523481258</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="バックエンド作業指図書&#10;受注金額０を許容するようにSerializer変更">
+      <created>1555528635048</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1555528635048</updated>
+    </task>
+    <task id="LOCAL-00058" summary="バックエンド作業指図書微修正&#10;Readmeメモ記入">
+      <created>1555538608191</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1555538608191</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -778,8 +819,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-452" width="1920" height="1057" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49810606" visible="true" weight="0.2454739" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49810606" visible="true" weight="0.2454739" />
       <window_info id="Structure" order="1" sideWeight="0.50189394" side_tool="true" weight="0.21459228" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32960597" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -790,7 +832,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32866243" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4978701" weight="0.32642487" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4909478" visible="true" weight="0.21139896" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.4909478" visible="true" weight="0.21139896" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50905216" side_tool="true" weight="0.21139896" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4941427" weight="0.4101911" />
@@ -844,8 +886,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="フロントエンド、テーブル周りコンポーネント割り振り" />
-    <MESSAGE value="バックエンド、API認証権限変更" />
     <MESSAGE value="フロントエンド、コード規約修正反映" />
     <MESSAGE value="フロントエンド、従業員追加機能実装完了&#10;ページネーション、検索コンポーネント改修&#10;既存データの編集については作成中" />
     <MESSAGE value="フロントエンド、従業員マスタ実装完了&#10;新規作成、編集、削除、検索機能実装済み" />
@@ -869,7 +909,9 @@
     <MESSAGE value="フロントエンド&#10;発注ファイル登録、修正機能実装&#10;発注書印刷機能実装開始" />
     <MESSAGE value="フロントエンド、バックエンド&#10;発注ファイル印刷機能実装" />
     <MESSAGE value="サーバー互換性確認" />
-    <option name="LAST_COMMIT_MESSAGE" value="サーバー互換性確認" />
+    <MESSAGE value="バックエンド作業指図書&#10;受注金額０を許容するようにSerializer変更" />
+    <MESSAGE value="バックエンド作業指図書微修正&#10;Readmeメモ記入" />
+    <option name="LAST_COMMIT_MESSAGE" value="バックエンド作業指図書微修正&#10;Readmeメモ記入" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -1148,41 +1190,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="170" column="25" selection-start-line="170" selection-start-column="4" selection-end-line="170" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-            <marker date="1555350004349" expanded="true" signature="3899:3904" ph="..." />
-            <marker date="1555350004349" expanded="true" signature="7151:7156" ph="..." />
-            <marker date="1555350004349" expanded="true" signature="7151:7674" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
           <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
           <folding>
             <marker date="1555364332032" expanded="true" signature="1400:1405" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="285" column="19" selection-start-line="285" selection-start-column="19" selection-end-line="285" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1555364690138" expanded="true" signature="820:826" ph="..." />
-            <marker date="1555364690138" expanded="true" signature="2450:2456" ph="..." />
-            <marker date="1555364690138" expanded="true" signature="5364:5365" ph="..." />
-            <marker date="1555364690138" expanded="true" signature="7753:8153" ph="..." />
-            <marker date="1555364690138" expanded="true" signature="8467:8473" ph="..." />
-            <marker date="1555364690138" expanded="true" signature="9958:10433" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1205,6 +1218,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="491">
           <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="79" lean-forward="true" selection-start-line="38" selection-start-column="79" selection-end-line="38" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+            <marker date="1555350004349" expanded="true" signature="3899:3904" ph="..." />
+            <marker date="1555350004349" expanded="true" signature="7151:7156" ph="..." />
+            <marker date="1555350004349" expanded="true" signature="7151:7674" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1555539302740" expanded="true" signature="820:826" ph="..." />
+            <marker date="1555539302740" expanded="true" signature="2573:2579" ph="..." />
+            <marker date="1555539302740" expanded="true" signature="5487:5488" ph="..." />
+            <marker date="1555539302740" expanded="true" signature="7876:8276" ph="..." />
+            <marker date="1555539302740" expanded="true" signature="8590:8596" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
