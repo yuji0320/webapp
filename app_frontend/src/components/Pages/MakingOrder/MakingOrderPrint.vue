@@ -353,7 +353,7 @@ export default {
       // 関係会社工事番号のチェックおよび表示
       let mfgNo = jobOrder.mfgNo
       if(supplier.isRelatedParty && jobOrder.relatedPartyMfgNo != "") {
-        mfgNo = mfgNo + "_" + jobOrder.relatedPartyMfgNo;
+        mfgNo = mfgNo + " / " + jobOrder.relatedPartyMfgNo;
       }
 
       // console.log(company);
