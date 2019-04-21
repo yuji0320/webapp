@@ -192,7 +192,8 @@ export default {
   },
   created() {
     this.getExpenseCategories({params: {"order_by": "category_number"}});
-    this.setBillOfMaterials("")
+    this.setBillOfMaterials("");
+    this.$store.commit("systemConfig/setLoading", false);
   }
 }
 </script>
