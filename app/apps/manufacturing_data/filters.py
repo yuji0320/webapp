@@ -30,10 +30,17 @@ class JobOrderFilter(filters.FilterSet):
 class BillOfMaterialFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+    parts_data = filters.CharFilter(field_name='partsData', method='parts_data_filter')
+
+    @staticmethod
+    def parts_data_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(standard__icontains=value) | Q(drawing_number__icontains=value)
+        )
 
     class Meta:
         model = BillOfMaterial
-        fields = ['id', 'company', 'job_order', 'type', 'name', "standard", "is_printed"]
+        fields = ['id', 'company', 'job_order', 'type', 'name', 'manufacturer', "standard", "is_printed", "parts_data"]
 
     order_by = filters.OrderingFilter(
         fields=(
@@ -72,7 +79,7 @@ class ReceivingProcessFilter(filters.FilterSet):
         model = ReceivingProcess
         fields = [
             'id', 'order__number', 'order__company', 'order__bill_of_material', 'order__bill_of_material__job_order',
-            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date'
+            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date',
         ]
 
     order_by = filters.OrderingFilter(
@@ -80,5 +87,22 @@ class ReceivingProcessFilter(filters.FilterSet):
             ('created_at', 'created_at'),
             ('order__number', 'order__number'),
             ('order__desired_delivery_date', 'order__desired_delivery_date'),
+            ('modified_at', 'modified_at'),
+        ),
+    )
+
+
+class PartsSearchFilter(filters.FilterSet):
+
+    class Meta:
+        model = BillOfMaterial
+        fields = [
+            'company', 'job_order', 'manufacturer', 'standard', 'drawing_number', 'type'
+        ]
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('modified_at', 'modified_at'),
         ),
     )

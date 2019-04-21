@@ -293,11 +293,16 @@ export default {
       // 合計金額
       let orderTotal = defaultDisplay + this.jobOrder.costs.orderTotal;
       let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
-      let commercialPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[0].toFixed(2));
       let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
-      let electricalPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[1].toFixed(2));
       let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
-      let processedPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[2].toFixed(2));
+      let commercialPartsResult = "";
+      let processedPartsResult = "";
+      let electricalPartsResult = "";
+      if(this.jobOrder) {
+        commercialPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[0].toFixed(2));
+        processedPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[2].toFixed(2));
+        electricalPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[1].toFixed(2));
+      }
       let directCostBudget = defaultDisplay + this.jobOrder.costs.directCostBudget;
       let directCostResult = defaultDisplay + this.moneyComma(this.drectCosts.drectCost.toFixed(2));
       let limitProfitBudget = defaultDisplay + this.jobOrder.costs.limitProfitBudget;

@@ -31,6 +31,9 @@ import ReceivingProcess from '@/components/Pages/ReceivingProcess/ReceivingProce
 import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
+import Investigation from '@/components/Pages/Investigation/Investigation.vue';
+// import PartsSearch from '@/components/Pages/Investigation/Investigation.vue';
+import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
 
 import Master from '@/components/Pages/Master/Master.vue';
 import Company from '@/components/Pages/Master/Company.vue';
@@ -200,6 +203,18 @@ const router = new Router({
                   path: 'notyet',
                   name: 'ReceivingProcessNotyet',
                   component: ReceivingProcessNotyet,
+                },
+              ],
+            },
+            {
+              path: 'investigation',
+              name: 'Investigation',
+              component: Investigation,
+              children: [
+                {
+                  path: 'parts_search',
+                  name: 'PartsSearch',
+                  component: PartsSearch,
                 },
               ],
             },

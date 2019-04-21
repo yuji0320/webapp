@@ -467,6 +467,7 @@ export default {
       this.setBillOfMaterials("");
       this.getExpenseCategory(this.partsType);
       this.getJobOrder(this.jobOrderID);
+      console.log(this.jobOrderID);
     }
   },
   mounted() {}

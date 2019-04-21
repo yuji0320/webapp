@@ -12,3 +12,5 @@ class AdminBillOfMaterial(admin.ModelAdmin):
 
 admin.site.register(JobOrder, AdminJobOrder)
 admin.site.register(BillOfMaterial, AdminBillOfMaterial)
+admin.site.register(MakingOrder)
+admin.site.register(ReceivingProcess)

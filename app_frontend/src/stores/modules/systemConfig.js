@@ -49,7 +49,13 @@ const systemConfigState = {
     {
       icon: 'search',
       title: 'Investigation',
-      subMenus: [],
+      subMenus: [
+        {
+          icon: 'search',
+          title: 'Prats Search',
+          url: {name: 'PartsSearch'},
+        },
+      ],
     },
     {
       icon: 'settings_applications',

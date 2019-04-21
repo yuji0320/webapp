@@ -203,6 +203,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
+    is_processed = serializers.SerializerMethodField()
 
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
@@ -237,6 +238,14 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_mfg_no(obj):
         return obj.bill_of_material.job_order.mfg_no
+
+    @staticmethod
+    def get_is_processed(obj):
+        if obj.bill_of_material:
+            status = obj.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        return status
 
     def validate(self, data):
         if data['number']:
@@ -285,7 +294,8 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'currency_data',
             'manufacturer_data',
             'supplier_data',
-            'mfg_no'
+            'mfg_no',
+            "is_processed"
         )
 
     # def update(self, instance, validated_data):
@@ -319,4 +329,53 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'order_data',
+        )
+
+
+class PartsSearchSerializer(serializers.ModelSerializer):
+    mfg_no = serializers.SerializerMethodField()
+    # order_data = serializers.SerializerMethodField()
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        return obj.job_order.mfg_no
+
+    # # 工事番号取得
+    # @staticmethod
+    # def get_order_data(obj):
+    #     try:
+    #         order_abstruct_contents = MakingOrder.objects.all().filter(
+    #             bill_of_material=obj.id).data
+    #         return order_abstruct_contents
+    #     except:
+    #         order_abstruct_contents = None
+    #         return order_abstruct_contents
+    #     # return BillOfMaterial.objects.values('id').get(id=obj.id)
+
+    class Meta:
+        model = BillOfMaterial
+        fields = (
+            'id',
+            'company',
+            'job_order',
+            'type',
+            'name',
+            'manufacturer',
+            'standard',
+            'drawing_number',
+            'amount',
+            'unit',
+            'currency',
+            'rate',
+            'unit_price',
+            'is_customer_supplied',
+            'is_printed',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'mfg_no',
+            # 'order_data'
         )

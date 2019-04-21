@@ -46,7 +46,7 @@ export default {
     // 検索先フィルター
     filter: { required: false },
     // エラー情報
-    errorMessages: { required: true }
+    errorMessages: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

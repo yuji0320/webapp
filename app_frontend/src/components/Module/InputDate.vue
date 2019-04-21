@@ -3,6 +3,7 @@
     :label="label"
     v-model="internalValue"
     :error-messages="errorMessages"
+    :disabled="disabled"
     type="date"
     min="1900-01-01" 
     max="2100-12-31"
@@ -21,7 +22,8 @@ export default {
   props: {
     label: { required: true },
     errorMessages: { required: true },
-    value: { required: true }
+    value: { required: true },
+    disabled: { required: false }
   },
   computed: {
     internalValue: {
