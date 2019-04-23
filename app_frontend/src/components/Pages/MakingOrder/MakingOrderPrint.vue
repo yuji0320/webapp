@@ -164,7 +164,7 @@ export default {
     params() {
       return {
         company: this.loginUserData.companyId,
-        job_order: this.jobOrderID,
+        bill_of_material__job_order: this.jobOrderID,
         is_printed: this.reprint,
         supplier: this.supplierID,
         // no_supplier: this.reprint,
