@@ -56,7 +56,7 @@
             :hide-actions="true"
             class="elevation-1 mb-4"
             select-all=true
-            item-key="name"
+            item-key="id"
             disable-initial-sort
           >
             <!-- テーブルデータ -->
@@ -91,7 +91,7 @@
             </template>
           </v-data-table>
 
-        <!-- {{ selectedItems[key].selected }} -->
+        <!-- {{ selectedItems[key].selected.length }} -->
         </template>
       </div>
 
@@ -309,7 +309,7 @@ export default {
         ) {}
       } else {
         // エラーがない場合はPDF作成
-        this.pdfgen(pdfData);
+        // this.pdfgen(pdfData);
 
         // 発注書印刷フラグ立て
         // 際印刷の場合は下記処理を飛ばす
@@ -384,7 +384,7 @@ export default {
             let tablebody = [];
             let tableHeaderData = this.headerData(selectedData[key].isProcessedParts);
             let tableHeader = this.headerList(tableHeaderData);
-            console.log(tableHeader);
+            // console.log(tableHeader);totalPrice
             tablebody.push(tableHeader);
             // 部品データの入力
             // 部品個数をゼロとして定義(カウント用)
@@ -397,7 +397,9 @@ export default {
               // 部品個数をカウント
               partsAmount += 1;
               // 部品金額を合計
-              orderAmount += selectedData[key].selected[p].totalPrice;
+              orderAmount += Math.round(selectedData[key].selected[p].totalPrice * 100)/100;
+              orderAmount = Math.round(orderAmount*100)/100;
+              // console.log(partsAmount, orderAmount);
               let partRow = [];
               var lastkey = Object.keys(tableHeaderData).pop();
               currency.push(selectedData[key].selected[p].currencyData.display);
@@ -437,6 +439,8 @@ export default {
             // 合計金額計算
             let totalPrice = orderAmount.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
             let total_display = "";
+
+            console.log(orderAmount);
 
             // 複数種別の通貨があった場合はエラーフラグを立てる
             var currencyDuplication = currency.filter(function (x, i, self) {

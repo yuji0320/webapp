@@ -6,6 +6,8 @@
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
+    <!-- {{ billOfMaterials.count }} -->
+
     <!-- カード形式リストコンポーネント -->
     <app-card-table
       :headers="headerData"
@@ -493,6 +495,7 @@ export default {
         type: this.partsType,
         is_printed: true,
         order_by: this.orderBy,
+        page_size: 1000
       };
     },
     headerData() {
@@ -535,6 +538,7 @@ export default {
       await this.getMakingOrders({params: params_order});
       const makingOrderList = this.makingOrders.results;
       const billOfMaterialList = this.billOfMaterials.results;
+      // console.log(this.billOfMaterials);
 
       // 部品表を参照している発注ファイルがあるか確認し、なければ作成
       for(let b in billOfMaterialList) {
