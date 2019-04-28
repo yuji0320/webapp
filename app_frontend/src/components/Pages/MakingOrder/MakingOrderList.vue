@@ -539,6 +539,7 @@ export default {
       const makingOrderList = this.makingOrders.results;
       const billOfMaterialList = this.billOfMaterials.results;
       // console.log(this.billOfMaterials);
+      
 
       // 部品表を参照している発注ファイルがあるか確認し、なければ作成
       for(let b in billOfMaterialList) {

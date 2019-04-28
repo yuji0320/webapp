@@ -440,7 +440,7 @@ export default {
             let totalPrice = orderAmount.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
             let total_display = "";
 
-            console.log(orderAmount);
+            // console.log(orderAmount);
 
             // 複数種別の通貨があった場合はエラーフラグを立てる
             var currencyDuplication = currency.filter(function (x, i, self) {
