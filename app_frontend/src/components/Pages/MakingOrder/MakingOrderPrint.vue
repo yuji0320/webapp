@@ -309,7 +309,7 @@ export default {
         ) {}
       } else {
         // エラーがない場合はPDF作成
-        // this.pdfgen(pdfData);
+        this.pdfgen(pdfData);
 
         // 発注書印刷フラグ立て
         // 際印刷の場合は下記処理を飛ばす
@@ -434,13 +434,10 @@ export default {
               tablebody.push(partRow);
               // console.log(partRow);
             }
-            // console.log(orderAmount);
 
             // 合計金額計算
             let totalPrice = orderAmount.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
             let total_display = "";
-
-            // console.log(orderAmount);
 
             // 複数種別の通貨があった場合はエラーフラグを立てる
             var currencyDuplication = currency.filter(function (x, i, self) {
