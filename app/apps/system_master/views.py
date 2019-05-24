@@ -1,39 +1,30 @@
-from django_filters import rest_framework as filters
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
+from core.multi_create import multi_create
 from .serializer import *
 from .filters import *
 
 
-class SystemCountryFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='contains')
-
-    class Meta:
-        model = SystemCountry
-        fields = ['id', 'name']
-
-
 class SystemCountryAPIView(viewsets.ModelViewSet):
-    # permission_classes = (
-    #     IsAuthenticated,
-    # )
+    # permission_classes = IsAuthenticated
     serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
     filter_class = SystemCountryFilter
 
+    @multi_create(serializer_class=SystemCountrySerializer)
+    def create(self, request, **kwargs):
+        pass
+
 
 class SystemCurrencyAPIView(viewsets.ModelViewSet):
-    # permission_classes = (
-    #     IsAuthenticated,
-    # )
+    # permission_classes = IsAuthenticated
+
     serializer_class = SystemCurrencySerializer
     queryset = SystemCurrency.objects.all()
 
 
 class SystemUnitTypeAPIView(viewsets.ModelViewSet):
-    # permission_classes = (
-    #     IsAuthenticated,
-    # )
+    # permission_classes = IsAuthenticated
     serializer_class = SystemUnitTypeSerializer
     queryset = SystemUnitType.objects.all()
     filter_class = SystemUnitTypeFilter

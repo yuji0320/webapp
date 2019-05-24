@@ -1,3 +1,5 @@
 # User data(initial)
 */initial_user_data.json
 initial_user_data.json
+*.dump
+mysql/.DS_Store

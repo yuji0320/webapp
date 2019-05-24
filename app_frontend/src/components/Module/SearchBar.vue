@@ -51,13 +51,6 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    // データ検索用パラメータを格納
-    // params() {
-    //   return {
-    //     company: this.loginUserData.companyId,
-    //     order_by: this.orderBy
-    //   };
-    // }
   },
   watch: {
     // ページネーション部分検索

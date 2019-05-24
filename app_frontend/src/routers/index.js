@@ -11,31 +11,24 @@ import Login from '@/components/Login.vue';
 import Logout from '@/components/Logout.vue';
 import Top from '@/components/Top.vue';
 import Main from '@/components/Pages/Main.vue';
-import JobOrder from '@/components/Pages/JobOrder/JobOrder.vue';
 import JobOrderList from '@/components/Pages/JobOrder/JobOrderList.vue';
 import JobOrderDetail from '@/components/Pages/JobOrder/JobOrderDetail.vue';
 import JobOrderEdit from '@/components/Pages/JobOrder/JobOrderEdit.vue';
 import JobOrderUpload from '@/components/Pages/JobOrder/JobOrderUpload.vue';
-import BillOfMaterial from '@/components/Pages/BillOfMaterial/BillOfMaterial.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialMenu from '@/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialList from '@/components/Pages/BillOfMaterial/BillOfMaterialList.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialUpload from '@/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialPrint from '@/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue'; /* eslint-disable-line max-len */
-import MakingOrder from '@/components/Pages/MakingOrder/MakingOrder.vue';
 import MakingOrderMenu from '@/components/Pages/MakingOrder/MakingOrderMenu.vue'; /* eslint-disable-line max-len */
 import MakingOrderList from '@/components/Pages/MakingOrder/MakingOrderList.vue'; /* eslint-disable-line max-len */
 import MakingOrderUpload from '@/components/Pages/MakingOrder/MakingOrderUpload.vue'; /* eslint-disable-line max-len */
 import MakingOrderPrint from '@/components/Pages/MakingOrder/MakingOrderPrint.vue'; /* eslint-disable-line max-len */
 import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.vue'; /* eslint-disable-line max-len */
-import ReceivingProcess from '@/components/Pages/ReceivingProcess/ReceivingProcess.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
-import Investigation from '@/components/Pages/Investigation/Investigation.vue';
 // import PartsSearch from '@/components/Pages/Investigation/Investigation.vue';
 import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
-
-import Master from '@/components/Pages/Master/Master.vue';
 import Company from '@/components/Pages/Master/Company.vue';
 import Staff from '@/components/Pages/Master/Staff.vue';
 import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
@@ -96,7 +89,7 @@ const router = new Router({
             {
               path: 'job_order',
               name: 'JobOrder',
-              component: JobOrder,
+              component: Root,
               children: [
                 {
                   path: 'list',
@@ -128,7 +121,7 @@ const router = new Router({
             {
               path: 'bill_of_material',
               name: 'BillOfMaterial',
-              component: BillOfMaterial,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -155,7 +148,7 @@ const router = new Router({
             {
               path: 'making_order',
               name: 'MakingOrder',
-              component: MakingOrder,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -187,7 +180,7 @@ const router = new Router({
             {
               path: 'receiving_process',
               name: 'ReceivingProcess',
-              component: ReceivingProcess,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -209,7 +202,7 @@ const router = new Router({
             {
               path: 'investigation',
               name: 'Investigation',
-              component: Investigation,
+              component: Root,
               children: [
                 {
                   path: 'parts_search',
@@ -221,7 +214,7 @@ const router = new Router({
             {
               path: 'master',
               name: 'Master',
-              component: Master,
+              component: Root,
               children: [
                 {
                   path: 'company',

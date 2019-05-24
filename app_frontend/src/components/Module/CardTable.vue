@@ -55,7 +55,6 @@
             :key="index"
             :class="header.class"
           >
-            
             <!-- 文字列がtrueの場合緑チェック -->
             <template v-if="props.item[header.value] === true">
               <v-icon color="green">check</v-icon>

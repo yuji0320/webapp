@@ -3,6 +3,14 @@ from django_filters import rest_framework as filters
 from .models import *
 
 
+class SystemCountryFilter(filters.FilterSet):
+    name = filters.CharFilter(lookup_expr='contains')
+
+    class Meta:
+        model = SystemCountry
+        fields = ['id', 'name']
+
+
 class SystemUnitTypeFilter(filters.FilterSet):
 
     class Meta:

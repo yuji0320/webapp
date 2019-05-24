@@ -168,6 +168,7 @@
         ></app-search-bar>
       </div>
 
+      <!-- 取引先種別タブ指定 -->
       <div slot="card-tabs">
         <v-tabs
           v-model="tabs.tab"
@@ -232,7 +233,8 @@ export default {
           { title: "Supplier", refine: "is_supplier" },
           { title: "Manufacturer", refine: "is_manufacturer" }
         ]
-      }
+      },
+      search:""
     };
   },
   computed: {
@@ -251,19 +253,19 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
-    ...mapActions("systemUserApi", [
-      "clearPartner",
-      "getPartners",
-      "setPartner",
-      "postPartner",
-      "putPartner",
-      "deletePartner"
-    ]),
+    ...mapActions("systemUserApi", ["clearPartner","getPartners","setPartner","postPartner","putPartner","deletePartner"]),
     // リスト検索
     async getList(data) {
+      // console.log(data);
+      this.search = data
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getPartners(data);
+      let list = await this.getPartners(this.search);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    // タブ選択情報を更新
+    tabClicked(refine) {
+      this.tabs.refine = refine;
+      this.searchList();
     },
     // タブ絞り込み複合検索関数
     searchList(val) {
@@ -283,12 +285,7 @@ export default {
         params[this.tabs.refine] = true;
       }
       // 上記指定パラメーターで検索を行う
-      this.getPartners({ params: params });
-    },
-    // タブ選択情報を更新
-    tabClicked(refine) {
-      this.tabs.refine = refine;
-      this.searchList();
+      this.getList({ params: params });
     },
     // 処理結果統合フォーム
     responseFunction(val) {

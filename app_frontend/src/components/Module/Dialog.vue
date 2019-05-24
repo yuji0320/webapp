@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" scrollable :max-width="width">
-    <v-btn slot="activator" color="primary" dark class="mb-2" v-show="!hideButtons">New Item</v-btn>
+    <v-btn slot="activator" color="primary" dark class="mb-2" v-show="!hideButtons">{{ openButton }}</v-btn>
     <v-card>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
@@ -62,10 +62,16 @@ export default {
   props: {
     formName: { required: true },
     dialogTitle: { required: false },
+    dialogOpenButton: { required: false },
     hideButtons: { required: false },
     dialogWidth: { required: false },
   },
   computed: {
+    openButton() {
+      let button = "New Item";
+      if(this.dialogOpenButton) { button = this.dialogOpenButton; };
+      return button
+    },
     formTitle() {
       let title = this.editedIndex === -1 ? "New Item" : "Edit Item";
       if(this.dialogTitle) { title = this.dialogTitle; };
