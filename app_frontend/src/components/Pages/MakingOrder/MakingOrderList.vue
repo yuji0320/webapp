@@ -538,9 +538,7 @@ export default {
       await this.getMakingOrders({params: params_order});
       const makingOrderList = this.makingOrders.results;
       const billOfMaterialList = this.billOfMaterials.results;
-      // console.log(this.billOfMaterials);
       
-
       // 部品表を参照している発注ファイルがあるか確認し、なければ作成
       for(let b in billOfMaterialList) {
         // 発注数量が０より大きい場合のみ
@@ -573,7 +571,6 @@ export default {
             newMakingOrder.modifiedBy = billOfMaterialList[b].modifiedBy;
             // 発注ファイルを作成する
             const res = await this.postMakingOrder(newMakingOrder);
-            // console.log(res);
             // console.log("create order");
           } else {
             // すでに存在する場合は何もしない

@@ -1,18 +1,23 @@
+from requests import Response
 from rest_framework import viewsets
 # from rest_framework.permissions import IsAuthenticated
-from core.multi_create import multi_create
+from core.multi_crud import multi_create, multi_update
 from .serializer import *
 from .filters import *
 
 
 class SystemCountryAPIView(viewsets.ModelViewSet):
     # permission_classes = IsAuthenticated
-    serializer_class = SystemCountrySerializer
     queryset = SystemCountry.objects.all()
+    serializer_class = SystemCountrySerializer
     filter_class = SystemCountryFilter
 
     @multi_create(serializer_class=SystemCountrySerializer)
     def create(self, request, **kwargs):
+        pass
+
+    @multi_update(serializer_class=SystemCountrySerializer)
+    def put(self, request, pk=None, *args, **kwargs):
         pass
 
 

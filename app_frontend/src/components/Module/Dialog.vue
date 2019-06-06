@@ -13,7 +13,6 @@
       <!-- フォーム内容 -->
       <v-card-text id="card-text">
         <v-container grid-list-md>
-          <!-- <v-form @submit.prevent="submitForm" :id="formName"> -->
 
             <!-- フォームコンテンツスロット -->
             <slot name="dialog-contents"></slot>
@@ -25,6 +24,9 @@
       <!-- フォーム操作 -->
       <v-card-actions>
         <v-btn color="darken-1" outline @click="dialog = false">Cansel</v-btn>
+
+        <!-- 拡張ボタンスロット -->
+        <slot name="expand-button"></slot>
 
         <v-spacer></v-spacer>
 

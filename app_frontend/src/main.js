@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import '@babel/polyfill';
 // 基本ライブラリのインポート
 import Vue from 'vue';
@@ -64,6 +65,11 @@ Vue.component('app-incremental-model-search', IncrementalModelSearch);
 // 入力関係
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
+
+// ダイアログコンポーネント
+// eslint-disable-next-line max-len
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+Vue.component('app-bom-dialog', BillOfMaterialDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);

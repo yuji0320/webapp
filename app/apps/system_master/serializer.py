@@ -3,6 +3,8 @@ from .models import *
 
 
 class SystemCountrySerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=False)
+
     class Meta:
         model = SystemCountry
         fields = '__all__'

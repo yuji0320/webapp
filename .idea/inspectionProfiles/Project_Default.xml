@@ -8,6 +8,7 @@
         <list>
           <option value="app.bms_backend.urls.*" />
           <option value="app.system_users.models.*" />
+          <option value="rest_framework_bulk" />
         </list>
       </option>
     </inspection_tool>

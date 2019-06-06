@@ -3,6 +3,7 @@
     <!-- Cardヘッダー -->
     <v-toolbar card>
       <slot name="card-header-icon"></slot>
+      <!-- <v-icon>list</v-icon> -->
       <v-toolbar-title class="font-weight-light">
         <slot name="card-header-title"></slot>
       </v-toolbar-title>
