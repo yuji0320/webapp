@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'system_master',
     'system_users',
     'manufacturing_data',
-    'rest_framework_bulk',
 ]
 
 # Application definition
