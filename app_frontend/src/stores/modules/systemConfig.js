@@ -91,6 +91,13 @@ const systemConfigState = {
     timeout: 1000,
   },
   excelJson: [],
+  moneySetting: {
+    prefix: '',
+    suffix: '',
+    thousands: ',',
+    decimal: '.',
+    precision: 2,
+  },
 };
 
 export default {

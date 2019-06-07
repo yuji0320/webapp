@@ -29,10 +29,11 @@
       <!-- ダイアログ関係スロット -->
       <span slot="card-dialog">
 
+        <!-- 部品表登録編集ダイアログコンポーネント -->
         <app-bom-dialog
-          :expenseCategory="expenseCategory"
+          @response-function="responseFunction"
+          ref="bom_dialog"
         >
-
         </app-bom-dialog>
         
       </span>
@@ -136,24 +137,6 @@ export default {
         header = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
       }
       return header;
-    },
-    // 部品表デフォルト値
-    defaultBillOfMaterial() {
-      // 単位デフォルト値取得
-      let unitType = this.unitTypes.results[0].id;
-      // デフォルト配列作成
-      let array = {
-        company: this.loginUserData.companyId,
-        jobOrder: this.jobOrderID,
-        type: this.partsType,
-        amount: "1.00",
-        unit: unitType,
-        currency: this.loginUserData.defaultCurrencyId,
-        rate: 1,
-        stockAppropriation: "0.00",
-        createdBy: this.loginUserData.id
-      }
-      return array;
     }
   },
   methods: {
@@ -176,47 +159,10 @@ export default {
       let list = await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
-    // 頭出しフォームに対するデータ反映
-    setIncremental(val) {
-      // メーカーデータをセット
-      if(!this.expenseCategory.isProcessedParts) {
-        this.$refs.manufacturer.setData(val.manufacturer);
-      }
-      // 単位データセット
-      this.$refs.unitType.setData(val.unit);
-      // 通貨データセット
-      this.$refs.currency.setData(val.currency);
-      // 仕損費データセット
-      this.$refs.failure.setData(val.failure);
-    },
-    // デフォルト値設定
-    setDefault() {
-      // console.log(this.defaultBillOfMaterial);
-      this.setIncremental(this.defaultBillOfMaterial);
-      this.setBillOfMaterial(this.defaultBillOfMaterial);
-    },
     // 編集データ設定
     editBillOfMaterial(val) {
-      this.setIncremental(val);
       this.setBillOfMaterial(val);
-      this.$refs.dialog.editForm();
-    },
-    // フォームおよび子コンポーネントのデータクリア
-    clearBillOfMaterial() {
-      // エラーをクリア
-      this.clearBillOfMaterialError();
-      // データをクリア
-      this.setBillOfMaterial({});
-      // メーカーデータを削除
-      if(!this.expenseCategory.isProcessedParts) {
-        this.$refs.manufacturer.clearItem();
-      }
-      // 単位データクリア
-      this.$refs.unitType.clearItem();
-      // 通貨データクリア
-      this.$refs.currency.clearItem();
-      // 仕損費データクリア
-      this.$refs.failure.clearItem();
+      this.$refs.bom_dialog.editBillOfMaterial();
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -224,34 +170,6 @@ export default {
       this.getBillOfMaterials({ params: this.params });
       // Snackbar表示
       this.showSnackbar(val.snack);
-    },
-    // 部品表フォーム送信
-    async submitBillOfMaterial() {
-      let res = {};
-      this.billOfMaterial.modifiedBy = this.loginUserData.id;
-      // コンポーネントの編集ステータスに応じて新規と更新を切り替える
-      if (this.$refs.dialog.editedIndex == -1) {
-        // 新規追加時の処理
-        // console.log("post");
-        res = await this.postBillOfMaterial(this.billOfMaterial);
-      } else {
-        // 更新時
-        // console.log("put");
-        res = await this.putBillOfMaterial(this.billOfMaterial);
-      }
-      if (res.data) {
-        // 更新成功時はモーダルを閉じる
-        if (this.$refs.dialog.editedIndex == -1) {
-          this.setDefault();
-        } else {
-          this.$refs.dialog.closeDialog();
-        }
-        this.responseFunction(res);
-      } else {
-        // 失敗時
-        console.log("Failed");
-        console.log(res);
-      }
     },
     // 部品表削除
     async deleteBillOfMaterialData(val) {
@@ -289,7 +207,6 @@ export default {
       this.setBillOfMaterials("");
       this.getExpenseCategory(this.partsType);
       this.getJobOrder(this.jobOrderID);
-      // console.log(this.jobOrderID);
     }
   },
   mounted() {}
