@@ -20,7 +20,7 @@
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
-        <v-btn @click="backToMenu" >
+        <v-btn @click="backToMenu">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
