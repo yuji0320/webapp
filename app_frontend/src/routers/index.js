@@ -34,6 +34,8 @@ import Staff from '@/components/Pages/Master/Staff.vue';
 import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
 import Partner from '@/components/Pages/Master/Partner.vue';
 import PartnerUpload from '@/components/Pages/Master/PartnerUpload.vue';
+// ユーザー設定
+import ChangePassword from '@/components/Pages/UserSettings/ChangePassword.vue';
 
 
 import ExcelUpload from '@/components/Module/ExcelUpload.vue';
@@ -85,6 +87,18 @@ const router = new Router({
               path: 'excel',
               name: 'excel',
               component: ExcelUpload,
+            },
+            {
+              path: 'user_settings',
+              name: 'UserSettings',
+              component: Root,
+              children: [
+                {
+                  path: 'change_password',
+                  name: 'ChangePassword',
+                  component: ChangePassword,
+                },
+              ]
             },
             {
               path: 'job_order',

@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 

@@ -143,11 +143,11 @@ export default {
         //   title: "Setting",
         //   url: ""
         // },
-        // {
-        //   icon: "account_circle",
-        //   title: "User",
-        //   url: ""
-        // },
+        {
+          icon: "account_circle",
+          title: "User Settings",
+          url: { name: "ChangePassword" }
+        },
         {
           icon: "exit_to_app",
           title: "Log out",

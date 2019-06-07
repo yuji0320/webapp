@@ -77,15 +77,6 @@
 
         </v-layout>
 
-
-
-        <!-- {{ expenseCategories }} -->
-        <!-- {{ jobOrderID }},
-        {{ partsType }} -->
-
-
-
-
       </v-card-text>
       <!-- Cardフッター -->
       <v-footer 
