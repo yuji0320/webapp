@@ -7,6 +7,7 @@ class JobOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     mfg_no = filters.CharFilter(field_name='mfg_no', lookup_expr='icontains')
     incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+    related_party_mfg_no = filters.CharFilter(field_name='related_party_mfg_no', lookup_expr='icontains')
 
     @staticmethod
     def incremental_filter(queryset, name, value):
@@ -16,7 +17,7 @@ class JobOrderFilter(filters.FilterSet):
 
     class Meta:
         model = JobOrder
-        fields = ['id', 'company', 'name', 'mfg_no', ]
+        fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', ]
 
     order_by = filters.OrderingFilter(
         fields=(

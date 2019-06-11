@@ -100,6 +100,7 @@ export default {
         // 検索カラムリスト
         tableSelectItems: [
           { label: "MFG No", value: "mfg_no" },
+          { label: "Related Party MFG No", value: "related_party_mfg_no" },
           { label: "Product Name", value: "name" }
         ],
         // 検索数値の初期値および返り値

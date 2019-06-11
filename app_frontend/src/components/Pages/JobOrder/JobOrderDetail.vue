@@ -99,7 +99,7 @@
                 </tr>
                 <tr>
                   <td colspan="2" class="text-center">{{ tableData[9][0].text }}</td>
-                  <td colspan="4">{{ tableData[9][1].text }}</td>
+                  <td colspan="4">{{ tableData[9][2].text }}</td>
                 </tr>
                 <tr>
                   <td colspan="1" class="text-center">{{ tableData[10][0].text }}</td>

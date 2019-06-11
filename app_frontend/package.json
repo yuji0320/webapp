@@ -19,7 +19,7 @@
     "moment": "^2.24.0",
     "roboto-fontface": "*",
     "v-money": "^0.8.1",
-    "vee-validate": "^2.2.9",
+    "vee-validate": "^2.2.10",
     "vue": "^2.6.10",
     "vue-json-excel": "^0.2.98",
     "vue-multiselect": "^2.1.6",

@@ -10,7 +10,7 @@ RUN apk update && \
     npm install -g @vue/cli&& \
     npm install -g npm install xlsx
 
-RUN npm install -g @vue/cli-service-global@3.0.4
+RUN npm install -g @vue/cli-service-global
 
 COPY package*.json ./
 

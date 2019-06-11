@@ -2,6 +2,7 @@
   <dictionary name="yujiarai">
     <words>
       <w>corsheaders</w>
+      <w>icontains</w>
     </words>
   </dictionary>
 </component>
