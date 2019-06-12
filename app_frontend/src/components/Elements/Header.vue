@@ -69,13 +69,7 @@
     </v-navigation-drawer>
 
     <!-- ヘッダーツールバー -->
-    <v-toolbar
-    app
-    :clipped-left="!clipped"
-    dark 
-    color="primary"
-    class="white--text"
-    >
+    <v-toolbar app :clipped-left="!clipped" dark color="primary" class="white--text">
       <!-- サイドバー操作 -->
       <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
       <v-divider
@@ -97,7 +91,7 @@
       </v-btn>
       <v-spacer></v-spacer>
       <!-- ログインユーザー情報 -->
-      <span class="subheading">
+      <span class="subheading" v-if="!$vuetify.breakpoint.xs">
         Logged in as {{ loginUserData.fullname }}
       </span>
       <v-divider

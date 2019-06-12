@@ -11,24 +11,30 @@ import Login from '@/components/Login.vue';
 import Logout from '@/components/Logout.vue';
 import Top from '@/components/Top.vue';
 import Main from '@/components/Pages/Main.vue';
+// 作業指図書
 import JobOrderList from '@/components/Pages/JobOrder/JobOrderList.vue';
 import JobOrderDetail from '@/components/Pages/JobOrder/JobOrderDetail.vue';
 import JobOrderEdit from '@/components/Pages/JobOrder/JobOrderEdit.vue';
 import JobOrderUpload from '@/components/Pages/JobOrder/JobOrderUpload.vue';
+// 部品表
 import BillOfMaterialMenu from '@/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialList from '@/components/Pages/BillOfMaterial/BillOfMaterialList.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialUpload from '@/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialPrint from '@/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue'; /* eslint-disable-line max-len */
+// 発注
 import MakingOrderMenu from '@/components/Pages/MakingOrder/MakingOrderMenu.vue'; /* eslint-disable-line max-len */
 import MakingOrderList from '@/components/Pages/MakingOrder/MakingOrderList.vue'; /* eslint-disable-line max-len */
 import MakingOrderUpload from '@/components/Pages/MakingOrder/MakingOrderUpload.vue'; /* eslint-disable-line max-len */
 import MakingOrderPrint from '@/components/Pages/MakingOrder/MakingOrderPrint.vue'; /* eslint-disable-line max-len */
 import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.vue'; /* eslint-disable-line max-len */
+// 仕入れ
 import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
-// import PartsSearch from '@/components/Pages/Investigation/Investigation.vue';
+// 調査
+import Reports from '@/components/Pages/Investigation/Reports/Reports.vue';
 import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
+// マスター
 import Company from '@/components/Pages/Master/Company.vue';
 import Staff from '@/components/Pages/Master/Staff.vue';
 import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
@@ -222,6 +228,11 @@ const router = new Router({
                   path: 'parts_search',
                   name: 'PartsSearch',
                   component: PartsSearch,
+                },
+                {
+                  path: 'summary_sheet_menu',
+                  name: 'Reports',
+                  component: Reports,
                 },
               ],
             },

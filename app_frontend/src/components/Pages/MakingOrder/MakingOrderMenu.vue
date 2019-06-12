@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <v-card>
       <v-toolbar card>
         <v-icon>send</v-icon>

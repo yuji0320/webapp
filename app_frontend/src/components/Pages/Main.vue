@@ -24,7 +24,8 @@
                 <v-flex 
                   v-for="subMenu in menu.subMenus"
                   :key="subMenu.title"
-                  xs3
+                  xs12
+                  sm3
                   d-flex
                 >
                   <v-card color="blue-grey darken-2" class="white--text">
