@@ -356,8 +356,6 @@ export default {
         mfgNo = mfgNo + " / " + jobOrder.relatedPartyMfgNo;
       }
 
-      // console.log(company);
-
       let today = changeDateUS(new Date());
 
       // JS日付フォーマット関数(US表記)
@@ -378,7 +376,6 @@ export default {
       let currency = [];
       for(let key in selectedData) {
         if (selectedData[key].selected) {
-          // console.log(selectedData[key].selected.length);
           if (selectedData[key].selected.length) {
             // テーブルヘッダー設定
             let tablebody = [];
@@ -648,10 +645,7 @@ export default {
           },
         },
         // データ表示部分
-        content: [
-          // poHeader,
-          contentList
-        ],
+        content: [ contentList],
         // 印刷プロパティ
         pageSize: 'LETTER',
         pageMargins: [30,300,30,0],

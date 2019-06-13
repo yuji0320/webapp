@@ -4,6 +4,9 @@
     <!-- 読み込み中ダイアログコンポーネント -->
     <app-loading-dialog></app-loading-dialog>
 
+    <!-- PDF作成コンポーネント -->
+    <app-pdf-make ref="pdfmake"></app-pdf-make>
+
     <v-card>
       <!-- Cardヘッダー -->
       <v-toolbar card>
@@ -11,6 +14,11 @@
           Sales by Period
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn 
+          @click="print" 
+          color="primary"
+          :disabled = "summaryBy === ''"
+        ><v-icon>print</v-icon> Print</v-btn>
       </v-toolbar>
 
       <!-- 検索フォーム -->
@@ -47,15 +55,13 @@
       <!-- 検索結果表示 -->
       <v-card-text>
         <template v-if="jobOrders.results">
-          <h2 class="text-xs-right">Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           <div
             v-for="(list, id) in summaryList"
             :key="id"
           >
-
             <!-- 項目名 -->
             <h2 class="title font-weight-light">{{ list.value }}</h2>
-
             <!-- テーブル表示 -->
             <app-data-table
               :headers="headers"
@@ -66,20 +72,14 @@
                 <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
               </span>
             </app-data-table>
-
+            <!-- レイアウト調整用改行タグ -->
             <br><br>
-            
           </div>
+          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
         </template>
-
       </v-card-text>
-
       <!-- Cardフッター -->
-      <v-footer 
-        card
-        height="auto"
-      >
-      </v-footer>
+      <v-footer card　height="auto"></v-footer>
     </v-card>
   </v-container>
 </template>
@@ -92,8 +92,8 @@ export default {
   name: "SalesByPeriod",
   data() {
     return {
-      date_from: "2018-04-01",
-      date_to: "2019-03-31",
+      date_from: "2018-01-01",
+      date_to: "2020-03-31",
       orderBy: "-completion_date",
       summaryBy: "",
       // テーブルヘッダーデータ
@@ -117,7 +117,6 @@ export default {
         for(var i=0,d;d=this.jobOrders.results[i];i++){
           let price = parseFloat(d.defaultCurrencyOrderAmount.replace(/,/g, ""));
           total += price;
-          // console.log(total);
         }
         total = Math.round( total * 100) / 100;
       }
@@ -199,7 +198,21 @@ export default {
       } else {
         return this.monthList;
       }
-    }
+    },
+    // PDF用ヘッダー
+    headerList() {
+      return function (val) {
+        let headerArray = [];
+        for(let key in val){
+          let headerCol = {
+            "text": val[key].text,
+            "alignment": "center"
+          }
+          headerArray.push(headerCol);
+        }
+        return headerArray;
+      }
+    },
   },
   methods: {
     ...mapActions("jobOrderAPI", ["getJobOrders", "clearJobOrders"]),
@@ -229,11 +242,88 @@ export default {
       let res = await this.getJobOrders({params: params});
       this.$store.commit("systemConfig/setLoading", false);
       return res;
+    },
+    // 印刷用データ作成
+    createPdfData() {
+      // PDFヘッダー
+      let headerText = "Sales Summary by Period : " + this.date_from + " to " + this.date_to;
+      // テーブル用リストの宣言
+      let tablebody = [];
+      // ヘッダー作成
+      let tableHeader = this.headerList(this.headers);
+      let tableWidths = [40, 200, 70, 70, 50, 90]
+      tablebody.push(tableHeader);
+      // テーブル内容作成
+      for(var s=0,summary;summary=this.summaryList[s];s++){
+        // 作業指図書データの展開
+        for(var d=0,data;data=summary.dataList[d];d++){
+          // 行オブジェクトの定義
+          let dataRow = [];
+          // テーブルヘッダーを展開
+          for(var h=0,head;head=this.headers[h];h++){
+            // dataからヘッダーに該当するものを抜き出す
+            let col = data[head.value];
+            // データがネストしている場合はネスと先データを表示
+            if(head.nest) {
+              if(col) { col = col[head.nest];}
+            }
+            // 金額に通貨記号を付与
+            if(head.value == "defaultCurrencyOrderAmount") {
+              col = this.loginUserData.defaultCurrencyDisplay + " " + col 
+            }
+            // データが右寄せ(数値)の場合は右寄せ処理
+            if(head.class=="text-xs-right") {
+              col = {"text": col, alignment: "right"}
+            }
+            // データが未定義の場合はblankを入力
+            if(!col) { col = ""; }
+            dataRow.push(col);
+          }
+          // テーブルデータに行を追加
+          tablebody.push(dataRow);
+        }
+        // 集計単位ごとの小計を表示
+        let subTotalText = summary.value + "   Total : ";
+        let subTotal = this.loginUserData.defaultCurrencyDisplay + " " + summary.subTotal.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
+        let subtotalRow = [
+          { colSpan: 5, text:subTotalText, alignment:"right", bold:true },'','','','',
+          { text: subTotal , alignment:"right", bold:true }
+        ]
+        tablebody.push(subtotalRow);
+      }
+      // 合計表示
+      let total = this.loginUserData.defaultCurrencyDisplay + " " + this.totalPrice.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
+      let totalRow = [
+        { colSpan: 5, text:"Grand Total : ", alignment:"right", bold:true },'','','','',
+        { text: total , alignment:"right", bold:true }
+      ]
+      tablebody.push(totalRow);
+      // テーブル定義
+      let tableData = {
+        table: {
+          headerRows: 1,
+          widths: tableWidths,
+          body: tablebody
+        }
+      }
+      // 出力データ整形
+      let pdfData = {
+        "headerText": headerText,
+        "content": tableData
+      }
+      return pdfData;
+    },
+    // 印刷
+    print() {
+      // 子コンポーネントの印刷関数を呼び出し
+      this.$refs.pdfmake.print(this.createPdfData());
     }
   },
   created () {
     // 集計データリセット
     this.clearJobOrders();
+    // 読み込みの初期化
+    this.$store.commit("systemConfig/setLoading", false);
   }
 }
 </script>

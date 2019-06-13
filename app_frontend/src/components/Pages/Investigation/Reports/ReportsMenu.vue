@@ -19,7 +19,7 @@
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test">
+                <v-btn large block outline color="primary" @click="test" disabled>
                   Open PO
                 </v-btn>
               </v-flex>
@@ -47,22 +47,22 @@
           <v-card-text>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="error" @click="test">
+                <v-btn large block outline color="error" @click="test" disabled>
                   Purchase by Supplier Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="error" @click="test">
+                <v-btn large block outline color="error" @click="test" disabled>
                   Purchase by Supplier Detail
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="error" @click="test">
+                <v-btn large block outline color="error" @click="test" disabled>
                   Purchase by Products Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="error" @click="test">
+                <v-btn large block outline color="error" @click="test" disabled>
                   Purchase by Products Detail
                 </v-btn>
               </v-flex>

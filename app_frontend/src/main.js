@@ -69,6 +69,9 @@ Vue.component('app-incremental-model-search', IncrementalModelSearch);
 // 入力関係
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
+// PDF作成
+import PdfMake from '@/components/Module/PdfMake/PdfMake.vue';
+Vue.component('app-pdf-make', PdfMake);
 
 // ダイアログコンポーネント
 // eslint-disable-next-line max-len
