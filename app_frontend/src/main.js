@@ -47,6 +47,8 @@ Vue.use(moneyConfig);
 // コンポーネントのグローバル適用
 import Confirm from '@/components/Module/Confirm.vue';
 Vue.component('app-confirm', Confirm);
+import LoadingDialog from '@/components/Module/LoadingDialog.vue';
+Vue.component('app-loading-dialog', LoadingDialog);
 import ExcelUpload from '@/components/Module/ExcelUpload.vue';
 Vue.component('app-excel-upload', ExcelUpload);
 import ExcelDownload from '@/components/Module/ExcelDownload.vue';
@@ -55,6 +57,8 @@ import SearchBar from '@/components/Module/SearchBar.vue';
 Vue.component('app-search-bar', SearchBar);
 import CardTable from '@/components/Module/CardTable.vue';
 Vue.component('app-card-table', CardTable);
+import DataTable from '@/components/Module/DataTable.vue';
+Vue.component('app-data-table', DataTable);
 import Dialog from '@/components/Module/Dialog.vue';
 Vue.component('app-dialog', Dialog);
 // 検索関係
@@ -88,6 +92,7 @@ Vue.filter('printDate', function(val) {
 
 Vue.filter('moneyDelemiter', function(value) {
   return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  // return value.toString().replace(/^(-?[0-9]+)(?=\.|$)/, function(s){ return s.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, '$1,');});
 });
 
 new Vue({

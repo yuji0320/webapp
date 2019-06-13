@@ -51,6 +51,11 @@ const systemConfigState = {
       title: 'Investigation',
       subMenus: [
         {
+          icon: 'poll',
+          title: 'Reports',
+          url: {name: 'ReportsMenu'},
+        },
+        {
           icon: 'search',
           title: 'Prats Search',
           url: {name: 'PartsSearch'},
@@ -146,6 +151,5 @@ export default {
     // setMenus({commit}) {
     //   commit('setMenus', this.systemConfigState.menus);
     // },
-
   },
 };

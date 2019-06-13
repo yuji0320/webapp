@@ -1,5 +1,9 @@
 <template>
   <v-container fluid grid-list-lg>
+
+    <!-- 読み込み中ダイアログコンポーネント -->
+    <!-- <app-loading-dialog></app-loading-dialog> -->
+
     <v-card>
       <!-- Cardヘッダー -->
       <v-toolbar card>
@@ -13,7 +17,7 @@
       <!-- 検索フォーム -->
       <v-card-title>
         <v-layout row wrap>
-          <v-flex xs12 md6>
+          <v-flex xs12 sm6 lg4 xl3>
             <app-incremental-model-search
               label="Job Order"
               orderBy="mfg_no"
@@ -22,9 +26,8 @@
               errorMessages=""
             ></app-incremental-model-search>
           </v-flex>
-
           <!-- メーカー選択 -->
-          <v-flex xs12 md6>
+          <v-flex xs12 sm6 lg4 xl3>
             <app-incremental-model-search
               label="Manufacturer"
               orderBy="name"
@@ -33,18 +36,17 @@
               filter="manufacturer"
             ></app-incremental-model-search>
           </v-flex>
-
-          <v-flex xs12 md6>
+          <!-- 型式、図面番号検索用テキスト -->
+          <v-flex xs12 sm6 lg4 xl3>
             <v-text-field 
               label="Standard / Drawing number"
               v-model="partsData"
             ></v-text-field>
           </v-flex>
-
-          <v-spacer></v-spacer>
-
-          <v-btn color="primary" dark class="mb-2" @click="searchParts()">Search</v-btn>
-
+          <!-- 検索ボタン -->
+          <v-flex xs12 sm6 lg4 xl3>
+            <v-btn color="primary" dark class="mb-2" @click="searchParts()">Search</v-btn>
+          </v-flex>
         </v-layout>
       </v-card-title>
 
@@ -57,44 +59,15 @@
         <v-card-title>
           <span class="title font-weight-light">{{ category.categoryName }}</span>
         </v-card-title>
-
-        <!-- テーブルデータ -->
-        <v-data-table
+        <!-- テーブル表示 -->
+        <app-data-table
           :headers="headerList(category.isProcessedParts)"
           :items="partsList(category.id)"
-          :hide-actions="true"
-          class="elevation-1 mb-4"
-          disable-initial-sort
-          :loading="$store.state.systemConfig.loading"
-        >
-          <template slot="items" slot-scope="props">
-            <tr>
-              <td 
-                v-for="(header, index) in headerList(category.isProcessedParts)"
-                :key="index"
-                :class="header.class"
-              >
-                <!-- jsonがネストしている場合はデータを抽出 -->
-                <template v-if="header.nest">
-                  <!-- ネスト元データが存在する場合のみ表示 -->
-                  <template v-if="props.item[header.value]">
-                    {{ props.item[header.value][header.nest] }}
-                  </template>
-                </template>
-                <!-- ネストしていない場合はデータを表示 -->
-                <template v-else>
-                  {{ props.item[header.value] }}
-                </template>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-
+          :doNotChangeClass="true"
+        ></app-data-table>
+        <!-- 位置調整用改行タグ -->
         <br><br><br>
-
       </div>
-
-
       <!-- Cardフッター -->
       <v-footer 
         card

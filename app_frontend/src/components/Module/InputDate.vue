@@ -7,6 +7,7 @@
     type="date"
     min="1900-01-01" 
     max="2100-12-31"
+    :append-outer-icon="appendOuterIcon"
   >
   </v-text-field>
 </template>
@@ -21,9 +22,10 @@ export default {
   },
   props: {
     label: { required: true },
-    errorMessages: { required: true },
+    errorMessages: { required: false },
     value: { required: true },
-    disabled: { required: false }
+    disabled: { required: false },
+    appendOuterIcon: { required: false },
   },
   computed: {
     internalValue: {

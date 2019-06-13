@@ -38,7 +38,7 @@ export default new Vuex.Store({
       paths: [
         'auth', 'systemMasterApi', 'jobOrderAPI',
         'billOfMaterialAPI', 'makingOrderAPI', 'receivingProcessAPI',
-        'systemConfig',
+        // 'systemConfig',
       ],
       storage: window.sessionStorage,
     }),

@@ -50,7 +50,7 @@ export default {
     getJobOrders({commit}, data) {
       const url = 'manufacturing_data/job_order/';
       const commitName = 'setJobOrders';
-      api.get({commit}, url, data, commitName);
+      return api.get({commit}, url, data, commitName);
     },
     // 新規作成
     createNew({commit}) {
@@ -110,5 +110,8 @@ export default {
       const commitName = 'setSearchJobOrder';
       api.get({commit}, url, data, commitName);
     },
+    clearJobOrders({commit}) {
+      commit('setJobOrders', {});
+    }
   },
 };
