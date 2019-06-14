@@ -1,12 +1,7 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
-
-    <!-- {{ billOfMaterials.count }} -->
 
     <!-- カード形式リストコンポーネント -->
     <app-card-table
@@ -38,7 +33,6 @@
           @clear-form="clearMakingOrder"
           ref="dialog"
         >
-
           <!-- フォーム内容 -->
           <span slot="dialog-contents">
             <v-layout wrap>
@@ -735,13 +729,13 @@ export default {
     if(!this.partsType || !this.jobOrderID) {
       this.$router.push({ name: "MakingOrderMenu" });
     } else {
+      this.setMakingOrders({});
       this.getExpenseCategory(this.partsType);
       this.getJobOrder(this.jobOrderID);
     }
   },
   mounted() {
     this.checkMakingOrderExist();
-
   }
 }
 </script>

@@ -433,7 +433,7 @@ export default {
             }
 
             // 合計金額計算
-            let totalPrice = orderAmount.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
+            let totalPrice = orderAmount.toFixed(2).toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,');
             let total_display = "";
 
             // 複数種別の通貨があった場合はエラーフラグを立てる

@@ -28,23 +28,13 @@
 
       <!-- ダイアログ関係スロット -->
       <span slot="card-dialog">
-
         <!-- 部品表登録編集ダイアログコンポーネント -->
-        <app-bom-dialog
-          @response-function="responseFunction"
-          ref="bom_dialog"
-        >
-        </app-bom-dialog>
-        
+        <app-bom-dialog @response-function="responseFunction" ref="bom_dialog"></app-bom-dialog>
       </span>
 
       <span slot="card-header-button">
         <!-- エクセルアップロード -->
-        <v-btn
-          fab
-          small
-          @click="upload"
-        >
+        <v-btn fab small @click="upload">
           <v-icon>cloud_upload</v-icon>
         </v-btn>
       </span>
@@ -113,13 +103,7 @@ export default {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
-    ...mapState("billOfMaterialAPI", [
-      "responseError",
-      "jobOrderID", 
-      "partsType", 
-      "billOfMaterials",
-      "billOfMaterial"
-    ]),
+    ...mapState("billOfMaterialAPI", ["responseError", "jobOrderID", "partsType", "billOfMaterials", "billOfMaterial"]),
     params() {
       return {
         company: this.loginUserData.companyId,
