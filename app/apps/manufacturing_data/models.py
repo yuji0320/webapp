@@ -214,4 +214,4 @@ class ReceivingProcess(models.Model):
         verbose_name = _('Receiving Processes')
         verbose_name_plural = _('Receiving Process')
 
-    def __str__(self): return self.id
+    # def __str__(self): return self.id

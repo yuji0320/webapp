@@ -15,7 +15,15 @@ class AdminMakingOrder(admin.ModelAdmin):
 
 
 class AdminReceivingProcess(admin.ModelAdmin):
-    list_display = ('order', 'created_at', 'modified_at')
+    list_display = ('get_number', 'order', 'created_at', 'modified_at')
+    list_filter = ('is_received', 'created_at', 'modified_at')
+    search_fields = ('order__number',)
+
+    @staticmethod
+    def get_number(obj):
+        return obj.order.number
+    get_number.short_description = 'Number'
+    get_number.admin_order_field = 'order__number'
 
 
 admin.site.register(JobOrder, AdminJobOrder)
