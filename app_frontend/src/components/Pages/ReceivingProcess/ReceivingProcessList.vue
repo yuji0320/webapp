@@ -169,7 +169,7 @@ export default {
         company: this.loginUserData.companyId,
         order__bill_of_material__job_order: this.jobOrderID,
         // is_received: false,
-        supplier: this.supplierID,
+        order__supplier: this.supplierID,
         order_by: this.orderBy,
         page_size: 1000
       };
