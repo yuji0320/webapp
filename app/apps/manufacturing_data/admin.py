@@ -12,6 +12,7 @@ class AdminBillOfMaterial(admin.ModelAdmin):
 
 class AdminMakingOrder(admin.ModelAdmin):
     list_display = ('number', 'name', 'created_at', 'modified_at')
+    search_fields = ('number',)
 
 
 class AdminReceivingProcess(admin.ModelAdmin):
