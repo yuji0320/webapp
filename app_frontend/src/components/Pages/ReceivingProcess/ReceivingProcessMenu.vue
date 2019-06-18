@@ -60,7 +60,7 @@
                       Receiving Process
                     </v-btn>
 
-                    <v-btn 
+                    <!-- <v-btn 
                       large 
                       block 
                       round
@@ -69,7 +69,7 @@
                       @click="editReceivingFile"
                     >
                       Edit Receiving File
-                    </v-btn>
+                    </v-btn> -->
 
                   </v-flex>
                 </v-layout>

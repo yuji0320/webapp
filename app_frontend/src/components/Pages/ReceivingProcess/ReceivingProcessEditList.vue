@@ -116,11 +116,16 @@ export default {
     ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
     ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
     ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
-    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess"]),
+    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcess"]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       let list = await this.getReceivingProcesses(data);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    // 発注ファイル編集
+    editReceivingProcess(val) {
+      this.setReceivingProcess(val);
+      this.$refs.receive_dialog.editReceivingProcess();
     },
     backToMenu() {
       this.$router.push({ name: "ReceivingProcessMenu" });
