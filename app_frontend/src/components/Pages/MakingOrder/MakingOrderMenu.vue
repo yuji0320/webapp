@@ -4,7 +4,7 @@
       <v-toolbar card>
         <v-icon>send</v-icon>
         <v-toolbar-title class="font-weight-light">
-          Order
+          Order with MFG No
         </v-toolbar-title>
       </v-toolbar>
 
@@ -20,10 +20,7 @@
         ></app-incremental-model-search>
       </v-card-title>
       
-      <v-container
-        fluid
-        grid-list-lg
-      >
+      <v-container fluid grid-list-lg>
         <v-layout row wrap>
           <v-flex xs12>
             <v-card>

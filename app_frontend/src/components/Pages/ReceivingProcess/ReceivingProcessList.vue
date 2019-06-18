@@ -42,9 +42,7 @@
 
         <!-- テーブルデータ -->
         <template slot="items" slot-scope="props">
-          <tr
-            :class="{'complete': props.item.isReceived}"
-          >
+          <tr :class="{'complete': props.item.isReceived}">
             <td class="">{{ props.item.orderData.number }}</td>
             <td>{{ props.item.orderData.name }}</td>
             <td>

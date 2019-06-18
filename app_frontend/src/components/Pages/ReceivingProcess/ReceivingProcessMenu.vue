@@ -11,7 +11,7 @@
       <!-- 工事番号、仕入先選択 -->
       <v-card-title>
         <v-layout row wrap>
-          <v-flex xs12 md6>
+          <v-flex xs12 sm6 md4>
             <app-incremental-model-search
               label="Job Order"
               orderBy="mfg_no"
@@ -21,7 +21,7 @@
               @clear-item="clearJobOrderID"
             ></app-incremental-model-search>
           </v-flex>
-          <v-flex xs12 md6>
+          <v-flex xs12 sm6 md4>
             <app-incremental-model-search
               label="Supplier"
               orderBy="name"
@@ -49,7 +49,6 @@
               <v-card-text>
                 <v-layout row>
                   <v-flex xs12>
-
                     <v-btn 
                       large 
                       block 
@@ -59,6 +58,17 @@
                       @click="receive"
                     >
                       Receiving Process
+                    </v-btn>
+
+                    <v-btn 
+                      large 
+                      block 
+                      round
+                      color="primary"
+                      :disabled = "mfgNo === '' || supplier === '' "
+                      @click="editReceivingFile"
+                    >
+                      Edit Receiving File
                     </v-btn>
 
                   </v-flex>
@@ -121,7 +131,7 @@ export default {
     ...mapState("receivingProcessAPI", ["jobOrderID", "supplierID"]),    
   }, 
   methods: {
-    ...mapActions("receivingProcessAPI", ["setJobOrderID", "setSupplierID"]),
+    ...mapActions("receivingProcessAPI", ["setJobOrderID", "setSupplierID", "setPartsType"]),
     clearJobOrderID() {
       this.mfgNo = "";
       this.setJobOrderID("");
@@ -133,7 +143,13 @@ export default {
     receive() {
       this.setJobOrderID(this.mfgNo);
       this.setSupplierID(this.supplier);
+      
       this.$router.push({ name: "ReceivingProcessList" });
+    },
+    editReceivingFile() {
+      this.setJobOrderID(this.mfgNo);
+      this.setSupplierID(this.supplier);
+      this.$router.push({ name: "ReceivingProcessEditList" });
     },
     // 納期経過分リスト
     notYet() {

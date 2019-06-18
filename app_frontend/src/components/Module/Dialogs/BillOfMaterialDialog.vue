@@ -1,6 +1,8 @@
 <template>
   <app-dialog
     :formName="'billOfMaterialForm'"
+    :hideButtons="hideButtons"
+    parentTitle="Bill of Material"
     @clear-form="clearBillOfMaterial"
     @submit-form="submitBillOfMaterial"
     @set-default="setDefault"
@@ -191,6 +193,9 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  props: {
+    hideButtons: { required: false }
+  },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),

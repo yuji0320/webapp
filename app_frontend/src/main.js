@@ -57,6 +57,8 @@ import SearchBar from '@/components/Module/SearchBar.vue';
 Vue.component('app-search-bar', SearchBar);
 import CardTable from '@/components/Module/CardTable.vue';
 Vue.component('app-card-table', CardTable);
+import Card from '@/components/Module/Card.vue';
+Vue.component('app-card', Card);
 import DataTable from '@/components/Module/DataTable.vue';
 Vue.component('app-data-table', DataTable);
 import Dialog from '@/components/Module/Dialog.vue';
@@ -77,6 +79,8 @@ Vue.component('app-pdf-make', PdfMake);
 // eslint-disable-next-line max-len
 import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
 Vue.component('app-bom-dialog', BillOfMaterialDialog);
+import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
+Vue.component('app-order-dialog', MakingOrderDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);

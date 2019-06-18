@@ -1,7 +1,12 @@
 // eslint-disable-next-line no-undef
 module.exports = {
+  // entry: [
+  //   "webpack-dev-server/client?http://127.0.0.0:8080",
+  //   "webpack/hot/only-dev-server",
+  //   "./src"
+  // ],
   devServer: {
-    // public: "192.168.1.49",
+    // public: "192.168.2.114",
     host: '0.0.0.0',
     port: 9000,
     disableHostCheck: true,

@@ -31,6 +31,7 @@ import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.
 import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessEditList from '@/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue'; /* eslint-disable-line max-len */
 // 調査
 import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
 import SalesByPeriod from '@/components/Pages/Investigation/Reports/SalesByPeriod.vue';
@@ -209,9 +210,14 @@ const router = new Router({
                   component: ReceivingProcessMenu,
                 },
                 {
-                  path: 'notyet',
+                  path: 'receiving',
                   name: 'ReceivingProcessList',
                   component: ReceivingProcessList,
+                },
+                {
+                  path: 'edit',
+                  name: 'ReceivingProcessEditList',
+                  component: ReceivingProcessEditList,
                 },
                 {
                   path: 'notyet',

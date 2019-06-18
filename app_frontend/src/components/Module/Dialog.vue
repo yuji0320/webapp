@@ -25,6 +25,8 @@
       <v-card-actions>
         <v-btn color="darken-1" outline @click="dialog = false">Cansel</v-btn>
 
+        <v-spacer></v-spacer>
+
         <!-- 拡張ボタンスロット -->
         <slot name="expand-button"></slot>
 
@@ -67,6 +69,7 @@ export default {
     dialogOpenButton: { required: false },
     hideButtons: { required: false },
     dialogWidth: { required: false },
+    parentTitle: { required: false },
   },
   computed: {
     openButton() {
@@ -76,6 +79,8 @@ export default {
     },
     formTitle() {
       let title = this.editedIndex === -1 ? "New Item" : "Edit Item";
+      // 親から指定があればフォームタイトルを変更する
+      if(this.parentTitle) { title = title + " (" + this.parentTitle + ")" }
       if(this.dialogTitle) { title = this.dialogTitle; };
       return title;
     },
