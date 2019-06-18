@@ -182,7 +182,12 @@ export default {
     ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
     ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
     ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
-    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess"]),
+    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess", "setReceivingProcessesList"]),
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      let list = await this.getReceivingProcesses(data);
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     async submitData(val) {
       let err = false;
       this.errorList = [];
@@ -240,7 +245,7 @@ export default {
       this.getPartner(this.supplierID);
       this.getExpenseCategories({params: {"order_by": "category_number"}});
       this.getJobOrder(this.jobOrderID);
-      this.getReceivingProcesses({params: this.params});
+      this.getList({params: this.params});
       // this.getMakingOrders({params: this.params});
     },    
   },
@@ -249,6 +254,7 @@ export default {
     if(!this.supplierID || !this.jobOrderID) {
       this.$router.push({ name: "ReceivingProcessMenu" });
     } else {
+      this.setReceivingProcessesList({});
       this.loadData();
     }
   },
