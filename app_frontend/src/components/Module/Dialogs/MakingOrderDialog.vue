@@ -15,8 +15,6 @@
 
       <v-layout wrap>
         <!-- 発注ファイルフォーム -->
-        <h3 class="headline mb-0">Order File</h3>
-        {{ makingOrder.billOfMaterialId }}
 
         <!-- エラー表示 -->
         <v-flex xs12>
@@ -317,7 +315,7 @@ export default {
             { color: "blue" }
           )
         ) {
-          // Yesの場合は削除処理
+          // Yesの場合は上書き処理
           this.setBillOfMaterial(this.makingOrder.billOfMaterial);
           this.billOfMaterial.unitPrice = order;
           this.billOfMaterial.modifiedBy = this.loginUserData.id;

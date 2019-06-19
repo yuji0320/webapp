@@ -14,7 +14,7 @@
           <v-flex xs12 sm6 md4>
             <app-incremental-model-search
               label="Job Order"
-              orderBy="mfg_no"
+              orderBy="-mfg_no"
               v-model="mfgNo"
               searchType="jobOrder"
               errorMessages=""
@@ -60,7 +60,7 @@
                       Receiving Process
                     </v-btn>
 
-                    <!-- <v-btn 
+                    <v-btn 
                       large 
                       block 
                       round
@@ -69,7 +69,7 @@
                       @click="editReceivingFile"
                     >
                       Edit Receiving File
-                    </v-btn> -->
+                    </v-btn>
 
                   </v-flex>
                 </v-layout>

@@ -91,9 +91,9 @@ class ReceivingProcessFilter(filters.FilterSet):
     order_by = filters.OrderingFilter(
         fields=(
             ('created_at', 'created_at'),
+            ('modified_at', 'modified_at'),
             ('order__number', 'order__number'),
             ('order__desired_delivery_date', 'order__desired_delivery_date'),
-            ('modified_at', 'modified_at'),
         ),
     )
 

@@ -81,6 +81,8 @@ import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDial
 Vue.component('app-bom-dialog', BillOfMaterialDialog);
 import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
 Vue.component('app-order-dialog', MakingOrderDialog);
+import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
+Vue.component('app-received-dialog', ReceivingProcessDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);

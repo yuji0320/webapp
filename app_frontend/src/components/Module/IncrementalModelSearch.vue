@@ -99,7 +99,8 @@ export default {
     params() {
       return {
         company: this.loginUserData.companyId,
-        order_by: this.orderBy
+        order_by: this.orderBy,
+        page_size: 1000
       };
     },
     fields() {

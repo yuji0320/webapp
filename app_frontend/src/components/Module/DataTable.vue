@@ -124,7 +124,7 @@ export default {
   methods: {
     // ダブルクリック時の処理
     doubleClick(item) {
-      this.$emit("edit-item", item);
+      this.$emit("double-clicked", item);
     },
     // データ閲覧イベントの発火
     viewItem(item) {

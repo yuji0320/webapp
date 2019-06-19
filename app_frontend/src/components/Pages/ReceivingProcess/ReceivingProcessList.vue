@@ -138,7 +138,7 @@ export default {
     return {
       dialog: false,
       errorList: [],
-      orderBy: "modified_at",
+      orderBy: "-order__desired_delivery_date",
       headers: [
         { text: "No.", value:"", width:"10px" },
         { text: "Partner name", value:"", width:"5" },
@@ -160,7 +160,7 @@ export default {
     ...mapState("systemUserApi", ["userPartner", "userCompany"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
     ...mapState("billOfMaterialAPI", ["billOfMaterials", "billOfMaterial"]),
-    ...mapState("makingOrderAPI", ["makingOrders"]),
+    ...mapState("makingOrderAPI", ["makingOrders", "makingOrder"]),
     ...mapState("receivingProcessAPI", [
       "responseError", "jobOrderID", "supplierID", "receivingProcesses", "receivingProcess"
     ]),
@@ -197,6 +197,7 @@ export default {
       let receivedAmount = val.amount;
       let orderUP = val.orderData.unitPrice;
       let receivedUP = val.unitPrice;
+      let orderData = val.orderData;
 
       if(!receivedDate) {
         err = true;
@@ -216,11 +217,8 @@ export default {
         err = true;
         this.errorList.push("Received Unit Price is require field");
       } else {
-        let up = orderUP - receivedUP;
-        if(up != 0) {
-          err = true;
-          this.errorList.push("Order Unit Price and received Unit Price does not match");
-        }
+        let res = {}
+        res = await this.checkPrice(receivedUP, orderData);
       }
 
       if(err) {
@@ -232,10 +230,8 @@ export default {
 
         let update = await this.putReceivingProcess(val);
         console.log(update);
-
         this.loadData();
       }
-      
     },
     backToMenu() {
       this.$router.push({ name: "ReceivingProcessMenu" });
@@ -248,6 +244,53 @@ export default {
       this.getList({params: this.params});
       // this.getMakingOrders({params: this.params});
     },    
+    // 仕入ファイルと発注の金額差チェック
+    async checkPrice(receivedUP, orderData) {
+      let res = {};
+      let received = receivedUP
+      let order = orderData.unitPrice;
+      let bom = orderData.billOfMaterial.unitPrice;
+      console.log(orderData);
+      if(received!=order) {
+        // 発注ファイルと部品表で単価が違う場合
+        // アラート文
+        let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
+                        "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
+                        "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" + 
+                        "\nAre you sure change Order's unit price and Bill ob material's unit price?")
+        if (
+          await this.$refs.confirm.open(
+            "Unit Price is different!",
+            alertText,
+            { color: "blue" }
+          )
+        ) {
+          // Yesの場合は上書き処理
+          // 部品表の編集
+          this.setBillOfMaterial(orderData.billOfMaterial);
+          this.billOfMaterial.unitPrice = received;
+          this.billOfMaterial.modifiedBy = this.loginUserData.id;
+          res = await this.putBillOfMaterial(this.billOfMaterial);
+          // 発注ファイルの上書き
+          this.setMakingOrder(orderData);
+          this.makingOrder.unitPrice = received;
+          this.makingOrder.modifiedBy = this.loginUserData.id;
+          this.makingOrder.billOfMaterialId = orderData.billOfMaterial.id;
+          res = await this.putMakingOrder(this.makingOrder);
+          this.showSnackbar(res.snack);
+          orderData.unitPrice = received;
+          return orderData;
+        } else {
+          // Noの場合はスナックバーにキャンセルの旨を表示
+          res.snack = { snack: "Price is not changed." };
+          this.showSnackbar(res.snack);
+          return orderData;
+        }
+      } else {
+        // 単価が同じ場合は処理しない
+      }
+      return orderData;
+    }
   },
   created() {
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
