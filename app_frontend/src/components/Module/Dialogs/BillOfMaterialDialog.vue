@@ -35,36 +35,36 @@
           ></v-text-field>
         </v-flex>
 
-        <template v-if="this.expenseCategory.isProcessedParts">
+        <!-- <template v-if="this.expenseCategory.isProcessedParts"> -->
           <!-- 図面番号 -->
-          <v-flex xs12>
-            <v-text-field 
-              label="Drawing Number"
-              v-model="billOfMaterial.drawingNumber"
-              :error-messages="responseError.drawingNumber"
-            ></v-text-field>
-          </v-flex>
-          <!-- 材質 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Material"
-              v-model="billOfMaterial.material"
-              :error-messages="responseError.material"
-            ></v-text-field>
-          </v-flex>
-          <!-- 表面処理 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Surface treatment"
-              v-model="billOfMaterial.surfaceTreatment"
-              :error-messages="responseError.surfaceTreatment"
-            ></v-text-field>
-          </v-flex>
-        </template>
+        <v-flex xs12 v-show="isProcessedParts">
+          <v-text-field 
+            label="Drawing Number"
+            v-model="billOfMaterial.drawingNumber"
+            :error-messages="responseError.drawingNumber"
+          ></v-text-field>
+        </v-flex>
+        <!-- 材質 -->
+        <v-flex xs12 md6 v-show="isProcessedParts">
+          <v-text-field 
+            label="Material"
+            v-model="billOfMaterial.material"
+            :error-messages="responseError.material"
+          ></v-text-field>
+        </v-flex>
+        <!-- 表面処理 -->
+        <v-flex xs12 md6 v-show="isProcessedParts">
+          <v-text-field 
+            label="Surface treatment"
+            v-model="billOfMaterial.surfaceTreatment"
+            :error-messages="responseError.surfaceTreatment"
+          ></v-text-field>
+        </v-flex>
+        <!-- </template> -->
 
-        <template v-else>
+        <!-- <template v-else> -->
           <!-- メーカー選択 -->
-          <v-flex xs12>
+          <v-flex xs12 v-show="!isProcessedParts">
             <app-incremental-model-search
               label="Manufacturer"
               orderBy="name"
@@ -76,7 +76,7 @@
             ></app-incremental-model-search>
           </v-flex>
           <!-- 規格・寸法 -->
-          <v-flex xs12 md6>
+          <v-flex xs12 md6 v-show="!isProcessedParts">
             <v-text-field 
               label="Standard/Form"
               v-model="billOfMaterial.standard"
@@ -84,14 +84,14 @@
             ></v-text-field>
           </v-flex>
           <!-- ユニット番号 -->
-          <v-flex xs12 md6>
+          <v-flex xs12 md6 v-show="!isProcessedParts">
             <v-text-field 
               label="Unit Number"
               v-model="billOfMaterial.unitNumber"
               :error-messages="responseError.unitNumber"
             ></v-text-field>
           </v-flex>
-        </template>
+        <!-- </template> -->
 
         <!-- 個数 -->
         <v-flex xs12 md4>
@@ -217,6 +217,14 @@ export default {
         createdBy: this.loginUserData.id
       }
       return array;
+    },
+    // 加工部品かどうか
+    isProcessedParts() {
+      if(this.billOfMaterial.isProcessed) {
+        return true;
+      } else {
+        return false
+      }
     }
   },
   methods: {
@@ -230,7 +238,7 @@ export default {
     // 頭出しフォームに対するデータ反映
     setIncremental(val) {
       // メーカーデータをセット
-      if(!this.expenseCategory.isProcessedParts) {
+      if(!this.isProcessedParts) {
         this.$refs.manufacturer.setData(val.manufacturer);
       }
       // 単位データセット

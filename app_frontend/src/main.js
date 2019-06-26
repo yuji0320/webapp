@@ -72,8 +72,10 @@ Vue.component('app-incremental-model-search', IncrementalModelSearch);
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
 // PDF作成
-import PdfMake from '@/components/Module/PdfMake/PdfMake.vue';
-Vue.component('app-pdf-make', PdfMake);
+// import PdfMake from '@/components/Module/PdfMake/PdfMake.vue';
+// Vue.component('app-pdf-make', PdfMake);
+import PdfMakeMixin from '@/components/Module/PdfMake/PdfMakeMixin.js';
+Vue.mixin(PdfMakeMixin);
 
 // ダイアログコンポーネント
 // eslint-disable-next-line max-len

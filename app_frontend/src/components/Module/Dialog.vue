@@ -23,7 +23,7 @@
       <v-divider></v-divider>
       <!-- フォーム操作 -->
       <v-card-actions>
-        <v-btn color="darken-1" outline @click="dialog = false">Cansel</v-btn>
+        <v-btn color="darken-1" outline @click="dialog = false">Cancel</v-btn>
 
         <v-spacer></v-spacer>
 

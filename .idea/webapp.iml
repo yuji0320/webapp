@@ -25,6 +25,8 @@
       <sourceFolder url="file://$MODULE_DIR$/app/bms_frontend/config" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app/bms_frontend/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app/bms_frontend/static" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/app/apps/manufacturing_data" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/app/apps/core" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Remote Python 3.6.6 Docker Compose (dev_app at [/Users/yujiarai/PycharmProjects/webapp/docker-compose-dev.yml])" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

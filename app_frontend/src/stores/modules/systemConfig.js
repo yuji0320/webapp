@@ -142,7 +142,7 @@ export default {
       commit('onSnackbar', {snack: snack, color: color});
       setTimeout(function() {
         commit('offSnackbar');
-      }, 2000);
+      }, 4000);
     },
     // jsonデータセット
     setExcelJson({commit}, data) {

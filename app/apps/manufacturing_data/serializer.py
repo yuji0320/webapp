@@ -121,6 +121,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     order_amount = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     mfg_no = serializers.SerializerMethodField()
+    is_processed = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -154,6 +155,11 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_mfg_no(obj):
         return obj.job_order.mfg_no
+
+    @staticmethod
+    def get_is_processed(obj):
+        status = obj.type.is_processed_parts
+        return status
 
     class Meta:
         model = BillOfMaterial
@@ -190,6 +196,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'order_amount',
             'manufacturer_data',
             'mfg_no',
+            'is_processed'
         )
 
 
@@ -204,10 +211,10 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
-
+    parts_detail = serializers.SerializerMethodField()
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
-        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
+        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True, allow_null=True)
 
     # デフォルト通貨での合計価格計算
     @staticmethod
@@ -250,6 +257,20 @@ class MakingOrderSerializer(serializers.ModelSerializer):
         else:
             status = False
         return status
+
+    # 部品詳細データ表示
+    @staticmethod
+    def get_parts_detail(obj):
+        # 加工部品かどうかを判断
+        if obj.bill_of_material:
+            status = obj.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        if status:
+            parts_detail = obj.drawing_number
+        else:
+            parts_detail = obj.standard
+        return parts_detail
 
     def validate(self, data):
         if data['number']:
@@ -299,7 +320,8 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'manufacturer_data',
             'supplier_data',
             'mfg_no',
-            "is_processed"
+            'is_processed',
+            'parts_detail'
         )
 
     # def update(self, instance, validated_data):
@@ -313,21 +335,21 @@ class MakingOrderSerializer(serializers.ModelSerializer):
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
     order_data = MakingOrderSerializer(source='order', read_only=True)
-    parts_detail = serializers.SerializerMethodField()
+    # parts_detail = serializers.SerializerMethodField()
 
-    # デフォルト通貨での合計価格計算
-    @staticmethod
-    def get_parts_detail(obj):
-        # 加工部品かどうかを判断
-        if obj.order.bill_of_material:
-            status = obj.order.bill_of_material.type.is_processed_parts
-        else:
-            status = False
-        if status:
-            parts_detail = obj.order.drawing_number
-        else:
-            parts_detail = obj.order.standard
-        return parts_detail
+    # 部品詳細データ表示
+    # @staticmethod
+    # def get_parts_detail(obj):
+    #     # 加工部品かどうかを判断
+    #     if obj.order.bill_of_material:
+    #         status = obj.order.bill_of_material.type.is_processed_parts
+    #     else:
+    #         status = False
+    #     if status:
+    #         parts_detail = obj.order.drawing_number
+    #     else:
+    #         parts_detail = obj.order.standard
+    #     return parts_detail
 
     class Meta:
         model = ReceivingProcess
@@ -348,7 +370,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'order_data',
-            'parts_detail'
+            # 'parts_detail'
         )
 
 

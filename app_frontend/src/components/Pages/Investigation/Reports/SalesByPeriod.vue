@@ -4,9 +4,6 @@
     <!-- 読み込み中ダイアログコンポーネント -->
     <app-loading-dialog></app-loading-dialog>
 
-    <!-- PDF作成コンポーネント -->
-    <app-pdf-make ref="pdfmake"></app-pdf-make>
-
     <v-card>
       <!-- Cardヘッダー -->
       <v-toolbar card>
@@ -316,7 +313,8 @@ export default {
     // 印刷
     print() {
       // 子コンポーネントの印刷関数を呼び出し
-      this.$refs.pdfmake.print(this.createPdfData());
+      this.printPDF(this.createPdfData());
+      // console.log(this.createPdfData());
     }
   },
   created () {

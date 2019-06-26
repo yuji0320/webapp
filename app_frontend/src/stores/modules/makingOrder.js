@@ -4,10 +4,12 @@ const makingOrderState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
+  isProcessed: '',
   supplierID: '',
   makingOrders: {},
   makingOrder: {},
   reprint: false,
+  tableSelected: [],
 };
 
 export default {
@@ -26,6 +28,10 @@ export default {
     setPartsType(state, payload) {
       state.partsType = payload;
     },
+    // 加工部品かどうか設定
+    setIsProcessed(state, payload) {
+      state.isProcessed = payload;
+    },
     // 部品種別設定
     setSupplierID(state, payload) {
       state.supplierID = payload;
@@ -42,6 +48,9 @@ export default {
     setReprint(state, payload) {
       state.reprint = payload;
     },
+    setTableSelected(state, payload) {
+      state.tableSelected = payload;
+    }
   },
   actions: {
     // 作業指図書IDセット
@@ -51,6 +60,10 @@ export default {
     // 部品種別IDセット
     setPartsType({commit}, data) {
       commit('setPartsType', data);
+    },
+    // 加工部品かどうかセット
+    setIsProcessed({commit}, data) {
+      commit('setIsProcessed', data);
     },
     // 仕入先IDセット
     setSupplierID({commit}, data) {
@@ -100,5 +113,8 @@ export default {
     setReprint({commit}, data) {
       commit('setReprint', data);
     },
+    setTableSelected({commit}, data) {
+      commit('setTableSelected', data);
+    }
   },
 };

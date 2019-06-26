@@ -16,6 +16,11 @@
       <slot name="card-header-button"></slot>
     </v-toolbar>
 
+    <!-- 注意書き -->
+    <v-card-text>
+      <slot name="card-text"></slot>
+    </v-card-text>
+
     <!-- Cardタイトル -->
     <v-card-title>
       <v-layout row wrap>

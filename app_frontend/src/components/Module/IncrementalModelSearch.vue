@@ -11,11 +11,13 @@
         :placeholder="label"
         :label="label"
         :error-messages="errorMessages"
+        :disabled="disabled"
       ></v-autocomplete>
     </v-flex>
     <v-flex x1 class="pt-3">
       <v-btn
         @click="clearItem"
+        :disabled="disabled"
       >Clear</v-btn>
     </v-flex>
   </v-layout>
@@ -46,7 +48,9 @@ export default {
     // 検索先フィルター
     filter: { required: false },
     // エラー情報
-    errorMessages: { required: false }
+    errorMessages: { required: false },
+    // disabled
+    disabled: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

@@ -1,11 +1,12 @@
 <template>
   <app-dialog
     :formName="'makingOrderForm'"
-    :hideButtons="true"
+    :hideButtons="!showAdd"
     parentTitle="Order"
     dialogWidth="600px"
     @submit-form="submitMakingOrder"
     @clear-form="clearMakingOrder"
+    @set-default="setDefault"
     ref="dialog"
   >
     <!-- フォーム内容 -->
@@ -51,64 +52,60 @@
         </v-flex>
 
         <!-- 加工部品の場合 -->
-        <template v-if="this.expenseCategory.isProcessedParts">
-          <!-- 図面番号 -->
-          <v-flex xs12>
-            <v-text-field 
-              label="Drawing Number"
-              v-model="makingOrder.drawingNumber"
-              :error-messages="responseError.drawingNumber"
-            ></v-text-field>
-          </v-flex>
-          <!-- 材質 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Material"
-              v-model="makingOrder.material"
-              :error-messages="responseError.material"
-            ></v-text-field>
-          </v-flex>
-          <!-- 表面処理 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Surface treatment"
-              v-model="makingOrder.surfaceTreatment"
-              :error-messages="responseError.surfaceTreatment"
-            ></v-text-field>
-          </v-flex>
-        </template>
+        <!-- 図面番号 -->
+        <v-flex xs12 v-show="isProcessedParts">
+          <v-text-field 
+            label="Drawing Number"
+            v-model="makingOrder.drawingNumber"
+            :error-messages="responseError.drawingNumber"
+          ></v-text-field>
+        </v-flex>
+        <!-- 材質 -->
+        <v-flex xs12 md6 v-show="isProcessedParts">
+          <v-text-field 
+            label="Material"
+            v-model="makingOrder.material"
+            :error-messages="responseError.material"
+          ></v-text-field>
+        </v-flex>
+        <!-- 表面処理 -->
+        <v-flex xs12 md6 v-show="isProcessedParts">
+          <v-text-field 
+            label="Surface treatment"
+            v-model="makingOrder.surfaceTreatment"
+            :error-messages="responseError.surfaceTreatment"
+          ></v-text-field>
+        </v-flex>
 
         <!-- 加工部品以外の場合 -->
-        <template v-else>
-          <!-- メーカー選択 -->
-          <v-flex xs12>
-            <app-incremental-model-search
-              label="Manufacturer"
-              orderBy="name"
-              v-model="makingOrder.manufacturer"
-              searchType="partner"
-              filter="manufacturer"
-              :errorMessages="responseError.manufacturer"
-              ref="manufacturer"
-            ></app-incremental-model-search>
-          </v-flex>
-          <!-- 規格・寸法 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Standard/Form"
-              v-model="makingOrder.standard"
-              :error-messages="responseError.standard"
-            ></v-text-field>
-          </v-flex>
-          <!-- ユニット番号 -->
-          <v-flex xs12 md6>
-            <v-text-field 
-              label="Unit Number"
-              v-model="makingOrder.unitNumber"
-              :error-messages="responseError.unitNumber"
-            ></v-text-field>
-          </v-flex>
-        </template>
+        <!-- メーカー選択 -->
+        <v-flex xs12 v-show="!isProcessedParts">
+          <app-incremental-model-search
+            label="Manufacturer"
+            orderBy="name"
+            v-model="makingOrder.manufacturer"
+            searchType="partner"
+            filter="manufacturer"
+            :errorMessages="responseError.manufacturer"
+            ref="manufacturer"
+          ></app-incremental-model-search>
+        </v-flex>
+        <!-- 規格・寸法 -->
+        <v-flex xs12 md6 v-show="!isProcessedParts">
+          <v-text-field 
+            label="Standard/Form"
+            v-model="makingOrder.standard"
+            :error-messages="responseError.standard"
+          ></v-text-field>
+        </v-flex>
+        <!-- ユニット番号 -->
+        <v-flex xs12 md6 v-show="!isProcessedParts">
+          <v-text-field 
+            label="Unit Number"
+            v-model="makingOrder.unitNumber"
+            :error-messages="responseError.unitNumber"
+          ></v-text-field>
+        </v-flex>
 
         <!-- 個数 -->
         <v-flex xs12 md4>
@@ -198,6 +195,9 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  props: {
+    showAdd: { required: false },
+  },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),
@@ -219,6 +219,14 @@ export default {
         createdBy: this.loginUserData.id
       }
       return array;
+    },
+    // 加工部品かどうか
+    isProcessedParts() {
+      if(this.makingOrder.isProcessed) {
+        return true;
+      } else {
+        return false
+      }
     }
   },
   methods: {
@@ -272,10 +280,18 @@ export default {
     async submitMakingOrder() {
       let res = {};
       this.makingOrder.modifiedBy = this.loginUserData.id;
-      this.makingOrder.billOfMaterialId = this.makingOrder.billOfMaterial.id;
+      if(this.makingOrder.billOfMaterial) {
+        this.makingOrder.billOfMaterialId = this.makingOrder.billOfMaterial.id;
+      } else {
+        this.makingOrder.billOfMaterialId = null;
+        if (this.$refs.dialog.editedIndex == -1) {
+          this.makingOrder.number = null;
+        }
+      }
       // コンポーネントの編集ステータスに応じて新規と更新を切り替える
       if (this.$refs.dialog.editedIndex == -1) {
         // 新規追加時の処理
+        this.makingOrder.createdBy = this.loginUserData.id;
         res = await this.postMakingOrder(this.makingOrder);
       } else {
         // 更新時
@@ -300,34 +316,36 @@ export default {
     // 発注ファイルと部品表の金額差チェック
     async checkPrice() {
       let res = {};
-      let order = this.makingOrder.unitPrice;
-      let bom = this.makingOrder.billOfMaterial.unitPrice;
-      if(order!=bom) {
-        // 発注ファイルと部品表で単価が違う場合
-        // アラート文
-        let alertText = ("Order's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
-                        "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" + 
-                        "\nAre you sure change Bill ob material's unit price?")
-        if (
-          await this.$refs.confirm.open(
-            "Unit Price is different!",
-            alertText,
-            { color: "blue" }
-          )
-        ) {
-          // Yesの場合は上書き処理
-          this.setBillOfMaterial(this.makingOrder.billOfMaterial);
-          this.billOfMaterial.unitPrice = order;
-          this.billOfMaterial.modifiedBy = this.loginUserData.id;
-          this.makingOrder.billOfMaterial = this.billOfMaterial;
-          res = await this.putBillOfMaterial(this.billOfMaterial);
+      if(this.makingOrder.billOfMaterial) {
+        let order = this.makingOrder.unitPrice;
+        let bom = this.makingOrder.billOfMaterial.unitPrice;
+        if(order!=bom) {
+          // 発注ファイルと部品表で単価が違う場合
+          // アラート文
+          let alertText = ("Order's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
+                          "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" + 
+                          "\nAre you sure change Bill ob material's unit price?")
+          if (
+            await this.$refs.confirm.open(
+              "Unit Price is different!",
+              alertText,
+              { color: "blue" }
+            )
+          ) {
+            // Yesの場合は上書き処理
+            this.setBillOfMaterial(this.makingOrder.billOfMaterial);
+            this.billOfMaterial.unitPrice = order;
+            this.billOfMaterial.modifiedBy = this.loginUserData.id;
+            this.makingOrder.billOfMaterial = this.billOfMaterial;
+            res = await this.putBillOfMaterial(this.billOfMaterial);
+          } else {
+            // Noの場合はスナックバーにキャンセルの旨を表示
+            res.snack = { snack: "Bill of Material's price is not changed." };
+            this.showSnackbar(res.snack);
+          }
         } else {
-          // Noの場合はスナックバーにキャンセルの旨を表示
-          res.snack = { snack: "Bill of Material's price is not changed." };
-          this.showSnackbar(res.snack);
+          // 単価が同じ場合は処理しない
         }
-      } else {
-        // 単価が同じ場合は処理しない
       }
     }
   }

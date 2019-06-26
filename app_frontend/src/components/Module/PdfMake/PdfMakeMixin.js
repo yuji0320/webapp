@@ -1,24 +1,31 @@
-<template>
-  
-</template>
-
-<script>
 export default {
+  data() {
+    return {
+      defaultPageMargins: [20,60,20,50],
+      pdfStyles: {
+        tableStyle: {
+          fontSize: 11,
+          margin: [ 0, 0, 0, 0]
+        }
+      },
+    }
+  },
   computed: {},
   methods: {
-    print(val) {
-      let docDefinition = this.createData(val);
-      let pdfname = docDefinition.header().text + "_" + new Date();
+    // printPDFに対して”content”と"header"データを渡す
+    printPDF(val) {
+      let docDefinition = this.createPDFData(val);
+      let pdfname = val.headerText + "_" + new Date();
       // データのオブジェクト化
       let pdfData = {
         "docDefinition": docDefinition,
         "pdfName": pdfname
       }
       // プリントの実行
-      this.pdfgen(pdfData);
+      this.pdfgennerate(pdfData);
     },
     // PDFデフォルトヘッダー
-    defaultHeader(val) {
+    defaultHeaderPDF(val) {
       return {
         text: val, 
         margin: [50,20],
@@ -27,10 +34,17 @@ export default {
       }; 
     },
     // PDF用データ作成
-    createData(val) {
+    createPDFData(val) {
       // ヘッダー用テキストを定義      
-      let headerText = val.headerText;
-      let pdfHeader = this.defaultHeader(headerText);
+      let pdfHeader = this.defaultHeaderPDF(val.headerText);
+      if(val.header) {pdfHeader = val.header};
+      // ページマージンの定義
+      let pageMargins = this.defaultPageMargins
+      if(val.pageMargins) {pageMargins = val.pageMargins};
+      // ページスタイルの定義
+      let styles = this.pdfStyles;
+      if(val.styles) {styles = val.styles};
+      // console.log(val);
       // データ定義
       var docDefinition = { 
         // ヘッダー等
@@ -39,22 +53,17 @@ export default {
         content: [ val.content ],
         // 印刷プロパティ
         pageSize: 'LETTER',
-        pageMargins: [20,60,20,50],
+        pageMargins: pageMargins,
         defaultStyle: {
           font: 'GenShin',
-          fontSize: 9
+          fontSize: 7
         },
-        styles: {
-          tableStyle: {
-            fontSize: 11,
-            margin: [ 0, 0, 0, 0]
-          }
-        },
+        styles: styles,
       }  
       return docDefinition;
     },
     // プリント機能関数
-    pdfgen(val) {
+    pdfgennerate(val) {
       pdfMake.fonts = {
         // 日本語が使用可能なフォントを設定
         GenShin: {
@@ -69,8 +78,3 @@ export default {
     }
   }
 }
-</script>
-
-<style>
-
-</style>

@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from manufacturing_data.filters import *
 from .serializer import *
-# from core.multi_create import multi_create
+from core.multi_crud import multi_create
 
 
 class JobOrderAPIView(viewsets.ModelViewSet):
@@ -34,6 +34,10 @@ class MakingOrderAPIView(viewsets.ModelViewSet):
     serializer_class = MakingOrderSerializer
     queryset = MakingOrder.objects.all()
     filter_class = MakingOrderFilter
+
+    # @multi_create(serializer_class=MakingOrderSerializer)
+    # def create(self, request, **kwargs):
+    #     pass
 
 
 class ReceivingProcessAPIView(viewsets.ModelViewSet):

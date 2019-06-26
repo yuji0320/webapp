@@ -171,12 +171,12 @@ export default {
 </script>
 
 <style>
-.printed, .complete, .complete * v-icon {
+/* .printed, .complete, .complete * v-icon {
   background-color: #4CAF50;
   color: white;
-}
+} */
 
-.error {
+/* .error {
   background-color: #fb8c;
   color: white;
 }
@@ -184,5 +184,5 @@ export default {
 .dataList:hover {
   background-color: #607d8b;
   color: black;
-}
+} */
 </style>

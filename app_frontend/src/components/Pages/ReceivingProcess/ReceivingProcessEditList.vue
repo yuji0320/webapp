@@ -43,6 +43,7 @@
           :completeColumn="completeColumn"
           @edit-item="editReceivingProcess"
           @double-clicked="editReceivingProcess"
+          @delete-item="deleteReceivingProcessData"
         >
         </app-data-table>
       </span>
@@ -77,7 +78,7 @@ export default {
       headers: [
         { text: "No", value: "orderData", nest:"number" },
         { text: "Part Name", value: "orderData", nest:"name" },
-        { text: "Standard / Dwaring No", value:"partsDetail" },
+        { text: "Standard / Dwaring No", value:"orderData", nest:"partsDetail" },
         { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
         { text: "Received", value: "receivedDate" },
         { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
@@ -156,17 +157,6 @@ export default {
       // Snackbar表示
       this.showSnackbar(val.snack);
     },
-    backToMenu() {
-      this.$router.push({ name: "ReceivingProcessMenu" });
-    },
-    // データの読み込み
-    loadData() {
-      this.setReceivingProcessesList({})
-      this.getPartner(this.supplierID);
-      this.getExpenseCategories({params: {"order_by": "category_number"}});
-      this.getJobOrder(this.jobOrderID);
-      this.getList({params: this.params});
-    },
     // 発注ファイル削除
     async deleteReceivingProcessData(val) {
       let res = {};
@@ -184,7 +174,18 @@ export default {
         // Noの場合はスナックバーにキャンセルの旨を表示
         res.snack = { snack: "Delete is cancelled" };
       }
-      responseFunction(res);
+      this.responseFunction(res);
+    },
+    backToMenu() {
+      this.$router.push({ name: "ReceivingProcessMenu" });
+    },
+    // データの読み込み
+    loadData() {
+      this.setReceivingProcessesList({})
+      this.getPartner(this.supplierID);
+      this.getExpenseCategories({params: {"order_by": "category_number"}});
+      this.getJobOrder(this.jobOrderID);
+      this.getList({params: this.params});
     }
   },
   created() {

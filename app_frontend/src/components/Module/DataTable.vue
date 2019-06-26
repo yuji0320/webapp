@@ -6,6 +6,9 @@
     class="elevation-1 mb-4"
     disable-initial-sort
     :loading="$store.state.systemConfig.loading"
+    v-model="selected"
+    :select-all="selectAll"
+    item-key="id"
   >
     <!-- テーブルデータ -->
     <template slot="items" slot-scope="props">
@@ -15,10 +18,20 @@
           'complete': addClass(props.item[completeColumn]),
           'error': props.item[errorColumn],
           'dataList': true,
-          'printed': addClass(props.item.isPrinted)
+          'printed': addClass(props.item.isPrinted),
+          'selected': addClass(props.selected)
         }"
         @dblclick="doubleClick(props.item)"
+        :active="props.selected"
       >
+        <td v-if="selectAll">
+          <v-checkbox
+            v-model="props.selected"
+            primary
+            hide-details
+            :disabled="addClass(props.item.isPrinted)"
+          ></v-checkbox>
+        </td>  
         <td 
           v-for="(header, index) in headers"
           :key="index"
@@ -31,6 +44,15 @@
           <!-- 文字列がtrueの場合赤バツ -->
           <template v-else-if="props.item[header.value] === false">
             <v-icon color="red">close</v-icon>
+          </template>
+          <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
+          <template v-else-if="header.value === 'checkbox'">
+            <v-checkbox
+              v-model="props.selected"
+              primary
+              hide-details
+              :disabled="addClass(props.item.isPrinted)"
+            ></v-checkbox>
           </template>
           <!-- true, false以外の場合はデータを表示 -->
           <template v-else>
@@ -97,10 +119,14 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "DataTable",
   data() {
-    return {};
+    return {
+      selected: []
+    };
   },
   props: {
     // テーブル情報表示
@@ -111,6 +137,8 @@ export default {
     errorColumn: { required: false },
     viewIcon: { required: false },
     doNotChangeClass: { required: false },
+    checkbox: { required: false },
+    selectAll: { required: false },
   },
   computed: {
     addClass() {
@@ -139,7 +167,8 @@ export default {
       item.delete = "ture";
       this.$emit("delete-item", item);
     }
-  }
+  },
+  created() {}
 }
 </script>
 
@@ -156,6 +185,10 @@ export default {
 
 .dataList:hover {
   background-color: #607d8b;
+  color: black;
+}
+
+.selected {
   color: black;
 }
 </style>

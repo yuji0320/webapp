@@ -1,7 +1,7 @@
-from requests import Response
+# from requests import Response
 from rest_framework import viewsets
 # from rest_framework.permissions import IsAuthenticated
-from core.multi_crud import multi_create, multi_update
+from core.multi_crud import multi_create
 from .serializer import *
 from .filters import *
 
@@ -16,9 +16,9 @@ class SystemCountryAPIView(viewsets.ModelViewSet):
     def create(self, request, **kwargs):
         pass
 
-    @multi_update(serializer_class=SystemCountrySerializer)
-    def put(self, request, pk=None, *args, **kwargs):
-        pass
+    # @multi_update(serializer_class=SystemCountrySerializer)
+    # def put(self, request, pk=None, *args, **kwargs):
+    #     pass
 
 
 class SystemCurrencyAPIView(viewsets.ModelViewSet):
