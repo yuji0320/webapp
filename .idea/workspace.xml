@@ -2,32 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="フロントエンド、仕入れ修正機能実装">
-      <change beforePath="$PROJECT_DIR$/.idea/webapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webapp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/CardTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/CardTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/BillOfMaterialDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/BillOfMaterialDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/MakingOrderDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/MakingOrderDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/LoadingDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/LoadingDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/PdfMake/PdfMake.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/SalesByPeriod.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/SalesByPeriod.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderNotyet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderNotyet.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/makingOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/makingOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/modules/systemConfig.js" afterDir="false" />
     </list>
     <ignored path="app/apps/manufacturing_data/fixtures/test.json" />
     <ignored mask="*.dump" />
@@ -69,8 +47,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="198" column="25" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+            <state relative-caret-position="186">
+              <caret line="172" column="23" lean-forward="true" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -338,6 +316,7 @@
       <workItem from="1561572456000" duration="734000" />
       <workItem from="1561573547738" duration="400000" />
       <workItem from="1561575894354" duration="344000" />
+      <workItem from="1561577010927" duration="16000" />
     </task>
     <task id="LOCAL-00042" summary="バックエンド、フロントエンド&#10;作業指図書登録編集機能実装完了">
       <created>1551249107053</created>
@@ -686,7 +665,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20004000" />
+    <option name="totallyTimeSpent" value="20434000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -699,6 +678,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-452" width="1920" height="1057" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4941691" visible="true" weight="0.1943557" />
       <window_info id="Structure" order="1" sideWeight="0.50189394" side_tool="true" weight="0.21459228" />
@@ -780,7 +760,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="注文書印刷レイアウト変更" />
     <MESSAGE value="フロントエンド、バックエンド&#10;仕入れ処理、部品表検索機能実装" />
     <MESSAGE value="パラメーター変更" />
     <MESSAGE value="部品検索機能一部変更" />
@@ -805,7 +784,8 @@
     <MESSAGE value="バックエンド、仕入れファイル管理画面修正" />
     <MESSAGE value="フロントエンド、仕入処理検索パラメーター修正" />
     <MESSAGE value="フロントエンド、仕入れ修正機能実装" />
-    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド、仕入れ修正機能実装" />
+    <MESSAGE value="フロントエンド・バックエンド&#10;工事番号なし発注機能実装、各共通機能コンポーネント化、ミックスイン化" />
+    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド・バックエンド&#10;工事番号なし発注機能実装、各共通機能コンポーネント化、ミックスイン化" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/apps/system_master/migrations/__init__.py">
@@ -1128,8 +1108,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="198" column="25" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+        <state relative-caret-position="186">
+          <caret line="172" column="23" lean-forward="true" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
         </state>
       </provider>
     </entry>

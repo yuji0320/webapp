@@ -142,22 +142,22 @@ export default {
     ...mapState("jobOrderAPI", ["jobOrder"]),
     ...mapState("makingOrderAPI", ["jobOrderID", "partsType", "supplierID", "makingOrders", "reprint"]),
     hasMFGNo() {
-      if(this.jobOrderID != "") { return true } else { return false };
+      return this.jobOrderID !== "";
     },
     // 印刷か再印刷で内容が変わる部分を定義
     switchParams() {
-      let cardTitle = "Print PO : "
-      let cardText = "You can print unprinted PO."
-      let params = {}
+      let cardTitle = "Print PO : ";
+      let cardText = "You can print unprinted PO.";
+      let params = {};
       if(this.reprint) {
-        cardTitle = "Rerint PO : "
+        cardTitle = "Rerint PO : ";
         cardText = "You can print all PO that already prented."
       }
       // 工事番号の有無
       if(this.hasMFGNo) {
         cardTitle += " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
         params = {
-          company: this.loginUserData.companyId,
+          company: this.loginUserData["companyId"],
           bill_of_material__job_order: this.jobOrderID,
           is_printed: this.reprint,
           supplier: this.supplierID,
@@ -166,9 +166,9 @@ export default {
         }
       } else {
         // 工事番号なしの場合
-        cardTitle += " without MFG No"
+        cardTitle += " without MFG No";
         params = {
-          company: this.loginUserData.companyId,
+          company: this.loginUserData["companyId"],
           no_bom: true,
           is_printed: this.reprint,
           supplier: this.supplierID,
@@ -193,7 +193,8 @@ export default {
           selected += selectedList[s].selected.length;
         }
       }
-      let disabled = (selected > 0) ? disabled = false : disabled = true;
+      let disabled = true;
+      disabled = selected <= 0;
       return disabled;
     },
     // 部品種別リスト作成
@@ -204,7 +205,7 @@ export default {
           {name: "Processed Parts", isProcessed: true},
           {name: "Other", isProcessed: false}
         ];
-        var arrObj = [];
+        let arrObj = [];
         let list = [];
         // 部品種別ごとに発注ファイルをまとめる
         for(let c in category) {
@@ -227,7 +228,7 @@ export default {
       // 部品種別ごとにテーブル表示項目を変更
       return function (val) {
         let header = [];
-        if(val==true) {
+        if(val===true) {
           header = this.defaultHeadersTop.concat(this.processedHeaders, this.defaultHeadersEnd);
         } else {
           header = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
@@ -256,7 +257,7 @@ export default {
       }
       this.getPartner(this.supplierID);
       this.getMakingOrders({params: this.switchParams.params});
-      this.getCompany({ detail: this.loginUserData.companyId });
+      this.getCompany({ detail: this.loginUserData["companyId"] });
       this.$store.commit("systemConfig/setLoading", false);
     }
   },

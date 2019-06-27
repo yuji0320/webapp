@@ -78,7 +78,7 @@ export default {
     ...mapState("makingOrderAPI", [ "jobOrderID", "partsType", "makingOrders"]),
     params() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         is_printed: false,
         order_by: this.orderBy,
       };
@@ -91,7 +91,7 @@ export default {
     ...mapActions("makingOrderAPI", [ "setJobOrderID", "getMakingOrders", "setMakingOrders"]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getMakingOrders(data);
+      await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // メニューに戻る

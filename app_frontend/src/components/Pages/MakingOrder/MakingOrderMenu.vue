@@ -257,7 +257,7 @@ export default {
       this.setIsProcessed(val);
       this.$router.push({ name: "MakingOrderList" });
     },
-    withoutMfgNo(val) {
+    withoutMfgNo() {
       this.setJobOrderID("");
       this.setIsProcessed(false);
       this.$router.push({ name: "MakingOrderList" });

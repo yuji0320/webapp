@@ -57,7 +57,7 @@
       <span slot="card-dialog">
         <!-- 発注ファイルダイアログ -->
         <app-order-dialog @response-function="responseFunction" :showAdd="!hasMFGNo" ref="order_dialog">
-          <span slot="edit-bom" d-inline-flex>
+          <span d-inline-flex slot="edit-bom">
             <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Bill of Material</v-btn>
           </span>
         </app-order-dialog>
@@ -140,41 +140,41 @@ export default {
     ...mapState("billOfMaterialAPI", ["billOfMaterial"]),
     ...mapState("makingOrderAPI", [ "jobOrderID", "isProcessed", "makingOrders", "makingOrder"]),
     hasMFGNo() {
-      if(this.jobOrderID) { return true } else { return false };
+      return !!this.jobOrderID;
     },
     // ページごとの設定
-    switchParams() {
+    switchParams: function () {
       let title = "";
       let headers = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
       // 工事番号有無の確認
-      if(this.hasMFGNo) {
+      if (this.hasMFGNo) {
         // 線品情報の追加
         title = " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
         // 加工部品かどうか
-        if(this.isProcessed) {
-          title += " (Processed Parts)"
+        if (this.isProcessed) {
+          title += " (Processed Parts)";
           headers = this.defaultHeadersTop.concat(this.processedHeaders, this.defaultHeadersEnd);
         } else {
           title += " (Other)"
         }
         return {
           params: {
-            company: this.loginUserData.companyId,
+            company: this.loginUserData["companyId"],
             bill_of_material__job_order: this.jobOrderID,
             bill_of_material__type__is_processed_parts: this.isProcessed,
-            order_by: this.orderBy, 
+            order_by: this.orderBy,
           },
           title: title,
           headers: headers
         }
       } else {
         // 工事番号なしの場合
-        title = " without MFG No"
+        title = " without MFG No";
         return {
           params: {
-            company: this.loginUserData.companyId,
+            company: this.loginUserData["companyId"],
             no_bom: true,
-            order_by: this.orderBy,            
+            order_by: this.orderBy,
           },
           title: title,
           headers: headers
@@ -195,7 +195,7 @@ export default {
     },
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getMakingOrders(data);
+      await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 発注ファイル編集
@@ -234,7 +234,7 @@ export default {
       // リストをリロード
       this.getMakingOrders({ params: this.switchParams.params });
       // Snackbar表示
-      this.showSnackbar(res.snack);
+      this.showSnackbar(res.snack.snack, res.snack.color);
     },
     // メニューに戻る
     backToMenu() {

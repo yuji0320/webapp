@@ -50,18 +50,14 @@ export default {
       supplierIsAble: true,
       date: "",
       dateIsAble: true
-    }
+    };
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("makingOrderAPI", ["makingOrder", "tableSelected"]),
     // 一つ以上選択されている場合のみTrueを返す
     selectedDataExists() {
-      if(this.tableSelected.length > 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.tableSelected.length > 0;
     }
   },
   methods: {
@@ -84,7 +80,7 @@ export default {
       if(this.selectedDataExists) {
         if(!this.supplierIsAble && !this.dateIsAble) {
           // 編集項目が両方ともfalseの場合アラートを出す
-          this.showSnackbar({color:"red", snack:"Input data is disabled."});
+          this.showSnackbar({color: "red", snack: "Input data is disabled."})
         } else {
           // 編集項目がどちらか一方選択済みの場合
           // レスポンス用変数の定義
@@ -92,7 +88,7 @@ export default {
           // 日付が空白の場合はnullを設定
           if(!this.date) { this.date = null; }
           // 選択済みデータを個別処理
-          for(var o=0,order;order=this.tableSelected[o];o++){
+          for(let o=0,order; order === this.tableSelected[o]; o++){
             // 講師尿データの反映
             order.modifiedBy = this.loginUserData.id;
             // BOMのIDを渡す
@@ -119,11 +115,12 @@ export default {
           res.snack = {
             color: "success",
             snack: "Update is success!"
-          }
+          };
           // 処理統合関数の呼び出し
-          this.$emit("response-function", res);       
+          this.$emit("response-function", res);
+          console.log(res);
           // ダイアログを閉じる
-          this.$refs.dialog.closeDialog(); 
+          this.$refs.dialog.closeDialog();
         }
       } else {
         // データを選択していない場合はアラートを出し、ダイアログを閉じる
