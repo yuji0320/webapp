@@ -18,10 +18,10 @@
           <v-alert 
             value="true"
             type="error"
-            v-if="responseError.nonFieldErrors"
+            v-if="responseError['nonFieldErrors']"
           >
             <li
-              v-for="(error, index) in responseError.nonFieldErrors"
+              v-for="(error, index) in responseError['nonFieldErrors']"
               :key="index"
             >
               {{ error }}
@@ -65,9 +65,9 @@
         <!-- 部品詳細 -->
         <v-flex xs12 md8>
           <v-text-field 
-            label="Standard / Dwaring No"
+            label="Standard / Drawing No"
             disabled
-            v-model="receivingProcess.partsDetail"
+            v-model="partsDetail"
           ></v-text-field>
         </v-flex>
         <!-- 個数 -->
@@ -117,7 +117,7 @@
             label="Rate"
             v-model="receivingProcess.rate"
             :error-messages="responseError.rate"
-            :suffix="loginUserData.defaultCurrencyCode"
+            :suffix="loginUserData['defaultCurrencyCode']"
             hint="1 Order currency = "
             :persistent-hint="true"
             class="right-input"
@@ -127,8 +127,8 @@
         <v-flex xs12 md4>
           <app-input-date 
             label="Received Date"
-            v-model="receivingProcess.receivedDate"
-            :errorMessages="responseError.receivedDate"
+            v-model="receivingProcess['receivedDate']"
+            :errorMessages="responseError['receivedDate']"
           ></app-input-date>
         </v-flex>   
       </v-layout>
@@ -158,6 +158,13 @@ export default {
     ...mapState("billOfMaterialAPI", ["billOfMaterial"]),
     ...mapState("makingOrderAPI", ["makingOrder"]),
     ...mapState("receivingProcessAPI", ["responseError", "receivingProcess"]),
+    partsDetail() {
+      if(this.receivingProcess.orderData){
+        return this.receivingProcess.orderData.partsDetail;
+      } else {
+        return "";
+      }
+    }
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
@@ -174,15 +181,16 @@ export default {
     setData(val) {
       this.mfgNo = val.orderData.mfgNo;
       this.number = val.orderData.number;
-      this.supplier = val.orderData.supplierData.name;
+      this.supplier = val.orderData["supplierData"].name;
       this.partName = val.orderData.name;
     },
     // 発注ファイル編集
     editReceivingProcess() {
-      this.clearReceivingProcessError()
+      this.clearReceivingProcessError();
       this.setIncremental(this.receivingProcess);
       this.setData(this.receivingProcess);
       this.$refs.dialog.editForm();
+      // console.log(this.receivingProcess);
     },
     async submitReceivingProcess() {
       let res = {};
@@ -204,16 +212,24 @@ export default {
     // 仕入ファイルと発注の金額差チェック
     async checkPrice() {
       let res = {};
-      let received = this.receivingProcess.unitPrice
+      let received = this.receivingProcess.unitPrice;
       let order = this.receivingProcess.orderData.unitPrice;
-      let bom = this.receivingProcess.orderData.billOfMaterial.unitPrice;
-      if(received!=order) {
+      let bom = "";
+      if (this.receivingProcess.orderData.billOfMaterial) {
+        bom = this.receivingProcess.orderData.billOfMaterial.unitPrice;
+      }
+      if(received!==order) {
         // 発注ファイルと部品表で単価が違う場合
         // アラート文
-        let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
-                        "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
-                        "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" + 
-                        "\nAre you sure change Order's unit price and Bill ob material's unit price?")
+        let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                "\nAre you sure change Order's unit price?");
+        if (bom !== "") {
+          alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                  "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                  "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
+                  "\nAre you sure change Order's unit price and Bill ob material's unit price?");
+        }
         if (
           await this.$refs.confirm.open(
             "Unit Price is different!",
@@ -222,16 +238,22 @@ export default {
           )
         ) {
           // Yesの場合は上書き処理
-          // 部品表の編集
-          this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
-          this.billOfMaterial.unitPrice = received;
-          this.billOfMaterial.modifiedBy = this.loginUserData.id;
-          res = await this.putBillOfMaterial(this.billOfMaterial);
-          // 発注ファイルの上書き
           this.setMakingOrder(this.receivingProcess.orderData);
+          // 部品表の編集
+          if (bom !== "") {
+            // 部品表の編集
+            this.setBillOfMaterial(orderData.billOfMaterial);
+            this.billOfMaterial.unitPrice = received;
+            this.billOfMaterial.modifiedBy = this.loginUserData.id;
+            res = await this.putBillOfMaterial(this.billOfMaterial);
+            this.makingOrder.billOfMaterialId = orderData.billOfMaterial.id;
+          } else {
+            this.makingOrder.billOfMaterialId = null;
+          }
+          // 発注ファイルの上書き
           this.makingOrder.unitPrice = received;
           this.makingOrder.modifiedBy = this.loginUserData.id;
-          this.makingOrder.billOfMaterialId = this.receivingProcess.orderData.billOfMaterial.id;
+          // this.makingOrder.billOfMaterialId = this.receivingProcess.orderData.billOfMaterial.id;
           this.receivingProcess.orderData = this.makingOrder;
           res = await this.putMakingOrder(this.makingOrder);
           this.showSnackbar(res.snack);

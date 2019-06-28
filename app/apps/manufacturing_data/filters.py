@@ -83,6 +83,7 @@ class MakingOrderFilter(filters.FilterSet):
 class ReceivingProcessFilter(filters.FilterSet):
     desired_delivery_date = filters.DateFromToRangeFilter(field_name='order__desired_delivery_date')
     name = filters.CharFilter(field_name='order__name', lookup_expr='icontains')
+    no_bom = filters.BooleanFilter(field_name='order__bill_of_material', lookup_expr='isnull')
 
     class Meta:
         model = ReceivingProcess

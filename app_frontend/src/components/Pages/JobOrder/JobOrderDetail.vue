@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <v-card>
       <v-toolbar card>
         <v-icon>work</v-icon>
@@ -16,11 +13,7 @@
           Back to List
         </v-btn>
         <!-- 編集ボタン -->
-        <v-btn
-          fab
-          small
-          @click="edit"
-        >
+        <v-btn fab small @click="edit">
           <v-icon>edit</v-icon>
         </v-btn>
         <v-btn 
@@ -172,9 +165,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+    import {mapActions, mapState} from "vuex";
 
-export default {
+    export default {
   title: "Job Order Detail",
   name: "JobOrderDetail",
   data() {
@@ -195,7 +188,7 @@ export default {
     ...mapState("billOfMaterialAPI", ["billOfMaterials"]),
     params() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         job_order: this.mfgNo,
         order_by: this.orderBy,
         page_size: 5000
@@ -205,37 +198,40 @@ export default {
     partsData() {
       // PDF作成用のデータを構築
       return function (val) {
-        const list = this.billOfMaterials.results.filter(x => x.type === val);
-        return list
+          return this.billOfMaterials.results.filter(x => x.type === val)
       }
     },
     // 部品種別毎の部品表仕分け
     partsTotal() {
       // PDF作成用のデータを構築
       return function (val) {
-        let total = 0
-        for(let t in val) {
-          total += val[t].totalDefaultCurrencyPrice;
+        let total = 0;
+        for (let i = 0; i < val.length; i++) {
+            total += val[i];
+
         }
+        // for(let t in val) {
+        //   total += val[t]["totalDefaultCurrencyPrice"];
+        // }
         return total
       }
     },
     // 直接原価集計
-    drectCosts() {
+    directCosts() {
       const categories = this.expenseCategories.results;
-      let results = []
-      let drectCost = 0
+      let results = [];
+      let directCost = 0;
       for(let c in categories) {
         // 部品毎集計
         let t = (Math.round(this.partsTotal(this.partsData(categories[c].id)) * 100) / 100);
         // 合計金額への加算
-        drectCost += t
+        directCost += t;
         results.push(t);
       }
-      drectCost = Math.round( drectCost * 100) / 100;
-      let orderAmount = Number(this.jobOrder.defaultCurrencyOrderAmount.split(',').join(''))
-      let limitProfit = (Math.round(( orderAmount - drectCost) * 100) / 100);
-      let limitProfitPercentage = 0
+      directCost = Math.round( directCost * 100) / 100;
+      let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
+      let limitProfit = (Math.round(( orderAmount - directCost) * 100) / 100);
+      let limitProfitPercentage = 0;
       if(limitProfit > 0) {
         limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       } else if(limitProfit < 0) {
@@ -243,55 +239,55 @@ export default {
       }
       return {
         results: results,
-        drectCost: drectCost,
+        directCost: directCost,
         limitProfit: limitProfit,
         limitProfitPercentage: limitProfitPercentage
       };
     },
     tableData() {
       // デフォルト通貨記号
-      let defaultDisplay = this.loginUserData.defaultCurrencyDisplay + " ";
+      let defaultDisplay = this.loginUserData["defaultCurrencyDisplay"] + " ";
 
       // 作業指図書発行者
-      let publisher = ""
+      let publisher = "";
       if(this.jobOrder.publisher){
-        publisher = this.jobOrder.publisherData.staffNumber + " : " + this.jobOrder.publisherData.fullName
+        publisher = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"]
       }
       // 設計者
-      let designer = ""
+      let designer = "";
       if(this.jobOrder.designer){
-        designer = this.jobOrder.designerData.staffNumber + " : " + this.jobOrder.designerData.fullName
+        designer = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"]
       }
       // 作業指図書発行者
-      let customer = ""
+      let customer = "";
       if(this.jobOrder.customer){
-        customer = this.jobOrder.customerData.name;
+        customer = this.jobOrder["customerData"].name;
       }
       // 作業指図書発行者
-      let deliveryDestination = ""
+      let deliveryDestination = "";
       if(this.jobOrder.deliveryDestination){
-        deliveryDestination = this.jobOrder.deliveryDestinationData.name;
+        deliveryDestination = this.jobOrder["deliveryDestinationData"].name;
       }
       // 受注金額
-      let orderPriceText = "Order Price (" + this.jobOrder.orderCurrencyData.code + ")";
-      let orderPrice = this.jobOrder.orderCurrencyData.display + " " + this.moneyComma(this.jobOrder.orderPrice);
+      let orderPriceText = "Order Price (" + this.jobOrder["orderCurrencyData"].code + ")";
+      let orderPrice = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
       let orderDate = "";
-      if(this.jobOrder.orderDate){ orderDate = this.jobOrder.orderDate;};
+      if(this.jobOrder.orderDate){ orderDate = this.jobOrder.orderDate;}
       let deliveryDate = "";
-      if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;};
+      if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;}
       let completionDate = "";
-      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;};
+      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;}
       // レート換算
       // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
-      let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
+      let orderRate = "1" + this.jobOrder["orderCurrencyData"].code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
       // 受注金額基準通貨
-      let orderPriceDefaultText = "Order Price (" + this.loginUserData.defaultCurrencyCode + ")";
-      let orderPriceDefault = defaultDisplay + this.jobOrder.defaultCurrencyOrderAmount;
+      let orderPriceDefaultText = "Order Price (" + this.loginUserData["defaultCurrencyCode"] + ")";
+      let orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
       // 税額
-      let taxPrice = defaultDisplay + this.jobOrder.costs.taxPrice;
-      let taxPercent = "(" + this.jobOrder.taxPercent + "%)"
+      let taxPrice = defaultDisplay + this.jobOrder["costs"]["taxPrice"];
+      let taxPercent = "(" + this.jobOrder.taxPercent + "%)";
       // 合計金額
-      let orderTotal = defaultDisplay + this.jobOrder.costs.orderTotal;
+      let orderTotal = defaultDisplay + this.jobOrder["costs"]["orderTotal"];
       let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
       let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
       let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
@@ -299,37 +295,37 @@ export default {
       let processedPartsResult = "";
       let electricalPartsResult = "";
       if(this.jobOrder) {
-        commercialPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[0].toFixed(2));
-        processedPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[2].toFixed(2));
-        electricalPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[1].toFixed(2));
+        commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
+        processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
+        electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
       }
-      let directCostBudget = defaultDisplay + this.jobOrder.costs.directCostBudget;
-      let directCostResult = defaultDisplay + this.moneyComma(this.drectCosts.drectCost.toFixed(2));
-      let limitProfitBudget = defaultDisplay + this.jobOrder.costs.limitProfitBudget;
-      let limitProfitResult = defaultDisplay + this.moneyComma(this.drectCosts.limitProfit.toFixed(2));
-      let limitProfitPercentageBudget =this.jobOrder.costs.limitProfitPercentageBudget + "%";
-      let limitProfitPercentageResult =this.drectCosts.limitProfitPercentage + "%";
+      let directCostBudget = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
+      let directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
+      let limitProfitBudget = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
+      let limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
+      let limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
+      let limitProfitPercentageResult =this.directCosts.limitProfitPercentage + "%";
 
       let tableData = [
         [
-          {text: "MFG No.", alignment:"center"}, 
-          {text: this.jobOrder.mfgNo, alignment:"center"}, 
-          {text: "Publisher", alignment:"center"}, 
-          {text: publisher, alignment:"center"}, 
-          {text: "Designer", alignment:"center"}, 
-          {text: designer, alignment:"center"}, 
+          {text: "MFG No.", alignment:"center"},
+          {text: this.jobOrder.mfgNo, alignment:"center"},
+          {text: "Publisher", alignment:"center"},
+          {text: publisher, alignment:"center"},
+          {text: "Designer", alignment:"center"},
+          {text: designer, alignment:"center"},
         ],
         [
-          {text: "Product Name", alignment:"center", colSpan: 2},{}, 
-          {text: this.jobOrder.name , colSpan: 4},{},{},{}, 
+          {text: "Product Name", alignment:"center", colSpan: 2},{},
+          {text: this.jobOrder.name , colSpan: 4},{},{},{},
         ],
         [
-          {text: "Customer", alignment:"center", colSpan: 2},{}, 
-          {text: customer, colSpan: 4},{},{},{}, 
+          {text: "Customer", alignment:"center", colSpan: 2},{},
+          {text: customer, colSpan: 4},{},{},{},
         ],
         [
-          {text: "Delivery Destination", alignment:"center", colSpan: 2},{}, 
-          {text: deliveryDestination, colSpan: 4},{},{},{}, 
+          {text: "Delivery Destination", alignment:"center", colSpan: 2},{},
+          {text: deliveryDestination, colSpan: 4},{},{},{},
         ],
         [
           {text: "Order Date", alignment:"center"},
@@ -343,7 +339,7 @@ export default {
           {text: orderPriceText, alignment:"center"},
           {text: orderPrice, alignment:"right"},
           {text: "Order Currency", alignment:"center"},
-          {text: this.jobOrder.orderCurrencyData.code, alignment:"center"},
+          {text: this.jobOrder["orderCurrencyData"].code, alignment:"center"},
           {text: "Order Rate", alignment:"center"},
           {text: orderRate, alignment:"center"}
         ],
@@ -364,15 +360,15 @@ export default {
         ],
         [
           {text: "Related Party's MFG No", alignment:"center", colSpan: 2},{},
-          {text: this.jobOrder.relatedPartyMfgNo, colSpan: 4},{},{},{}
-        ],  
+          {text: this.jobOrder["relatedPartyMfgNo"], colSpan: 4},{},{},{}
+        ],
         [
-          {text: "Note", alignment:"center"}, 
-          {text: this.jobOrder.notes, colSpan: 5},{},{},{}, {}
+          {text: "Note", alignment:"center"},
+          {text: this.jobOrder["notes"], colSpan: 5},{},{},{}, {}
         ],
         [
           {text:"", alignment:"right", colSpan: 3},{},{},
-          {text: "Budjet", alignment:"center"},
+          {text: "Budget", alignment:"center"},
           {text: "Results", alignment:"center"},
           {text: "Failure", alignment:"center"},
         ],
@@ -438,7 +434,7 @@ export default {
       let pdfData = {
         "docDefinition": docDefinition,
         "pdfName": pdfname
-      }
+      };
 
       // プリントの実行
       this.pdfgen(pdfData);
@@ -463,9 +459,9 @@ export default {
             paddingTop: function(i, node) { return 5; },
             paddingBottom: function(i, node) { return 5; }
           }
-        }
+        };
 
-      var docDefinition = { 
+      let docDefinition = {
         // ヘッダー等
         header: function(){
           return {
@@ -492,7 +488,7 @@ export default {
             margin: [ 0, 0, 0, 0]
           }
         },
-      }  
+      };
       return docDefinition;
     },
     // プリント機能関数

@@ -6,7 +6,6 @@
 
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
-    {{ jobOrderID }}
     <app-card>
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>print</v-icon></span>
@@ -151,7 +150,7 @@ export default {
       let params = {};
       if(this.reprint) {
         cardTitle = "Rerint PO : ";
-        cardText = "You can print all PO that already prented."
+        cardText = "You can print all PO that already printed."
       }
       // 工事番号の有無
       if(this.hasMFGNo) {

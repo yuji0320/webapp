@@ -114,7 +114,7 @@ export default {
       commercialHeaders: [
         { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
         { text: "Standard/Form", value: "standard" },
-        { text: "Unit number", value: "unit_number" }
+        { text: "Unit number", value: "unitNumber" }
       ],
       // 加工部品テーブルヘッダー
       processedHeaders: [

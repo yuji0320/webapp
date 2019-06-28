@@ -88,7 +88,7 @@ export default {
           // 日付が空白の場合はnullを設定
           if(!this.date) { this.date = null; }
           // 選択済みデータを個別処理
-          for(let o=0,order; order === this.tableSelected[o]; o++){
+          for(let o=0,order; order = this.tableSelected[o]; o++){
             // 講師尿データの反映
             order.modifiedBy = this.loginUserData.id;
             // BOMのIDを渡す
@@ -109,7 +109,7 @@ export default {
             }
             // データのアップロード
             res = await this.putMakingOrder(order);
-            // console.log(res);
+            console.log(res);
           }
           // 成功時のスナックバー定義
           res.snack = {

@@ -5,6 +5,7 @@ const receivingProcessState = {
   jobOrderID: '',
   partsType: '',
   supplierID: '',
+  orderNumber: '',
   receivingProcesses: {},
   receivingProcess: {},
 };
@@ -29,6 +30,10 @@ export default {
     setSupplierID(state, payload) {
       state.supplierID = payload;
     },
+    // 発注番号設定
+    setOrderNumber(state, payload) {
+      state.orderNumber = payload;
+    },
     // 仕入れファイルリスト取得
     setReceivingProcesses(state, payload) {
       state.receivingProcesses = payload;
@@ -51,13 +56,16 @@ export default {
     setSupplierID({commit}, data) {
       commit('setSupplierID', data);
     },
+    // 発注番号セット
+    setOrderNumber({commit}, data) {
+      commit('setOrderNumber', data);
+    },
     // 仕入れファイルリスト取得
     async getReceivingProcesses({commit}, data) {
       const url = 'manufacturing_data/receiving_process/';
       const commitName = 'setReceivingProcesses';
-      const res = api.get({commit}, url, data, commitName);
       // console.log(res);
-      return res;
+      return api.get({commit}, url, data, commitName);
     },
     // 仕入れファイル単体セット
     setReceivingProcess({commit}, data) {
@@ -75,22 +83,19 @@ export default {
     async postReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/';
       const commitName = 'setReceivingProcess';
-      const res = await api.post({commit}, url, data, commitName);
-      return res;
+      return await api.post({commit}, url, data, commitName);
     },
     // 仕入れファイル情報更新
     async putReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/' + data.id + '/';
       const commitName = 'setReceivingProcess';
-      const res = await api.put({commit}, url, data, commitName);
-      return res;
+      return await api.put({commit}, url, data, commitName);
     },
     // 仕入れファイル削除
     async deleteReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/' + data.id + '/';
       const commitName = 'setReceivingProcess';
-      const res = await api.delete({commit}, url, data, commitName);
-      return res;
+      return await api.delete({commit}, url, data, commitName);
     },
   },
 };

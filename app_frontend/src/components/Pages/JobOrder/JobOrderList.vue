@@ -74,7 +74,7 @@ export default {
   name: "JobOrder",
   data() {
     return {
-      orderBy: "-created_at",
+      orderBy: "-mfg_no",
       headers: [
         { text: "MFG No.", value: "mfgNo" },
         { text: "Product name", value: "name" },
@@ -119,7 +119,7 @@ export default {
     ]),
     params() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         order_by: this.orderBy
       };
     }
@@ -137,7 +137,7 @@ export default {
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       // console.log(this.$store.state.systemConfig.loading);
-      let list = await this.getJobOrders(data);
+      await this.getJobOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
       // console.log(this.$store.state.systemConfig.loading);
     },
@@ -187,7 +187,7 @@ export default {
   mounted() {
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
     this.headers[7].text =
-      "Order price" + " (" + this.loginUserData.defaultCurrencyCode + ")";
+      "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
   }
 };
 </script>

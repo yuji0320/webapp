@@ -7,7 +7,7 @@
     <app-card>
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>move_to_inbox</v-icon></span>
-      <span slot="card-header-title">Edit Receiving File "{{ jobOrder.mfgNo }} - {{ jobOrder.name }}"</span>
+      <span slot="card-header-title">Edit Receiving File {{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -25,7 +25,7 @@
             :count="receivingProcesses.count"
             :orderBy="orderBy"
             :incremental="incremental"
-            :params="params"
+            :params="switchParams.params"
             @search-list="getList"
           ></app-search-bar>
         </v-layout>
@@ -51,8 +51,8 @@
 
     <app-received-dialog @response-function="responseFunction" ref="receive_dialog">
       <span slot="edit-order" d-inline-flex>
-        <v-btn color="primary" dark @click="editMakingorder">Edit Order File</v-btn>
-        <v-btn color="primary" dark @click="editBillOfMaterial">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editMakingOrder">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Order File</v-btn>
       </span>
     </app-received-dialog>
 
@@ -78,7 +78,7 @@ export default {
       headers: [
         { text: "No", value: "orderData", nest:"number" },
         { text: "Part Name", value: "orderData", nest:"name" },
-        { text: "Standard / Dwaring No", value:"orderData", nest:"partsDetail" },
+        { text: "Standard / Drawing No", value:"orderData", nest:"partsDetail" },
         { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
         { text: "Received", value: "receivedDate" },
         { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
@@ -93,11 +93,10 @@ export default {
       incremental: {
         // 検索カラムリスト
         tableSelectItems: [
-          { label: "Order Number", value: "order__number" },
           { label: "Part Name", value: "name" }
         ],
         // 検索数値の初期値および返り値
-        tableSelectValue: "order__number",
+        tableSelectValue: "name",
         tableSearch: ""
       }
     }
@@ -110,17 +109,60 @@ export default {
     ...mapState("billOfMaterialAPI", ["billOfMaterials", "billOfMaterial"]),
     ...mapState("makingOrderAPI", ["makingOrders"]),
     ...mapState("receivingProcessAPI", [
-      "responseError", "jobOrderID", "supplierID", "receivingProcesses", "receivingProcess"
+      "responseError", "jobOrderID", "supplierID", "orderNumber", "receivingProcesses", "receivingProcess"
     ]),
-    params() {
-      return {
-        company: this.loginUserData.companyId,
-        order__bill_of_material__job_order: this.jobOrderID,
-        order__supplier: this.supplierID,
-        order_by: this.orderBy,
-        is_received: true
-      };
+    hasMFGNo() {
+      return !!this.jobOrderID;
     },
+    hasOrderNumber() {
+      return !!this.orderNumber;
+    },
+    // ページごとの設定
+    switchParams: function () {
+      let title = "";
+      if (this.hasOrderNumber) {
+        // 工事番号なしの場合
+        title = " - Order Number " + this.orderNumber;
+        return {
+          params: {
+            company: this.loginUserData["companyId"],
+            order__number: this.orderNumber,
+            is_received: true,
+            order_by: this.orderBy,
+          },
+          title: title
+        }
+      } else {
+        if (this.hasMFGNo) {
+          title = " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
+          return {
+            params: {
+              company: this.loginUserData["companyId"],
+              order__bill_of_material__job_order: this.jobOrderID,
+              is_received: true,
+              order__supplier: this.supplierID,
+              order_by: this.orderBy,
+              page_size: 1000
+            },
+            title: title
+          }
+        } else {
+          // 工事番号なしの場合
+          title = " without MFG No";
+          return {
+            params: {
+              company: this.loginUserData["companyId"],
+              is_received: true,
+              no_bom: true,
+              order__supplier: this.supplierID,
+              order_by: this.orderBy,
+              page_size: 1000
+            },
+            title: title
+          }
+        }
+      }
+    }
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
@@ -132,28 +174,28 @@ export default {
     ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setReceivingProcess", "deleteReceivingProcess"]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getReceivingProcesses(data);
+      await this.getReceivingProcesses(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 仕入れファイル編集
     editReceivingProcess(val) {
       this.setReceivingProcess(val);
-      this.$refs.receive_dialog.editReceivingProcess();
+      this.$refs["receive_dialog"].editReceivingProcess();
     },
     // 発注ファイル編集
-    editMakingorder() {
+    editMakingOrder() {
       this.setMakingOrder(this.receivingProcess.orderData);
-      this.$refs.order_dialog.editMakingOrder();
+      this.$refs["order_dialog"].editMakingOrder();
     },
     // 部品表ファイル編集
     editBillOfMaterial() {
       this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
-      this.$refs.bom_dialog.editBillOfMaterial();
+      this.$refs["bom_dialog"].editBillOfMaterial();
     },
     // 処理結果統合フォーム
     responseFunction(val) {
       // リストをリロード
-      this.getList({ params: this.params });
+      this.getList({ params: this.switchParams.params });
       // Snackbar表示
       this.showSnackbar(val.snack);
     },
@@ -181,24 +223,26 @@ export default {
     },
     // データの読み込み
     loadData() {
-      this.setReceivingProcessesList({})
-      this.getPartner(this.supplierID);
+      this.setReceivingProcessesList({});
+      if (this.supplierID) {
+          this.getPartner(this.supplierID);
+      }
       this.getExpenseCategories({params: {"order_by": "category_number"}});
-      this.getJobOrder(this.jobOrderID);
-      this.getList({params: this.params});
+      if (this.hasMFGNo) {
+        this.getJobOrder(this.jobOrderID);
+      }
+      this.getList({params: this.switchParams.params});
     }
   },
   created() {
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
-    if(!this.supplierID || !this.jobOrderID) {
-      this.$router.push({ name: "ReceivingProcessMenu" });
+    if(!this.supplierID && !this.orderNumber) {
+        this.$router.push({ name: "ReceivingProcessMenu" });
     } else {
-      this.loadData();
+        this.setReceivingProcessesList({});
+        this.loadData();
     }
   }
 }
 </script>
 
-<style>
-
-</style>

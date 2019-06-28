@@ -14,7 +14,7 @@
         :disabled="disabled"
       ></v-autocomplete>
     </v-flex>
-    <v-flex x1 class="pt-3">
+    <v-flex class="pt-3">
       <v-btn
         @click="clearItem"
         :disabled="disabled"
@@ -68,41 +68,41 @@ export default {
       switch(this.searchType) {
         case "staff":
           return this.searchUserStaffs.results;
-          break;
+          // break;
         case "currency":
           return this.currencies.results;
-          break;
+          // break;
         case "unitType":
           return this.unitTypes.results;
-          break;
+          // break;
         case "failure":
           return this.failureCategories.results;
-          break;   
+          // break;
         case "partner":
           switch(this.filter) {
             case "customer":
               return this.searchPartnerCustomers.results;
-              break;
+              // break;
             case "delivery":
               return this.searchPartnerDeliveries.results;
-              break;
+              // break;
             case "supplier":
               return this.searchPartnerSuppliers.results;
-              break;
+              // break;
             case "manufacturer":
               return this.searchPartnerManufacturers.results;
-              break;
+              // break;
           }
           break;
         case "jobOrder":
           return this.searchJobOrder.results;
-          break;
+          // break;
       }
     },
     // データ検索用共通パラメータを格納
     params() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         order_by: this.orderBy,
         page_size: 1000
       };

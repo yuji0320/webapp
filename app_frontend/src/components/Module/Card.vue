@@ -17,9 +17,10 @@
     </v-toolbar>
 
     <!-- 注意書き -->
-    <v-card-text>
-      <slot name="card-text"></slot>
-    </v-card-text>
+<!--    このスロットを追加すると検索バーが下がる-->
+<!--    <v-card-text>-->
+<!--      <slot name="card-text"></slot>-->
+<!--    </v-card-text>-->
 
     <!-- Cardタイトル -->
     <v-card-title>
