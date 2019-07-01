@@ -46,7 +46,10 @@
     </v-card-text>
 
     <!-- Cardフッター -->
-    <v-footer card height="auto"></v-footer>
+    <v-footer card height="auto">
+      <v-spacer></v-spacer>
+      <slot name="card-footer-button"></slot>
+    </v-footer>
 
   </v-card>
 </template>
