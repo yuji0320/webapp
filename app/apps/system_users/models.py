@@ -16,6 +16,7 @@ class UserCompany(models.Model):
     phone = models.CharField('phone number', max_length=20)  # 電話番号
     fax = models.CharField('fax number', max_length=20, blank=True)  # FAX番号
     default_currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 会計通貨
+    time_charge = models.DecimalField(_('Time Charge'), max_digits=17, decimal_places=2, default=0)  # タイムチャージ
     logo_data = models.TextField('logo', blank=True, null=True, default=None)  # ロゴデータ
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時

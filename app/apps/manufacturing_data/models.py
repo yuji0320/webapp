@@ -198,6 +198,7 @@ class ReceivingProcess(models.Model):
     currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
     rate = models.FloatField(_('Rate'), default=1)  # 仕入時為替レート
     unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, null=True, blank=True)  # 単価
+    suspense_received_date = models.DateField(_('Suspense Received date'), blank=True, null=True, default=None)  # 仮仕入日
     received_date = models.DateField(_('Received date'), blank=True, null=True, default=None)  # 仕入日
     is_received = models.BooleanField(_('is Received'), default=False)  # 部品表印刷済みかどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時

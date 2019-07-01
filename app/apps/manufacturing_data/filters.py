@@ -84,13 +84,14 @@ class ReceivingProcessFilter(filters.FilterSet):
     desired_delivery_date = filters.DateFromToRangeFilter(field_name='order__desired_delivery_date')
     name = filters.CharFilter(field_name='order__name', lookup_expr='icontains')
     no_bom = filters.BooleanFilter(field_name='order__bill_of_material', lookup_expr='isnull')
+    is_suspense_received = filters.BooleanFilter(field_name='suspense_received_date', lookup_expr='isnull')
 
     class Meta:
         model = ReceivingProcess
         fields = [
             'id', 'order__number', 'order__company', 'order__bill_of_material', 'order__bill_of_material__job_order',
             'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date',
-            'name',
+            'name', 'suspense_received_date', 'is_suspense_received',
         ]
 
     order_by = filters.OrderingFilter(

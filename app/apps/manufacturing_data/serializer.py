@@ -335,21 +335,6 @@ class MakingOrderSerializer(serializers.ModelSerializer):
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
     order_data = MakingOrderSerializer(source='order', read_only=True)
-    # parts_detail = serializers.SerializerMethodField()
-
-    # 部品詳細データ表示
-    # @staticmethod
-    # def get_parts_detail(obj):
-    #     # 加工部品かどうかを判断
-    #     if obj.order.bill_of_material:
-    #         status = obj.order.bill_of_material.type.is_processed_parts
-    #     else:
-    #         status = False
-    #     if status:
-    #         parts_detail = obj.order.drawing_number
-    #     else:
-    #         parts_detail = obj.order.standard
-    #     return parts_detail
 
     class Meta:
         model = ReceivingProcess
@@ -363,6 +348,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'rate',
             'unit_price',
             'received_date',
+            'suspense_received_date',
             'is_received',
             'created_at',
             'created_by',

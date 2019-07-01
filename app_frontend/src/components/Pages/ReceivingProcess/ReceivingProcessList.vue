@@ -42,13 +42,13 @@
                 :headers="headers"
                 :items="receivingProcesses.results"
                 :hide-actions="true"
-                class="mi-table elevation-1"
+                class="elevation-1"
                 disable-initial-sort
                 :loading="$store.state.systemConfig.loading"
         >
           <!-- テーブルデータ -->
           <template slot="items" slot-scope="props">
-            <tr :class="{'complete': props.item.isReceived}">
+            <tr :class="{'complete': props.item.isReceived}" @dblclick="editReceivingProcess(props.item)"  @click="props.expanded = !props.expanded">
               <td class="">{{ props.item.orderData.number }}</td>
               <td>{{ props.item.orderData.name }}</td>
               <td>
@@ -93,22 +93,17 @@
                 ></v-text-field>
               </td>
               <td>
-                <v-btn
-                        @click="submitData(props.item)"
-                        :disabled = "props.item.isReceived"
-                >Submit</v-btn>
+                <v-btn @click="submitData(props.item)" :disabled = "props.item.isReceived">
+                  Submit
+                </v-btn>
               </td>
             </tr>
           </template>
         </v-data-table>
-
-        <v-dialog
-                v-model="dialog"
-                max-width="400"
-        >
+        
+        <v-dialog v-model="dialog" max-width="400">
           <v-card>
             <v-card-title class="headline error">There is some error</v-card-title>
-
             <v-card-text>
               <ul>
                 <li v-for="(item, index) in errorList" :key="index">
@@ -116,7 +111,6 @@
                 </li>
               </ul>
             </v-card-text>
-
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn @click="dialog = false">OK</v-btn>
@@ -126,6 +120,19 @@
       </span>
 
     </app-card>
+
+    <app-received-dialog @response-function="responseFunction" ref="receive_dialog">
+      <span slot="edit-order" d-inline-flex>
+        <v-btn color="primary" dark @click="editMakingOrder">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Order File</v-btn>
+      </span>
+    </app-received-dialog>
+
+    <!-- 発注ファイル -->
+    <app-order-dialog @response-function="responseFunction" ref="order_dialog"></app-order-dialog>
+    <!-- 部品票ダイアログ -->
+    <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
+
   </v-container>
 </template>
 
@@ -141,17 +148,17 @@
                 errorList: [],
                 orderBy: "-order__desired_delivery_date",
                 headers: [
-                    { text: "No.", value:"", width:"10px", fixed: true},
-                    { text: "Partner name", value:"", width:"5px", fixed: true },
-                    { text: "Standard / Drawing No", value:"", width:"5px", fixed: true },
-                    { text: "Other Data", value:"", width:"5px", fixed: true },
-                    { text: "Desire Date", value:"", width:"5px", fixed: true },
-                    { text: "Received Date", value:"", width:"5px", fixed: true },
-                    { text: "Order Qty", value:"", width:"5px", fixed: true },
-                    { text: "Received Qty", value:"", width:"5px", fixed: true },
-                    { text: "Order Unit Price", value:"", width:"5px", fixed: true },
-                    { text: "Received Unit Price", value:"", width:"5px", fixed: true },
-                    { text: "Action", value:"", width:"5px", fixed: true }
+                    { text: "No.", value:"number", width:"5%"},
+                    { text: "Partner name", value:"name", width:"10%" },
+                    { text: "Standard / Drawing No", value:"", width:"15%" },
+                    { text: "Other Data", value:"", width:"5%" },
+                    { text: "Desire Date", value:"", width:"5%" },
+                    { text: "Received Date", value:"", width:"10%" },
+                    { text: "Order Qty", value:"", width:"5%" },
+                    { text: "Received Qty", value:"", width:"15%" },
+                    { text: "Order Unit Price", value:"", width:"5%" },
+                    { text: "Received Unit Price", value:"", width:"15%" },
+                    { text: "Action", value:"", width:"10%" }
                 ],
                 // テーブル検索用データ
                 incremental: {
@@ -235,7 +242,7 @@
             ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
             ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
             ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
-            ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess", "setReceivingProcessesList"]),
+            ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess", "setReceivingProcessesList", "setReceivingProcess"]),
             // 入力数値確認
             isNumber(numVal){
                 // チェック条件パターン(整数15桁、少数2桁)
@@ -374,7 +381,30 @@
                     // 単価が同じ場合は処理しない
                 }
                 return orderData;
-            }
+            },
+            // 仕入れファイル編集
+            editReceivingProcess(val) {
+                this.setReceivingProcess(val);
+                // console.log(val);
+                this.$refs["receive_dialog"].editReceivingProcess();
+            },
+            // 発注ファイル編集
+            editMakingOrder() {
+                this.setMakingOrder(this.receivingProcess.orderData);
+                this.$refs["order_dialog"].editMakingOrder();
+            },
+            // 部品表ファイル編集
+            editBillOfMaterial() {
+                this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
+                this.$refs["bom_dialog"].editBillOfMaterial();
+            },
+            // 処理結果統合フォーム
+            responseFunction(val) {
+                // リストをリロード
+                this.getList({ params: this.switchParams.params });
+                // Snackbar表示
+                this.showSnackbar(val.snack);
+            },
         },
         created() {
             // もし工事番号等がクリアの場合はメニューにリダイレクトする
@@ -388,8 +418,9 @@
     }
 </script>
 
-<style>
-  .mi-table{
-    table-layout : fixed;
+<style scoped>
+  table.v-table tbody td,
+  table.v-table tbody th {
+    height: 19px;
   }
 </style>

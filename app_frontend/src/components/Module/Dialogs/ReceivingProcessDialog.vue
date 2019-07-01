@@ -179,6 +179,7 @@ export default {
       this.$refs.currency.setData(val.currency);
     },
     setData(val) {
+      console.log(val);
       this.mfgNo = val.orderData.mfgNo;
       this.number = val.orderData.number;
       this.supplier = val.orderData["supplierData"].name;
