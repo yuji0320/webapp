@@ -61,3 +61,25 @@ class SystemFailureCategoryFilter(filters.FilterSet):
             ('category_number', 'category_number'),
         ),
     )
+
+
+class SystemWorkTypeFilter(filters.FilterSet):
+    incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
+
+    @staticmethod
+    def incremental_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(number__icontains=value) | Q(name__icontains=value)
+        )
+
+    class Meta:
+        model = SystemWorkType
+        fields = ['id', 'name', 'number', 'is_calculate', 'incremental_field']
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('name', 'name'),
+            ('number', 'number'),
+        ),
+    )

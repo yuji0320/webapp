@@ -49,6 +49,15 @@ class ReceivingProcessAPIView(viewsets.ModelViewSet):
     filter_class = ReceivingProcessFilter
 
 
+class ManHourAPIView(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = ManHourSerializer
+    queryset = ManHour.objects.all()
+    filter_class = ManHourFilter
+
+
 # class PartsSearchAPIView(viewsets.ModelViewSet):
 #     permission_classes = (
 #         IsAuthenticated,

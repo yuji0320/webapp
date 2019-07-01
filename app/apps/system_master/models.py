@@ -81,3 +81,20 @@ class SystemFailureCategory(models.Model):
         verbose_name_plural = _('System Failure Categories')
 
     def __str__(self): return self.category_name
+
+
+class SystemWorkType(models.Model):
+    # 仕損費種別マスタ
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    number = models.IntegerField(_('Work Type number'), unique=True)  # 企業内での項目番号
+    name = models.CharField(_('Work Type name'), max_length=150)  # 項目名
+    is_calculate = models.BooleanField(_('is Calculate'), default=True)  # 計算するかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    class Meta:
+        db_table = 'system_work_type'
+        verbose_name = _('System Work Type')
+        verbose_name_plural = _('System Work Types')
+
+    def __str__(self): return self.name

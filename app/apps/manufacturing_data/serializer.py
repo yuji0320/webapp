@@ -360,6 +360,33 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
         )
 
 
+class ManHourSerializer(serializers.ModelSerializer):
+    staff_data = UserStaffSerializer(source='staff', read_only=True)
+    type_data = SystemWorkTypeSerializer(source='type', read_only=True)
+    failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
+
+    class Meta:
+        model = ManHour
+        fields = (
+            # 発注ファイル
+            'id',
+            'job_order',
+            'staff',
+            'type',
+            'work_hour',
+            'date',
+            'failure',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'staff_data',
+            'type_data',
+            'failure_data',
+        )
+
+
 class PartsSearchSerializer(serializers.ModelSerializer):
     mfg_no = serializers.SerializerMethodField()
     # order_data = serializers.SerializerMethodField()

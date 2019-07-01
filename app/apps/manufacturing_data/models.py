@@ -74,8 +74,9 @@ class JobOrder(models.Model):
         verbose_name_plural = _('Job Order')
         unique_together = (("company", "mfg_no"),)  # 会社ごとの工事番号ユニーク
 
-    # def __str__(self):
-    #     return u"MFG No:{mfg_no}, Product Name:{name}".format(**vars(self))
+    def __str__(self):
+        title = self.mfg_no + ':' + self.name
+        return title
 
 
 class BillOfMaterial(models.Model):
@@ -216,3 +217,32 @@ class ReceivingProcess(models.Model):
         verbose_name_plural = _('Receiving Process')
 
     # def __str__(self): return self.id
+
+
+class ManHour(models.Model):
+    # 仕入れファイル
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    job_order = models.ForeignKey('JobOrder', on_delete=models.PROTECT, blank=True, null=True,)  # 紐付け工事番号
+    staff = models.ForeignKey('system_users.UserStaff', on_delete=models.PROTECT)  # 作業担当者
+    type = models.ForeignKey('system_master.SystemWorkType', on_delete=models.PROTECT)  # 作業種別
+    work_hour = models.DecimalField(_('Work Hour'), max_digits=17, decimal_places=2)  # 作業時間
+    date = models.DateField(_('Date'))  # 作業日
+    failure = models.ForeignKey(
+        'system_master.SystemFailureCategory',
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True
+    )  # 仕損種別
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
+
+    class Meta:
+        db_table = 'man_hour'
+        verbose_name = _('Man Hour')
+        verbose_name_plural = _('Man hours')

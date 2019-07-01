@@ -60,3 +60,16 @@ class SystemFailureCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SystemFailureCategory
         fields = '__all__'
+
+
+class SystemWorkTypeSerializer(serializers.ModelSerializer):
+    incremental_field = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_incremental_field(obj):
+        search_field = str(obj.number) + " : " + obj.name
+        return search_field
+
+    class Meta:
+        model = SystemWorkType
+        fields = '__all__'

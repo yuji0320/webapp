@@ -104,6 +104,24 @@ class ReceivingProcessFilter(filters.FilterSet):
     )
 
 
+class ManHourFilter(filters.FilterSet):
+    work_date_range = filters.DateFromToRangeFilter(field_name='date')
+
+    class Meta:
+        model = ManHour
+        fields = [
+            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range',
+        ]
+
+    order_by = filters.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('modified_at', 'modified_at'),
+            ('date', 'date'),
+        ),
+    )
+
+
 class PartsSearchFilter(filters.FilterSet):
 
     class Meta:
