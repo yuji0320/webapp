@@ -224,7 +224,7 @@ class ManHour(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     job_order = models.ForeignKey('JobOrder', on_delete=models.PROTECT, blank=True, null=True,)  # 紐付け工事番号
     staff = models.ForeignKey('system_users.UserStaff', on_delete=models.PROTECT)  # 作業担当者
-    type = models.ForeignKey('system_master.SystemWorkType', on_delete=models.PROTECT)  # 作業種別
+    type = models.ForeignKey('system_master.SystemJobType', on_delete=models.PROTECT)  # 作業種別
     work_hour = models.DecimalField(_('Work Hour'), max_digits=17, decimal_places=2)  # 作業時間
     date = models.DateField(_('Date'))  # 作業日
     failure = models.ForeignKey(

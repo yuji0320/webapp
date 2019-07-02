@@ -83,7 +83,7 @@ class SystemFailureCategory(models.Model):
     def __str__(self): return self.category_name
 
 
-class SystemWorkType(models.Model):
+class SystemJobType(models.Model):
     # 仕損費種別マスタ
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number = models.IntegerField(_('Work Type number'), unique=True)  # 企業内での項目番号
@@ -93,8 +93,8 @@ class SystemWorkType(models.Model):
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
 
     class Meta:
-        db_table = 'system_work_type'
-        verbose_name = _('System Work Type')
-        verbose_name_plural = _('System Work Types')
+        db_table = 'system_job_type'
+        verbose_name = _('System Job Type')
+        verbose_name_plural = _('System Job Types')
 
     def __str__(self): return self.name

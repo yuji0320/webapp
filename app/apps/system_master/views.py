@@ -47,7 +47,7 @@ class SystemFailureCategoryAPIView(viewsets.ModelViewSet):
     filter_class = SystemFailureCategoryFilter
 
 
-class SystemWorkTypeAPIView(viewsets.ModelViewSet):
-    serializer_class = SystemWorkTypeSerializer
-    queryset = SystemWorkType.objects.all()
-    filter_class = SystemWorkTypeFilter
+class SystemJobTypeAPIView(viewsets.ModelViewSet):
+    serializer_class = SystemJobTypeSerializer
+    queryset = SystemJobType.objects.all()
+    filter_class = SystemJobTypeFilter

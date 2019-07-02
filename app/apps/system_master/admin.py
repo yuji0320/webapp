@@ -14,7 +14,7 @@ class AdminSystemFailureCategory(admin.ModelAdmin):
     list_display = ('category_name', 'category_number', 'created_at', 'modified_at')
 
 
-class AdminSystemWorkType(admin.ModelAdmin):
+class AdminSystemJobType(admin.ModelAdmin):
     list_display = ('name', 'number', 'is_calculate', 'created_at', 'modified_at')
 
 
@@ -23,4 +23,4 @@ admin.site.register(SystemCurrency)
 admin.site.register(SystemUnitType, AdminSystemUnitType)
 admin.site.register(SystemExpenseCategory, AdminSystemExpenseCategory),
 admin.site.register(SystemFailureCategory, AdminSystemFailureCategory),
-admin.site.register(SystemWorkType, AdminSystemWorkType)
+admin.site.register(SystemJobType, AdminSystemJobType)

@@ -63,7 +63,7 @@ class SystemFailureCategoryFilter(filters.FilterSet):
     )
 
 
-class SystemWorkTypeFilter(filters.FilterSet):
+class SystemJobTypeFilter(filters.FilterSet):
     incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
 
     @staticmethod
@@ -73,7 +73,7 @@ class SystemWorkTypeFilter(filters.FilterSet):
         )
 
     class Meta:
-        model = SystemWorkType
+        model = SystemJobType
         fields = ['id', 'name', 'number', 'is_calculate', 'incremental_field']
 
     order_by = filters.OrderingFilter(

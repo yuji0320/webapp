@@ -362,7 +362,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
 
 class ManHourSerializer(serializers.ModelSerializer):
     staff_data = UserStaffSerializer(source='staff', read_only=True)
-    type_data = SystemWorkTypeSerializer(source='type', read_only=True)
+    type_data = SystemJobTypeSerializer(source='type', read_only=True)
     failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
 
     class Meta:

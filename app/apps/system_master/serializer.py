@@ -62,7 +62,7 @@ class SystemFailureCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SystemWorkTypeSerializer(serializers.ModelSerializer):
+class SystemJobTypeSerializer(serializers.ModelSerializer):
     incremental_field = serializers.SerializerMethodField()
 
     @staticmethod
@@ -71,5 +71,5 @@ class SystemWorkTypeSerializer(serializers.ModelSerializer):
         return search_field
 
     class Meta:
-        model = SystemWorkType
+        model = SystemJobType
         fields = '__all__'
