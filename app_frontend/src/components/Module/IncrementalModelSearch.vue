@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories"]),
+    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes"]),
     ...mapState("systemUserApi", [
       "searchUserStaffs",
       "searchUserPartners",
@@ -63,7 +63,7 @@ export default {
       "searchPartnerSuppliers",
       "searchPartnerManufacturers"
     ]),
-    ...mapState("jobOrderAPI", ["searchJobOrder"]),    
+    ...mapState("jobOrderAPI", ["searchJobOrder"]), 
     searchItems() {
       switch(this.searchType) {
         case "staff":
@@ -97,6 +97,8 @@ export default {
         case "jobOrder":
           return this.searchJobOrder.results;
           // break;
+        case "jobType":
+          return this.jobTypes.results;
       }
     },
     // データ検索用共通パラメータを格納
@@ -118,7 +120,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories"]),
+    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories", "getJobTypes"]),
     ...mapActions("systemUserApi", [
       "getSearchUserStaffs",
       "getSearchUserPartners",
@@ -166,6 +168,8 @@ export default {
         case "jobOrder":
           this.getSearchJobOrder(search);
           break;
+        case "jobType":
+          this.getJobTypes(search);
       }
     },
     clearItem() {

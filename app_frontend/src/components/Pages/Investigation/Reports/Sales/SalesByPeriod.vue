@@ -4,22 +4,28 @@
     <!-- 読み込み中ダイアログコンポーネント -->
     <app-loading-dialog></app-loading-dialog>
 
-    <v-card>
-      <!-- Cardヘッダー -->
-      <v-toolbar card>
-        <v-toolbar-title class="font-weight-light">
-          Sales by Period
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
+    <app-card>
+            <!-- ヘッダー部分スロット -->
+      <span slot="card-header-title">Sales by Period</span>
+
+      <!-- 戻るボタン -->
+      <span slot="card-header-buck-button">
+        <v-btn @click="backToMenu" >
+          <v-icon>reply</v-icon>
+          Back to Menu
+        </v-btn>
+      </span>
+
+      <!-- 印刷ボタン -->
+      <span slot="card-header-buck-button">
         <v-btn 
           @click="print" 
           color="primary"
           :disabled = "summaryBy === ''"
         ><v-icon>print</v-icon> Print</v-btn>
-      </v-toolbar>
+      </span>
 
-      <!-- 検索フォーム -->
-      <v-card-title>
+      <span slot="search-bar">
         <v-layout row wrap>
           <!-- 検索開始日 -->
           <v-flex xs12 sm6 md3>
@@ -47,10 +53,9 @@
             >Search(Sort by Month)</v-btn>
           </v-flex>
         </v-layout>
-      </v-card-title>
+      </span>
 
-      <!-- 検索結果表示 -->
-      <v-card-text>
+      <span slot="card-content">
         <template v-if="jobOrders.results">
           <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           <div
@@ -74,10 +79,8 @@
           </div>
           <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
         </template>
-      </v-card-text>
-      <!-- Cardフッター -->
-      <v-footer card　height="auto"></v-footer>
-    </v-card>
+      </span>
+    </app-card>
   </v-container>
 </template>
 
@@ -89,8 +92,8 @@ export default {
   name: "SalesByPeriod",
   data() {
     return {
-      date_from: "2018-01-01",
-      date_to: "2020-03-31",
+      date_from: "",
+      date_to: "",
       orderBy: "-completion_date",
       summaryBy: "",
       // テーブルヘッダーデータ
@@ -315,7 +318,10 @@ export default {
       // 子コンポーネントの印刷関数を呼び出し
       this.printPDF(this.createPdfData());
       // console.log(this.createPdfData());
-    }
+    },
+    backToMenu() {
+      this.$router.push({ name: "ReportsMenu" });
+    },
   },
   created () {
     // 集計データリセット

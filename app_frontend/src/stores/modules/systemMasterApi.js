@@ -7,6 +7,7 @@ const systemMasterState = {
   expenseCategories: {},
   expenseCategory: {},
   failureCategories: {},
+  jobTypes: {},
 };
 
 export default {
@@ -36,6 +37,10 @@ export default {
     // 仕損費種別取得用
     setFailureCategories(state, payload) {
       state.failureCategories = payload;
+    },
+    // 作業種別取得用
+    setJobTypes(state, payload) {
+      state.jobTypes = payload;
     },
   },
   actions: {
@@ -73,6 +78,12 @@ export default {
     async getFailureCategories({commit}, data) {
       const url = 'system_master/failure_categories/';
       const commitName = 'setFailureCategories';
+      api.get({commit}, url, data, commitName);
+    },
+    // 作業種別h崇徳用
+    async getJobTypes({commit}, data) {
+      const url = 'system_master/job_types/';
+      const commitName = 'setJobTypes';
       api.get({commit}, url, data, commitName);
     },
   },

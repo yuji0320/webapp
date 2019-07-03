@@ -15,6 +15,7 @@ import jobOrderAPI from './modules/jobOrder.js';
 import billOfMaterialAPI from './modules/billOfMaterial';
 import makingOrderAPI from './modules/makingOrder';
 import receivingProcessAPI from './modules/receivingProcess';
+import manHourAPI from './modules/manHour';
 
 Vue.use(Vuex);
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     billOfMaterialAPI,
     makingOrderAPI,
     receivingProcessAPI,
+    manHourAPI,
   },
   state: {},
   mutations: {},

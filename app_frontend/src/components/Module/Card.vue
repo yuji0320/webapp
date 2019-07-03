@@ -23,7 +23,7 @@
 <!--    </v-card-text>-->
 
     <!-- Cardタイトル -->
-    <v-card-title>
+    <v-card-title v-show="!noSeachBar">
       <v-layout row wrap>
         <v-flex xs12>
           <!-- 検索バー表示スロット -->
@@ -56,7 +56,9 @@
 
 <script>
 export default {
-
+  props: {
+    noSeachBar: { required: false },
+  }
 }
 </script>
 

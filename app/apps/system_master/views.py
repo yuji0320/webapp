@@ -51,3 +51,7 @@ class SystemJobTypeAPIView(viewsets.ModelViewSet):
     serializer_class = SystemJobTypeSerializer
     queryset = SystemJobType.objects.all()
     filter_class = SystemJobTypeFilter
+
+    @multi_create(serializer_class=SystemJobTypeSerializer)
+    def create(self, request, **kwargs):
+        pass

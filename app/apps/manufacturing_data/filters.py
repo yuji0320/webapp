@@ -106,11 +106,14 @@ class ReceivingProcessFilter(filters.FilterSet):
 
 class ManHourFilter(filters.FilterSet):
     work_date_range = filters.DateFromToRangeFilter(field_name='date')
+    name = filters.CharFilter(field_name='staff__full_name', lookup_expr='icontains')
+    mfg_no = filters.CharFilter(field_name='job_order__mfg_no', lookup_expr='icontains')
+    date_icontains = filters.CharFilter(field_name='date', lookup_expr='icontains')
 
     class Meta:
         model = ManHour
         fields = [
-            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range',
+            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains'
         ]
 
     order_by = filters.OrderingFilter(
@@ -134,5 +137,6 @@ class PartsSearchFilter(filters.FilterSet):
         fields=(
             ('created_at', 'created_at'),
             ('modified_at', 'modified_at'),
+            ('date', 'date'),
         ),
     )

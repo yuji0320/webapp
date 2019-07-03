@@ -364,6 +364,24 @@ class ManHourSerializer(serializers.ModelSerializer):
     staff_data = UserStaffSerializer(source='staff', read_only=True)
     type_data = SystemJobTypeSerializer(source='type', read_only=True)
     failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
+    mfg_no = serializers.SerializerMethodField()
+    product_name = serializers.SerializerMethodField()
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        mfg_no = ""
+        if obj.job_order:
+            mfg_no = obj.job_order.mfg_no
+        return mfg_no
+
+    # 製品名取得
+    @staticmethod
+    def get_product_name(obj):
+        name = ""
+        if obj.job_order:
+            name = obj.job_order.name
+        return name
 
     class Meta:
         model = ManHour
@@ -384,6 +402,8 @@ class ManHourSerializer(serializers.ModelSerializer):
             'staff_data',
             'type_data',
             'failure_data',
+            'mfg_no',
+            'product_name'
         )
 
 

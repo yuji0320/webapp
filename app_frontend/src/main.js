@@ -85,6 +85,8 @@ import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue
 Vue.component('app-order-dialog', MakingOrderDialog);
 import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
 Vue.component('app-received-dialog', ReceivingProcessDialog);
+import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
+Vue.component('app-man-hour-dialog', ManHourDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);

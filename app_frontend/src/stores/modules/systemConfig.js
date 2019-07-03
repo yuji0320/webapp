@@ -35,17 +35,17 @@ const systemConfigState = {
         },
       ],
     },
-    // {
-    //   icon: 'account_box',
-    //   title: 'Man-hour management',
-    //   subMenus: [
-    //     {
-    //       icon: 'access_time',
-    //       title: 'Man Hour',
-    //       url: '',
-    //     },
-    //   ],
-    // },
+    {
+      icon: 'account_box',
+      title: 'Man-hour management',
+      subMenus: [
+        {
+          icon: 'access_time',
+          title: 'Man Hour',
+          url: {name: 'ManHourMenu'},
+        },
+      ],
+    },
     {
       icon: 'search',
       title: 'Investigation',
@@ -81,11 +81,11 @@ const systemConfigState = {
           title: 'Partner master',
           url: {name: 'Partner'},
         },
-        {
-          icon: '',
-          title: 'Man-hour master',
-          url: '',
-        },
+        // {
+        //   icon: '',
+        //   title: 'Man-hour master',
+        //   url: '',
+        // },
       ],
     },
   ],

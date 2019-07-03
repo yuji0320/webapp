@@ -32,9 +32,13 @@ import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingP
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessEditList from '@/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue'; /* eslint-disable-line max-len */
+// 工数管理
+import ManHourMenu from '@/components/Pages/ManHour/ManHourMenu.vue';
+import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
 // 調査
 import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
-import SalesByPeriod from '@/components/Pages/Investigation/Reports/SalesByPeriod.vue';
+import SalesByPeriod from '@/components/Pages/Investigation/Reports//Sales/SalesByPeriod.vue';
+import ManHourMonthly from '@/components/Pages/Investigation/Reports//ManHour/ManHourMonthly.vue';
 import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
 // マスター
 import Company from '@/components/Pages/Master/Company.vue';
@@ -227,6 +231,23 @@ const router = new Router({
               ],
             },
             {
+              path: 'man_hour',
+              name: 'ManHour',
+              component: Root,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'ManHourMenu',
+                  component: ManHourMenu,
+                },     
+                {
+                  path: 'list',
+                  name: 'ManHourList',
+                  component: ManHourList,
+                },    
+              ]
+            },
+            {
               path: 'investigation',
               name: 'Investigation',
               component: Root,
@@ -250,6 +271,11 @@ const router = new Router({
                       path: 'sales_by_period',
                       name: 'SalesByPeriod',
                       component: SalesByPeriod,
+                    },
+                    {
+                      path: 'man_hour_monthly',
+                      name: 'ManHourMonthly',
+                      component: ManHourMonthly,
                     },
                   ],
                 },

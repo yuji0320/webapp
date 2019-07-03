@@ -28,7 +28,7 @@ class AdminReceivingProcess(admin.ModelAdmin):
 
 
 class AdminManHour(admin.ModelAdmin):
-    list_display = ('job_order', 'staff', 'type', 'work_hour', 'date', 'created_at', 'modified_at')
+    list_display = ('job_order', 'staff', 'work_hour', 'date', 'created_at', 'modified_at')
     search_fields = ('number',)
 
 
