@@ -24,6 +24,7 @@ class UserStaffFilter(filters.FilterSet):
     staffNumber = filters.CharFilter(field_name='staff_number', lookup_expr='contains')
     incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
     is_tenure = filters.BooleanFilter(field_name='is_retired_filter', method='is_tenure_filter')
+    date_left = filters.CharFilter(method='date_left_filter')
 
     @staticmethod
     def incremental_filter(queryset, name, value):
@@ -35,9 +36,15 @@ class UserStaffFilter(filters.FilterSet):
     def is_tenure_filter(queryset, name, value):
         return queryset.all().filter(date_left__isnull=value)
 
+    @staticmethod
+    def date_left_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(date_left__isnull=True) | Q(date_left__gte=value)
+        )
+
     class Meta:
         model = UserStaff
-        fields = ['id', 'company', 'is_login_user', 'staffNumber', 'is_tenure']
+        fields = ['id', 'company', 'is_login_user', 'staffNumber', 'is_tenure', 'date_left']
 
     order_by = filters.OrderingFilter(
         fields=(

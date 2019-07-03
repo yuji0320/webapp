@@ -106,6 +106,10 @@ export default {
       const commitName = 'setStaff';
       api.get({commit}, url, data, commitName);
     },
+    // 従業員Stateセット
+    setStaffs({commit}, data) {
+      commit('setStaffs', data);
+    },
     // 従業員State情報クリア
     clearStaff({commit}) {
       commit('setStaff', {});

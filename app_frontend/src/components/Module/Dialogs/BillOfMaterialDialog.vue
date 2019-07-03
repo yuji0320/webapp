@@ -277,6 +277,10 @@ export default {
     },
     // 部品表フォーム送信
     async submitBillOfMaterial() {
+      // 希望納期がゼロの場合はnullを挿入
+      if(this.billOfMaterial.desiredDeliveryDate === "") {
+        this.billOfMaterial.desiredDeliveryDate = null
+      }
       let res = {};
       this.billOfMaterial.modifiedBy = this.loginUserData.id;
       // コンポーネントの編集ステータスに応じて新規と更新を切り替える

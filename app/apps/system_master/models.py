@@ -88,6 +88,7 @@ class SystemJobType(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number = models.IntegerField(_('Work Type number'), unique=True)  # 企業内での項目番号
     name = models.CharField(_('Work Type name'), max_length=150, unique=True)  # 項目名
+    abbr = models.CharField(_('Abbreviation'), max_length=10, blank=True)  # 略称
     is_calculate = models.BooleanField(_('is Calculate'), default=True)  # 計算するかどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時

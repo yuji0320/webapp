@@ -3,6 +3,7 @@ import api from '@/api';
 const manHourState = {
   responseError: {},
   isAdmin: "",
+  isAnnual: false,
   manHour: {},
   manHours: {}
 };
@@ -15,9 +16,13 @@ export default {
     error(state, payload) {
       state.responseError = payload;
     },
-    // 工事番号指定
+    // 管理者かどうか
     setIsAdmin(state, payload) {
       state.isAdmin = payload;
+    },
+    // 年間検索かどうか
+    setIsAnnual(state, payload) {
+      state.isAnnual = payload;
     },
     // 仕入れファイルリスト取得
     setManHours(state, payload) {
@@ -29,9 +34,13 @@ export default {
     },
   },
   actions: {
-    // 作業指図書IDセット
+    // 管理者かどうか
     setIsAdmin({commit}, data) {
       commit('setIsAdmin', data);
+    },
+    // 年間検索かどうか
+    setIsAnnual({commit}, data) {
+      commit('setIsAnnual', data);
     },
     // 工数単体セット
     setManHour({commit}, data) {

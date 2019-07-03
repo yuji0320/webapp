@@ -128,7 +128,7 @@ export default {
       // リストの作成
       if(this.jobOrders.results) {
         // 指図書データから取引先情報の抜き出し
-        for(var i=0,d;d=this.jobOrders.results[i];i++){
+        for(let i=0,d;d=this.jobOrders.results[i];i++){
           let array = {
             key: d.customerData.id,
             value: d.customerData.name,
@@ -236,7 +236,7 @@ export default {
         completion_date_after: this.date_from,
         completion_date_before: this.date_to,
         order_by: this.orderBy,
-        page_size: 1000
+        page_size: max
       }
       this.$store.commit("systemConfig/setLoading", true);
       let res = await this.getJobOrders({params: params});

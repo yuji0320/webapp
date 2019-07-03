@@ -63,13 +63,13 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" :to="{ name: 'ManHourMonthly' }">
+                <v-btn large block outline color="primary" @click="manHourTotal(false)">
                   Monthly Total Reports
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test">
-                  Yearly Total Reports 
+                <v-btn large block outline color="primary" @click="manHourTotal(true)">
+                  Annual Total Reports for Costing
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -83,15 +83,25 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   title: "Reports",
   name: "Reports",
   data() {
     return {};
   },
+  computed: {
+    ...mapState("manHourAPI", ["isAnnual"]),
+  },
   methods: {
+    ...mapActions("manHourAPI", ["setIsAnnual"]),
     test() {
       console.log("test");
+    },
+    manHourTotal(val) {
+      this.setIsAnnual(val);
+      this.$router.push({ name: "ManHourTotal" });
     }
   }
 }

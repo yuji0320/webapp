@@ -38,7 +38,7 @@ import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
 // 調査
 import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
 import SalesByPeriod from '@/components/Pages/Investigation/Reports//Sales/SalesByPeriod.vue';
-import ManHourMonthly from '@/components/Pages/Investigation/Reports//ManHour/ManHourMonthly.vue';
+import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
 import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
 // マスター
 import Company from '@/components/Pages/Master/Company.vue';
@@ -273,9 +273,9 @@ const router = new Router({
                       component: SalesByPeriod,
                     },
                     {
-                      path: 'man_hour_monthly',
-                      name: 'ManHourMonthly',
-                      component: ManHourMonthly,
+                      path: 'man_hour_total',
+                      name: 'ManHourTotal',
+                      component: ManHourTotal,
                     },
                   ],
                 },
