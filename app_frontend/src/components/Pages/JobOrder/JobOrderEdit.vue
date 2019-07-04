@@ -129,6 +129,14 @@
                 :errorMessages="responseError.completionDate"
               ></app-input-date >
             </v-flex>
+            <!-- 工事完了日 -->
+            <v-flex xs4>
+              <app-input-date 
+                label="Completion Date"
+                v-model="jobOrder.billDate"
+                :errorMessages="responseError.billDate"
+              ></app-input-date >
+            </v-flex>
             <!-- 受注金額 -->
             <v-flex xs4>
               <v-text-field 

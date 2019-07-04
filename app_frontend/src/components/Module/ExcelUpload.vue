@@ -14,6 +14,15 @@
         <v-icon>reply</v-icon>
         Back to List
       </v-btn>
+      <v-btn
+        @click="submitAllData"
+        color="primary"
+        v-if="submitAll"
+        :disabled="disabledSubmitAll"
+      >
+        <v-icon></v-icon>
+        Submit All
+      </v-btn>
     </v-toolbar>
 
     <v-card-title>
@@ -110,11 +119,19 @@ export default {
   },
   props: {
     headers: { required: true },
-    errorColumn: { required: false }
+    errorColumn: { required: false },
+    submitAll: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemConfig", ["excelJson"])
+    ...mapState("systemConfig", ["excelJson"]),
+    disabledSubmitAll() {
+      if(this.excelJson.length === 0) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   methods: {
     ...mapActions("systemConfig", ["setExcelJson"]),
@@ -199,6 +216,11 @@ export default {
     // データ登録処理
     async upload(item) {
       this.$emit("submit-data", item);
+    },
+    // データ全件登録処理
+    async submitAllData() {
+      this.$emit("submit-all", );
+      // console.log("submitall");
     }
   },
   created() {
@@ -208,7 +230,7 @@ export default {
 </script>
 
 <style>
-.complete, .complete * v-icon {
+/* .complete, .complete * v-icon {
   background-color: #4CAF50;
   color: white;
 }
@@ -221,5 +243,5 @@ export default {
 .dataList:hover {
   background-color: #607d8b;
   color: black;
-}
+} */
 </style>

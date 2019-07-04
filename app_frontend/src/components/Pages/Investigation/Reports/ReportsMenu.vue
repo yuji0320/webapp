@@ -76,8 +76,6 @@
           </span>
         </app-card>
       </v-flex>
-
-
     </v-layout>
   </v-container>
 </template>

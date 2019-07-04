@@ -93,7 +93,7 @@ const systemConfigState = {
     snack: '',
     color: '',
     snackbarStatus: false,
-    timeout: 1000,
+    timeout: 3000,
   },
   excelJson: [],
   moneySetting: {

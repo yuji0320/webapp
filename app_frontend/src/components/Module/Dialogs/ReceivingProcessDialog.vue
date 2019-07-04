@@ -126,6 +126,14 @@
         <!-- 希望納期 -->
         <v-flex xs12 md4>
           <app-input-date 
+            label="Suspense Received Date"
+            v-model="receivingProcess['suspenseReceivedDate']"
+            :errorMessages="responseError['suspenseReceivedDate']"
+          ></app-input-date>
+        </v-flex>
+        <!-- 仕入日 -->
+        <v-flex xs12 md4>
+          <app-input-date 
             label="Received Date"
             v-model="receivingProcess['receivedDate']"
             :errorMessages="responseError['receivedDate']"
@@ -179,7 +187,7 @@ export default {
       this.$refs.currency.setData(val.currency);
     },
     setData(val) {
-      console.log(val);
+      // console.log(val);
       this.mfgNo = val.orderData.mfgNo;
       this.number = val.orderData.number;
       this.supplier = val.orderData["supplierData"].name;
@@ -197,6 +205,13 @@ export default {
       let res = {};
       this.receivingProcess.modifiedBy = this.loginUserData.id;
       this.receivingProcess.order = this.receivingProcess.orderData.id;
+      // 日付がブランクの場合nullをセットおする
+      if(this.receivingProcess.suspenseReceivedDate==="") {
+        this.receivingProcess.suspenseReceivedDate = null
+      }
+      if(this.receivingProcess.receivedDate==="") {
+        this.receivingProcess.receivedDate = null
+      }
       // console.log(this.receivingProcess);
       res = await this.putReceivingProcess(this.receivingProcess);
       if (res.data) {

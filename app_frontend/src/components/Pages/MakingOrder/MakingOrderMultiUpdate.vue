@@ -8,6 +8,10 @@
     ref="dialog"
   >
     <span slot="dialog-contents">
+
+      <!-- 読み込み中ダイアログコンポーネント -->
+      <app-loading-dialog></app-loading-dialog>
+
       <v-layout wrap>
         <!-- 仕入先選択 -->
         <v-flex xs1>
@@ -82,6 +86,9 @@ export default {
           // 編集項目が両方ともfalseの場合アラートを出す
           this.showSnackbar({color: "red", snack: "Input data is disabled."})
         } else {
+          // ロード開始
+          this.$store.commit("systemConfig/setLoading", true);
+
           // 編集項目がどちらか一方選択済みの場合
           // レスポンス用変数の定義
           let res = {};
@@ -109,7 +116,7 @@ export default {
             }
             // データのアップロード
             res = await this.putMakingOrder(order);
-            console.log(res);
+            // console.log(res);
           }
           // 成功時のスナックバー定義
           res.snack = {
@@ -118,7 +125,9 @@ export default {
           };
           // 処理統合関数の呼び出し
           this.$emit("response-function", res);
-          console.log(res);
+          // console.log(res);
+          // ロード終了
+          this.$store.commit("systemConfig/setLoading", false);
           // ダイアログを閉じる
           this.$refs.dialog.closeDialog();
         }
@@ -128,6 +137,9 @@ export default {
         this.$refs.dialog.closeDialog();
       }
     }
+  },
+  created () {
+    this.$store.commit("systemConfig/setLoading", false);
   }
 }
 </script>

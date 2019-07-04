@@ -18,6 +18,14 @@ class JobOrderAPIView(viewsets.ModelViewSet):
     #     pass
 
 
+class DirectCostBudgetAPIView(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = DirectCostBudgetSerializer
+    queryset = DirectCostBudget.objects.all()
+
+
 class BillOfMaterialAPIView(viewsets.ModelViewSet):
     permission_classes = (
         IsAuthenticated,
@@ -25,6 +33,10 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
     serializer_class = BillOfMaterialSerializer
     queryset = BillOfMaterial.objects.all()
     filter_class = BillOfMaterialFilter
+
+    @multi_create(serializer_class=BillOfMaterialSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 
 class MakingOrderAPIView(viewsets.ModelViewSet):

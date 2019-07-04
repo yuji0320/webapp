@@ -236,7 +236,7 @@ export default {
         completion_date_after: this.date_from,
         completion_date_before: this.date_to,
         order_by: this.orderBy,
-        page_size: max
+        page_size: "max"
       }
       this.$store.commit("systemConfig/setLoading", true);
       let res = await this.getJobOrders({params: params});

@@ -8,6 +8,7 @@ const receivingProcessState = {
   orderNumber: '',
   receivingProcesses: {},
   receivingProcess: {},
+  tableSelected: [],
 };
 
 export default {
@@ -42,6 +43,9 @@ export default {
     setReceivingProcess(state, payload) {
       state.receivingProcess = payload;
     },
+    setTableSelected(state, payload) {
+      state.tableSelected = payload;
+    }
   },
   actions: {
     // 作業指図書IDセット
@@ -97,5 +101,8 @@ export default {
       const commitName = 'setReceivingProcess';
       return await api.delete({commit}, url, data, commitName);
     },
+    setTableSelected({commit}, data) {
+      commit('setTableSelected', data);
+    }
   },
 };

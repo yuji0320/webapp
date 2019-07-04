@@ -39,6 +39,7 @@ class JobOrder(models.Model):
     order_date = models.DateField(_('Order Date'), blank=True, null=True)  # 受注日
     delivery_date = models.DateField(_('Delivery Date'), blank=True, null=True)  # 納入日
     completion_date = models.DateField(_('Completion Date'), blank=True, null=True)  # 工事完了日
+    bill_date = models.DateField(_('Bill Date'), blank=True, null=True)  # 請求日
     notes = models.TextField(_('Notes'), blank=True)  # 備考
     related_party_mfg_no = models.CharField(_("Related party's MFG No"), max_length=20, blank=True)  # 関係会社工事番号
     commercial_parts_budget = models.DecimalField(
@@ -59,6 +60,54 @@ class JobOrder(models.Model):
         decimal_places=2,
         default=0
     )  # 加工部品見積金額
+    outsourcing_mechanical_design_budget = models.DecimalField(
+        _('Outsourcing Mechanical Design budget'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 外注機構設計見積金額
+    outsourcing_electrical_design_budget = models.DecimalField(
+        _('Outsourcing Electrical Design budget'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 外注電気見積金額
+    outsourcing_other_budget = models.DecimalField(
+        _('Outsourcing - Other budget'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 外注組み立て調整見積金額
+    mechanical_design_budget_hours = models.DecimalField(
+        _('Mechanical Design budget hours'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 設計見積時間
+    electrical_design_budget_hours = models.DecimalField(
+        _('Electrical Design budget hours'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 電気設計見積時間
+    assembly_budget_hours = models.DecimalField(
+        _('Assembly budget hours'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 組み立て調整見積時間
+    electrical_wiring_budget_hours = models.DecimalField(
+        _('Electrical Wiring budget hours'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 配線工事見積時間
+    installation_budget_hours = models.DecimalField(
+        _('Installation budget hours'),
+        max_digits=17,
+        decimal_places=2,
+        default=0
+    )  # 現地調整見積時間
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     created_by = models.ForeignKey('system_users.User',
                                    related_name='%(class)s_requests_created',
@@ -77,6 +126,27 @@ class JobOrder(models.Model):
     def __str__(self):
         title = self.mfg_no + ':' + self.name
         return title
+
+
+class DirectCostBudget(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    job_order = models.ForeignKey('JobOrder', on_delete=models.PROTECT)  # 紐付け工事番号
+    type = models.ForeignKey('system_master.SystemExpenseCategory', on_delete=models.PROTECT)  # 部品種別
+    order_price = models.DecimalField(_('Order Price'), max_digits=17, decimal_places=2)  # 受注金額
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
+
+    class Meta:
+        db_table = 'direct_cost_budget'
+        verbose_name = _('Direct Cost Budget')
+        verbose_name_plural = _('Direct Cost Budget')
+        unique_together = (("job_order", "type"),)  # 会社ごとの工事番号ユニーク
 
 
 class BillOfMaterial(models.Model):

@@ -9,6 +9,9 @@ class JobOrderFilter(filters.FilterSet):
     incremental_field = filters.CharFilter(field_name='incrementalFilter', method='incremental_filter')
     related_party_mfg_no = filters.CharFilter(field_name='related_party_mfg_no', lookup_expr='icontains')
     completion_date = filters.DateFromToRangeFilter(field_name='completion_date')
+    bill_date = filters.DateFromToRangeFilter(field_name='bill_date')
+    uncompleted = filters.BooleanFilter(field_name='completion_date', lookup_expr='isnull')
+    unbilled = filters.BooleanFilter(field_name='bill_date', lookup_expr='isnull')
 
     @staticmethod
     def incremental_filter(queryset, name, value):
@@ -18,7 +21,7 @@ class JobOrderFilter(filters.FilterSet):
 
     class Meta:
         model = JobOrder
-        fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', ]
+        fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', 'bill_date', ]
 
     order_by = filters.OrderingFilter(
         fields=(

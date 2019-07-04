@@ -1,13 +1,16 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
+    
+    <!-- 読み込み中ダイアログコンポーネント -->
+    <app-loading-dialog></app-loading-dialog>
+
     <app-excel-upload
       :headers="headerData"
       @back-to-list="backToList"
       @fix-json="fixJson"
       @submit-data="submitData"
+      @submit-all="submitAllData"
+      submitAll="true"
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>list</v-icon></span>
@@ -75,7 +78,7 @@ export default {
       return {
         company: this.loginUserData.companyId,
         is_manufacturer: true,
-        page_size: 1000
+        page_size: "max"
         // order_by: this.orderBy
       };
     },
@@ -185,6 +188,7 @@ export default {
     },
     // データ処理
     async submitData(val) {
+      this.$store.commit("systemConfig/setLoading", true);
       // console.log(val);
       let res = {};
       res = await this.postBillOfMaterial(val);
@@ -198,9 +202,36 @@ export default {
         this.excelJson[val.key].err = true;
         console.log(res.error);
       }
+      this.$store.commit("systemConfig/setLoading", false);
+    },
+    async submitAllData() {
+      this.$store.commit("systemConfig/setLoading", true);
+      let res = {};
+      res = await this.postBillOfMaterial(this.excelJson);
+
+      if (res.data) {
+        // console.log("success");
+        for(let i=0,success; success = this.excelJson[i]; i++){
+          success.updated = true;
+        }
+      } else {
+        // console.log(res.error.data);
+        for(let i=0,errprData; errprData = this.excelJson[i]; i++){
+          if(Object.keys(res.error.data[i]).length !== 0) {
+            // console.log(Object.keys(res.error.data[i]).length);
+            errprData.err = true;
+          }
+        }
+      }
+
+      // console.log(res);
+      
+      this.showSnackbar(res.snack);
+      this.$store.commit("systemConfig/setLoading", false);
     }
   },
   created() {
+    this.$store.commit("systemConfig/setLoading", false);
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
     if(!this.partsType || !this.jobOrderID) {
       this.$router.push({ name: "BillOfMaterialMenu" });

@@ -32,6 +32,7 @@ import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingP
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessEditList from '@/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessSuspense from '@/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue'; /* eslint-disable-line max-len */
 // 工数管理
 import ManHourMenu from '@/components/Pages/ManHour/ManHourMenu.vue';
 import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
@@ -212,6 +213,11 @@ const router = new Router({
                   path: 'menu',
                   name: 'ReceivingProcessMenu',
                   component: ReceivingProcessMenu,
+                },
+                {
+                  path: 'suspense',
+                  name: 'ReceivingProcessSuspense',
+                  component: ReceivingProcessSuspense,
                 },
                 {
                   path: 'receiving',

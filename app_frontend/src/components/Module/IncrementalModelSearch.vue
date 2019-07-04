@@ -106,7 +106,7 @@ export default {
       return {
         company: this.loginUserData["companyId"],
         order_by: this.orderBy,
-        page_size: 1000
+        page_size: "max"
       };
     },
     fields() {

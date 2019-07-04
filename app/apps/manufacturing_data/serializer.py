@@ -5,6 +5,14 @@ from system_users.serializer import *
 from system_master.serializer import *
 
 
+class DirectCostBudgetSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=False)
+
+    class Meta:
+        model = DirectCostBudget
+        fields = '__all__'
+
+
 # 作業指図書
 class JobOrderSerializer(serializers.ModelSerializer):
     default_currency_order_amount = serializers.SerializerMethodField()
@@ -80,11 +88,20 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'order_date',
             'delivery_date',
             'completion_date',
+            'bill_date',
             'notes',
             'related_party_mfg_no',
             'commercial_parts_budget',
             'electrical_parts_budget',
             'processed_parts_budget',
+            'outsourcing_mechanical_design_budget',
+            'outsourcing_electrical_design_budget',
+            'outsourcing_other_budget',
+            'mechanical_design_budget_hours',
+            'electrical_design_budget_hours',
+            'assembly_budget_hours',
+            'electrical_wiring_budget_hours',
+            'installation_budget_hours',
             'created_at',
             'created_by',
             'modified_at',

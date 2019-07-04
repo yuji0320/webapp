@@ -29,14 +29,19 @@
           @click="createJobOrder()"
           >New Item</v-btn>
 
+          <!-- 工事完了済み、売上未計上の部品の一括更新 -->
+          <!-- <span slot="card-header-button">
+            <bulk-bill-date></bulk-bill-date>
+          </span> -->
+
           <!-- エクセルアップロード -->
-          <v-btn
+          <!-- <v-btn
             fab
             small
             @click="upload"
           >
             <v-icon>cloud_upload</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-layout>
       </span>
 
@@ -68,10 +73,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import JobOrderBulkBillDate from "./JobOrderBulkBillDate.vue"
 
 export default {
   title: "Job Order",
   name: "JobOrder",
+  components: {
+    "bulk-bill-date": JobOrderBulkBillDate
+  },
   data() {
     return {
       orderBy: "-mfg_no",

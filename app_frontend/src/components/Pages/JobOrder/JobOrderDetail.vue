@@ -43,7 +43,7 @@
                   <td colspan="1">{{ tableData[0][1].text }}</td>
                   <td colspan="1" class="text-center">{{ tableData[0][2].text }}</td>
                   <td colspan="1" class="text-center">{{ tableData[0][3].text }}</td>
-                <td colspan="1" class="text-center">{{ tableData[0][4].text }}</td>
+                  <td colspan="1" class="text-center">{{ tableData[0][4].text }}</td>
                   <td colspan="1" class="text-center">{{ tableData[0][5].text }}</td>
                 </tr>
                 <tr>
@@ -60,11 +60,11 @@
                 </tr>
                 <tr>						
                   <td class="text-center">{{ tableData[4][0].text }}</td>				
-                  <td>{{ tableData[4][1].text }}</td>
+                  <td class="text-center">{{ tableData[4][1].text }}</td>
                   <td class="text-center">{{ tableData[4][2].text }}</td>					
-                  <td>{{ tableData[4][3].text }}</td>
+                  <td class="text-center">{{ tableData[4][3].text }}</td>
                   <td class="text-center">{{ tableData[4][4].text }}</td>
-                  <td>{{ tableData[4][5].text }}</td>
+                  <td class="text-center">{{ tableData[4][5].text }}</td>
                 </tr>
                 <tr>
                   <td class="text-center">{{ tableData[5][0].text }}</td>				
@@ -198,7 +198,10 @@
     partsData() {
       // PDF作成用のデータを構築
       return function (val) {
-          return this.billOfMaterials.results.filter(x => x.type === val)
+        if(this.billOfMaterials.results) {
+          return this.billOfMaterials.results.filter(x => x.type === val);
+        }
+        // return this.billOfMaterials.results.filter(x => x.type === val);
       }
     },
     // 部品種別毎の部品表仕分け
@@ -207,12 +210,8 @@
       return function (val) {
         let total = 0;
         for (let i = 0; i < val.length; i++) {
-            total += val[i];
-
+            total += val[i].totalDefaultCurrencyPrice;
         }
-        // for(let t in val) {
-        //   total += val[t]["totalDefaultCurrencyPrice"];
-        // }
         return total
       }
     },
@@ -245,171 +244,179 @@
       };
     },
     tableData() {
-      // デフォルト通貨記号
-      let defaultDisplay = this.loginUserData["defaultCurrencyDisplay"] + " ";
-
-      // 作業指図書発行者
-      let publisher = "";
-      if(this.jobOrder.publisher){
-        publisher = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"]
-      }
-      // 設計者
-      let designer = "";
-      if(this.jobOrder.designer){
-        designer = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"]
-      }
-      // 作業指図書発行者
-      let customer = "";
-      if(this.jobOrder.customer){
-        customer = this.jobOrder["customerData"].name;
-      }
-      // 作業指図書発行者
-      let deliveryDestination = "";
-      if(this.jobOrder.deliveryDestination){
-        deliveryDestination = this.jobOrder["deliveryDestinationData"].name;
-      }
-      // 受注金額
-      let orderPriceText = "Order Price (" + this.jobOrder["orderCurrencyData"].code + ")";
-      let orderPrice = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
-      let orderDate = "";
-      if(this.jobOrder.orderDate){ orderDate = this.jobOrder.orderDate;}
-      let deliveryDate = "";
-      if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;}
-      let completionDate = "";
-      if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;}
-      // レート換算
-      // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
-      let orderRate = "1" + this.jobOrder["orderCurrencyData"].code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
-      // 受注金額基準通貨
-      let orderPriceDefaultText = "Order Price (" + this.loginUserData["defaultCurrencyCode"] + ")";
-      let orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
-      // 税額
-      let taxPrice = defaultDisplay + this.jobOrder["costs"]["taxPrice"];
-      let taxPercent = "(" + this.jobOrder.taxPercent + "%)";
-      // 合計金額
-      let orderTotal = defaultDisplay + this.jobOrder["costs"]["orderTotal"];
-      let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
-      let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
-      let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
-      let commercialPartsResult = "";
-      let processedPartsResult = "";
-      let electricalPartsResult = "";
       if(this.jobOrder) {
-        commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
-        processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
-        electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
-      }
-      let directCostBudget = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
-      let directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
-      let limitProfitBudget = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
-      let limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
-      let limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
-      let limitProfitPercentageResult =this.directCosts.limitProfitPercentage + "%";
+        // デフォルト通貨記号
+        let defaultDisplay = this.loginUserData["defaultCurrencyDisplay"] + " ";
 
-      let tableData = [
-        [
-          {text: "MFG No.", alignment:"center"},
-          {text: this.jobOrder.mfgNo, alignment:"center"},
-          {text: "Publisher", alignment:"center"},
-          {text: publisher, alignment:"center"},
-          {text: "Designer", alignment:"center"},
-          {text: designer, alignment:"center"},
-        ],
-        [
-          {text: "Product Name", alignment:"center", colSpan: 2},{},
-          {text: this.jobOrder.name , colSpan: 4},{},{},{},
-        ],
-        [
-          {text: "Customer", alignment:"center", colSpan: 2},{},
-          {text: customer, colSpan: 4},{},{},{},
-        ],
-        [
-          {text: "Delivery Destination", alignment:"center", colSpan: 2},{},
-          {text: deliveryDestination, colSpan: 4},{},{},{},
-        ],
-        [
-          {text: "Order Date", alignment:"center"},
-          {text: orderDate, alignment:"center"},
-          {text: "Delivery Date", alignment:"center"},
-          {text: deliveryDate, alignment:"center"},
-          {text: "Completion Date", alignment:"center"},
-          {text: completionDate, alignment:"center"}
-        ],
-        [
-          {text: orderPriceText, alignment:"center"},
-          {text: orderPrice, alignment:"right"},
-          {text: "Order Currency", alignment:"center"},
-          {text: this.jobOrder["orderCurrencyData"].code, alignment:"center"},
-          {text: "Order Rate", alignment:"center"},
-          {text: orderRate, alignment:"center"}
-        ],
-        [
-          {text: orderPriceDefaultText, alignment:"right", colSpan: 2},{},
-          {text: orderPriceDefault, alignment:"right", colSpan: 2},{},
-          {text: "(Exclude Tax)", alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text:"Tax", alignment:"right", colSpan: 2},{},
-          {text: taxPrice, alignment:"right", colSpan: 2},{},
-          {text: taxPercent, alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text:"Total", alignment:"right", colSpan: 2},{},
-          {text: orderTotal, alignment:"right", colSpan: 2},{},
-          {text: "", alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text: "Related Party's MFG No", alignment:"center", colSpan: 2},{},
-          {text: this.jobOrder["relatedPartyMfgNo"], colSpan: 4},{},{},{}
-        ],
-        [
-          {text: "Note", alignment:"center"},
-          {text: this.jobOrder["notes"], colSpan: 5},{},{},{}, {}
-        ],
-        [
-          {text:"", alignment:"right", colSpan: 3},{},{},
-          {text: "Budget", alignment:"center"},
-          {text: "Results", alignment:"center"},
-          {text: "Failure", alignment:"center"},
-        ],
-        [
-          {text:"Commercial parts costs", alignment:"center", colSpan: 3},{},{},
-          {text: commercialPartsBudget, alignment:"right"},
-          {text: commercialPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Electrical parts costs	", alignment:"center", colSpan: 3},{},{},
-          {text: electricalPartsBudget, alignment:"right"},
-          {text: electricalPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Processed parts costs	", alignment:"center", colSpan: 3},{},{},
-          {text: processedPartsBudget, alignment:"right"},
-          {text: processedPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Direct Cost", alignment:"center", colSpan: 3},{},{},
-          {text: directCostBudget, alignment:"right"},
-          {text: directCostResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Limit Profit", alignment:"center", colSpan: 3},{},{},
-          {text: limitProfitBudget, alignment:"right"},
-          {text: limitProfitResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Limit Profit Percentage", bold: true, alignment:"center", colSpan: 3},{},{},
-          {text: limitProfitPercentageBudget, alignment:"right"},
-          {text: limitProfitPercentageResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ]
-      ];
-      return tableData;
+        // 作業指図書発行者
+        let publisher = "";
+        if(this.jobOrder.publisher){
+          publisher = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"]
+        }
+        // 設計者
+        let designer = "";
+        if(this.jobOrder.designer){
+          designer = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"]
+        }
+        // 作業指図書発行者
+        let customer = "";
+        if(this.jobOrder.customer){
+          customer = this.jobOrder["customerData"].name;
+        }
+        // 作業指図書発行者
+        let deliveryDestination = "";
+        if(this.jobOrder.deliveryDestination){
+          deliveryDestination = this.jobOrder["deliveryDestinationData"].name;
+        }
+        // 受注金額
+        let orderPriceText = "Order Price (" + this.jobOrder["orderCurrencyData"].code + ")";
+        let orderPrice = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
+        let orderDate = "";
+        if(this.jobOrder.orderDate){ orderDate = this.jobOrder.orderDate;}
+        let deliveryDate = "";
+        if(this.jobOrder.deliveryDate){ deliveryDate = this.jobOrder.deliveryDate;}
+        let completionDate = "";
+        if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;}
+        // レート換算
+        // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
+        let orderRate = "1" + this.jobOrder["orderCurrencyData"].code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
+        // 受注金額基準通貨
+        let orderPriceDefaultText = "Order Price (" + this.loginUserData["defaultCurrencyCode"] + ")";
+        let orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
+        // 税額
+        let taxPrice = defaultDisplay + this.jobOrder["costs"]["taxPrice"];
+        let taxPercent = "(" + this.jobOrder.taxPercent + "%)";
+        // 合計金額
+        let orderTotal = defaultDisplay + this.jobOrder["costs"]["orderTotal"];
+        let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
+        let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
+        let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
+        let commercialPartsResult = "";
+        let processedPartsResult = "";
+        let electricalPartsResult = "";
+        let outsourcingMechanicalDesignBudget = "";
+        let outsourcingElectricalDesignBudget = "";
+        let outsourcingOtherBudget = "";
+        if(this.jobOrder) {
+          commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
+          processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
+          electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+          outsourcingMechanicalDesignBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+          outsourcingElectricalDesignBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+          outsourcingOtherBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+        }
+        let directCostBudget = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
+        let directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
+        let limitProfitBudget = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
+        let limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
+        let limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
+        let limitProfitPercentageResult =this.directCosts.limitProfitPercentage + "%";
+
+        let tableData = [
+          [
+            {text: "MFG No.", alignment:"center"},
+            {text: this.jobOrder.mfgNo, alignment:"center"},
+            {text: "Publisher", alignment:"center"},
+            {text: publisher, alignment:"center"},
+            {text: "Designer", alignment:"center"},
+            {text: designer, alignment:"center"},
+          ],
+          [
+            {text: "Product Name", alignment:"center", colSpan: 2},{},
+            {text: this.jobOrder.name , colSpan: 4},{},{},{},
+          ],
+          [
+            {text: "Customer", alignment:"center", colSpan: 2},{},
+            {text: customer, colSpan: 4},{},{},{},
+          ],
+          [
+            {text: "Delivery Destination", alignment:"center", colSpan: 2},{},
+            {text: deliveryDestination, colSpan: 4},{},{},{},
+          ],
+          [
+            {text: "Order Date", alignment:"center"},
+            {text: orderDate, alignment:"center"},
+            {text: "Delivery Date", alignment:"center"},
+            {text: deliveryDate, alignment:"center"},
+            {text: "Completion Date", alignment:"center"},
+            {text: completionDate, alignment:"center"}
+          ],
+          [
+            {text: orderPriceText, alignment:"center"},
+            {text: orderPrice, alignment:"right"},
+            {text: "Order Currency", alignment:"center"},
+            {text: this.jobOrder["orderCurrencyData"].code, alignment:"center"},
+            {text: "Order Rate", alignment:"center"},
+            {text: orderRate, alignment:"center"}
+          ],
+          [
+            {text: orderPriceDefaultText, alignment:"right", colSpan: 2},{},
+            {text: orderPriceDefault, alignment:"right", colSpan: 2},{},
+            {text: "(Exclude Tax)", alignment:"left", colSpan: 2},{},
+          ],
+          [
+            {text:"Tax", alignment:"right", colSpan: 2},{},
+            {text: taxPrice, alignment:"right", colSpan: 2},{},
+            {text: taxPercent, alignment:"left", colSpan: 2},{},
+          ],
+          [
+            {text:"Total", alignment:"right", colSpan: 2},{},
+            {text: orderTotal, alignment:"right", colSpan: 2},{},
+            {text: "", alignment:"left", colSpan: 2},{},
+          ],
+          [
+            {text: "Related Party's MFG No", alignment:"center", colSpan: 2},{},
+            {text: this.jobOrder["relatedPartyMfgNo"], colSpan: 4},{},{},{}
+          ],
+          [
+            {text: "Note", alignment:"center"},
+            {text: this.jobOrder["notes"], colSpan: 5},{},{},{}, {}
+          ],
+          [
+            {text:"", alignment:"right", colSpan: 3},{},{},
+            {text: "Budget", alignment:"center"},
+            {text: "Results", alignment:"center"},
+            {text: "Failure", alignment:"center"},
+          ],
+          [
+            {text:"Commercial parts costs", alignment:"center", colSpan: 3},{},{},
+            {text: commercialPartsBudget, alignment:"right"},
+            {text: commercialPartsResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Electrical parts costs	", alignment:"center", colSpan: 3},{},{},
+            {text: electricalPartsBudget, alignment:"right"},
+            {text: electricalPartsResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Processed parts costs	", alignment:"center", colSpan: 3},{},{},
+            {text: processedPartsBudget, alignment:"right"},
+            {text: processedPartsResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Direct Cost", alignment:"center", colSpan: 3},{},{},
+            {text: directCostBudget, alignment:"right"},
+            {text: directCostResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Limit Profit", alignment:"center", colSpan: 3},{},{},
+            {text: limitProfitBudget, alignment:"right"},
+            {text: limitProfitResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Limit Profit Percentage", bold: true, alignment:"center", colSpan: 3},{},{},
+            {text: limitProfitPercentageBudget, alignment:"right"},
+            {text: limitProfitPercentageResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ]
+        ];
+        return tableData;
+      }
     }
   },
   methods: {

@@ -48,7 +48,14 @@
         >
           <!-- テーブルデータ -->
           <template slot="items" slot-scope="props">
-            <tr :class="{'complete': props.item.isReceived}" @dblclick="editReceivingProcess(props.item)"  @click="props.expanded = !props.expanded">
+            <tr 
+              :class="{
+                'suspenseComplete': props.item.suspenseReceivedDate,
+                'dataList': true
+                }" 
+              @dblclick="editReceivingProcess(props.item)"
+              max-width="100%"
+            >
               <td class="">{{ props.item.orderData.number }}</td>
               <td>{{ props.item.orderData.name }}</td>
               <td>
@@ -151,13 +158,13 @@
                     { text: "No.", value:"number", width:"5%"},
                     { text: "Partner name", value:"name", width:"10%" },
                     { text: "Standard / Drawing No", value:"", width:"15%" },
-                    { text: "Other Data", value:"", width:"5%" },
+                    { text: "Other", value:"", width:"5%" },
                     { text: "Desire Date", value:"", width:"5%" },
                     { text: "Received Date", value:"", width:"10%" },
                     { text: "Order Qty", value:"", width:"5%" },
                     { text: "Received Qty", value:"", width:"15%" },
-                    { text: "Order Unit Price", value:"", width:"5%" },
-                    { text: "Received Unit Price", value:"", width:"15%" },
+                    { text: "Order UP", value:"", width:"5%" },
+                    { text: "Received UP", value:"", width:"15%" },
                     { text: "Action", value:"", width:"10%" }
                 ],
                 // テーブル検索用データ
@@ -300,6 +307,10 @@
                 } else {
                     // console.log(val);
                     val.modifiedBy = this.loginUserData.id;
+                    // 仮仕入未処理の場合は仕入日を入れる
+                    if(!val.suspenseReceivedDate) {
+                      val.suspenseReceivedDate = receivedDate;
+                    }
                     val.isReceived = true;
 
                     await this.putReceivingProcess(val);
@@ -418,9 +429,6 @@
     }
 </script>
 
-<style scoped>
-  table.v-table tbody td,
-  table.v-table tbody th {
-    height: 19px;
-  }
+<style>
+
 </style>

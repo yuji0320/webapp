@@ -5,6 +5,11 @@
       <span slot="card-header-icon"><v-icon>move_to_inbox</v-icon></span>
       <span slot="card-header-title">Receive</span>
 
+      <!-- 仕入済、仮仕入未処理の部品の一括更新 -->
+      <!-- <span slot="card-header-button">
+        <bulk-suspense></bulk-suspense>
+      </span> -->
+
       <span slot="card-title-text">
         <!-- 工事番号、仕入先選択 -->
         <v-layout row wrap>
@@ -58,6 +63,16 @@
                 <v-card-text>
                   <v-layout row>
                     <v-flex xs12>
+                      <v-btn
+                        large
+                        block
+                        round
+                        color="primary"
+                        :disabled = "supplier === '' && number === ''"
+                        @click="suspense"
+                      >
+                        Suspense Receive
+                      </v-btn>
                       <v-btn
                         large
                         block
@@ -121,10 +136,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ReceivingProcessBulkSuspenseReceived from "./ReceivingProcessBulkSuspenseReceived.vue"
 
 export default {
   title: "Receiving Process Menu",
   name: "ReceivingProcessMenu",
+  components: {
+    "bulk-suspense": ReceivingProcessBulkSuspenseReceived
+  },
   data() {
     return {
       mfgNo: "",
@@ -150,6 +169,12 @@ export default {
     clearOrderNumber() {
         this.number = "";
         this.setOrderNumber("");
+    },
+    suspense() {
+      this.setJobOrderID(this.mfgNo);
+      this.setSupplierID(this.supplier);
+      this.setOrderNumber(this.number);
+      this.$router.push({ name: "ReceivingProcessSuspense" });
     },
     receive() {
       this.setJobOrderID(this.mfgNo);

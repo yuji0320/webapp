@@ -7,7 +7,7 @@
     <app-card>
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>move_to_inbox</v-icon></span>
-      <span slot="card-header-title">Edit Receiving File {{ switchParams.title }}</span>
+      <span slot="card-header-title">Suspense Receive {{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -15,6 +15,15 @@
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
+
+        <!-- 一括編集ボタン -->
+        <v-btn 
+          @click="multiUpdate" 
+          outline 
+          color="primary"
+        >
+          Multi Update
+        </v-btn>       
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
@@ -44,6 +53,8 @@
           @edit-item="editReceivingProcess"
           @double-clicked="editReceivingProcess"
           @delete-item="deleteReceivingProcessData"
+          completeDisabled=true
+          ref="data_table"
         >
         </app-data-table>
       </span>
@@ -61,34 +72,40 @@
     <!-- 部品票ダイアログ -->
     <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
 
+    <multi-update @response-function="responseFunction" ref="multi_update"></multi-update>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ReceivingProcessMultiUpdate from "./ReceivingProcessMultiUpdate.vue"
 
 export default {
-  title: "Edit Receiving File",
-  name: "ReceivingProcessList",
+  title: "Suspense Receive",
+  name: "ReceivingProcessSuspense",
+  components: {
+    "multi-update": ReceivingProcessMultiUpdate
+  },
   data() {
     return {
       // データ関係
       orderBy: "-order__desired_delivery_date",
       // テーブルヘッダーデータ
       headers: [
+        { text: "", value: "checkbox" },
         { text: "No", value: "orderData", nest:"number" },
         { text: "Part Name", value: "orderData", nest:"name" },
         { text: "Standard / Drawing No", value:"orderData", nest:"partsDetail" },
         { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
-        { text: "Received", value: "receivedDate" },
+        { text: "Suspense Received", value: "suspenseReceivedDate" },
         { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
         { text: "Received Amount", value: "amount", class: "text-xs-right" },
-        { text: "Order UP", value: "orderData", nest: "unitPrice", class: "text-xs-right" },
-        { text: "Received UP", value: "unitPrice", class: "text-xs-right" },
+        // { text: "Order UP", value: "orderData", nest: "unitPrice", class: "text-xs-right" },
+        // { text: "Received UP", value: "unitPrice", class: "text-xs-right" },
         { text: "Action", value: "action", class: "text-xs-center" }
       ],
-      //  仕入完了時色変更
-      completeColumn: "isReceived",
+      //  仮仕入完了時色変更
+      completeColumn: "suspenseReceivedDate",
       // テーブル検索用データ
       incremental: {
         // 検索カラムリスト
@@ -103,14 +120,9 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),
-    ...mapState("systemUserApi", ["userPartner", "userCompany"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
-    ...mapState("billOfMaterialAPI", ["billOfMaterials", "billOfMaterial"]),
-    ...mapState("makingOrderAPI", ["makingOrders"]),
-    ...mapState("receivingProcessAPI", [
-      "responseError", "jobOrderID", "supplierID", "orderNumber", "receivingProcesses", "receivingProcess"
-    ]),
+    ...mapState("systemUserApi", ["userPartner", "userCompany"]),
+    ...mapState("receivingProcessAPI", [ "responseError", "jobOrderID", "supplierID", "orderNumber", "receivingProcesses", "receivingProcess", "tableSelected"]),
     hasMFGNo() {
       return !!this.jobOrderID;
     },
@@ -127,7 +139,7 @@ export default {
           params: {
             company: this.loginUserData["companyId"],
             order__number: this.orderNumber,
-            is_received: true,
+            is_received: false,
             order_by: this.orderBy,
           },
           title: title
@@ -139,7 +151,7 @@ export default {
             params: {
               company: this.loginUserData["companyId"],
               order__bill_of_material__job_order: this.jobOrderID,
-              is_received: true,
+              is_received: false,
               order__supplier: this.supplierID,
               order_by: this.orderBy,
             },
@@ -151,7 +163,7 @@ export default {
           return {
             params: {
               company: this.loginUserData["companyId"],
-              is_received: true,
+              is_received: false,
               no_bom: true,
               order__supplier: this.supplierID,
               order_by: this.orderBy,
@@ -164,12 +176,17 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
-    ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getExpenseCategory"]),
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
-    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
-    ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
-    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setReceivingProcess", "deleteReceivingProcess"]),
+    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial"]),
+    ...mapActions("makingOrderAPI", ["setMakingOrder"]),
+    ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setReceivingProcess", "deleteReceivingProcess", "setTableSelected"]),
+    // 一括編集機能
+    multiUpdate() {
+      this.setTableSelected(this.$refs.data_table.selected);
+      // console.log(test);
+      this.$refs.multi_update.openDialog();
+    },
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getReceivingProcesses(data);
@@ -190,13 +207,6 @@ export default {
       this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
       this.$refs["bom_dialog"].editBillOfMaterial();
     },
-    // 処理結果統合フォーム
-    responseFunction(val) {
-      // リストをリロード
-      this.getList({ params: this.switchParams.params });
-      // Snackbar表示
-      this.showSnackbar(val.snack);
-    },
     // 発注ファイル削除
     async deleteReceivingProcessData(val) {
       let res = {};
@@ -216,6 +226,14 @@ export default {
       }
       this.responseFunction(res);
     },
+    // 処理結果統合フォーム
+    responseFunction(val) {
+      // リストをリロード
+      this.getList({ params: this.switchParams.params });
+      // Snackbar表示
+      this.showSnackbar(val.snack);
+      this.$refs.data_table.selected = [];
+    },
     backToMenu() {
       this.$router.push({ name: "ReceivingProcessMenu" });
     },
@@ -225,7 +243,6 @@ export default {
       if (this.supplierID) {
           this.getPartner(this.supplierID);
       }
-      this.getExpenseCategories({params: {"order_by": "category_number"}});
       if (this.hasMFGNo) {
         this.getJobOrder(this.jobOrderID);
       }
@@ -244,3 +261,6 @@ export default {
 }
 </script>
 
+<style>
+
+</style>

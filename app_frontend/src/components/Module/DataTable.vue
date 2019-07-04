@@ -51,7 +51,7 @@
               v-model="props.selected"
               primary
               hide-details
-              :disabled="addClass(props.item.isPrinted)"
+              :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
             ></v-checkbox>
           </template>
           <!-- true, false以外の場合はデータを表示 -->
@@ -93,6 +93,7 @@
                 small
                 class="mr-2"
                 @click="editItem(props.item)"
+                :disabled="disabledActions(props.item[completeColumn])"
               >
                 edit
               </v-icon>
@@ -101,6 +102,7 @@
                 small
                 class="mr-2"
                 @click="deleteItem(props.item)"
+                :disabled="disabledActions(props.item[completeColumn])"
               >
                 delete
               </v-icon>
@@ -139,6 +141,7 @@ export default {
     doNotChangeClass: { required: false },
     checkbox: { required: false },
     selectAll: { required: false },
+    completeDisabled: { required: false },
   },
   computed: {
     addClass() {
@@ -147,12 +150,24 @@ export default {
           return val
         }
       }
+    },
+    disabledActions() {
+      return function (val) {
+        if(this.completeDisabled && val) {
+          return true
+        } else {
+          return false
+        }
+      }     
     }
   },
   methods: {
     // ダブルクリック時の処理
     doubleClick(item) {
-      this.$emit("double-clicked", item);
+      if(!this.disabledActions(item.suspenseReceivedDate)) {
+        this.$emit("double-clicked", item);
+      }
+      // console.log(item);
     },
     // データ閲覧イベントの発火
     viewItem(item) {
@@ -174,6 +189,11 @@ export default {
 
 <style>
 .printed, .complete, .complete * v-icon {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.suspenseComplete {
   background-color: #4CAF50;
   color: white;
 }
