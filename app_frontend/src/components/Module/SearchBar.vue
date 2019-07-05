@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex sm8 md4 lg3 d-flex>
+    <v-flex xs12 sm8 lg5>
       <app-pagination
         v-model="search.page"
         :length="length"
@@ -8,13 +8,13 @@
       ></app-pagination>
     </v-flex>
 
-    <v-flex sm4 md2 lg2>
+    <v-flex xs12 sm4 lg2>
       <v-subheader>
         Total : {{ count }} items
       </v-subheader>
     </v-flex>
 
-    <v-flex sm12 md6 lg7>
+    <v-flex xs12 sm12 lg5>
       <app-search
         v-model="search.incremental"
       ></app-search>

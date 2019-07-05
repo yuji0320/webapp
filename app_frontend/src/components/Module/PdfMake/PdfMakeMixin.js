@@ -37,13 +37,22 @@ export default {
     createPDFData(val) {
       // ヘッダー用テキストを定義      
       let pdfHeader = this.defaultHeaderPDF(val.headerText);
-      if(val.header) {pdfHeader = val.header};
+      if(val.header) { 
+        pdfHeader = val.header; 
+        // console.log(pdfHeader);
+      };
       // ページマージンの定義
       let pageMargins = this.defaultPageMargins
-      if(val.pageMargins) {pageMargins = val.pageMargins};
+      if(val.pageMargins) {
+        pageMargins = val.pageMargins;
+        // console.log(pageMargins);
+      };
       // ページスタイルの定義
       let styles = this.pdfStyles;
-      if(val.styles) {styles = val.styles};
+      if(val.styles) {
+        styles = val.styles;
+        // console.log(styles);
+      };
       // console.log(val);
       // データ定義
       var docDefinition = { 
@@ -51,6 +60,18 @@ export default {
         header(){ return pdfHeader;},
         // データ表示部分
         content: [ val.content ],
+        footer: function(currentPage, pageCount) {
+          return {
+              margin:[0, 10, 0, 0],
+              columns: [
+                {
+                  fontSize: 9,
+                  text:currentPage.toString() + ' of ' + pageCount,
+                  alignment: 'center'
+                }
+              ]
+          };
+        },
         // 印刷プロパティ
         pageSize: 'LETTER',
         pageMargins: pageMargins,

@@ -111,7 +111,7 @@ export default {
       content.headerText = pdfTitle;
       // ヘッダーの追加
       content.header = this.poHeader();
-      content.pageMargins = [30,300,30,0];
+      content.pageMargins = [30,280,30,50];
       content.styles = {
         title: { fontSize: 20},
         titleSub: { fontSize: 13},
@@ -169,7 +169,7 @@ export default {
                   }
                 }
                 // 発注番号を文字列に変換
-                if (h === 0) d = String(d);
+                if (h == 0) { d = String(d); }
                 // データがネストしている場合はネスと先データを表示
                 if (tableHeaderData[h].nest) {
                   if (d) {
@@ -269,6 +269,9 @@ export default {
     },
     poFooter: function () {
       const user = this.loginUserData;
+      // const fullName = user["fullname"];
+      const createdBy = "Created by : " + user["fullname"];
+      console.log(createdBy);
       // POフッター部分
       return [
         {
@@ -279,7 +282,7 @@ export default {
             widths: [250],
             margin: [0, 50, 0, 0],
             body: [
-              [{text: "Created by : " + user["fullname"], bold: true, fontSize: 12}],
+              [{text: "Created by : " , bold: true, fontSize: 12}],
               [{text: "Approved by :", bold: true, fontSize: 12}],
               [{text: "Signature :", bold: true, fontSize: 12}],
             ]
@@ -320,6 +323,7 @@ export default {
       const company = this.userCompany;
       const jobOrder = this.jobOrder;
       let mfgNo = "";
+      const logo = company["logoData"];
 
       // 工事番号の設定
       if(this.hasMFGNo) {
@@ -336,14 +340,14 @@ export default {
       return [
         {
           columns: [
-            { image: company["logoData"], width: 100, margin: [ 0, 0, 0, 0 ] },
+            {image: logo, width: 100, margin: [ 0, 0, 0, 0 ], x:30},
             [
-              {text: company.name, style: 'title', width: '*', margin: [ 20, 0, 0, 0 ]},
-              {text: company.address, style: 'titleSub', width: '*', margin: [ 20, 0, 0, 0 ]},
-              {text: 'TEL : ' + company.phone + ' FAX : ' + company["fax"] , style: 'titleSub', width: '*', margin: [ 20, 0, 0, 0 ]},
+              {text: company.name, style: 'title', width: '*', margin: [ 50, 0, 0, 0 ]},
+              {text: company.address, style: 'titleSub', width: '*', margin: [ 50, 0, 0, 0 ]},
+              {text: 'TEL : ' + company.phone + ' FAX : ' + company["fax"] , style: 'titleSub', width: '*', margin: [ 50, 0, 0, 0 ]},
             ],
           ],
-          margin: [ 30, 40, 30, 0 ],
+          margin: [ 0, 40, 30, 0 ],
         },
         {
           columns: [

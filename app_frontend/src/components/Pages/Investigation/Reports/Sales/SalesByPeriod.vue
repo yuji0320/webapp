@@ -233,8 +233,8 @@ export default {
       // 検索パラメーター
       let params = {
         company: this.loginUserData.companyId,
-        completion_date_after: this.date_from,
-        completion_date_before: this.date_to,
+        bill_date_after: this.date_from,
+        bill_date_before: this.date_to,
         order_by: this.orderBy,
         page_size: "max"
       }

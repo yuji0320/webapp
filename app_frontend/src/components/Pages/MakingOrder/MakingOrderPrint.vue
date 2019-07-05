@@ -132,6 +132,8 @@ export default {
       ],
       // テーブル機能関係
       selectedItems: [],
+      // 部品リスト
+      partsArray: [],
     };
   },
   computed: {
@@ -246,8 +248,31 @@ export default {
     backToMenu() {
       this.$router.push({ name: "MakingOrderMenu" });
     },
+    makePartsArray() {
+      let orders = this.makingOrders.results;
+      let category = [
+        {name: "Processed Parts", isProcessed: true},
+        {name: "Other", isProcessed: false}
+      ];
+      let arrObj = [];
+      let list = [];
+      // 部品種別ごとに発注ファイルをまとめる
+      for(let c in category) {
+        // 種別ごとに部品リストを集計
+        list = orders.filter(x => x.isProcessed === category[c]["isProcessed"]);
+        // 部品個数が０でない場合は配列に挿入
+        if(list.length > 0) {
+          arrObj[c] = category[c];
+          arrObj[c]["parts"] = list;
+          // console.log(list);
+        }
+      }
+      // 部品選択用配列に値を代入
+      this.selectedItems = arrObj.slice();
+      return arrObj;
+    },
     // データの読み込み
-    loadData() {
+    async loadData() {
       this.$store.commit("systemConfig/setLoading", true);
       if(this.jobOrderID) {
         this.getJobOrder(this.jobOrderID);
@@ -255,8 +280,8 @@ export default {
         this.setJobOrder({});
       }
       this.getPartner(this.supplierID);
-      this.getMakingOrders({params: this.switchParams.params});
-      this.getCompany({ detail: this.loginUserData["companyId"] });
+      await this.getMakingOrders({params: this.switchParams.params});
+      await this.getCompany({ detail: this.loginUserData["companyId"] });
       this.$store.commit("systemConfig/setLoading", false);
     }
   },
