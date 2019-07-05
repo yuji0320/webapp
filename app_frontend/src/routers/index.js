@@ -39,6 +39,7 @@ import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
 // 調査
 import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
 import SalesByPeriod from '@/components/Pages/Investigation/Reports//Sales/SalesByPeriod.vue';
+import OpenPO from '@/components/Pages/Investigation/Reports//Sales/OpenPO.vue';
 import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
 import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
 // マスター
@@ -277,6 +278,11 @@ const router = new Router({
                       path: 'sales_by_period',
                       name: 'SalesByPeriod',
                       component: SalesByPeriod,
+                    },
+                    {
+                      path: 'open_po',
+                      name: 'OpenPO',
+                      component: OpenPO,
                     },
                     {
                       path: 'man_hour_total',

@@ -12,6 +12,9 @@ class JobOrderFilter(filters.FilterSet):
     bill_date = filters.DateFromToRangeFilter(field_name='bill_date')
     uncompleted = filters.BooleanFilter(field_name='completion_date', lookup_expr='isnull')
     unbilled = filters.BooleanFilter(field_name='bill_date', lookup_expr='isnull')
+    search_open_po = filters.CharFilter(method='open_po_filter')
+    delivery_date_isnull = filters.BooleanFilter(field_name='delivery_date', lookup_expr='isnull')
+    order_date_isnull = filters.BooleanFilter(field_name='order_date', lookup_expr='isnull')
 
     @staticmethod
     def incremental_filter(queryset, name, value):
@@ -19,9 +22,16 @@ class JobOrderFilter(filters.FilterSet):
             Q(mfg_no__icontains=value) | Q(name__icontains=value)
         )
 
+    @staticmethod
+    def open_po_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(bill_date__isnull=True) | Q(bill_date__gte=value)
+        )
+
     class Meta:
         model = JobOrder
-        fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', 'bill_date', ]
+        fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', 'bill_date',
+                  'search_open_po', 'delivery_date_isnull']
 
     order_by = filters.OrderingFilter(
         fields=(

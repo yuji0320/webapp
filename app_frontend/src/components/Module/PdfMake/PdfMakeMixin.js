@@ -30,7 +30,8 @@ export default {
         text: val, 
         margin: [50,20],
         alignment: "center",
-        fonsSize: 20
+        fontSize: 15,
+        bold: true
       }; 
     },
     // PDF用データ作成

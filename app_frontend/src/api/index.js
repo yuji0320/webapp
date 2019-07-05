@@ -6,8 +6,8 @@ import axios from 'axios';
 const axiosBase = axios;
 // const host = process.env.VUE_APP_API_BASE_URL;
 
-// const host = 'https://localhost/api/';
-const host = 'https://192.168.2.200/api/';
+const host = 'https://localhost/api/';
+// const host = 'https://192.168.2.200/api/';
 
 export default {
   async request(method, url, params) {

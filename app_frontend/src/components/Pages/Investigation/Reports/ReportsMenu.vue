@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex xs12 md6>
         <app-card noSeachBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Sales Reports</span>
@@ -14,7 +14,7 @@
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test" disabled>
+                <v-btn large block outline color="primary" :to="{ name: 'OpenPO' }">
                   Open PO
                 </v-btn>
               </v-flex>
@@ -23,7 +23,7 @@
         </app-card>
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex xs12 md6>
         <app-card noSeachBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Purchasing Reports</span>
@@ -32,22 +32,12 @@
             <v-layout row>
               <v-flex sm6 xs12>
                 <v-btn large block outline color="primary" @click="test" disabled>
-                  Purchase by Supplier Summary
+                  Purchasing Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
                 <v-btn large block outline color="primary" @click="test" disabled>
-                  Purchase by Supplier Detail
-                </v-btn>
-              </v-flex>
-              <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test" disabled>
-                  Purchase by Products Summary
-                </v-btn>
-              </v-flex>
-              <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test" disabled>
-                  Purchase by Products Detail
+                  Purchasing Detail
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -55,7 +45,7 @@
         </app-card>
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex xs12 md6>
         <app-card noSeachBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Man Hour Reports</span>
@@ -69,7 +59,7 @@
               </v-flex>
               <v-flex sm6 xs12>
                 <v-btn large block outline color="primary" @click="manHourTotal(true)">
-                  Annual Total Reports for Costing
+                  Annual Reports for Costing
                 </v-btn>
               </v-flex>
             </v-layout>

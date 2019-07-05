@@ -5,8 +5,8 @@
     <app-loading-dialog></app-loading-dialog>
 
     <app-card>
-            <!-- ヘッダー部分スロット -->
-      <span slot="card-header-title">Sales by Period</span>
+      <!-- ヘッダー部分スロット -->
+      <span slot="card-header-title">Open PO</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -21,7 +21,7 @@
         <v-btn 
           @click="print" 
           color="primary"
-          :disabled = "summaryBy === ''"
+          :disabled = "summaryList.length === 0"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -29,28 +29,17 @@
         <v-layout row wrap>
           <!-- 検索開始日 -->
           <v-flex xs12 sm6 md3>
-            <app-input-date label="Date from" v-model="date_from" appendOuterIcon="〜"></app-input-date>
-          </v-flex>
-          <!-- 検索終了日 -->
-          <v-flex xs12 sm6 md3>
-            <app-input-date label="Date to" v-model="date_to"></app-input-date>
+            <app-input-date label="Date" v-model="date"></app-input-date>
           </v-flex>
           <!-- 検索ボタン -->
           <v-flex xs12 md6>
-            <!-- 取引先別集計 -->
-            <v-btn 
-              color="primary" 
-              class="mb-2" 
-              @click="searchByCustomer"
-              :disabled = "date_from === '' || date_to === '' "
-            >Search(Sort by Customer)</v-btn>
             <!-- 年月別集計 -->
             <v-btn 
               color="primary" 
               class="mb-2" 
-              @click="searchByMonth"
-              :disabled = "date_from === '' || date_to === '' "
-            >Search(Sort by Month)</v-btn>
+              @click="search"
+              :disabled = "date === '' "
+            >Search</v-btn>
           </v-flex>
         </v-layout>
       </span>
@@ -80,6 +69,7 @@
           <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
         </template>
       </span>
+
     </app-card>
   </v-container>
 </template>
@@ -89,22 +79,19 @@ import { mapState, mapActions } from "vuex";
 import SalesReportCreatePDFMixin from "./SalesReportCreatePDFMixin.js"
 
 export default {
-  title: "Sales by Period",
-  name: "SalesByPeriod",
+  title: "Open PO",
+  name: "OpenPO",
   mixins: [SalesReportCreatePDFMixin],
   data() {
     return {
-      date_from: "",
-      date_to: "",
-      orderBy: "-completion_date",
-      summaryBy: "",
+      date: "2019-03-31",
       // テーブルヘッダーデータ
       headers: [
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
         { text: "Delivery", value: "deliveryDestinationData", nest: "abbr" },
         { text: "Customer", value: "customerData", nest: "abbr" },
-        { text: "Bill Date", value: "BillDate" },
+        { text: "Delivery Date", value: "deliveryDate" },
         { text: "Order price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"}
       ],
     };
@@ -122,53 +109,18 @@ export default {
         }
         total = Math.round( total * 100) / 100;
       }
-      return total;
+      return total.toFixed(2);
     },
-    // 取引先リスト
-    customerList() {
-      let customerList = [];
-      // リストの作成
-      if(this.jobOrders.results) {
-        // 指図書データから取引先情報の抜き出し
-        for(let i=0,d;d=this.jobOrders.results[i];i++){
-          let array = {
-            key: d.customerData.id,
-            value: d.customerData.name,
-          }
-          customerList.push(array);
-        }
-        // 重複削除
-        customerList = customerList.filter(function(v1,i1,a1){ 
-          return (a1.findIndex(function(v2){ 
-            return (v1.key===v2.key) 
-          }) === i1);
-        });
-        // 取引先別集計
-        for(var i=0,d;d=customerList[i];i++){
-          let list = this.jobOrders.results.filter(x => x.customer === d.key);
-          let total = list.reduce((p, x) => p + parseFloat(x.defaultCurrencyOrderAmount.replace(/,/g, "")), 0)
-          d.subTotal = (Math.round( total * 100) / 100).toFixed(2);
-          d.dataList = list;
-        }
-        // 名前順ソート
-        customerList.sort(function(a,b){
-            if(a.value<b.value) return -1;
-            if(a.value > b.value) return 1;
-            return 0;
-        });
-      }
-      return customerList
-    },
-    // 範囲月リスト
-    monthList(){
+    // 月別リスト
+    summaryList(){
       let monthList = [];
       // リストの作成
       if(this.jobOrders.results) {
         // 指図書データから取引先情報の抜き出し
         for(var i=0,d;d=this.jobOrders.results[i];i++){
           let array = {
-            key: d.billDate.substr(0, 7),
-            value: d.billDate.substr(0, 7),
+            key: d.deliveryDate.substr(0, 7),
+            value: d.deliveryDate.substr(0, 7),
           }
           monthList.push(array);
         }
@@ -180,7 +132,7 @@ export default {
         });
         // 年月別集計
         for(var i=0,d;d=monthList[i];i++){
-          let list = this.jobOrders.results.filter(x => x.billDate.substr(0, 7) === d.key);
+          let list = this.jobOrders.results.filter(x => x.deliveryDate.substr(0, 7) === d.key);
           let total = list.reduce((p, x) => p + parseFloat(x.defaultCurrencyOrderAmount.replace(/,/g, "")), 0)
           d.subTotal = (Math.round( total * 100) / 100).toFixed(2);
           d.dataList = list;
@@ -193,27 +145,13 @@ export default {
         });
       }
       return monthList
-    },
-    summaryList() {
-      if(this.summaryBy=="customer") {
-        return this.customerList;
-      } else {
-        return this.monthList;
-      }
     }
   },
   methods: {
     ...mapActions("jobOrderAPI", ["getJobOrders", "clearJobOrders"]),
-    // 取引先別集計
-    async searchByCustomer() {
-      this.orderBy = "customer__name";
-      this.summaryBy = "customer";
-      let res = await this.getObjects();
-    },
     // 月別集計
-    async searchByMonth() {
+    async search() {
       this.orderBy = "-completion_date";
-      this.summaryBy = "month";
       let res = await this.getObjects();
     },
     // 集計データ取得
@@ -221,8 +159,9 @@ export default {
       // 検索パラメーター
       let params = {
         company: this.loginUserData.companyId,
-        bill_date_after: this.date_from,
-        bill_date_before: this.date_to,
+        search_open_po: this.date,
+        delivery_date_isnull: false,
+        order_date_isnull:false,
         order_by: this.orderBy,
         page_size: "max"
       }
@@ -233,14 +172,13 @@ export default {
     },
     // 印刷
     print() {
-      let headerText = "Sales Summary by Period : " + this.date_from + " to " + this.date_to;
+      let headerText = "Open PO at " + this.date;
       // 子コンポーネントの印刷関数を呼び出し
       this.printPDF(this.createPdfData(headerText));
-      // console.log(this.createPdfData());
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });
-    },
+    }
   },
   created () {
     // 集計データリセット
