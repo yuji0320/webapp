@@ -57,8 +57,8 @@ const systemConfigState = {
         },
         {
           icon: 'search',
-          title: 'Prats Search',
-          url: {name: 'PartsSearch'},
+          title: 'Search',
+          url: {name: 'SearchMenu'},
         },
       ],
     },
@@ -80,14 +80,9 @@ const systemConfigState = {
           icon: 'people_outline',
           title: 'Partner master',
           url: {name: 'Partner'},
-        },
-        // {
-        //   icon: '',
-        //   title: 'Man-hour master',
-        //   url: '',
-        // },
-      ],
-    },
+        }
+      ]
+    }
   ],
   snackbar: {
     snack: '',

@@ -9,12 +9,12 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" :to="{ name: 'SalesByPeriod' }">
+                <v-btn large block outline :to="{ name: 'SalesByPeriod' }">
                   Sales by period
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" :to="{ name: 'OpenPO' }">
+                <v-btn large block outline :to="{ name: 'OpenPO' }">
                   Open PO
                 </v-btn>
               </v-flex>
@@ -31,12 +31,12 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test" disabled>
+                <v-btn large block outline @click="purchasing" disabled>
                   Purchasing Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="test" disabled>
+                <v-btn large block outline @click="purchasing" disabled>
                   Purchasing Detail
                 </v-btn>
               </v-flex>
@@ -53,12 +53,12 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="manHourTotal(false)">
+                <v-btn large block outline @click="manHourTotal(false)">
                   Monthly Total Reports
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline color="primary" @click="manHourTotal(true)">
+                <v-btn large block outline @click="manHourTotal(true)">
                   Annual Reports for Costing
                 </v-btn>
               </v-flex>
@@ -86,6 +86,9 @@ export default {
     ...mapActions("manHourAPI", ["setIsAnnual"]),
     test() {
       console.log("test");
+    },
+    purchasing() {
+      this.$router.push({ name: "PurchasingReport" });
     },
     manHourTotal(val) {
       this.setIsAnnual(val);
