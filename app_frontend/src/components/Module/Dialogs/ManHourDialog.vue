@@ -88,7 +88,7 @@
           ></app-input-date>
         </v-flex>       
 
-        {{ defaultManHour }}
+        <!-- {{ defaultManHour }} -->
 
       </v-layout>
     </span>

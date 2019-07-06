@@ -27,13 +27,15 @@ export default {
       return {
         company: this.loginUserData["companyId"],
         is_received: true,
-        is_suspense_received:true
+        is_suspense_received:true,
+        page_size: "max"
       }      
     },
     paramsSuspense() {
       return {
         company: this.loginUserData["companyId"],
         is_suspense_received: false,
+        page_size: "max"
       }      
     }
   },
