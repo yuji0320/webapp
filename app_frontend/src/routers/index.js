@@ -38,10 +38,13 @@ import ManHourMenu from '@/components/Pages/ManHour/ManHourMenu.vue';
 import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
 // 調査
 import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
-import SalesByPeriod from '@/components/Pages/Investigation/Reports//Sales/SalesByPeriod.vue';
+import SalesByPeriod from '@/components/Pages/Investigation/Reports/Sales/SalesByPeriod.vue';
 import OpenPO from '@/components/Pages/Investigation/Reports//Sales/OpenPO.vue';
+import PurchasingReport from '@/components/Pages/Investigation/Reports/Purchasing/PurchasingReport.vue';
 import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
-import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
+import SearchMenu from '@/components/Pages/Investigation/Search/SearchMenu.vue';
+import SearchBOM from '@/components/Pages/Investigation/Search/SearchBOM.vue';
+// import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
 // マスター
 import Company from '@/components/Pages/Master/Company.vue';
 import Staff from '@/components/Pages/Master/Staff.vue';
@@ -260,9 +263,21 @@ const router = new Router({
               component: Root,
               children: [
                 {
-                  path: 'parts_search',
-                  name: 'PartsSearch',
-                  component: PartsSearch,
+                  path: 'search',
+                  name: 'Search',
+                  component: Root,
+                  children: [
+                    {
+                      path: 'menu',
+                      name: 'SearchMenu',
+                      component: SearchMenu,
+                    },               
+                    {
+                      path: 'search_bom',
+                      name: 'SearchBOM',
+                      component: SearchBOM,
+                    },
+                  ]
                 },
                 {
                   path: 'reports',
@@ -283,6 +298,11 @@ const router = new Router({
                       path: 'open_po',
                       name: 'OpenPO',
                       component: OpenPO,
+                    },
+                    {
+                      path: 'purchasing_report',
+                      name: 'PurchasingReport',
+                      component: PurchasingReport,
                     },
                     {
                       path: 'man_hour_total',
