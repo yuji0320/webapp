@@ -44,7 +44,9 @@ import PurchasingReport from '@/components/Pages/Investigation/Reports/Purchasin
 import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
 import SearchMenu from '@/components/Pages/Investigation/Search/SearchMenu.vue';
 import SearchBOM from '@/components/Pages/Investigation/Search/SearchBOM.vue';
-// import PartsSearch from '@/components/Pages/Investigation/PartsSearch.vue';
+import SearchOrder from '@/components/Pages/Investigation/Search/SearchOrder.vue';
+import SearchReceived from '@/components/Pages/Investigation/Search/SearchReceived.vue';
+import SearchCost from '@/components/Pages/Investigation/Search/SearchCost.vue';
 // マスター
 import Company from '@/components/Pages/Master/Company.vue';
 import Staff from '@/components/Pages/Master/Staff.vue';
@@ -276,6 +278,21 @@ const router = new Router({
                       path: 'search_bom',
                       name: 'SearchBOM',
                       component: SearchBOM,
+                    },
+                    {
+                      path: 'search_order',
+                      name: 'SearchOrder',
+                      component: SearchOrder,
+                    },
+                    {
+                      path: 'search_received',
+                      name: 'SearchReceived',
+                      component: SearchReceived,
+                    },
+                    {
+                      path: 'search_cost',
+                      name: 'SearchCost',
+                      component: SearchCost,
                     },
                   ]
                 },

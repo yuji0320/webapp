@@ -7,6 +7,7 @@
     @submit-form="submitBillOfMaterial"
     @set-default="setDefault"
     ref="dialog"
+    :editDisable="editDisable"
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
@@ -32,6 +33,7 @@
             label="Part Name*"
             v-model="billOfMaterial.name"
             :error-messages="responseError.name"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
 
@@ -42,6 +44,7 @@
             label="Drawing Number"
             v-model="billOfMaterial.drawingNumber"
             :error-messages="responseError.drawingNumber"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 材質 -->
@@ -50,6 +53,7 @@
             label="Material"
             v-model="billOfMaterial.material"
             :error-messages="responseError.material"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 表面処理 -->
@@ -58,6 +62,7 @@
             label="Surface treatment"
             v-model="billOfMaterial.surfaceTreatment"
             :error-messages="responseError.surfaceTreatment"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- </template> -->
@@ -73,6 +78,7 @@
               filter="manufacturer"
               :errorMessages="responseError.manufacturer"
               ref="manufacturer"
+              :disabled="editDisable"
             ></app-incremental-model-search>
           </v-flex>
           <!-- 規格・寸法 -->
@@ -81,6 +87,7 @@
               label="Standard/Form"
               v-model="billOfMaterial.standard"
               :error-messages="responseError.standard"
+              :disabled="editDisable"
             ></v-text-field>
           </v-flex>
           <!-- ユニット番号 -->
@@ -89,6 +96,7 @@
               label="Unit Number"
               v-model="billOfMaterial.unitNumber"
               :error-messages="responseError.unitNumber"
+              :disabled="editDisable"
             ></v-text-field>
           </v-flex>
         <!-- </template> -->
@@ -100,6 +108,7 @@
             v-model="billOfMaterial.amount"
             class="right-input"
             :error-messages="responseError.amount"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 単位選択 -->
@@ -111,6 +120,7 @@
             searchType="unitType"
             :errorMessages="responseError.unit"
             ref="unitType"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- 在庫充当個数 -->
@@ -120,6 +130,7 @@
             v-model="billOfMaterial.stockAppropriation"
             class="right-input"
             :error-messages="responseError.stockAppropriation"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex> 
         <v-flex xs12 md8>
@@ -131,6 +142,7 @@
             v-model="billOfMaterial.unitPrice"
             :error-messages="responseError.unitPrice"
             class="right-input"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 通貨 -->
@@ -142,6 +154,7 @@
           searchType="currency"
           :errorMessages="responseError.currency"
           ref="currency"
+          :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- レート -->
@@ -154,6 +167,7 @@
             hint="1 Order currency = "
             :persistent-hint="true"
             class="right-input"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 希望納期 -->
@@ -162,6 +176,7 @@
             label="Desired Delivery Date"
             v-model="billOfMaterial.desiredDeliveryDate"
             :errorMessages="responseError.desiredDeliveryDate"
+            :disabled="editDisable"
           ></app-input-date >
         </v-flex>       
         <!-- 支給品Boolern -->
@@ -170,6 +185,7 @@
             label="is Customer Supplied"
             v-model="billOfMaterial.isCustomerSupplied"
             :errorMessages="responseError.isCustomerSupplied"
+            :disabled="editDisable"
           ></v-checkbox>
         </v-flex>
         <!-- 仕損費種別 -->
@@ -181,6 +197,7 @@
           searchType="failure"
           :errorMessages="responseError.failure"
           ref="failure"
+          :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
       </v-layout>
@@ -194,7 +211,8 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   props: {
-    hideButtons: { required: false }
+    hideButtons: { required: false },
+    editDisable: { required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

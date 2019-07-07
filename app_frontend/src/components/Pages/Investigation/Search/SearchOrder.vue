@@ -1,43 +1,20 @@
 <template>
   <v-container fluid grid-list-lg>
-    <!-- 確認ダイアログ -->
-    <app-confirm ref="confirm"></app-confirm>
-
     <app-card>
-      <!-- ヘッダー部分スロット -->
-      <span slot="card-header-icon"><v-icon>send</v-icon></span>
-      <span slot="card-header-title">Order {{ switchParams.title }}</span>
+      <span slot="card-header-icon"><v-icon>search</v-icon></span>
+      <span slot="card-header-title">{{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
-        <v-btn @click="backToMenu" >
+        <v-btn @click="backToMenu">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-
-        <!-- 一括編集ボタン -->
-        <v-btn 
-          @click="multiUpdate" 
-          outline 
-          color="primary"
-        >
-          Multi Update
-        </v-btn>       
       </span>
 
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="switchParams.headers"
-          :items="makingOrders.results"
-          :checkbox="true"
-          @edit-item="editMakingOrder"
-          @double-clicked="editMakingOrder"
-          @delete-item="deleteMakingOrderData"
-          ref="data_table"
-        >
-        </app-data-table>
-      </span>
+      <div slot="card-title-text">
+        <p>* Green is already Ordered.</p>
+      </div>
 
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
@@ -53,54 +30,47 @@
         </v-layout>
       </div>
 
+      <span slot="card-content">
+        <!-- テーブル表示 -->
+        <app-data-table
+          :headers="switchParams.headers"
+          :items="makingOrders.results"
+          :checkbox="true"
+          :editDisabled="true"
+          :viewIcon="true"
+          @view-item="viewMakingOrder"
+          @double-clicked="viewMakingOrder"
+          ref="data_table"
+        >
+        </app-data-table>
+      </span>
+
       <!-- ダイアログ関係スロット -->
       <span slot="card-dialog">
         <!-- 発注ファイルダイアログ -->
-        <app-order-dialog @response-function="responseFunction" :showAdd="!hasMFGNo" ref="order_dialog">
+        <app-order-dialog :showAdd="false" ref="order_dialog" :editDisable="true">
           <span d-inline-flex slot="edit-bom">
-            <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Bill of Material</v-btn>
+            <v-btn color="primary" dark @click="viewBillOfMaterial" v-if="hasMFGNo">View Bill of Material</v-btn>
           </span>
         </app-order-dialog>
         <!-- 部品表ダイアログ -->
-        <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
+        <app-bom-dialog ref="bom_dialog" :hideButtons="true" :editDisable="true"></app-bom-dialog>
       </span>
-      
-    </app-card>
 
-    <multi-update @response-function="responseFunction" ref="multi_update"></multi-update>
+    </app-card>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue"
-
 export default {
-  title: "Making Order",
-  name: "MakingOrder",
-  components: {
-    "multi-update": MakingOrderMultiUpdate
-  },
-  data() {
+  title: "Search Order",
+  name: "SearchOrder",
+  data () {
     return {
       orderBy: "-created_at",
-      // headers: [
-      //   { text: "", value: "checkbox" },
-      //   { text: "No", value: "number" },
-      //   { text: "Part Name", value: "name" },
-      //   { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
-      //   { text: "Standard/Form", value: "standard" },
-      //   { text: "Unit number", value: "unit_number" },
-      //   { text: "Supplier", value: "supplierData" , nest: "abbr"},
-      //   { text: "Amount", value: "amount", class: "text-xs-right" },
-      //   { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
-      //   { text: "Delivery", value: "desiredDeliveryDate" },
-      //   { text: "Action", value: "action", class: "text-xs-center" }
-      // ],
       // テーブルヘッダーデータ
       defaultHeadersTop: [
-        { text: "", value: "checkbox" },
-        { text: "No", value: "number" },
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
@@ -108,13 +78,14 @@ export default {
         { text: "Amount", value: "amount", class: "text-xs-right" },
         { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
         { text: "Delivery", value: "desiredDeliveryDate" },
+        { text: "Ordered Date", value: "orderedDate" },
         { text: "Action", value: "action", class: "text-xs-center" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
         { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
         { text: "Standard/Form", value: "standard" },
-        { text: "Unit number", value: "unitNumber" }
+        { text: "Unit number", value: "unit_number" }
       ],
       // 加工部品テーブルヘッダー
       processedHeaders: [
@@ -144,12 +115,12 @@ export default {
     },
     // ページごとの設定
     switchParams: function () {
-      let title = "";
+      let title = "Search Order";
       let headers = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
       // 工事番号有無の確認
       if (this.hasMFGNo) {
         // 線品情報の追加
-        title = " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
+        title += " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
         // 加工部品かどうか
         if (this.isProcessed) {
           title += " (Processed Parts)";
@@ -169,7 +140,7 @@ export default {
         }
       } else {
         // 工事番号なしの場合
-        title = " without MFG No";
+        title += " without MFG No";
         return {
           params: {
             company: this.loginUserData["companyId"],
@@ -183,69 +154,33 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemConfig", ["showSnackbar"]),
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("billOfMaterialAPI", ["setBillOfMaterial"]),
-    ...mapActions("makingOrderAPI", ["getMakingOrders", "setMakingOrder", "setMakingOrders", "postMakingOrder", "deleteMakingOrder", "setTableSelected"]),
-    // 一括編集機能
-    multiUpdate() {
-      this.setTableSelected(this.$refs.data_table.selected);
-      // console.log(test);
-      this.$refs.multi_update.openDialog();
-    },
+    ...mapActions("makingOrderAPI", ["getMakingOrders", "setMakingOrder", "setMakingOrders"]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 発注ファイル編集
-    editMakingOrder: function (val) {
+    viewMakingOrder: function (val) {
       this.setMakingOrder(val);
       this.$refs.order_dialog.editMakingOrder();
     },
-    editBillOfMaterial() {
+    viewBillOfMaterial() {
       this.setBillOfMaterial(this.makingOrder.billOfMaterial);
       this.$refs.bom_dialog.editBillOfMaterial();
     },
-    // 処理結果統合フォーム
-    responseFunction(val) {
-      // リストをリロード
-      this.getList({ params: this.switchParams.params });
-      // Snackbar表示
-      this.showSnackbar(val.snack);
-    },
-    // 発注ファイル削除
-    async deleteMakingOrderData(val) {
-      let res = {};
-      // 削除確認
-      if (
-        await this.$refs.confirm.open(
-          "Delete",
-          "Are you sure delete this data?",
-          { color: "red" }
-        )
-      ) {
-        // Yesの場合は削除処理
-        res = await this.deleteMakingOrder(val);
-      } else {
-        // Noの場合はスナックバーにキャンセルの旨を表示
-        res.snack = { snack: "Delete is cancelled" };
-      }
-      // リストをリロード
-      this.getMakingOrders({ params: this.switchParams.params });
-      // Snackbar表示
-      this.showSnackbar(res.snack.snack, res.snack.color);
-    },
     // メニューに戻る
     backToMenu() {
-      this.$router.push({ name: "MakingOrderMenu" });
-    },
+      this.$router.push({ name: "SearchMenu" });
+    }
   },
-  created() {
+  created () {
     this.setMakingOrders({});
     if(this.jobOrderID) {
       this.getJobOrder(this.jobOrderID);
-    }
+    } 
   }
 }
 </script>

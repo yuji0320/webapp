@@ -2,16 +2,21 @@
   <v-container fluid grid-list-lg>
 
     <!-- 読み込み中ダイアログコンポーネント -->
-    <!-- <app-loading-dialog></app-loading-dialog> -->
+    <app-loading-dialog></app-loading-dialog>
 
     <v-card>
       <!-- Cardヘッダー -->
       <v-toolbar card>
         <v-icon>search</v-icon>
         <v-toolbar-title class="font-weight-light">
-          Parts Search
+          Search Parts Cost
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn @click="backToMenu">
+          <v-icon>reply</v-icon>
+          Back to Menu
+        </v-btn>
+
       </v-toolbar>
 
       <!-- 検索フォーム -->
@@ -161,6 +166,10 @@ export default {
     searchParts() {
       // console.log(this.params);
       this.getList({params:this.params})
+    },
+    // メニューに戻る
+    backToMenu() {
+      this.$router.push({ name: "SearchMenu" });
     }
   },
   created() {

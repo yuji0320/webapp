@@ -23,7 +23,7 @@
       <v-divider></v-divider>
       <!-- フォーム操作 -->
       <v-card-actions>
-        <v-btn color="darken-1" outline @click="dialog = false">Cancel</v-btn>
+        <v-btn color="darken-1" outline @click="dialog = false" v-show="!editDisable">Cancel</v-btn>
 
         <v-spacer></v-spacer>
 
@@ -45,6 +45,7 @@
           type="submit"
           outline
           @click="submitForm"
+          v-show="!editDisable"
         >Save</v-btn>
         
       </v-card-actions>
@@ -70,6 +71,7 @@ export default {
     hideButtons: { required: false },
     dialogWidth: { required: false },
     parentTitle: { required: false },
+    editDisable: { required: false },
   },
   computed: {
     openButton() {
@@ -82,6 +84,7 @@ export default {
       // 親から指定があればフォームタイトルを変更する
       if(this.parentTitle) { title = title + " (" + this.parentTitle + ")" }
       if(this.dialogTitle) { title = this.dialogTitle; };
+      if(this.editDisable) { title = "Detail"; };
       return title;
     },
     width() {

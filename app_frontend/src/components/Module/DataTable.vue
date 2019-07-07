@@ -94,6 +94,7 @@
                 class="mr-2"
                 @click="editItem(props.item)"
                 :disabled="disabledActions(props.item[completeColumn])"
+                v-show="!editDisabled"
               >
                 edit
               </v-icon>
@@ -103,6 +104,7 @@
                 class="mr-2"
                 @click="deleteItem(props.item)"
                 :disabled="disabledActions(props.item[completeColumn])"
+                v-show="!editDisabled"
               >
                 delete
               </v-icon>
@@ -142,6 +144,7 @@ export default {
     checkbox: { required: false },
     selectAll: { required: false },
     completeDisabled: { required: false },
+    editDisabled: { required: false },
   },
   computed: {
     addClass() {

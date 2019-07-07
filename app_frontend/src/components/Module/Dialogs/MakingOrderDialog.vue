@@ -8,6 +8,7 @@
     @clear-form="clearMakingOrder"
     @set-default="setDefault"
     ref="dialog"
+    :editDisable="editDisable"
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
@@ -48,6 +49,7 @@
             label="Part Name*"
             v-model="makingOrder.name"
             :error-messages="responseError.name"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
 
@@ -58,6 +60,7 @@
             label="Drawing Number"
             v-model="makingOrder.drawingNumber"
             :error-messages="responseError.drawingNumber"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 材質 -->
@@ -66,6 +69,7 @@
             label="Material"
             v-model="makingOrder.material"
             :error-messages="responseError.material"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 表面処理 -->
@@ -74,6 +78,7 @@
             label="Surface treatment"
             v-model="makingOrder.surfaceTreatment"
             :error-messages="responseError.surfaceTreatment"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
 
@@ -88,6 +93,7 @@
             filter="manufacturer"
             :errorMessages="responseError.manufacturer"
             ref="manufacturer"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- 規格・寸法 -->
@@ -96,6 +102,7 @@
             label="Standard/Form"
             v-model="makingOrder.standard"
             :error-messages="responseError.standard"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- ユニット番号 -->
@@ -104,6 +111,7 @@
             label="Unit Number"
             v-model="makingOrder.unitNumber"
             :error-messages="responseError.unitNumber"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
 
@@ -114,6 +122,7 @@
             v-model="makingOrder.amount"
             class="right-input"
             :error-messages="responseError.amount"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 単位選択 -->
@@ -125,6 +134,7 @@
             searchType="unitType"
             :errorMessages="responseError.unit"
             ref="unitType"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- 金額 -->
@@ -135,6 +145,7 @@
             :error-messages="responseError.unitPrice"
             class="right-input"
             @blur="checkPrice"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 通貨 -->
@@ -146,6 +157,7 @@
           searchType="currency"
           :errorMessages="responseError.currency"
           ref="currency"
+          :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- レート -->
@@ -158,6 +170,7 @@
             hint="1 Order currency = "
             :persistent-hint="true"
             class="right-input"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 仕入先選択 -->
@@ -170,6 +183,7 @@
             filter="supplier"
             :errorMessages="responseError.supplier"
             ref="supplier"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- 希望納期 -->
@@ -178,6 +192,7 @@
             label="Desired Delivery Date"
             v-model="makingOrder.desiredDeliveryDate"
             :errorMessages="responseError.desiredDeliveryDate"
+            :disabled="editDisable"
           ></app-input-date>
         </v-flex>       
       </v-layout>
@@ -197,6 +212,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   props: {
     showAdd: { required: false },
+    editDisable: { required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

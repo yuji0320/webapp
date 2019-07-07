@@ -125,26 +125,25 @@
               <v-card-text>
                 <v-layout row>
                   <v-flex xs12>
+                    <app-incremental-model-search
+                      label="Job Order"
+                      orderBy="mfg_no"
+                      v-model="mfgNoPrint"
+                      searchType="jobOrder"
+                      errorMessages=""
+                      @clear-item="clearJobOrderIDPrint"
+                    ></app-incremental-model-search>
 
-                      <app-incremental-model-search
-                        label="Job Order"
-                        orderBy="mfg_no"
-                        v-model="mfgNoPrint"
-                        searchType="jobOrder"
-                        errorMessages=""
-                        @clear-item="clearJobOrderIDPrint"
-                      ></app-incremental-model-search>
-
-                      <!-- 仕入先選択 -->
-                      <app-incremental-model-search
-                        label="Supplier"
-                        orderBy="name"
-                        v-model="supplier"
-                        searchType="partner"
-                        filter="supplier"
-                        ref="supplier"
-                        :errorMessages="supplier.err"
-                      ></app-incremental-model-search>
+                    <!-- 仕入先選択 -->
+                    <app-incremental-model-search
+                      label="Supplier"
+                      orderBy="name"
+                      v-model="supplier"
+                      searchType="partner"
+                      filter="supplier"
+                      ref="supplier"
+                      :errorMessages="supplier.err"
+                    ></app-incremental-model-search>
                   </v-flex>
 
                   <!-- 発注書印刷 -->
