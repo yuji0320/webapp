@@ -77,6 +77,51 @@
         <app-card noSeachBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
           <span slot="card-header-title">Search Received</span>
+          <span slot="card-content">
+            <v-layout row wrap>
+              <!-- 検索フォーム -->
+              <v-flex xs12>
+                <app-incremental-model-search
+                        label="Job Order"
+                        orderBy="-mfg_no"
+                        v-model="mfgNoReceived"
+                        searchType="jobOrder"
+                        errorMessages=""
+                        @clear-item="clearJobOrderIDReceived"
+                ></app-incremental-model-search>
+              </v-flex>
+              <v-flex xs12>
+                <app-incremental-model-search
+                        label="Supplier"
+                        orderBy="name"
+                        v-model="supplierReceived"
+                        searchType="partner"
+                        filter="supplier"
+                        ref="supplier"
+                        @clear-item="clearSupplierIDReceived"
+                ></app-incremental-model-search>
+              </v-flex>
+              <!--発注番号検索-->
+              <v-flex xs12>
+                <v-layout>
+                  <v-flex>
+                    <v-text-field label="Order Number" v-model="numberReceived"></v-text-field>
+                  </v-flex>
+                  <v-flex class="pt-3">
+                    <v-btn @click="clearOrderNumberReceived">Clear</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+
+              <v-flex xs12 sm6>
+                <v-btn large block outline @click="searchReceived" :disabled = "supplierReceived === '' && numberReceived === ''">
+                  Search Received
+                </v-btn>
+              </v-flex>
+
+
+            </v-layout>
+          </span>
         </app-card>
       </v-flex>
 
@@ -112,12 +157,15 @@ export default {
       mfgNoOrder: "",
       // supplierOrder: "",
       // orderNumberOrder: "",
+      mfgNoReceived: "",
+      supplierReceived: "",
+      numberReceived: ""
     }
   },
   computed: {
     ...mapState("billOfMaterialAPI", { jobOrderIDBOM: "jobOrderID"}),
     ...mapState("makingOrderAPI", { jobOrderIDOrder: "jobOrderID", isProcessedOrder: "isProcessed", supplierIDOrder: "supplierID"}),
-
+    ...mapState("receivingProcessAPI", { jobOrderIDReceived: "jobOrderID", orderNumberReceived: "orderNumber", supplierIDReceived: "supplierID"}),
   },
   methods: {
     ...mapActions("billOfMaterialAPI", 
@@ -125,6 +173,9 @@ export default {
     ),
     ...mapActions("makingOrderAPI", 
       { setJobOrderIDOrder:"setJobOrderID", setIsProcessedOrder: "setIsProcessed", setSupplierIDOrder: "setSupplierID"}
+    ),
+    ...mapActions("receivingProcessAPI", 
+      { setJobOrderIDReceived:"setJobOrderID", setOrderNumberReceived: "setOrderNumber", setSupplierIDReceived: "setSupplierID"}
     ),
     clearJobOrderIDBOM() {
       this.mfgNoBOM = "";
@@ -150,14 +201,30 @@ export default {
       this.setJobOrderIDOrder("");
       this.$router.push({ name: "SearchOrder" });
     },
+    clearJobOrderIDReceived() {},
+    clearSupplierIDReceived() {},
+    clearOrderNumberReceived() {
+      this.numberReceived = "";
+    },
+    searchReceived() {
+      this.setJobOrderIDReceived(this.mfgNoReceived);
+      this.setOrderNumberReceived(this.numberReceived);
+      this.setSupplierIDReceived(this.supplierReceived);
+      // console.log(this.mfgNoReceived);
+      // console.log(this.numberReceived);
+      // console.log(this.supplierReceived);
+      this.$router.push({ name: "SearchReceived" });
+    },
     searchCost() {
       this.$router.push({ name: "SearchCost" });
     }
-
   },
   created () {
     this.mfgNoBOM = this.jobOrderIDBOM;
     this.mfgNoOrder = this.jobOrderIDOrder;
+    this.mfgNoReceived = this.jobOrderIDReceived;
+    this.numberReceived = this.orderNumberReceived;
+    this.supplierReceived = this.supplierIDReceived;
   }
 }
 </script>

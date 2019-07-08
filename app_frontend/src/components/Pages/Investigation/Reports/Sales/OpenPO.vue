@@ -94,6 +94,7 @@ export default {
         { text: "Delivery Date", value: "deliveryDate" },
         { text: "Order price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"}
       ],
+      orderBy: "delivery_date"
     };
   },
   computed: {

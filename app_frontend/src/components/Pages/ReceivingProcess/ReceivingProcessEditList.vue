@@ -52,7 +52,7 @@
     <app-received-dialog @response-function="responseFunction" ref="receive_dialog">
       <span slot="edit-order" d-inline-flex>
         <v-btn color="primary" dark @click="editMakingOrder">Edit Order File</v-btn>
-        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit BOM</v-btn>
       </span>
     </app-received-dialog>
 

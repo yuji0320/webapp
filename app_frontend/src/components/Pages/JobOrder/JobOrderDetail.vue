@@ -142,16 +142,111 @@
                   <td class="text-right">{{ tableData[16][5].text }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center"><strong>{{ tableData[17][0].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[17][3].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[17][4].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[17][5].text }}</strong></td>
+                  <td class="text-center">{{ tableData[17][0].text }}</td>
+                  <td class="text-right">{{ tableData[17][3].text }}</td>
+                  <td class="text-right">{{ tableData[17][4].text }}</td>
+                  <td class="text-right">{{ tableData[17][5].text }}</td>
+                </tr>
+                <tr>
+                  <td class="text-center">{{ tableData[18][0].text }}</td>
+                  <td class="text-right">{{ tableData[18][3].text }}</td>
+                  <td class="text-right">{{ tableData[18][4].text }}</td>
+                  <td class="text-right">{{ tableData[18][5].text }}</td>
+                </tr>
+                <tr>
+                  <td class="text-center"><strong>{{ tableData[19][0].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[19][3].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[19][4].text }}</strong></td>
+                  <td class="text-right"><strong>{{ tableData[19][5].text }}</strong></td>
                 </tr>
               </tbody>
             </table>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td class="text-center" style="width : 450px !important;"></td>
+                  <td class="text-center" style="width : 50px !important;">Hour</td>
+                  <td class="text-center" style="width : 150px !important;">Budget(予算)</td>
+                  <td class="text-center" style="width : 50px !important;">Hour</td>
+                  <td class="text-center" style="width : 150px !important;">Results(実績)</td>
+                  <td class="text-center" style="width : 50px !important;">Hour</td>
+                  <td class="text-center" style="width : 150px !important;">Failure(仕損)</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center">①mechanical design costs(機構設計)</td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                </tr>
+                <tr>
+                  <td class="text-center">①mechanical design costs(機構設計)</td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                </tr>
+                <tr>
+                  <td class="text-center">①mechanical design costs(機構設計)</td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                </tr>
+                <tr>
+                  <td class="text-center">①mechanical design costs(機構設計)</td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                </tr>
+                <tr>
+                  <td class="text-center">①mechanical design costs(機構設計)</td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-center" style="width : 400px !important;">Manufacturing costs(製造原価)</td>
+                <td class="text-right" style="width : 200px !important;"></td>
+                <td class="text-right" style="width : 200px !important;"></td>
+                <td class="text-right" style="width : 200px !important;"></td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Profit(利益)</strong></td>
+                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong></strong></td>
+                <td class="text-center"><strong>Failure Rate (仕損率)</strong></td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Profit percentage(利益率)</strong></td>
+                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong></strong></td>
+              </tr>
+            </table>
+
+
+
         </v-container>
       </v-card-text>
-
       <!-- Cardフッター -->
       <v-footer 
         card
@@ -178,13 +273,7 @@
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["expenseCategories"]),
-    ...mapState("jobOrderAPI", [
-      "responseError",
-      "mfgNo",
-      "jobOrders",
-      "jobOrder",
-      "jobOrderStatus"
-    ]),
+    ...mapState("jobOrderAPI", ["responseError","mfgNo","jobOrders","jobOrder","jobOrderStatus"]),
     ...mapState("billOfMaterialAPI", ["billOfMaterials"]),
     params() {
       return {
@@ -291,19 +380,22 @@
         let commercialPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
         let electricalPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
         let processedPartsBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
+        let outsourcingMechanicalDesignBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
+        let outsourcingElectricalDesignBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
+        let outsourcingOtherBudget = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
         let commercialPartsResult = "";
         let processedPartsResult = "";
         let electricalPartsResult = "";
-        let outsourcingMechanicalDesignBudget = "";
-        let outsourcingElectricalDesignBudget = "";
-        let outsourcingOtherBudget = "";
+        let outsourcingMechanicalDesignResult = "";
+        let outsourcingElectricalDesignResult = "";
+        let outsourcingOtherResult = "";
         if(this.jobOrder) {
           commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
-          processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
           electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
-          outsourcingMechanicalDesignBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
-          outsourcingElectricalDesignBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
-          outsourcingOtherBudget = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+          processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
+          outsourcingMechanicalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[3].toFixed(2));
+          outsourcingElectricalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[4].toFixed(2));
+          outsourcingOtherResult = defaultDisplay + this.moneyComma(this.directCosts.results[5].toFixed(2));
         }
         let directCostBudget = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
         let directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
@@ -373,7 +465,7 @@
             {text: this.jobOrder["notes"], colSpan: 5},{},{},{}, {}
           ],
           [
-            {text:"", alignment:"right", colSpan: 3},{},{},
+            {text:"Direct Cost", alignment:"center", colSpan: 3},{},{},
             {text: "Budget", alignment:"center"},
             {text: "Results", alignment:"center"},
             {text: "Failure", alignment:"center"},
@@ -394,6 +486,24 @@
             {text:"Processed parts costs	", alignment:"center", colSpan: 3},{},{},
             {text: processedPartsBudget, alignment:"right"},
             {text: processedPartsResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Outsourcing Mechanical Design Costs	", alignment:"center", colSpan: 3},{},{},
+            {text: outsourcingMechanicalDesignBudget, alignment:"right"},
+            {text: outsourcingMechanicalDesignResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Outsourcing Electrical Design Costs	", alignment:"center", colSpan: 3},{},{},
+            {text: outsourcingElectricalDesignBudget, alignment:"right"},
+            {text: outsourcingElectricalDesignResult, alignment:"right"},
+            {text: "", alignment:"right"},
+          ],
+          [
+            {text:"Outsourcing Other Costs	", alignment:"center", colSpan: 3},{},{},
+            {text: outsourcingOtherBudget, alignment:"right"},
+            {text: outsourcingOtherResult, alignment:"right"},
             {text: "", alignment:"right"},
           ],
           [
@@ -458,7 +568,7 @@
             headerRows: 0,
             widths: ["*", "*", "*", "*", "*", "*"],
             heights: 190,
-            body: this.tableData
+            body: this.tableData,
           },
           layout: {
             paddingLeft: function(i, node) { return 5; },
@@ -475,12 +585,12 @@
             text: headerText, 
             margin: [50,20],
             alignment: "center",
-            fonsSize: 20
+            fontSize: 20
           };
         },
         // データ表示部分
         content: [
-          tableData
+          tableData,
         ],
         // 印刷プロパティ
         pageSize: 'LETTER',
@@ -491,7 +601,7 @@
         },
         styles: {
           tableStyle: {
-            fontSize: 11,
+            fontSize: 9,
             margin: [ 0, 0, 0, 0]
           }
         },

@@ -82,9 +82,12 @@ export default {
     formTitle() {
       let title = this.editedIndex === -1 ? "New Item" : "Edit Item";
       // 親から指定があればフォームタイトルを変更する
-      if(this.parentTitle) { title = title + " (" + this.parentTitle + ")" }
+      if(this.parentTitle) { 
+        if(this.editDisable) { title = "Detail"; };
+        title = title + " (" + this.parentTitle + ")" 
+      }
       if(this.dialogTitle) { title = this.dialogTitle; };
-      if(this.editDisable) { title = "Detail"; };
+      
       return title;
     },
     width() {

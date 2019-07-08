@@ -6,6 +6,7 @@
     dialogWidth="600px"
     @submit-form="submitReceivingProcess"
     ref="dialog"
+    :editDisable="editDisable"
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
@@ -77,6 +78,7 @@
             v-model="receivingProcess.amount"
             class="right-input"
             :error-messages="responseError.amount"
+            :disabled="editDisable"
           ></v-text-field>
         </v-flex>
         <!-- 単位選択 -->
@@ -88,6 +90,7 @@
             searchType="unitType"
             :errorMessages="responseError.unit"
             ref="unitType"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- 金額 -->
@@ -98,17 +101,19 @@
             :error-messages="responseError.unitPrice"
             class="right-input"
             @blur="checkPrice"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 通貨 -->
         <v-flex xs12 md8>
           <app-incremental-model-search
-          label="Currency"
-          orderBy="id"
-          v-model="receivingProcess.currency"
-          searchType="currency"
-          :errorMessages="responseError.currency"
-          ref="currency"
+            label="Currency"
+            orderBy="id"
+            v-model="receivingProcess.currency"
+            searchType="currency"
+            :errorMessages="responseError.currency"
+            ref="currency"
+            :disabled="editDisable"
           ></app-incremental-model-search>
         </v-flex>
         <!-- レート -->
@@ -121,6 +126,7 @@
             hint="1 Order currency = "
             :persistent-hint="true"
             class="right-input"
+            :disabled="editDisable"
           ></v-text-field >
         </v-flex>
         <!-- 希望納期 -->
@@ -129,6 +135,7 @@
             label="Suspense Received Date"
             v-model="receivingProcess['suspenseReceivedDate']"
             :errorMessages="responseError['suspenseReceivedDate']"
+            :disabled="editDisable"
           ></app-input-date>
         </v-flex>
         <!-- 仕入日 -->
@@ -137,6 +144,7 @@
             label="Received Date"
             v-model="receivingProcess['receivedDate']"
             :errorMessages="responseError['receivedDate']"
+            :disabled="editDisable"
           ></app-input-date>
         </v-flex>   
       </v-layout>
@@ -160,6 +168,9 @@ export default {
       supplier: "",
       partName: ""
     }
+  },
+  props: {
+    editDisable: { required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

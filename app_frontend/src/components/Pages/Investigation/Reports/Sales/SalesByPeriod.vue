@@ -104,7 +104,7 @@ export default {
         { text: "Product Name", value: "name" },
         { text: "Delivery", value: "deliveryDestinationData", nest: "abbr" },
         { text: "Customer", value: "customerData", nest: "abbr" },
-        { text: "Bill Date", value: "BillDate" },
+        { text: "Bill Date", value: "billDate" },
         { text: "Order price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"}
       ],
     };

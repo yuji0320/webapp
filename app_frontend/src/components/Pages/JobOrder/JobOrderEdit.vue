@@ -132,7 +132,7 @@
             <!-- 工事完了日 -->
             <v-flex xs4>
               <app-input-date 
-                label="Completion Date"
+                label="Bill Date"
                 v-model="jobOrder.billDate"
                 :errorMessages="responseError.billDate"
               ></app-input-date >
@@ -194,10 +194,13 @@
                 :error-messages="responseError.relatedPartyMfgNo"
               ></v-text-field>
             </v-flex>
+            <v-flex xs12>
+              <h3>Direct Cost Budget</h3>
+            </v-flex>
             <!-- 市販部品予算 -->
             <v-flex xs4>
               <v-text-field 
-                label="Commercial parts budget"
+                label="Commercial Parts Budget"
                 v-model="jobOrder.commercialPartsBudget"
                 :error-messages="responseError.commercialPartsBudget"
                 class="right-input"
@@ -207,7 +210,7 @@
             <!-- 電気部品予算 -->
             <v-flex xs4>
               <v-text-field 
-                label="Electrical parts budget"
+                label="Electrical Parts Budget"
                 v-model="jobOrder.electricalPartsBudget"
                 :error-messages="responseError.electricalPartsBudget"
                 class="right-input"
@@ -217,13 +220,97 @@
             <!-- 加工部品予算 -->
             <v-flex xs4>
               <v-text-field 
-                label="Processed parts budget"
+                label="Processed Parts Budget"
                 v-model="jobOrder.processedPartsBudget"
                 :error-messages="responseError.processedPartsBudget"
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
             </v-flex>
+            <!-- 外注機構設計予算 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Outsourcing Mechanical Design Budget"
+                v-model="jobOrder.outsourcingMechanicalDesignBudget"
+                :error-messages="responseError.outsourcingMechanicalDesignBudget"
+                class="right-input"
+                :suffix="loginUserData.defaultCurrencyCode"
+              ></v-text-field >
+            </v-flex>
+            <!-- 外注電気設計予算 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Outsourcing Electrical DesignBudget"
+                v-model="jobOrder.outsourcingElectricalDesignBudget"
+                :error-messages="responseError.outsourcingElectricalDesignBudget"
+                class="right-input"
+                :suffix="loginUserData.defaultCurrencyCode"
+              ></v-text-field >
+            </v-flex>
+            <!-- 外注その他予算 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Outsourcing Other Budget"
+                v-model="jobOrder.outsourcingOtherBudget"
+                :error-messages="responseError.outsourcingOtherBudget"
+                class="right-input"
+                :suffix="loginUserData.defaultCurrencyCode"
+              ></v-text-field >
+            </v-flex>
+            <v-flex xs12>
+              <h3>Budget Work Time</h3>
+            </v-flex>
+            <!-- 機械設計予算時間 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Mechanical Design Budget Hours"
+                v-model="jobOrder.mechanicalDesignBudgetHours"
+                :error-messages="responseError.mechanicalDesignBudgetHours"
+                class="right-input"
+                suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+            <!-- 電気設計予算時間 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Electrical Design Budget Hours"
+                v-model="jobOrder.electricalDesignBudgetHours"
+                :error-messages="responseError.electricalDesignBudgetHours"
+                class="right-input"
+                suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+            <!-- 組み立て調整予算時間 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Assembly Budget Hours"
+                v-model="jobOrder.assemblyBudgetHours"
+                :error-messages="responseError.assemblyBudgetHours"
+                class="right-input"
+                suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+            <!-- 電気工事予算時間 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Electrical Wiring Budget Hours"
+                v-model="jobOrder.electricalWiringBudgetHours"
+                :error-messages="responseError.electricalWiringBudgetHours"
+                class="right-input"
+                suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+            <!-- 現地調整予算時間 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Installation BudgetHours"
+                v-model="jobOrder.installationBudgetHours"
+                :error-messages="responseError.installationBudgetHours"
+                class="right-input"
+                suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+
           </v-layout>
         </v-form>
 

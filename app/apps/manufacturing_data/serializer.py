@@ -40,7 +40,10 @@ class JobOrderSerializer(serializers.ModelSerializer):
         # 受注金額合計
         order_total = order_price + tax_price
         # 予算直接原価
-        direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget
+        direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget + \
+                             obj.outsourcing_mechanical_design_budget + obj.outsourcing_electrical_design_budget + \
+                             obj.outsourcing_other_budget
+        # 限界利益予算額
         limit_profit_budget = order_price - direct_cost_budget
         if obj.order_price == 0:
             limit_profit_percentage = 0
@@ -54,6 +57,24 @@ class JobOrderSerializer(serializers.ModelSerializer):
             else:
                 # 限界利益が負の場合
                 limit_profit_percentage = (direct_cost_budget - order_price) / order_price * -100
+        # 予算労務時間
+        working_hours_budget = obj.mechanical_design_budget_hours + obj.electrical_design_budget_hours + \
+                               obj.assembly_budget_hours + obj.electrical_wiring_budget_hours + obj.installation_budget_hours
+        # 予算労務費
+        labor_cost_budget = working_hours_budget * obj.company.time_charge
+        total_profit_budget = limit_profit_budget - labor_cost_budget
+        if obj.order_price == 0:
+            total_profit_percentage = 0
+        else:
+            if total_profit_budget > 0:
+                # 限界利益が正の場合
+                total_profit_percentage = total_profit_budget / order_price * 100
+            elif total_profit_budget == 0:
+                # 限界利益がゼロの場合
+                total_profit_percentage = 0
+            else:
+                # 限界利益が負の場合
+                total_profit_percentage = (labor_cost_budget + direct_cost_budget - order_price) / order_price * -100
 
         costs = {
             'tax_price': "{:,.2f}".format(tax_price),
@@ -61,6 +82,10 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'direct_cost_budget': "{:,.2f}".format(direct_cost_budget),
             'limit_profit_budget': "{:,.2f}".format(limit_profit_budget),
             'limit_profit_percentage_budget': "{:-,.2f}".format(limit_profit_percentage),
+            'working_hours_budget': "{:-,.2f}".format(working_hours_budget),
+            'labor_cost_budget': "{:-,.2f}".format(labor_cost_budget),
+            'total_profit_budget': "{:-,.2f}".format(total_profit_budget),
+            'total_profit_percentage': "{:-,.2f}".format(total_profit_percentage),
         }
         return costs
 
