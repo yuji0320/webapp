@@ -48,7 +48,7 @@
       <v-flex xs12 md6>
         <app-card noSeachBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
-          <span slot="card-header-title">Man Hour Reports</span>
+          <span slot="card-header-title">Costing Reports</span>
 
           <span slot="card-content">
             <v-layout row>
@@ -60,6 +60,28 @@
               <v-flex sm6 xs12>
                 <v-btn large block outline @click="manHourTotal(true)">
                   Annual Reports for Costing
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </span>
+        </app-card>
+      </v-flex>
+
+      <v-flex xs12 md6>
+        <app-card noSeachBar="true">
+          <span slot="card-header-icon"><v-icon>poll</v-icon></span>
+          <span slot="card-header-title">Man Hour Reports</span>
+
+          <span slot="card-content">
+            <v-layout row>
+              <v-flex sm6 xs12>
+                <v-btn large block outline @click="wipDirect()">
+                  Work-in-process(Direct costs)
+                </v-btn>
+              </v-flex>
+              <v-flex sm6 xs12>
+                <v-btn large block outline disabled>
+                  Work-in-process(Labor costs)
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -93,6 +115,9 @@ export default {
     manHourTotal(val) {
       this.setIsAnnual(val);
       this.$router.push({ name: "ManHourTotal" });
+    },
+    wipDirect() {
+      this.$router.push({ name: "WIPDirectCosts" });      
     }
   }
 }

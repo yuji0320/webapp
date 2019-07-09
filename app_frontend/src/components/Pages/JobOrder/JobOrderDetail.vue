@@ -164,7 +164,7 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <td class="text-center" style="width : 450px !important;"></td>
+                  <td class="text-center" style="width : 475px !important;"></td>
                   <td class="text-center" style="width : 50px !important;">Hour</td>
                   <td class="text-center" style="width : 150px !important;">Budget(予算)</td>
                   <td class="text-center" style="width : 50px !important;">Hour</td>
@@ -224,7 +224,7 @@
 
             <table class="table table-bordered">
               <tr>
-                <td class="text-center" style="width : 400px !important;">Manufacturing costs(製造原価)</td>
+                <td class="text-center" style="width : 470px !important;">Manufacturing costs(製造原価)</td>
                 <td class="text-right" style="width : 200px !important;"></td>
                 <td class="text-right" style="width : 200px !important;"></td>
                 <td class="text-right" style="width : 200px !important;"></td>

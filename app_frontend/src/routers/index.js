@@ -42,6 +42,7 @@ import SalesByPeriod from '@/components/Pages/Investigation/Reports/Sales/SalesB
 import OpenPO from '@/components/Pages/Investigation/Reports//Sales/OpenPO.vue';
 import PurchasingReport from '@/components/Pages/Investigation/Reports/Purchasing/PurchasingReport.vue';
 import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
+import WIPDirectCosts from '@/components/Pages/Investigation/Reports//WorkInProcess/WIPDirectCosts.vue';
 import SearchMenu from '@/components/Pages/Investigation/Search/SearchMenu.vue';
 import SearchBOM from '@/components/Pages/Investigation/Search/SearchBOM.vue';
 import SearchOrder from '@/components/Pages/Investigation/Search/SearchOrder.vue';
@@ -325,6 +326,11 @@ const router = new Router({
                       path: 'man_hour_total',
                       name: 'ManHourTotal',
                       component: ManHourTotal,
+                    },
+                    {
+                      path: 'wip_direct_costs',
+                      name: 'WIPDirectCosts',
+                      component: WIPDirectCosts,
                     },
                   ],
                 },

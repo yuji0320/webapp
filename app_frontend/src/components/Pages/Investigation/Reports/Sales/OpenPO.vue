@@ -134,7 +134,7 @@ export default {
         // 年月別集計
         for(var i=0,d;d=monthList[i];i++){
           let list = this.jobOrders.results.filter(x => x.deliveryDate.substr(0, 7) === d.key);
-          let total = list.reduce((p, x) => p + parseFloat(x.defaultCurrencyOrderAmount.replace(/,/g, "")), 0)
+          let total = list.reduce((p, x) => p + parseFloat(x.defaultCurrencyOrderAmount.replace(/,/g, "")), 0);
           d.subTotal = (Math.round( total * 100) / 100).toFixed(2);
           d.dataList = list;
         }

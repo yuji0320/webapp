@@ -54,6 +54,7 @@ class SystemExpenseCategory(models.Model):
     category_number = models.IntegerField(_('Category number'), unique=True)  # 項目番号
     category_name = models.CharField(_('Category name'), max_length=150, unique=True)  # 項目名
     is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
+    is_calculate = models.BooleanField(_('is Calculate in WIP'), default=True)  # 仕掛で計算するかどうか
     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時

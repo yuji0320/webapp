@@ -30,7 +30,7 @@ class SystemExpenseCategoryFilter(filters.FilterSet):
 
     class Meta:
         model = SystemExpenseCategory
-        fields = ['id', 'category_name', 'category_number', 'is_active']
+        fields = ['id', 'category_name', 'category_number', 'is_active', 'is_calculate']
 
     order_by = filters.OrderingFilter(
         fields=(
