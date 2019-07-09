@@ -69,7 +69,7 @@ export default {
       defaultHeaders: [
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
-        { text: "Delivery", value: "deliveryDate" },
+        { text: "Delivery Date", value: "deliveryDate" },
         { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"},
       ],
       totalCol: {text: "Total", value: "totalArray", nest: "total", class: "text-xs-right"},
