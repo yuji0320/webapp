@@ -21,7 +21,7 @@
         <v-btn 
           @click="print" 
           color="primary"
-          disabled
+          :disabled="dataList.length === 0"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -59,10 +59,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import WIPDirectPrint from "./WIPDirectPrint.js"
 
 export default {
   title: "WIP Direct Costs",
   name: "WIPDirectCosts",
+  mixins: [WIPDirectPrint],
   data () {
     return {
       date: "2019-04-30",
@@ -134,7 +136,17 @@ export default {
         JobOrder.totalArray = await this.getReceivedList(JobOrder.id);
       }
       // 総合計の計算
-      this.grandTotal = dataList.reduce((p, x) => p + parseFloat(x.totalArray.total.replace(/,/g, "")), 0);
+      let grandTotalArray = {};
+      grandTotalArray.total = this.moneyComma(dataList.reduce((p, x) => p + parseFloat(x.totalArray.total.replace(/,/g, "")), 0).toFixed(2));
+      for(let c=0,category; category=this.expenseCategories.results[c]; c++) {
+        grandTotalArray[category.id] = this.moneyComma(dataList.reduce((p, x) => p + parseFloat(x.totalArray[category.id].replace(/,/g, "")), 0).toFixed(2));
+      }
+      this.grandTotal = grandTotalArray.total;
+      let totalData = {
+        name:"Total",
+        totalArray:grandTotalArray
+      }
+      dataList.push(totalData);
       return dataList;
     },
     // 仕入データ取得
@@ -164,7 +176,9 @@ export default {
       return totalArray
     },
     print() {
-      console.log("print wip");
+      let res = this.createPdfData();
+      console.log(res);
+
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });

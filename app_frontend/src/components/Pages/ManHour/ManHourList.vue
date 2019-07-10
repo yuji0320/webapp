@@ -153,7 +153,7 @@ export default {
   },
   created () {
     this.setManHours({});
-    this.getJobTypes();
+    this.getJobTypes({params:{order_by:"number"}});
   }
 }
 </script>

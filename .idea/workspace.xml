@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/apps/system_master/migrations/0008_systemexpensecategory_is_calculate.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/system_master/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/system_master/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/routers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/routers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/ManHourDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/ManHourDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ManHour/ManHourList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ManHour/ManHourList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue" afterDir="false" />
     </list>
     <ignored path="app/apps/manufacturing_data/fixtures/test.json" />
     <ignored mask="*.dump" />
@@ -55,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="272" column="17" selection-start-line="272" selection-start-column="4" selection-end-line="272" selection-end-column="17" />
+            <state relative-caret-position="150">
+              <caret line="12" column="10" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -64,8 +60,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="458">
+              <caret line="110" column="94" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -357,21 +353,8 @@
       <workItem from="1562419881977" duration="4821000" />
       <workItem from="1562518774525" duration="663000" />
       <workItem from="1562593475113" duration="1788000" />
-      <workItem from="1562697190424" duration="1626000" />
-    </task>
-    <task id="LOCAL-00059" summary="アプリケーション微修正&#10;・作業指図書アップロード部分エラー処理&#10;・バックエンドシリアライザー&#10;・スタッフマスターリスト表示処理">
-      <created>1555590697601</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1555590697602</updated>
-    </task>
-    <task id="LOCAL-00060" summary="関係会社工事番号機能実装&#10;発注書印刷レイアウト修正">
-      <created>1555600679744</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1555600679745</updated>
+      <workItem from="1562697190424" duration="2243000" />
+      <workItem from="1562768576008" duration="171000" />
     </task>
     <task id="LOCAL-00061" summary="作業指図書画面微修正">
       <created>1555605468324</created>
@@ -702,11 +685,25 @@
       <option name="project" value="LOCAL" />
       <updated>1562620145425</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="フロントエンド仕掛材料費集計画面実装">
+      <created>1562705187481</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1562705187481</updated>
+    </task>
+    <task id="LOCAL-00109" summary="フロントエンド仕掛材料費集計画面レイアウト修正">
+      <created>1562705553206</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1562705553206</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77099000" />
+    <option name="totallyTimeSpent" value="77887000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -719,8 +716,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-452" width="1920" height="1057" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4941691" visible="true" weight="0.17305644" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4941691" visible="true" weight="0.17465389" />
       <window_info id="Structure" order="1" sideWeight="0.50189394" side_tool="true" weight="0.21459228" />
       <window_info id="Favorites" order="2" sideWeight="0.5058309" side_tool="true" weight="0.19029851" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -800,8 +798,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="フロントエンド、バックエンド売上集計画面作成&#10;フロントエンド部品検索画面機能修正" />
-    <MESSAGE value="フロントエンド、売上集計画面PDF出力機能実装" />
     <MESSAGE value="フロントエンド、発注ファイルダイアログ部分修正中(未完)" />
     <MESSAGE value="バックエンド、django admin修正" />
     <MESSAGE value="フロントエンド、発注ファイルコンポーネント化、仕入れファイル修正機能実装開始" />
@@ -825,7 +821,9 @@
     <MESSAGE value="Windows Server起動環境反映" />
     <MESSAGE value="フロントエンド調査画面実装" />
     <MESSAGE value="フロントエンド調査画面修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド調査画面修正" />
+    <MESSAGE value="フロントエンド仕掛材料費集計画面実装" />
+    <MESSAGE value="フロントエンド仕掛材料費集計画面レイアウト修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド仕掛材料費集計画面レイアウト修正" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app_frontend/public/index.html">
@@ -1138,13 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="272" column="17" selection-start-line="272" selection-start-column="4" selection-end-line="272" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -1152,10 +1143,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="458">
+          <caret line="110" column="94" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
         </state>
       </provider>
     </entry>

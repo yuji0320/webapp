@@ -138,7 +138,7 @@ export default {
     // デフォルト値設定
     setDefault() {
       const defaultData = Object.assign({}, this.defaultManHour);
-      console.log(defaultData);
+      // console.log(defaultData);
       this.setIncremental(defaultData);
       this.setManHour(defaultData);
     },
@@ -183,7 +183,7 @@ export default {
         if (this.$refs.dialog.editedIndex == -1) {
           this.setManHour({});
           this.setDefault();
-          console.log(this.defaultManHour);
+          // console.log(this.defaultManHour);
         } else {
           this.$refs.dialog.closeDialog();
         }

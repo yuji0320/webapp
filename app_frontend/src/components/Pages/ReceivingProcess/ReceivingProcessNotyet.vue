@@ -66,9 +66,10 @@ export default {
         // 検索カラムリスト
         tableSelectItems: [
           { label: "Order Number", value: "order__number" },
+          { label: "MFG No", value: "mfg_no" },
         ],
         // 検索数値の初期値および返り値
-        tableSelectValue: "order__number",
+        tableSelectValue: "mfg_no",
         tableSearch: ""
       }      
     }
