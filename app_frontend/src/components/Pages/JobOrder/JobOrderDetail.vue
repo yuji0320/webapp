@@ -433,7 +433,7 @@ export default {
         jobOrder.limitProfitBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
         jobOrder.limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
         // 材料費実績
-        if(this.jobOrderExists) {
+        if((this.directCosts.results).length !== 0) {
           jobOrder.commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
           jobOrder.electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
           jobOrder.processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
@@ -458,7 +458,7 @@ export default {
         jobOrder.workingHoursBudgetDisplay = this.jobOrder["costs"]["workingHoursBudget"] + " h";
         jobOrder.laborCostBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["laborCostBudget"];
         // 労務費実績
-        if(this.manHours.results) {
+        if((this.laborCost.results).length !== 0) {
           jobOrder.mechanicalDesignResultHoursDisplay = this.laborCost.results[0].toFixed(2) + " h";
           jobOrder.mechanicalDesignResultPrice = defaultDisplay + (this.laborCost.results[0] * timeCharge).toFixed(2);
           jobOrder.electricalDesignResultHoursDisplay = this.laborCost.results[1].toFixed(2) + " h";
