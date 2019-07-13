@@ -477,9 +477,11 @@ export default {
         jobOrder.totalProfitBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["totalProfitBudget"]);
         jobOrder.totalProfitPercentageBudget =this.jobOrder["costs"]["totalProfitPercentage"] + "%";
         // 集計値実績
-        let manufacturingCostResult = this.directCosts.directCost + (this.laborCost.totalWorkHours * timeCharge);
+        let manufacturingCostResult = 0;
+        manufacturingCostResult = this.directCosts.directCost + (this.laborCost.totalWorkHours * timeCharge);
         let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
-        let profitResult = (Math.round(( orderAmount - manufacturingCostResult) * 100) / 100);
+        let profitResult = 0;
+        profitResult = (Math.round(( orderAmount - manufacturingCostResult) * 100) / 100);
         let profitPercentageResult = 0;
         if(profitResult > 0) {
           profitPercentageResult = Math.round((profitResult / orderAmount * 100) * 100) / 100;
