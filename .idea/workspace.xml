@@ -3,13 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/apps/core/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/core/pagination.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/bms_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/bms_backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/ManHourDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Dialogs/ManHourDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ManHour/ManHourList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ManHour/ManHourList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/PdfMake/PdfMakeMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/PdfMake/PdfMakeMixin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Purchasing/PurchasingReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Purchasing/PurchasingReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesByPeriod.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesByPeriod.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectCosts.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPDirectPrint.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.bak.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessBulkSuspenseReceived.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessBulkSuspenseReceived.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/routers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/routers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/stores/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/stores/index.js" afterDir="false" />
     </list>
     <ignored path="app/apps/manufacturing_data/fixtures/test.json" />
     <ignored mask="*.dump" />
@@ -48,20 +64,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/models.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="12" column="10" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="10" />
+            <state relative-caret-position="270">
+              <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="110" column="94" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
+            <state relative-caret-position="1260">
+              <caret line="88" column="32" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -116,12 +132,10 @@
         <option value="$PROJECT_DIR$/nginx/nginx.conf" />
         <option value="$PROJECT_DIR$/app/apps/system_users/fixtures/user_master_json_ksa.json" />
         <option value="$PROJECT_DIR$/app/apps/system_users/admin.py" />
-        <option value="$PROJECT_DIR$/app/apps/core/pagination.py" />
         <option value="$PROJECT_DIR$/mysql/Dockerfile" />
         <option value="$PROJECT_DIR$/app/apps/core/multi_create.py" />
         <option value="$PROJECT_DIR$/app/apps/core/multi_crud.py" />
         <option value="$PROJECT_DIR$/docker-compose-dev.yml" />
-        <option value="$PROJECT_DIR$/app/bms_backend/settings.py" />
         <option value="$PROJECT_DIR$/app/apps/system_users/views.py" />
         <option value="$PROJECT_DIR$/app/apps/system_users/serializer.py" />
         <option value="$PROJECT_DIR$/app_frontend/Dockerfile" />
@@ -152,11 +166,13 @@
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/urls.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/models.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" />
-        <option value="$PROJECT_DIR$/app/requirements.txt" />
         <option value="$PROJECT_DIR$/app/apps/system_master/models.py" />
         <option value="$PROJECT_DIR$/app/apps/system_master/filters.py" />
-        <option value="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" />
         <option value="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" />
+        <option value="$PROJECT_DIR$/app/requirements.txt" />
+        <option value="$PROJECT_DIR$/app/bms_backend/settings.py" />
+        <option value="$PROJECT_DIR$/app/apps/core/pagination.py" />
+        <option value="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" />
       </list>
     </option>
   </component>
@@ -198,6 +214,13 @@
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
               <item name="manufacturing_data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -206,6 +229,12 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
               <item name="system_users" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="bms_backend" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="webapp" type="b2602c69:ProjectViewProjectNode" />
@@ -354,14 +383,9 @@
       <workItem from="1562518774525" duration="663000" />
       <workItem from="1562593475113" duration="1788000" />
       <workItem from="1562697190424" duration="2243000" />
-      <workItem from="1562768576008" duration="171000" />
-    </task>
-    <task id="LOCAL-00061" summary="作業指図書画面微修正">
-      <created>1555605468324</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1555605468324</updated>
+      <workItem from="1562768576008" duration="1303000" />
+      <workItem from="1562851046642" duration="2658000" />
+      <workItem from="1562938999887" duration="215000" />
     </task>
     <task id="LOCAL-00062" summary="注文書印刷レイアウト変更">
       <created>1555607407540</created>
@@ -699,11 +723,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562705553206</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="フロントエンド納期経過分リスト修正">
+      <created>1562768856384</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1562768856385</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77887000" />
+    <option name="totallyTimeSpent" value="81892000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -718,7 +749,7 @@
     <frame x="-1920" y="-452" width="1920" height="1057" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4941691" visible="true" weight="0.17465389" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4941691" visible="true" weight="0.17784877" />
       <window_info id="Structure" order="1" sideWeight="0.50189394" side_tool="true" weight="0.21459228" />
       <window_info id="Favorites" order="2" sideWeight="0.5058309" side_tool="true" weight="0.19029851" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -798,7 +829,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="フロントエンド、発注ファイルダイアログ部分修正中(未完)" />
     <MESSAGE value="バックエンド、django admin修正" />
     <MESSAGE value="フロントエンド、発注ファイルコンポーネント化、仕入れファイル修正機能実装開始" />
     <MESSAGE value="フロントエンド、仕入れファイル修正機能実装開始" />
@@ -823,23 +853,14 @@
     <MESSAGE value="フロントエンド調査画面修正" />
     <MESSAGE value="フロントエンド仕掛材料費集計画面実装" />
     <MESSAGE value="フロントエンド仕掛材料費集計画面レイアウト修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド仕掛材料費集計画面レイアウト修正" />
+    <MESSAGE value="フロントエンド納期経過分リスト修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="フロントエンド納期経過分リスト修正" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_frontend/public/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/bms_backend/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" lean-forward="true" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/bms_backend/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
@@ -1063,13 +1084,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nginx/development.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
@@ -1136,10 +1150,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
+    <entry file="file://$PROJECT_DIR$/app/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="23" column="11" selection-start-line="23" selection-end-line="24" />
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bms_backend/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="47" column="1" lean-forward="true" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/core/pagination.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="26" lean-forward="true" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1152,8 +1183,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/filters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="110" column="94" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
+        <state relative-caret-position="270">
+          <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="88" column="32" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="32" />
         </state>
       </provider>
     </entry>

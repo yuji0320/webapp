@@ -24,7 +24,7 @@ export default {
       let tablebody = [];
       // ヘッダー作成
       let tableHeader = this.headerList(this.headers);
-      let tableWidths = [40, 200, 70, 70, 50, 90]
+      let tableWidths = [40, 200, 70, 70, 50, 90];
       tablebody.push(tableHeader);
       // テーブル内容作成
       for(var s=0,summary;summary=this.summaryList[s];s++){
@@ -76,7 +76,8 @@ export default {
         table: {
           headerRows: 1,
           widths: tableWidths,
-          body: tablebody
+          body: tablebody,
+          fontSize:20
         }
       }
       // 出力データ整形

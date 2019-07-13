@@ -88,6 +88,18 @@
           ></app-input-date>
         </v-flex>       
 
+        <!-- 仕損費種別 -->
+        <v-flex xs12 md8>
+          <app-incremental-model-search
+          label="Failure"
+          orderBy="category_number"
+          v-model="manHour.failure"
+          searchType="failure"
+          :errorMessages="responseError.failure"
+          ref="failure"
+          ></app-incremental-model-search>
+        </v-flex>
+
         <!-- {{ defaultManHour }} -->
 
       </v-layout>
@@ -134,6 +146,8 @@ export default {
       this.$refs.jobOrder.setData(val.jobOrder);
       // 作業区分データセット
       this.$refs.jobType.setData(val.type);
+      // 仕損費データセット
+      this.$refs.failure.setData(val.failure);
     },
     // デフォルト値設定
     setDefault() {
@@ -165,6 +179,8 @@ export default {
       this.$refs.jobOrder.setData();
       // 作業区分データクリア
       this.$refs.jobType.setData();
+      // 仕損費データクリア
+      this.$refs.failure.clearItem();
     },
     async submitManHour() {
       let res = {};

@@ -45,6 +45,9 @@ export default {
       // ページマージンの定義
       let pageMargins = this.defaultPageMargins
       if(val.pageMargins) {
+        pageMargins = val.pageMargin;
+      }
+      if(val.pageMargins) {
         pageMargins = val.pageMargins;
         // console.log(pageMargins);
       };
@@ -62,23 +65,24 @@ export default {
         // データ表示部分
         content: [ val.content ],
         footer: function(currentPage, pageCount) {
-          return {
-              margin:[0, 10, 0, 0],
-              columns: [
-                {
-                  fontSize: 9,
-                  text:currentPage.toString() + ' of ' + pageCount,
-                  alignment: 'center'
-                }
-              ]
+          let footerData = {
+            margin:[0, 10, 0, 0],
+            columns: [
+              {
+                fontSize: 9,
+                text:currentPage.toString() + ' of ' + pageCount,
+                alignment: 'center'
+              }
+            ]
           };
+          return footerData
         },
         // 印刷プロパティ
         pageSize: 'LETTER',
         pageMargins: pageMargins,
         defaultStyle: {
           font: 'GenShin',
-          fontSize: 7
+          fontSize: 8
         },
         styles: styles,
       }  

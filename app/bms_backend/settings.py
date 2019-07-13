@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'system_master',
     'system_users',
     'manufacturing_data',
+    # 'drf-extensions',
 ]
 
 # Application definition

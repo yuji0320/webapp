@@ -10,3 +10,4 @@ django-filter
 django-cors-headers
 djangorestframework-camel-case
 django_extensions
+drf-extensions

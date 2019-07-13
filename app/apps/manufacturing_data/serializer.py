@@ -62,6 +62,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
                                obj.assembly_budget_hours + obj.electrical_wiring_budget_hours + obj.installation_budget_hours
         # 予算労務費
         labor_cost_budget = working_hours_budget * obj.company.time_charge
+        manufacturing_cost_budget = direct_cost_budget + labor_cost_budget
         total_profit_budget = limit_profit_budget - labor_cost_budget
         if obj.order_price == 0:
             total_profit_percentage = 0
@@ -84,6 +85,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'limit_profit_percentage_budget': "{:-,.2f}".format(limit_profit_percentage),
             'working_hours_budget': "{:-,.2f}".format(working_hours_budget),
             'labor_cost_budget': "{:-,.2f}".format(labor_cost_budget),
+            'manufacturing_cost_budget': "{:-,.2f}".format(manufacturing_cost_budget),
             'total_profit_budget': "{:-,.2f}".format(total_profit_budget),
             'total_profit_percentage': "{:-,.2f}".format(total_profit_percentage),
         }

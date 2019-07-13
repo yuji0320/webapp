@@ -6,7 +6,7 @@
 
     <app-card>
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-title">Work In Process (Direct Costs)</span>
+      <span slot="card-header-title">Work In Process (Material Costs)</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -59,15 +59,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import WIPDirectPrint from "./WIPDirectPrint.js"
+import WIPMaterialPrint from "./WIPMaterialPrint.js"
 
 export default {
-  title: "WIP Direct Costs",
-  name: "WIPDirectCosts",
-  mixins: [WIPDirectPrint],
+  title: "WIP Material Costs",
+  name: "WIPMaterialCosts",
+  mixins: [WIPMaterialPrint],
   data () {
     return {
-      date: "2019-04-30",
+      date: "2019-03-31",
       defaultHeaders: [
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
@@ -90,8 +90,9 @@ export default {
         search_open_po: this.date,
         delivery_date_isnull: false,
         order_date_isnull:false,
+        // order_date_before: this.date,
         order_by: "delivery_date",
-        page_size: "max"
+        page_size: 100000
       }
     },
     // テーブルヘッダー作成
@@ -141,10 +142,12 @@ export default {
       for(let c=0,category; category=this.expenseCategories.results[c]; c++) {
         grandTotalArray[category.id] = this.moneyComma(dataList.reduce((p, x) => p + parseFloat(x.totalArray[category.id].replace(/,/g, "")), 0).toFixed(2));
       }
+      let defaultCurrencyOrderAmount = this.moneyComma(dataList.reduce((p, x) => p + parseFloat(x.defaultCurrencyOrderAmount.replace(/,/g, "")), 0).toFixed(2));
       this.grandTotal = grandTotalArray.total;
       let totalData = {
         name:"Total",
-        totalArray:grandTotalArray
+        totalArray:grandTotalArray,
+        defaultCurrencyOrderAmount: defaultCurrencyOrderAmount
       }
       dataList.push(totalData);
       return dataList;
@@ -156,7 +159,7 @@ export default {
         company: this.loginUserData["companyId"],
         received_date_before: this.date,
         order__bill_of_material__job_order: val,
-        page_size: "max"
+        page_size: 100000
       }
       let res = await this.getReceivingProcesses({params: params});
       let receivedList = res.results;
@@ -176,9 +179,9 @@ export default {
       return totalArray
     },
     print() {
-      let res = this.createPdfData();
-      console.log(res);
-
+      // let res = this.createPdfData();
+      // console.log(res);
+      this.printPDF(this.createPdfData());
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });

@@ -75,8 +75,8 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="wipDirect()">
-                  Work-in-process(Direct costs)
+                <v-btn large block outline @click="wipMaterial()">
+                  Work-in-process(Material costs)
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
@@ -116,8 +116,8 @@ export default {
       this.setIsAnnual(val);
       this.$router.push({ name: "ManHourTotal" });
     },
-    wipDirect() {
-      this.$router.push({ name: "WIPDirectCosts" });      
+    wipMaterial() {
+      this.$router.push({ name: "WIPMaterialCosts" });      
     }
   }
 }

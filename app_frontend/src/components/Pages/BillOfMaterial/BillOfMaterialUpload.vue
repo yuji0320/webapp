@@ -78,7 +78,7 @@ export default {
       return {
         company: this.loginUserData.companyId,
         is_manufacturer: true,
-        page_size: "max"
+        page_size: 100000
         // order_by: this.orderBy
       };
     },

@@ -23,6 +23,7 @@
           fab
           small
           @click="viewDetail"
+          v-show="jobOrderStatus.isEditing"
         >
           <v-icon>visibility</v-icon>
         </v-btn>
@@ -310,22 +311,20 @@
                 suffix="Hours"
               ></v-text-field >
             </v-flex>
-
+            <v-flex xs12 class="text-xs-right">
+              <v-btn 
+                color="darken-1"
+                @click="clearJobOrder()"
+                outline
+              >Clear</v-btn>
+              <v-btn 
+                color="blue darken-1"
+                @click="submitForm()"
+                outline
+              >Save</v-btn>
+            </v-flex>
           </v-layout>
         </v-form>
-
-        <v-btn 
-          color="blue darken-1"
-          @click="submitForm()"
-          outline
-        >Save</v-btn>
-
-        <v-btn 
-          color="darken-1"
-          @click="clearJobOrder()"
-          outline
-        >Clear</v-btn>
-
       </v-card-text>
 
       <!-- Cardフッター -->

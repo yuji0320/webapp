@@ -28,14 +28,14 @@ export default {
         company: this.loginUserData["companyId"],
         is_received: true,
         is_suspense_received:true,
-        page_size: "max"
+        page_size: 100000
       }      
     },
     paramsSuspense() {
       return {
         company: this.loginUserData["companyId"],
         is_suspense_received: false,
-        page_size: "max"
+        page_size: 100000
       }      
     }
   },
