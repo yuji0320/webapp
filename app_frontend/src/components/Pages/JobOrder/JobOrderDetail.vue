@@ -362,12 +362,14 @@ export default {
       const types = this.jobTypes.results;
       let results = [];
       let totalWorkHours = 0;
-      for(let h=0, type; type=types[h]; h++) {
-        // 部品毎集計
-        let t = (Math.round(this.calcLaborTotal(this.manHourList(type.id)) * 100) / 100);
-        // 合計金額への加算
-        totalWorkHours += t;
-        results.push(t);        
+      if(types) {
+        for(let h=0, type; type=types[h]; h++) {
+          // 部品毎集計
+          let t = (Math.round(this.calcLaborTotal(this.manHourList(type.id)) * 100) / 100);
+          // 合計金額への加算
+          totalWorkHours += t;
+          results.push(t);        
+        }
       }
       return {
         results: results,
