@@ -194,6 +194,8 @@ export default {
     this.clearJobOrders();
     // 読み込みの初期化
     this.$store.commit("systemConfig/setLoading", false);
+    // 本日日付のインプット
+    this.date = this.todayISO;
   }
 }
 </script>

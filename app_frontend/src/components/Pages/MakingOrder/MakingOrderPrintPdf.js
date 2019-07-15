@@ -212,7 +212,7 @@ export default {
             let colSpan = 0;
             let totalRow = [];
             if (selectedData[key].isProcessed) {
-              tableWidths = [15, 60, 60, 110, 40, 30, 60, 60, 40];
+              tableWidths = [25, 60, 60, 95, 40, 30, 60, 60, 45];
               colSpan = 7;
               // 合計金額行を追加
               totalRow = [
@@ -220,7 +220,7 @@ export default {
                 {colSpan: 2, text: total_display, alignment: "right", bold: true}, ''
               ]
             } else {
-              tableWidths = [15, 90, 60, 130, 30, 60, 60, 40];
+              tableWidths = [25, 90, 60, 115, 30, 60, 60, 45];
               colSpan = 6;
               // 合計金額行を追加
               totalRow = [

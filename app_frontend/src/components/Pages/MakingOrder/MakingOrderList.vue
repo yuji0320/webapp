@@ -22,7 +22,17 @@
           color="primary"
         >
           Multi Update
-        </v-btn>       
+        </v-btn>
+
+        <!-- 一括削除ボタン -->
+        <v-btn 
+          @click="multiDelete" 
+          outline 
+          color="error"
+        >
+          Multi Delete
+        </v-btn>
+
       </span>
 
       <span slot="card-content">
@@ -74,29 +84,18 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue"
+import MakingOrderMultiDeleteMixin from "./MakingOrderMultiDeleteMixin.js"
 
 export default {
   title: "Making Order",
   name: "MakingOrder",
+  mixins: [MakingOrderMultiDeleteMixin],
   components: {
-    "multi-update": MakingOrderMultiUpdate
+    "multi-update": MakingOrderMultiUpdate,
   },
   data() {
     return {
       orderBy: "-created_at",
-      // headers: [
-      //   { text: "", value: "checkbox" },
-      //   { text: "No", value: "number" },
-      //   { text: "Part Name", value: "name" },
-      //   { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
-      //   { text: "Standard/Form", value: "standard" },
-      //   { text: "Unit number", value: "unit_number" },
-      //   { text: "Supplier", value: "supplierData" , nest: "abbr"},
-      //   { text: "Amount", value: "amount", class: "text-xs-right" },
-      //   { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
-      //   { text: "Delivery", value: "desiredDeliveryDate" },
-      //   { text: "Action", value: "action", class: "text-xs-center" }
-      // ],
       // テーブルヘッダーデータ
       defaultHeadersTop: [
         { text: "", value: "checkbox" },
@@ -190,7 +189,6 @@ export default {
     // 一括編集機能
     multiUpdate() {
       this.setTableSelected(this.$refs.data_table.selected);
-      // console.log(test);
       this.$refs.multi_update.openDialog();
     },
     async getList(data) {
@@ -245,6 +243,7 @@ export default {
     this.setMakingOrders({});
     if(this.jobOrderID) {
       this.getJobOrder(this.jobOrderID);
+      this.setTableSelected([]);
     }
   }
 }

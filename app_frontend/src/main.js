@@ -11,14 +11,13 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 // ユーティリティファイルのインポート
 import titleMixin from './util/title';
 import dateFormetMixin from './util/dateFormat';
+import getDateMixin from './util/getDateMixin';
 
 // ライブラリのインポート
 // 時刻データ操作ライブラリのインポート
 import moment from 'moment';
 // バリデーションライブラリのインポート
 import VeeValidate from 'vee-validate';
-// pdfmakeフォントのインポート
-// import vfs_fonts from "./util/vfs_fonts";
 
 // Bootstrap Vueのインポート
 import BootstrapVue from 'bootstrap-vue';
@@ -72,8 +71,6 @@ Vue.component('app-incremental-model-search', IncrementalModelSearch);
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
 // PDF作成
-// import PdfMake from '@/components/Module/PdfMake/PdfMake.vue';
-// Vue.component('app-pdf-make', PdfMake);
 import PdfMakeMixin from '@/components/Module/PdfMake/PdfMakeMixin.js';
 Vue.mixin(PdfMakeMixin);
 
@@ -91,6 +88,7 @@ Vue.component('app-man-hour-dialog', ManHourDialog);
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 Vue.mixin(dateFormetMixin);
+Vue.mixin(getDateMixin);
 Vue.use(BootstrapVue);
 
 // 開発ステータスの定義

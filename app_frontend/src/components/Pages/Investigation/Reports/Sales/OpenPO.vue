@@ -84,7 +84,7 @@ export default {
   mixins: [SalesReportCreatePDFMixin],
   data() {
     return {
-      date: "2019-03-31",
+      date: "",
       // テーブルヘッダーデータ
       headers: [
         { text: "MFG No", value: "mfgNo" },
@@ -186,6 +186,8 @@ export default {
     this.clearJobOrders();
     // 読み込みの初期化
     this.$store.commit("systemConfig/setLoading", false);
+    // 本日日付のインプット
+    this.date = this.todayISO;
   }
 }
 </script>

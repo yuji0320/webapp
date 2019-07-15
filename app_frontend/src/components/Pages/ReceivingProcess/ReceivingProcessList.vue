@@ -299,8 +299,11 @@
                         // 整数の場合は".00"を追加する
                         receivedUP = parseInt(receivedUP).toFixed(2);
                     }
-                    let res = {};
+                    let res = "";
                     res = await this.checkPrice(receivedUP, orderData);
+                    if(!res) {
+                      this.errorList.push("Received Price and Order Price is not same. \n Please edit order file and input correct price.");
+                    }
                 }
                 if(err) {
                     this.dialog = true;
@@ -336,62 +339,16 @@
                 let res = {};
                 let received = receivedUP;
                 let order = orderData.unitPrice;
-                let bom = "";
-                if (orderData.billOfMaterial) {
-                    bom = orderData.billOfMaterial.unitPrice;
-                }
                 // console.log(orderData);
                 if(received!==order) {
-                    // 発注ファイルと部品表で単価が違う場合
-                    // アラート文
-                    let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                        "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                        "\nAre you sure change Order's unit price?");
-                    if (bom !== "") {
-                        alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                            "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                            "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
-                            "\nAre you sure change Order's unit price and Bill ob material's unit price?");
-                    }
-                    if (
-                        await this.$refs.confirm.open(
-                            "Unit Price is different!",
-                            alertText,
-                            { color: "blue" }
-                        )
-                    ) {
-                        // Yesの場合は上書き処理
-                        this.setMakingOrder(orderData);
-                        // 部品表ファイルが存在する場合はアップデート
-                        if (bom !== "") {
-                            // 部品表の編集
-                            this.setBillOfMaterial(orderData.billOfMaterial);
-                            this.billOfMaterial.unitPrice = received;
-                            this.billOfMaterial.modifiedBy = this.loginUserData.id;
-                            res = await this.putBillOfMaterial(this.billOfMaterial);
-                            this.makingOrder.billOfMaterialId = orderData.billOfMaterial.id;
-                        } else {
-                            this.makingOrder.billOfMaterialId = null;
-                        }
-                        // 発注ファイルの上書き
-                        this.makingOrder.unitPrice = received;
-                        this.makingOrder.modifiedBy = this.loginUserData.id;
-                        res = await this.putMakingOrder(this.makingOrder);
-                        this.showSnackbar(res.snack);
-                        orderData.unitPrice = received;
-                        // リストの再読み込み
-                        // this.getList({params: this.switchParams.params});
-                        return orderData;
-                    } else {
-                        // Noの場合はスナックバーにキャンセルの旨を表示
-                        res.snack = { snack: "Price is not changed." };
-                        // this.showSnackbar(res.snack);
-                        return orderData;
-                    }
+                  this.setMakingOrder(this.receivingProcess.orderData);
+                  this.$refs["order_dialog"].editMakingOrder();
+                  return false;
                 } else {
-                    // 単価が同じ場合は処理しない
+                  // console.log("matched ");
+                  // 単価が同じ場合は処理しない
+                  return true;
                 }
-                return orderData;
             },
             // 仕入れファイル編集
             editReceivingProcess(val) {

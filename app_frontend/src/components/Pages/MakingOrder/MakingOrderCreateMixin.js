@@ -69,7 +69,7 @@ export default {
             newMakingOrder.modifiedBy = billOfMaterialList[bom].modifiedBy;
             // 発注ファイルを作成する
             let res = await this.postMakingOrder(newMakingOrder);
-            console.log(res);
+            // console.log(res);
           } else {
             // すでに存在する場合は何もしない
             // console.log(billOfMaterialList[bom].id + " is already exists");

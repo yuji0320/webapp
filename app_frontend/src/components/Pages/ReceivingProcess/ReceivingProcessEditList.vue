@@ -209,6 +209,16 @@ export default {
         )
       ) {
         // Yesの場合は削除処理
+        // 発注ファイルのフラグ修正
+        val.orderData.isPrinted = false;
+        if(val.orderData.billOfMaterial) {
+          console.log(val.orderData.billOfMaterial);
+          val.orderData.billOfMaterialId = val.orderData.billOfMaterial.id;
+        } else {
+          val.orderData.billOfMaterialId = null;
+        }
+        await this.putMakingOrder(val.orderData);
+        // 仕入ファイルの削除
         res = await this.deleteReceivingProcess(val);
       } else {
         // Noの場合はスナックバーにキャンセルの旨を表示
