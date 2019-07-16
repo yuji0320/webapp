@@ -38,6 +38,11 @@ export default {
     createPDFData(val) {
       // ヘッダー用テキストを定義      
       let pdfHeader = this.defaultHeaderPDF(val.headerText);
+      // 印刷向き
+      let pageOrientation = "portrait";
+      if(val.pageOrientation) {
+        pageOrientation = val.pageOrientation;
+      }
       if(val.header) { 
         pdfHeader = val.header; 
         // console.log(pdfHeader);
@@ -80,6 +85,7 @@ export default {
         // 印刷プロパティ
         pageSize: 'LETTER',
         pageMargins: pageMargins,
+        pageOrientation: pageOrientation,
         defaultStyle: {
           font: 'GenShin',
           fontSize: 8

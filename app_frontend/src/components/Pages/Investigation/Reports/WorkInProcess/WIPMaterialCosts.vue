@@ -71,7 +71,7 @@ export default {
       defaultHeaders: [
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
-        { text: "Delivery Date", value: "deliveryDate" },
+        { text: "Delivery Date", value: "deliveryDate", class: "text-xs-center" },
         { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"},
       ],
       totalCol: {text: "Total", value: "totalArray", nest: "total", class: "text-xs-right"},
@@ -98,19 +98,18 @@ export default {
     // テーブルヘッダー作成
     tableHeaders() {
       let headerList = [];
-      // headerList.concat();
-      if(this.expenseCategories.results) {
-        let list = this.expenseCategories.results;
-        for (let i=0,expense; expense=list[i]; i++) {
-          let col = {
-            text: expense.categoryName,
-            value: "totalArray",
-            nest: expense.id,
-            class: "text-xs-right"
-          };
-          headerList.push(col);
-        }
-      }
+      // if(this.expenseCategories.results) {
+      //   let list = this.expenseCategories.results;
+      //   for (let i=0,expense; expense=list[i]; i++) {
+      //     let col = {
+      //       text: expense.abbr,
+      //       value: "totalArray",
+      //       nest: expense.id,
+      //       class: "text-xs-right"
+      //     };
+      //     headerList.push(col);
+      //   }
+      // }
       headerList.push(this.totalCol);
       let results = this.defaultHeaders.concat(headerList);
       return results
@@ -191,7 +190,7 @@ export default {
     // 計算対象カテゴリー取得
     this.getExpenseCategories({params: {is_calculate:true, order_by:"category_number"}});
     // // 集計データリセット
-    this.clearJobOrders();
+    // this.clearJobOrders();
     // 読み込みの初期化
     this.$store.commit("systemConfig/setLoading", false);
     // 本日日付のインプット

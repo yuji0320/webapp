@@ -42,7 +42,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
         # 予算直接原価
         direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget + \
                              obj.outsourcing_mechanical_design_budget + obj.outsourcing_electrical_design_budget + \
-                             obj.outsourcing_other_budget
+                             obj.outsourcing_other_budget + obj.shipping_cost_budget
         # 限界利益予算額
         limit_profit_budget = order_price - direct_cost_budget
         if obj.order_price == 0:
@@ -124,11 +124,13 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'outsourcing_mechanical_design_budget',
             'outsourcing_electrical_design_budget',
             'outsourcing_other_budget',
+            'shipping_cost_budget',
             'mechanical_design_budget_hours',
             'electrical_design_budget_hours',
             'assembly_budget_hours',
             'electrical_wiring_budget_hours',
             'installation_budget_hours',
+            'shipping_cost_result',
             'created_at',
             'created_by',
             'modified_at',

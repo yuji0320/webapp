@@ -278,7 +278,7 @@ export default {
       this.$router.push({ name: "MakingOrderPrint" });
     },
     reprintOrder() {
-      this.setJobOrderID(this.mfgNo);
+      this.setJobOrderID(this.mfgNoPrint);
       this.setReprint(true);
       this.setSupplierID(this.supplier);
       this.$router.push({ name: "MakingOrderPrint" });

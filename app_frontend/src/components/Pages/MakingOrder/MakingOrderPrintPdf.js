@@ -282,7 +282,7 @@ export default {
             widths: [250],
             margin: [0, 50, 0, 0],
             body: [
-              [{text: "Created by : " , bold: true, fontSize: 12}],
+              [{text: createdBy , bold: true, fontSize: 12}],
               [{text: "Approved by :", bold: true, fontSize: 12}],
               [{text: "Signature :", bold: true, fontSize: 12}],
             ]
@@ -332,6 +332,8 @@ export default {
         if(supplier["isRelatedParty"] && jobOrder["relatedPartyMfgNo"] !== "") {
           mfgNo = mfgNo + " / " + jobOrder["relatedPartyMfgNo"];
         }
+      } else {
+        mfgNo = "Stock Parts";
       }
       // 日付の設定
       let today = this.changeDateUS(new Date());

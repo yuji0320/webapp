@@ -53,6 +53,7 @@ class SystemExpenseCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category_number = models.IntegerField(_('Category number'), unique=True)  # 項目番号
     category_name = models.CharField(_('Category name'), max_length=150, unique=True)  # 項目名
+    abbr = models.CharField(_('Abbreviation'), max_length=10, blank=True)  # 略称
     is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
     is_calculate = models.BooleanField(_('is Calculate in WIP'), default=True)  # 仕掛で計算するかどうか
     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか

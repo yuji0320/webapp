@@ -132,6 +132,12 @@ export default {
           {text: "", alignment:"right"},
         ],
         [
+          {text:"Shipping Cost", alignment:"left", margin:[10,0,0,0]},
+          {text: this.jobOrderData.shippingCostBudgetDisplay, alignment:"right"},
+          {text: this.jobOrderData.shippingCostResult, alignment:"right"},
+          {text: "", alignment:"right"},
+        ],
+        [
           {text:"Direct Cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
           {text: this.jobOrderData.directCostBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.directCostResult, alignment:"right", decoration: 'underline'},

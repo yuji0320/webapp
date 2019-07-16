@@ -258,6 +258,16 @@
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
             </v-flex>
+            <!-- 運送費予算 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Shipping Cost Budget"
+                v-model="jobOrder.shippingCostBudget"
+                :error-messages="responseError.shippingCostBudget"
+                class="right-input"
+                :suffix="loginUserData.defaultCurrencyCode"
+              ></v-text-field >
+            </v-flex>
             <v-flex xs12>
               <h3>Budget Work Time</h3>
             </v-flex>
@@ -309,6 +319,19 @@
                 :error-messages="responseError.installationBudgetHours"
                 class="right-input"
                 suffix="Hours"
+              ></v-text-field >
+            </v-flex>
+            <v-flex xs12>
+              <h3>shipping Cost Result</h3>
+            </v-flex>
+            <!-- 運送費実績 -->
+            <v-flex xs4>
+              <v-text-field 
+                label="Shipping Cost Result"
+                v-model="jobOrder.shippingCostResult"
+                :error-messages="responseError.shippingCostResult"
+                class="right-input"
+                :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
             </v-flex>
             <v-flex xs12 class="text-xs-right">

@@ -23,7 +23,7 @@ export default {
       let tablebody = [];
       // ヘッダー作成
       let tableHeader = this.headerList(this.tableHeaders);
-      let tableWidths = [40, 160, 50, 50, 50, 50, 50, 50];
+      let tableWidths = [55, 230, 80, 80, 80];
       tablebody.push(tableHeader);
       // テーブル内容作成
       for(var d=0,data;data=this.dataList[d];d++){
@@ -42,7 +42,11 @@ export default {
           }
           // データが右寄せ(数値)の場合は右寄せ処理
           if(head.class=="text-xs-right") {
-            col = {"text": col, alignment: "right"}
+            col = {"text": col, alignment: "right"};
+          }
+          // データが右寄せ(数値)の場合は右寄せ処理
+          if(head.class=="text-xs-center" && col) {
+            col = {"text": col, alignment: "center"};
           }
           // データが未定義の場合はblankを入力
           if(!col) { col = ""; }
@@ -61,7 +65,8 @@ export default {
       // 出力データ整形
       let pdfData = {
         "headerText": headerText,
-        "content": tableData
+        "content": tableData,
+        // "pageOrientation": "landscape"
       }
       return pdfData;
     }

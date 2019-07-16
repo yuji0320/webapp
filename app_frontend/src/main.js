@@ -11,7 +11,6 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 // ユーティリティファイルのインポート
 import titleMixin from './util/title';
 import dateFormetMixin from './util/dateFormat';
-import getDateMixin from './util/getDateMixin';
 
 // ライブラリのインポート
 // 時刻データ操作ライブラリのインポート
@@ -88,7 +87,6 @@ Vue.component('app-man-hour-dialog', ManHourDialog);
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 Vue.mixin(dateFormetMixin);
-Vue.mixin(getDateMixin);
 Vue.use(BootstrapVue);
 
 // 開発ステータスの定義

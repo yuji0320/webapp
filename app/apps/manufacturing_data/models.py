@@ -1,9 +1,7 @@
 from system_users.models import *
 # from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
-
-# Create your models here.
+from decimal import Decimal
 
 
 class JobOrder(models.Model):
@@ -43,40 +41,25 @@ class JobOrder(models.Model):
     notes = models.TextField(_('Notes'), blank=True)  # 備考
     related_party_mfg_no = models.CharField(_("Related party's MFG No"), max_length=20, blank=True)  # 関係会社工事番号
     commercial_parts_budget = models.DecimalField(
-        _('Commercial parts budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Commercial parts budget'), max_digits=17, decimal_places=2, default=0
     )  # 市販部品見積金額
     electrical_parts_budget = models.DecimalField(
-        _('Electrical parts budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Electrical parts budget'), max_digits=17, decimal_places=2, default=0
     )  # 電気部品見積金額
     processed_parts_budget = models.DecimalField(
-        _('Processed parts budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Processed parts budget'), max_digits=17, decimal_places=2, default=0
     )  # 加工部品見積金額
+    shipping_cost_budget = models.DecimalField(
+        _('Shipping Cost budget'), max_digits=17, decimal_places=2, default=Decimal('0.00')
+    )  # 運送費予算
     outsourcing_mechanical_design_budget = models.DecimalField(
-        _('Outsourcing Mechanical Design budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Outsourcing Mechanical Design budget'), max_digits=17, decimal_places=2, default=0
     )  # 外注機構設計見積金額
     outsourcing_electrical_design_budget = models.DecimalField(
-        _('Outsourcing Electrical Design budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Outsourcing Electrical Design budget'), max_digits=17, decimal_places=2, default=0
     )  # 外注電気見積金額
     outsourcing_other_budget = models.DecimalField(
-        _('Outsourcing - Other budget'),
-        max_digits=17,
-        decimal_places=2,
-        default=0
+        _('Outsourcing - Other budget'), max_digits=17, decimal_places=2, default=0
     )  # 外注組み立て調整見積金額
     mechanical_design_budget_hours = models.DecimalField(
         _('Mechanical Design budget hours'),
@@ -108,6 +91,7 @@ class JobOrder(models.Model):
         decimal_places=2,
         default=0
     )  # 現地調整見積時間
+    shipping_cost_result = models.DecimalField(_('Shipping Cost result'), max_digits=17, decimal_places=2, default=Decimal('0.00'))  # 運送費実績
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     created_by = models.ForeignKey('system_users.User',
                                    related_name='%(class)s_requests_created',

@@ -154,6 +154,12 @@
                 <td class="text-right"></td>
               </tr>
               <tr>
+                <td class="text-center">Shipping Costs</td>
+                <td class="text-right">{{ jobOrderData.shippingCostBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.shippingCostResultDisplay }}</td>
+                <td class="text-right"></td>
+              </tr>
+              <tr>
                 <td class="text-center"><strong>Material Cost Total</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.directCostBudgetDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.directCostResult }}</strong></td>
@@ -325,7 +331,7 @@ export default {
         directCost += t;
         results.push(t);
       }
-      directCost = Math.round( directCost * 100) / 100;
+      directCost = Math.round( (directCost + parseFloat(this.jobOrder.shippingCostResult) ) * 100) / 100;
       let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
       let limitProfit = (Math.round(( orderAmount - directCost) * 100) / 100);
       let limitProfitPercentage = 0;
@@ -431,6 +437,7 @@ export default {
         jobOrder.outsourcingMechanicalDesignBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingMechanicalDesignBudget);
         jobOrder.outsourcingElectricalDesignBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingElectricalDesignBudget);
         jobOrder.outsourcingOtherBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingOtherBudget);
+        jobOrder.shippingCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.shippingCostBudget);
         jobOrder.directCostBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
         jobOrder.limitProfitBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
         jobOrder.limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
@@ -442,37 +449,38 @@ export default {
           jobOrder.outsourcingMechanicalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[3].toFixed(2));
           jobOrder.outsourcingElectricalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[4].toFixed(2));
           jobOrder.outsourcingOtherResult = defaultDisplay + this.moneyComma(this.directCosts.results[5].toFixed(2));
+          jobOrder.shippingCostResultDisplay = defaultDisplay + this.moneyComma(this.jobOrder.shippingCostResult);
           jobOrder.directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
           jobOrder.limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
           jobOrder.limitProfitPercentageResult =this.directCosts.limitProfitPercentage + "%";
         }
         // 労務費予算
         jobOrder.mechanicalDesignBudgetHoursDisplay = this.jobOrder.mechanicalDesignBudgetHours + " h";
-        jobOrder.mechanicalDesignBudgetPrice = defaultDisplay + (this.jobOrder.mechanicalDesignBudgetHours * timeCharge).toFixed(2);
+        jobOrder.mechanicalDesignBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.mechanicalDesignBudgetHours * timeCharge).toFixed(2));
         jobOrder.electricalDesignBudgetHoursDisplay = this.jobOrder.electricalDesignBudgetHours + " h";
-        jobOrder.electricalDesignBudgetPrice = defaultDisplay + (this.jobOrder.electricalDesignBudgetHours * timeCharge).toFixed(2);
+        jobOrder.electricalDesignBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.electricalDesignBudgetHours * timeCharge).toFixed(2));
         jobOrder.assemblyBudgetHoursDisplay = this.jobOrder.assemblyBudgetHours + " h";
-        jobOrder.assemblyBudgetPrice = defaultDisplay + (this.jobOrder.assemblyBudgetHours * timeCharge).toFixed(2);
+        jobOrder.assemblyBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.assemblyBudgetHours * timeCharge).toFixed(2));
         jobOrder.electricalWiringBudgetHoursDisplay = this.jobOrder.electricalWiringBudgetHours + " h";
-        jobOrder.electricalWiringBudgetPrice = defaultDisplay + (this.jobOrder.electricalWiringBudgetHours * timeCharge).toFixed(2);
+        jobOrder.electricalWiringBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.electricalWiringBudgetHours * timeCharge).toFixed(2));
         jobOrder.installationBudgetHoursDisplay = this.jobOrder.installationBudgetHours + " h";
-        jobOrder.installationBudgetPrice = defaultDisplay + (this.jobOrder.installationBudgetHours * timeCharge).toFixed(2);
+        jobOrder.installationBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.installationBudgetHours * timeCharge).toFixed(2));
         jobOrder.workingHoursBudgetDisplay = this.jobOrder["costs"]["workingHoursBudget"] + " h";
-        jobOrder.laborCostBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["laborCostBudget"];
+        jobOrder.laborCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["laborCostBudget"]);
         // 労務費実績
         if((this.laborCost.results).length !== 0) {
           jobOrder.mechanicalDesignResultHoursDisplay = this.laborCost.results[0].toFixed(2) + " h";
-          jobOrder.mechanicalDesignResultPrice = defaultDisplay + (this.laborCost.results[0] * timeCharge).toFixed(2);
+          jobOrder.mechanicalDesignResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[0] * timeCharge).toFixed(2));
           jobOrder.electricalDesignResultHoursDisplay = this.laborCost.results[1].toFixed(2) + " h";
-          jobOrder.electricalDesignResultPrice = defaultDisplay + (this.laborCost.results[1] * timeCharge).toFixed(2);
+          jobOrder.electricalDesignResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[1] * timeCharge).toFixed(2));
           jobOrder.assemblyResultHoursDisplay = this.laborCost.results[2].toFixed(2) + " h";
-          jobOrder.assemblyResultPrice = defaultDisplay + (this.laborCost.results[2] * timeCharge).toFixed(2);
+          jobOrder.assemblyResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[2] * timeCharge).toFixed(2));
           jobOrder.electricalWiringResultHoursDisplay = this.laborCost.results[3].toFixed(2) + " h";
-          jobOrder.electricalWiringResultPrice = defaultDisplay + (this.laborCost.results[3] * timeCharge).toFixed(2);
+          jobOrder.electricalWiringResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[3] * timeCharge).toFixed(2));
           jobOrder.installationResultHoursDisplay = this.laborCost.results[4].toFixed(2) + " h";
-          jobOrder.installationResultPrice = defaultDisplay + (this.laborCost.results[4] * timeCharge).toFixed(2);
+          jobOrder.installationResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[4] * timeCharge).toFixed(2));
           jobOrder.workingHoursResultDisplay = this.laborCost.totalWorkHours.toFixed(2) + " h";
-          jobOrder.laborCostResultDisplay = defaultDisplay + (this.laborCost.totalWorkHours * timeCharge).toFixed(2);
+          jobOrder.laborCostResultDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalWorkHours * timeCharge).toFixed(2));
         }
         // 集計値予算
         jobOrder.manufacturingCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["manufacturingCostBudget"]);
