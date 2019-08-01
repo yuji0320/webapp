@@ -131,7 +131,7 @@
     <app-received-dialog @response-function="responseFunction" ref="receive_dialog">
       <span slot="edit-order" d-inline-flex>
         <v-btn color="primary" dark @click="editMakingOrder">Edit Order File</v-btn>
-        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit BOM File</v-btn>
       </span>
     </app-received-dialog>
 
@@ -253,7 +253,7 @@
             // 入力数値確認
             isNumber(numVal){
                 // チェック条件パターン(整数15桁、少数2桁)
-                let pattern = /^([1-9][0-9]{0,14}|0)(\.[0-9]{1,2})?$/;
+                let pattern = /^([-+]?[1-9][0-9]{0,14}|0)(\.[0-9]{1,2})?$/;
                 // 数値チェック
                 return pattern.test(numVal);
             },
@@ -295,9 +295,10 @@
                     // console.log(receivedUP);
                     this.errorList.push("Received Unit Price allow only number (decimal 2)");
                 } else {
-                    if (receivedUP.match(/^\d+$/)) {
+                    if (receivedUP.match("^[-+]?[0-9]+$")) {
                         // 整数の場合は".00"を追加する
                         receivedUP = parseInt(receivedUP).toFixed(2);
+                        console.log(receivedUP);
                     }
                     let res = "";
                     res = await this.checkPrice(receivedUP, orderData);
@@ -339,7 +340,7 @@
                 let res = {};
                 let received = receivedUP;
                 let order = orderData.unitPrice;
-                // console.log(orderData);
+                console.log(orderData);
                 if(received!==order) {
                   this.setMakingOrder(this.receivingProcess.orderData);
                   this.$refs["order_dialog"].editMakingOrder();
@@ -353,7 +354,7 @@
             // 仕入れファイル編集
             editReceivingProcess(val) {
                 this.setReceivingProcess(val);
-                // console.log(val);
+                console.log(val.orderData);
                 this.$refs["receive_dialog"].editReceivingProcess();
             },
             // 発注ファイル編集
