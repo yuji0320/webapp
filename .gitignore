@@ -3,3 +3,5 @@
 initial_user_data.json
 *.dump
 mysql/.DS_Store
+/nginx/log/
+/mysql/backup/backup/
