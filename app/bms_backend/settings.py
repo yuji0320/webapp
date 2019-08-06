@@ -25,6 +25,7 @@ SECRET_KEY = '8c871khoayk8u5d9ayny8rlil0wdd$q28*6e)uvl%z#aob^_qn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -73,7 +74,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'static'),
+            os.path.join(BASE_DIR, 'static/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -141,7 +142,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

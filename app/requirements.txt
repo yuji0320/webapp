@@ -11,3 +11,4 @@ django-cors-headers
 djangorestframework-camel-case
 django_extensions
 drf-extensions
+uwsgi==2.0.17

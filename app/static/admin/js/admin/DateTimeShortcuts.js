@@ -20,10 +20,10 @@
         dismissClockFunc: [],
         dismissCalendarFunc: [],
         calendarDivName1: 'calendarbox', // name of calendar <div> that gets toggled
-        calendarDivName2: 'calendarin',  // name of <div> that contains calendar
-        calendarLinkName: 'calendarlink',// name of the link that is used to toggle
-        clockDivName: 'clockbox',        // name of clock <div> that gets toggled
-        clockLinkName: 'clocklink',      // name of the link that is used to toggle
+        calendarDivName2: 'calendarin', // name of <div> that contains calendar
+        calendarLinkName: 'calendarlink', // name of the link that is used to toggle
+        clockDivName: 'clockbox', // name of clock <div> that gets toggled
+        clockLinkName: 'clocklink', // name of the link that is used to toggle
         shortCutsClass: 'datetimeshortcuts', // class of the clock and cal shortcuts
         timezoneWarningClass: 'timezonewarning', // class of the warning for timezone mismatch
         timezoneOffset: 0,
@@ -206,7 +206,7 @@
             else {
                 // since style's width is in em, it'd be tough to calculate
                 // px value of it. let's use an estimated px for now
-                // IE returns wrong value for findPosX when in rtl mode
+                // TODO: IE returns wrong value for findPosX when in rtl mode
                 //       (it returns as it was left aligned), needs to be fixed.
                 clock_box.style.left = findPosX(clock_link) - 110 + 'px';
             }
@@ -345,7 +345,7 @@
                 e.preventDefault();
                 DateTimeShortcuts.dismissCalendar(num);
             });
-            django.jQuery(document).bind('keyup', function(event) {
+            django.jQuery(document).on('keyup', function(event) {
                 if (event.which === 27) {
                     // ESC key closes popup
                     DateTimeShortcuts.dismissCalendar(num);
@@ -379,7 +379,7 @@
             else {
                 // since style's width is in em, it'd be tough to calculate
                 // px value of it. let's use an estimated px for now
-                // IE returns wrong value for findPosX when in rtl mode
+                // TODO: IE returns wrong value for findPosX when in rtl mode
                 //       (it returns as it was left aligned), needs to be fixed.
                 cal_box.style.left = findPosX(cal_link) - 180 + 'px';
             }
