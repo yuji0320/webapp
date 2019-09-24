@@ -277,7 +277,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     # 表示用単価作成(通貨記号付き文字列単価)
     @staticmethod
     def get_display_price(obj):
-        display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
+        display_price = obj.currency.display + ' ' + "{:-,.2f}".format(obj.unit_price)
         return display_price
 
     # 表示用合計金額作成(通貨記号付き文字列合計金額)

@@ -27,13 +27,13 @@ export default {
       let tableWidths = [40, 200, 70, 70, 50, 90];
       tablebody.push(tableHeader);
       // テーブル内容作成
-      for(var s=0,summary;summary=this.summaryList[s];s++){
+      for(let s=0,summary;summary=this.summaryList[s];s++){
         // 作業指図書データの展開
-        for(var d=0,data;data=summary.dataList[d];d++){
+        for(let d=0,data;data=summary.dataList[d];d++){
           // 行オブジェクトの定義
           let dataRow = [];
           // テーブルヘッダーを展開
-          for(var h=0,head;head=this.headers[h];h++){
+          for(let h=0,head;head=this.headers[h];h++){
             // dataからヘッダーに該当するものを抜き出す
             let col = data[head.value];
             // データがネストしている場合はネスと先データを表示

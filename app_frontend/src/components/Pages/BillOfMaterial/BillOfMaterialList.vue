@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
@@ -64,7 +61,7 @@ export default {
   name: "BillOfMaterialList",
   data() {
     return {
-      orderBy: "-created_at",
+      orderBy: 'manufacturer__name,standard,drawing_number',
       // テーブルヘッダーデータ
       defaultHeadersTop: [
         { text: "Part Name", value: "name" }
@@ -140,7 +137,7 @@ export default {
     ]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getBillOfMaterials(data);
+      await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 編集データ設定

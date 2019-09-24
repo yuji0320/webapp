@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       // データ関係
-      orderBy: "-order__desired_delivery_date",
+      orderBy: 'suspense_received_date,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
       // テーブルヘッダーデータ
       headers: [
         { text: "No", value: "orderData", nest:"number" },
@@ -212,7 +212,6 @@ export default {
         // 発注ファイルのフラグ修正
         val.orderData.isPrinted = false;
         if(val.orderData.billOfMaterial) {
-          console.log(val.orderData.billOfMaterial);
           val.orderData.billOfMaterialId = val.orderData.billOfMaterial.id;
         } else {
           val.orderData.billOfMaterialId = null;

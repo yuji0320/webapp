@@ -46,11 +46,10 @@
 
       <span slot="card-content">
         <template v-if="jobOrders.results">
-          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
-          <div
-            v-for="(list, id) in summaryList"
-            :key="id"
-          >
+          <h2 class="text-xs-right">
+            Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}
+          </h2>
+          <div v-for="(list, id) in summaryList" :key="id">
             <!-- 項目名 -->
             <h2 class="title font-weight-light">{{ list.value }}</h2>
             <!-- テーブル表示 -->
@@ -60,13 +59,17 @@
               :footer="true"
             >
               <span slot="data-table-footer">
-                <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
+                <strong>
+                  Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}
+                </strong>
               </span>
             </app-data-table>
             <!-- レイアウト調整用改行タグ -->
             <br><br>
           </div>
-          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+          <h2 class="text-xs-right">
+            Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}
+          </h2>
         </template>
       </span>
 

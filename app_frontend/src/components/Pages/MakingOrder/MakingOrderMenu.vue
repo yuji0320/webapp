@@ -26,7 +26,7 @@
               <v-card-title>
                 <app-incremental-model-search
                   label="Job Order"
-                  orderBy="mfg_no"
+                  orderBy="-mfg_no"
                   v-model="mfgNo"
                   searchType="jobOrder"
                   errorMessages=""

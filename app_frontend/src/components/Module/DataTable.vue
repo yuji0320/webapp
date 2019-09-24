@@ -77,7 +77,7 @@
           </template>
 
           <!-- 最終行のみ挿入可能スロットを追加する -->
-          <div v-show="header.value == 'action'">
+          <div v-show="header.value === 'action'">
             <v-layout justify-center>
               <!-- 閲覧ボタン -->
               <v-icon
@@ -123,8 +123,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
 export default {
   name: "DataTable",
   data() {

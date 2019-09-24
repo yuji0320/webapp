@@ -16,14 +16,8 @@
       <slot name="card-header-button"></slot>
     </v-toolbar>
 
-    <!-- 注意書き -->
-<!--    このスロットを追加すると検索バーが下がる-->
-<!--    <v-card-text>-->
-<!--      <slot name="card-text"></slot>-->
-<!--    </v-card-text>-->
-
     <!-- Cardタイトル -->
-    <v-card-title v-show="!noSeachBar">
+    <v-card-title v-show="!noSearchBar">
       <v-layout row wrap>
         <v-flex xs12>
           <!-- 検索バー表示スロット -->
@@ -57,7 +51,7 @@
 <script>
 export default {
   props: {
-    noSeachBar: { required: false },
+    noSearchBar: { required: false },
   }
 }
 </script>

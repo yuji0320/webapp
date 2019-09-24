@@ -69,7 +69,7 @@ export default {
   data () {
     return {
       // データ関係
-      orderBy: "-order__desired_delivery_date",
+      orderBy: 'suspense_received_date,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
       // テーブルヘッダーデータ
       headers: [
         { text: "No", value: "orderData", nest:"number" },

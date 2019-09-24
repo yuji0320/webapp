@@ -7,4 +7,7 @@
   <component name="PyPackaging">
     <option name="earlyReleasesAsUpgrades" value="true" />
   </component>
+  <component name="WebPackConfiguration">
+    <option name="path" value="$PROJECT_DIR$/app_frontend/vue.config.js" />
+  </component>
 </project>

@@ -33,6 +33,7 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
     serializer_class = BillOfMaterialSerializer
     queryset = BillOfMaterial.objects.all()
     filter_class = BillOfMaterialFilter
+    # filter_backends = [filters.OrderingFilter]
 
     @multi_create(serializer_class=BillOfMaterialSerializer)
     def create(self, request, **kwargs):

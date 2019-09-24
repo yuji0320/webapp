@@ -144,246 +144,246 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from "vuex";
+  import { mapState, mapActions } from "vuex";
 
-    export default {
-        title: "Receiving Process List",
-        name: "ReceivingProcessList",
-        data() {
+  export default {
+    title: "Receiving Process List",
+    name: "ReceivingProcessList",
+      data() {
+        return {
+          dialog: false,
+          errorList: [],
+          orderBy: 'suspense_received_date,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
+          headers: [
+              { text: "No.", value:"number", width:"5%"},
+              { text: "Partner name", value:"name", width:"10%" },
+              { text: "Standard / Drawing No", value:"", width:"15%" },
+              { text: "Other", value:"", width:"5%" },
+              { text: "Desire Date", value:"", width:"5%" },
+              { text: "Received Date", value:"", width:"10%" },
+              { text: "Order Qty", value:"", width:"5%" },
+              { text: "Received Qty", value:"", width:"15%" },
+              { text: "Order UP", value:"", width:"5%" },
+              { text: "Received UP", value:"", width:"15%" },
+              { text: "Action", value:"", width:"10%" }
+          ],
+          // テーブル検索用データ
+          incremental: {
+            // 検索カラムリスト
+            tableSelectItems: [
+              { label: "Part Name", value: "name" }
+            ],
+            // 検索数値の初期値および返り値
+            tableSelectValue: "name",
+            tableSearch: ""
+          }
+        }
+      },
+      computed: {
+        ...mapState("auth", ["loginUserData"]),
+        ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),
+        ...mapState("systemUserApi", ["userPartner", "userCompany"]),
+        ...mapState("jobOrderAPI", ["jobOrder"]),
+        ...mapState("billOfMaterialAPI", ["billOfMaterials", "billOfMaterial"]),
+        ...mapState("makingOrderAPI", ["makingOrders", "makingOrder"]),
+        ...mapState("receivingProcessAPI", [
+          "responseError", "jobOrderID", "supplierID", "orderNumber", "receivingProcesses", "receivingProcess"
+        ]),
+        hasMFGNo() {
+          return !!this.jobOrderID;
+        },
+        hasOrderNumber() {
+          return !!this.orderNumber;
+        },
+        // ページごとの設定
+        switchParams: function () {
+          let title = "";
+          if (this.hasOrderNumber) {
+            // 工事番号なしの場合
+            title = " - Order Number " + this.orderNumber;
             return {
-                dialog: false,
-                errorList: [],
-                orderBy: "-order__desired_delivery_date",
-                headers: [
-                    { text: "No.", value:"number", width:"5%"},
-                    { text: "Partner name", value:"name", width:"10%" },
-                    { text: "Standard / Drawing No", value:"", width:"15%" },
-                    { text: "Other", value:"", width:"5%" },
-                    { text: "Desire Date", value:"", width:"5%" },
-                    { text: "Received Date", value:"", width:"10%" },
-                    { text: "Order Qty", value:"", width:"5%" },
-                    { text: "Received Qty", value:"", width:"15%" },
-                    { text: "Order UP", value:"", width:"5%" },
-                    { text: "Received UP", value:"", width:"15%" },
-                    { text: "Action", value:"", width:"10%" }
-                ],
-                // テーブル検索用データ
-                incremental: {
-                    // 検索カラムリスト
-                    tableSelectItems: [
-                        { label: "Part Name", value: "name" }
-                    ],
-                    // 検索数値の初期値および返り値
-                    tableSelectValue: "name",
-                    tableSearch: ""
-                }
+              params: {
+                company: this.loginUserData["companyId"],
+                order__number: this.orderNumber,
+                is_received: false,
+                order_by: this.orderBy,
+              },
+              title: title
             }
-        },
-        computed: {
-            ...mapState("auth", ["loginUserData"]),
-            ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory"]),
-            ...mapState("systemUserApi", ["userPartner", "userCompany"]),
-            ...mapState("jobOrderAPI", ["jobOrder"]),
-            ...mapState("billOfMaterialAPI", ["billOfMaterials", "billOfMaterial"]),
-            ...mapState("makingOrderAPI", ["makingOrders", "makingOrder"]),
-            ...mapState("receivingProcessAPI", [
-                "responseError", "jobOrderID", "supplierID", "orderNumber", "receivingProcesses", "receivingProcess"
-            ]),
-            hasMFGNo() {
-                return !!this.jobOrderID;
-            },
-            hasOrderNumber() {
-                return !!this.orderNumber;
-            },
-            // ページごとの設定
-            switchParams: function () {
-                let title = "";
-                if (this.hasOrderNumber) {
-                    // 工事番号なしの場合
-                    title = " - Order Number " + this.orderNumber;
-                    return {
-                        params: {
-                            company: this.loginUserData["companyId"],
-                            order__number: this.orderNumber,
-                            is_received: false,
-                            order_by: this.orderBy,
-                        },
-                        title: title
-                    }
-                } else {
-                    if (this.hasMFGNo) {
-                        title = " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
-                        return {
-                            params: {
-                                company: this.loginUserData["companyId"],
-                                order__bill_of_material__job_order: this.jobOrderID,
-                                is_received: false,
-                                order__supplier: this.supplierID,
-                                order_by: this.orderBy,
-                                page_size: 1000
-                            },
-                            title: title
-                        }
-                    } else {
-                        // 工事番号なしの場合
-                        title = " without MFG No";
-                        return {
-                            params: {
-                                company: this.loginUserData["companyId"],
-                                is_received: false,
-                                no_bom: true,
-                                order__supplier: this.supplierID,
-                                order_by: this.orderBy,
-                                page_size: 1000
-                            },
-                            title: title
-                        }
-                    }
-                }
-            }
-        },
-        methods: {
-            ...mapActions("systemConfig", ["showSnackbar"]),
-            ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getExpenseCategory"]),
-            ...mapActions("jobOrderAPI", ["getJobOrder"]),
-            ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
-            ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
-            ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
-            ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess", "setReceivingProcessesList", "setReceivingProcess"]),
-            // 入力数値確認
-            isNumber(numVal){
-                // チェック条件パターン(整数15桁、少数2桁)
-                let pattern = /^([-+]?[1-9][0-9]{0,14}|0)(\.[0-9]{1,2})?$/;
-                // 数値チェック
-                return pattern.test(numVal);
-            },
-            async getList(data) {
-                this.$store.commit("systemConfig/setLoading", true);
-                await this.getReceivingProcesses(data);
-                this.$store.commit("systemConfig/setLoading", false);
-            },
-            async submitData(val) {
-                let err = false;
-                this.errorList = [];
-                // let deliveryDate = val.orderData.desiredDeliveryDate;
-                let receivedDate = val["receivedDate"];
-                let orderAmount = val.orderData.amount;
-                let receivedAmount = val.amount;
-                // let orderUP = val.orderData.unitPrice;
-                let receivedUP = val.unitPrice;
-                let orderData = val.orderData;
-
-                if(!receivedDate) {
-                    err = true;
-                    this.errorList.push("Received date is require field");
-                }
-                if(!receivedAmount) {
-                    err = true;
-                    this.errorList.push("Received amount is require field");
-                } else {
-                    let amount = orderAmount - receivedAmount;
-                    if(amount !== 0) {
-                        err = true;
-                        this.errorList.push("Order amount and received amount does not match");
-                    }
-                }
-                if(!receivedUP) {
-                    err = true;
-                    this.errorList.push("Received Unit Price is required field");
-                } else if (!this.isNumber(receivedUP)) {
-                    err = true;
-                    // console.log(receivedUP);
-                    this.errorList.push("Received Unit Price allow only number (decimal 2)");
-                } else {
-                    if (receivedUP.match("^[-+]?[0-9]+$")) {
-                        // 整数の場合は".00"を追加する
-                        receivedUP = parseInt(receivedUP).toFixed(2);
-                        console.log(receivedUP);
-                    }
-                    let res = "";
-                    res = await this.checkPrice(receivedUP, orderData);
-                    if(!res) {
-                      this.errorList.push("Received Price and Order Price is not same. \n Please edit order file and input correct price.");
-                    }
-                }
-                if(err) {
-                    this.dialog = true;
-                } else {
-                    // console.log(val);
-                    val.modifiedBy = this.loginUserData.id;
-                    // 仮仕入未処理の場合は仕入日を入れる
-                    if(!val.suspenseReceivedDate) {
-                      val.suspenseReceivedDate = receivedDate;
-                    }
-                    val.isReceived = true;
-
-                    await this.putReceivingProcess(val);
-                    this.loadData();
-                }
-            },
-            backToMenu() {
-                this.$router.push({ name: "ReceivingProcessMenu" });
-            },
-            // データの読み込み
-            loadData() {
-                if (this.supplierID) {
-                    this.getPartner(this.supplierID);
-                }
-                this.getExpenseCategories({params: {"order_by": "category_number"}});
-                if (this.hasMFGNo) {
-                    this.getJobOrder(this.jobOrderID);
-                }
-                this.getList({params: this.switchParams.params});
-            },
-            // 仕入ファイルと発注の金額差チェック
-            async checkPrice(receivedUP, orderData) {
-                let res = {};
-                let received = receivedUP;
-                let order = orderData.unitPrice;
-                console.log(orderData);
-                if(received!==order) {
-                  this.setMakingOrder(this.receivingProcess.orderData);
-                  this.$refs["order_dialog"].editMakingOrder();
-                  return false;
-                } else {
-                  // console.log("matched ");
-                  // 単価が同じ場合は処理しない
-                  return true;
-                }
-            },
-            // 仕入れファイル編集
-            editReceivingProcess(val) {
-                this.setReceivingProcess(val);
-                console.log(val.orderData);
-                this.$refs["receive_dialog"].editReceivingProcess();
-            },
-            // 発注ファイル編集
-            editMakingOrder() {
-                this.setMakingOrder(this.receivingProcess.orderData);
-                this.$refs["order_dialog"].editMakingOrder();
-            },
-            // 部品表ファイル編集
-            editBillOfMaterial() {
-                this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
-                this.$refs["bom_dialog"].editBillOfMaterial();
-            },
-            // 処理結果統合フォーム
-            responseFunction(val) {
-                // リストをリロード
-                this.getList({ params: this.switchParams.params });
-                // Snackbar表示
-                this.showSnackbar(val.snack);
-            },
-        },
-        created() {
-            // もし工事番号等がクリアの場合はメニューにリダイレクトする
-            if(!this.supplierID && !this.orderNumber) {
-                this.$router.push({ name: "ReceivingProcessMenu" });
+          } else {
+            if (this.hasMFGNo) {
+              title = " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
+              return {
+                params: {
+                  company: this.loginUserData["companyId"],
+                  order__bill_of_material__job_order: this.jobOrderID,
+                  is_received: false,
+                  order__supplier: this.supplierID,
+                  order_by: this.orderBy,
+                  page_size: 1000
+                },
+                title: title
+              }
             } else {
-                this.setReceivingProcessesList({});
-                this.loadData();
+              // 工事番号なしの場合
+              title = " without MFG No";
+              return {
+                params: {
+                  company: this.loginUserData["companyId"],
+                  is_received: false,
+                  no_bom: true,
+                  order__supplier: this.supplierID,
+                  order_by: this.orderBy,
+                  page_size: 1000
+                },
+                title: title
+              }
             }
+          }
+        }
+      },
+      methods: {
+        ...mapActions("systemConfig", ["showSnackbar"]),
+        ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getExpenseCategory"]),
+        ...mapActions("jobOrderAPI", ["getJobOrder"]),
+        ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
+        ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
+        ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder"]),
+        ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "putReceivingProcess", "setReceivingProcessesList", "setReceivingProcess"]),
+        // 入力数値確認
+        isNumber(numVal){
+          // チェック条件パターン(整数15桁、少数2桁)
+          let pattern = /^([-+]?[1-9][0-9]{0,14}|0)(\.[0-9]{1,2})?$/;
+          // 数値チェック
+          return pattern.test(numVal);
         },
+        async getList(data) {
+          this.$store.commit("systemConfig/setLoading", true);
+          await this.getReceivingProcesses(data);
+          this.$store.commit("systemConfig/setLoading", false);
+        },
+        async submitData(val) {
+          let err = false;
+          this.errorList = [];
+          // let deliveryDate = val.orderData.desiredDeliveryDate;
+          let receivedDate = val["receivedDate"];
+          let orderAmount = val.orderData.amount;
+          let receivedAmount = val.amount;
+          // let orderUP = val.orderData.unitPrice;
+          let receivedUP = val.unitPrice;
+          let orderData = val.orderData;
+
+          if(!receivedDate) {
+            err = true;
+            this.errorList.push("Received date is require field");
+          }
+          if(!receivedAmount) {
+            err = true;
+            this.errorList.push("Received amount is require field");
+          } else {
+            let amount = orderAmount - receivedAmount;
+            if(amount !== 0) {
+              err = true;
+              this.errorList.push("Order amount and received amount does not match");
+            }
+          }
+          if(!receivedUP) {
+            err = true;
+            this.errorList.push("Received Unit Price is required field");
+          } else if (!this.isNumber(receivedUP)) {
+            err = true;
+            // console.log(receivedUP);
+            this.errorList.push("Received Unit Price allow only number (decimal 2)");
+          } else {
+            if (receivedUP.match("^[-+]?[0-9]+$")) {
+              // 整数の場合は".00"を追加する
+              receivedUP = parseInt(receivedUP).toFixed(2);
+              // console.log(receivedUP);
+            }
+            let res = "";
+            res = await this.checkPrice(receivedUP, orderData);
+            if(!res) {
+              this.errorList.push("Received Price and Order Price is not same. \n Please edit order file and input correct price.");
+            }
+          }
+          if(err) {
+            this.dialog = true;
+          } else {
+            // console.log(val);
+            val.modifiedBy = this.loginUserData.id;
+            // 仮仕入未処理の場合は仕入日を入れる
+            if(!val.suspenseReceivedDate) {
+              val.suspenseReceivedDate = receivedDate;
+            }
+            val.isReceived = true;
+
+            await this.putReceivingProcess(val);
+            this.loadData();
+          }
+        },
+        backToMenu() {
+          this.$router.push({ name: "ReceivingProcessMenu" });
+        },
+        // データの読み込み
+        loadData() {
+          if (this.supplierID) {
+            this.getPartner(this.supplierID);
+          }
+          this.getExpenseCategories({params: {"order_by": "category_number"}});
+          if (this.hasMFGNo) {
+            this.getJobOrder(this.jobOrderID);
+          }
+          this.getList({params: this.switchParams.params});
+        },
+        // 仕入ファイルと発注の金額差チェック
+        async checkPrice(receivedUP, orderData) {
+          let res = {};
+          let received = receivedUP;
+          let order = orderData.unitPrice;
+          // console.log(orderData);
+          if(received!==order) {
+            this.setMakingOrder(this.receivingProcess.orderData);
+            this.$refs["order_dialog"].editMakingOrder();
+            return false;
+          } else {
+            // console.log("matched ");
+            // 単価が同じ場合は処理しない
+            return true;
+          }
+        },
+        // 仕入れファイル編集
+        editReceivingProcess(val) {
+          this.setReceivingProcess(val);
+          // console.log(val.orderData);
+          this.$refs["receive_dialog"].editReceivingProcess();
+        },
+        // 発注ファイル編集
+        editMakingOrder() {
+          this.setMakingOrder(this.receivingProcess.orderData);
+          this.$refs["order_dialog"].editMakingOrder();
+        },
+        // 部品表ファイル編集
+        editBillOfMaterial() {
+          this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
+          this.$refs["bom_dialog"].editBillOfMaterial();
+        },
+        // 処理結果統合フォーム
+        responseFunction(val) {
+          // リストをリロード
+          this.getList({ params: this.switchParams.params });
+          // Snackbar表示
+          this.showSnackbar(val.snack);
+        },
+      },
+      created() {
+        // もし工事番号等がクリアの場合はメニューにリダイレクトする
+        if(!this.supplierID && !this.orderNumber) {
+          this.$router.push({ name: "ReceivingProcessMenu" });
+        } else {
+          this.setReceivingProcessesList({});
+          this.loadData();
+        }
+      },
     }
 </script>
 

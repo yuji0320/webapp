@@ -190,7 +190,7 @@ export default {
     // 計算対象カテゴリー取得
     this.getExpenseCategories({params: {is_calculate:true, order_by:"category_number"}});
     // // 集計データリセット
-    // this.clearJobOrders();
+    this.clearJobOrders();
     // 読み込みの初期化
     this.$store.commit("systemConfig/setLoading", false);
     // 本日日付のインプット

@@ -2,204 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/wsgi/django.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx/uwsgi_params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/yujiarai.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/yujiarai.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrintMixin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint_bak.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webapp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bms_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/bms_backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bms_backend/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/bms_backend/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/autocomplete.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/changelists.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/dashboard.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/fonts.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/forms.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/login.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/responsive.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/responsive_rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/vendor/select2/LICENSE-SELECT2.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/vendor/select2/select2.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/vendor/select2/select2.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/widgets.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/calendar-icons.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/gis/move_vertex_off.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/gis/move_vertex_on.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-addlink.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-alert.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-calendar.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-changelink.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-clock.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-deletelink.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-no.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-unknown-alt.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-unknown.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/icon-yes.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/inline-delete.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/search.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/selector-icons.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/sorting-icons.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/tooltag-add.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/img/tooltag-arrowright.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/SelectBox.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/SelectFilter2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/actions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/actions.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/admin/DateTimeShortcuts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/admin/RelatedObjectLookups.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/autocomplete.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/calendar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/cancel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/change_form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/collapse.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/collapse.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/core.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/inlines.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/inlines.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/jquery.init.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/popup_response.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/prepopulate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/prepopulate.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/prepopulate_init.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/timeparse.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/urlify.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/jquery/LICENSE-JQUERY.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/jquery/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/jquery/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/LICENSE-SELECT2.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/az.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/bg.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ca.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/cs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/da.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/de.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/el.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/en.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/es.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/et.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/eu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/fa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/fi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/fr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/gl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/he.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/hi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/hr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/hu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/id.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/is.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/it.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ja.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/km.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ko.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/lt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/lv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/mk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ms.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/nb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/nl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/pl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/pt-BR.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/pt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ro.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/ru.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/sk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/sr-Cyrl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/sr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/sv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/th.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/tr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/uk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/vi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/zh-CN.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/i18n/zh-TW.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/select2.full.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/select2/select2.full.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/xregexp/LICENSE-XREGEXP.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/xregexp/xregexp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/vendor/xregexp/xregexp.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/css/app.2f9ea22c33c937e78c1fae1e2b37aa12.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/css/app.2f9ea22c33c937e78c1fae1e2b37aa12.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/app.541730e6a27397773d44.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/app.541730e6a27397773d44.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/manifest.8ad97ff44980ae905d14.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/manifest.8ad97ff44980ae905d14.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/vendor.488af352192e07de53f6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/build/js/vendor.488af352192e07de53f6.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/css/app.2f9ea22c33c937e78c1fae1e2b37aa12.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/css/app.2f9ea22c33c937e78c1fae1e2b37aa12.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/app.e5856b201c48b7d1d1d7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/app.e5856b201c48b7d1d1d7.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/manifest.8ad97ff44980ae905d14.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/manifest.8ad97ff44980ae905d14.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/vendor.488af352192e07de53f6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/build/js/vendor.488af352192e07de53f6.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/bootstrap-theme.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/bootstrap-tweaks.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/default.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/font-awesome-4.0.3.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/css/prettify.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/css/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/css/highlight.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/css/jquery.json-view.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/img/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/img/grid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/js/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/js/highlight.pack.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/js/jquery.json-view.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/fonts/fontawesome-webfont.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/img/glyphicons-halflings-white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/img/glyphicons-halflings.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/img/grid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/ajax-form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/coreapi-0.1.1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/csrf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/default.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/jquery-3.3.1.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/prettify-min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/bundles/app.bundle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/bundles/app.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/bundles/vendors.bundle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/bundles/vendors.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/favicon-16x16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/favicon-32x32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework_swagger/logo_small.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPMaterialCosts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPMaterialCosts.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchBOM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchBOM.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchOrder.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderCreateMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderCreateMixin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderNotyet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderNotyet.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/development.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx/production.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/production.conf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -241,12 +78,22 @@
     <option name="ROOT_SYNC" value="SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="2ec3ee97-671e-4855-8228-b9396926c46d" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="ProjectId" id="1OityPl0pWdXz7TjWW9cDBKa2Oz" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -254,11 +101,20 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.jscs" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.jscs" value="" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -269,18 +125,19 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/nginx" />
+      <recent name="$PROJECT_DIR$/doc/assets" />
+      <recent name="$PROJECT_DIR$/app/apps/system_master/fixtures" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/wsgi" />
       <recent name="$PROJECT_DIR$/app/apps/system_users/fixtures" />
       <recent name="$PROJECT_DIR$/app/apps" />
       <recent name="$PROJECT_DIR$/doc/specs" />
       <recent name="$PROJECT_DIR$/app/bms_backend" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app" />
-      <recent name="$PROJECT_DIR$/nginx" />
-      <recent name="$PROJECT_DIR$/doc/assets" />
-      <recent name="$PROJECT_DIR$/app/apps/system_master/fixtures" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -333,8 +190,58 @@
       <item itemvalue="Docker.webapp docker" />
     </list>
   </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@1e8ab509" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2dec0f02" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7d91c3f4" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@daf07ad" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@b9f4a39" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+          </expand>
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
+  </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -391,13 +298,10 @@
       <workItem from="1564967266044" duration="17000" />
       <workItem from="1564967308464" duration="2940000" />
       <workItem from="1564974604418" duration="19694000" />
-    </task>
-    <task id="LOCAL-00070" summary="フロントエンド&#10;発注ファイル印刷機能バグ修正">
-      <created>1556432030667</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1556432030667</updated>
+      <workItem from="1565050160897" duration="631000" />
+      <workItem from="1565050915258" duration="22606000" />
+      <workItem from="1569302488636" duration="26000" />
+      <workItem from="1569302541690" duration="1120000" />
     </task>
     <task id="LOCAL-00071" summary="システム全体微修正">
       <created>1558692975464</created>
@@ -735,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564645743141</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="バックエンドstaticファイル、wsgiまわり修正">
+      <created>1565050252894</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1565050252894</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -786,7 +697,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="フロントエンド、仕入れ修正機能実装" />
     <MESSAGE value="フロントエンド・バックエンド&#10;工事番号なし発注機能実装、各共通機能コンポーネント化、ミックスイン化" />
     <MESSAGE value="フロントエンド、仮仕入処理モデル作成" />
     <MESSAGE value="フロントエンド、バックエンド&#10;原価計算マスタレート登録機能実装" />
@@ -811,7 +721,8 @@
     <MESSAGE value="残件修正" />
     <MESSAGE value="仕入処理マイナス許容" />
     <MESSAGE value="gitignore修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore修正" />
+    <MESSAGE value="バックエンドstaticファイル、wsgiまわり修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="バックエンドstaticファイル、wsgiまわり修正" />
   </component>
   <component name="masterDetails">
     <states>

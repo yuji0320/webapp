@@ -68,7 +68,7 @@ export default {
   name: "SearchOrder",
   data () {
     return {
-      orderBy: "-created_at",
+      orderBy: 'is_printed,supplier__name,manufacturer__name,standard,drawing_number',
       // テーブルヘッダーデータ
       defaultHeadersTop: [
         { text: "Part Name", value: "name" }

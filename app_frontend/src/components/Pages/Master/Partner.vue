@@ -202,7 +202,7 @@ export default {
       orderBy: "-created_at",
       // テーブルヘッダー
       headers: [
-        { text: "Parnter number", value: "partnerNumber" },
+        { text: "Partner number", value: "partnerNumber" },
         { text: "Partner name", value: "name" },
         { text: "Abbreviation", value: "abbr" },
         { text: "is Customer", value: "isCustomer" },
@@ -239,11 +239,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", [
-      "userPartners",
-      "userPartner",
-      "responseError"
-    ]),
+    ...mapState("systemUserApi", ["userPartners", "userPartner", "responseError"]),
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -274,10 +270,10 @@ export default {
         this.tabs.params = val.params;
       }
       // paramsを宣言
-      var params = this.tabs.params;
+      let params = this.tabs.params;
       // タブ指定情報を初期化
-      var len = this.tabs.items;
-      for (var i = 1; i < len.length; i++) {
+      let len = this.tabs.items;
+      for (let i = 1; i < len.length; i++) {
         delete this.tabs.params[len[i].refine];
       }
       // タブ選択がAll以外の場合は検索要件を追加する

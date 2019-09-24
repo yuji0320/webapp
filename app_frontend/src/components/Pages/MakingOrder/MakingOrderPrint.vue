@@ -69,7 +69,7 @@
                       primary
                       hide-details
                     ></v-checkbox>
-                  </td>              
+                  </td>
                   <td 
                     v-for="(header, index) in headerData(category.isProcessedParts)"
                     :key="index"

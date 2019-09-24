@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <!-- 部品表検索 -->
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
           <span slot="card-header-title">Search Bill of Material</span>
           <span slot="card-content">
@@ -37,7 +37,7 @@
 
       <!-- 発注ファイル検索 -->
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
           <span slot="card-header-title">Search Order</span>
           <span slot="card-content">
@@ -74,7 +74,7 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
           <span slot="card-header-title">Search Received</span>
           <span slot="card-content">
@@ -126,7 +126,7 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
           <span slot="card-header-title">Search Parts Cost</span>
           <span slot="card-content">

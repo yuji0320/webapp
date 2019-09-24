@@ -2,7 +2,7 @@
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Sales Reports</span>
 
@@ -24,7 +24,7 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Purchasing Reports</span>
 
@@ -46,9 +46,9 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
-          <span slot="card-header-title">Costing Reports</span>
+          <span slot="card-header-title">Man Hour Reports</span>
 
           <span slot="card-content">
             <v-layout row>
@@ -68,9 +68,9 @@
       </v-flex>
 
       <v-flex xs12 md6>
-        <app-card noSeachBar="true">
+        <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
-          <span slot="card-header-title">Man Hour Reports</span>
+          <span slot="card-header-title">Costing Reports</span>
 
           <span slot="card-content">
             <v-layout row>

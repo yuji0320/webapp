@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      orderBy: "-created_at"
+      orderBy: "-created_at, name"
     }
   },
   computed: {
@@ -10,7 +10,7 @@ export default {
         company: this.loginUserData["companyId"],
         bill_of_material__job_order: this.jobOrderID,
         bill_of_material__type__is_processed_parts: this.isProcessed,
-        order_by: this.orderBy,
+        // order_by: this.orderBy,
         page_size: 1000
       };
     },
@@ -20,7 +20,7 @@ export default {
         job_order: this.jobOrderID,
         type__is_processed_parts: this.isProcessed,
         is_printed: true,
-        order_by: this.orderBy,
+        // order_by: this.orderBy,
         page_size: 1000
       };
     },

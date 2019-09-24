@@ -4,7 +4,7 @@
     <!-- 読み込み中ダイアログコンポーネント -->
     <app-loading-dialog></app-loading-dialog>
 
-    <app-card noSeachBar="true">
+    <app-card noSearchBar="true">
       <span slot="card-header-icon"><v-icon>work</v-icon></span>
       <span slot="card-header-title">Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}</span>
 

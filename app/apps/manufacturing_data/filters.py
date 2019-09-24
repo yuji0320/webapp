@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django_filters import rest_framework as filters
 from .models import *
+from django.utils.translation import gettext_lazy as _
 
 
 class JobOrderFilter(filters.FilterSet):
@@ -63,9 +64,17 @@ class BillOfMaterialFilter(filters.FilterSet):
                   'type__is_processed_parts', ]
 
     order_by = filters.OrderingFilter(
-        fields=(
+        choices=(
             ('created_at', 'created_at'),
+            ('-created_at', '-created_at'),
             ('name', 'name'),
+            ('-name', '-name'),
+            ('manufacturer__name', 'manufacturer__name'),
+            ('-manufacturer__name', '-manufacturer__name'),
+            ('standard', 'standard'),
+            ('-standard', '-standard'),
+            ('drawing_number', 'drawing_number'),
+            ('-drawing_number', '-drawing_number'),
         ),
     )
 
@@ -85,12 +94,18 @@ class MakingOrderFilter(filters.FilterSet):
         ]
 
     order_by = filters.OrderingFilter(
-        fields=(
+        choices=(
             ('created_at', 'created_at'),
             ('unit_price', 'unit_price'),
             ('number', 'number'),
             ('name', 'name'),
-            ('desired_delivery_date', 'desired_delivery_date')
+            ('supplier__name', 'supplier__name'),
+            ('manufacturer__name', 'manufacturer__name'),
+            ('standard', 'standard'),
+            ('drawing_number', 'drawing_number'),
+            ('desired_delivery_date', 'desired_delivery_date'),
+            ('-desired_delivery_date', '-desired_delivery_date'),
+            ('is_printed', 'is_printed')
         ),
     )
 
@@ -112,11 +127,16 @@ class ReceivingProcessFilter(filters.FilterSet):
         ]
 
     order_by = filters.OrderingFilter(
-        fields=(
+        choices=(
             ('created_at', 'created_at'),
             ('modified_at', 'modified_at'),
             ('order__number', 'order__number'),
             ('order__desired_delivery_date', 'order__desired_delivery_date'),
+            ('order__manufacturer__name', 'order__manufacturer__name'),
+            ('order__standard', 'order__standard'),
+            ('order__drawing_number', 'order__drawing_number'),
+            ('order__supplier__name', 'order__supplier__name'),
+            ('suspense_received_date', 'suspense_received_date'),
         ),
     )
 
@@ -134,11 +154,14 @@ class ManHourFilter(filters.FilterSet):
         ]
 
     order_by = filters.OrderingFilter(
-        fields=(
+        choices=(
             ('created_at', 'created_at'),
+            ('-created_at', '-created_at'),
             ('modified_at', 'modified_at'),
+            ('-modified_at', '-modified_at'),
             ('date', 'date'),
-        ),
+            ('-date', '-date'),
+        )
     )
 
 

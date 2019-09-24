@@ -62,7 +62,7 @@ export default {
   name: "SearchBillOfMaterial",
   data () {
     return {
-      orderBy: "-created_at",
+      orderBy: 'manufacturer__name,standard,drawing_number',
       // テーブルヘッダーデータ
       defaultHeadersTop: [
         { text: "Part Name", value: "name" }
