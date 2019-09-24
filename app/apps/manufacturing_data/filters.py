@@ -1,7 +1,6 @@
 from django.db.models import Q
 from django_filters import rest_framework as filters
 from .models import *
-from django.utils.translation import gettext_lazy as _
 
 
 class JobOrderFilter(filters.FilterSet):
