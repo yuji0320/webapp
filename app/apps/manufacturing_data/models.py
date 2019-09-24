@@ -187,7 +187,7 @@ class BillOfMaterial(models.Model):
 
 # def get_next(data):
 #     try:
-#         return MakingOrder.objects.filter(company=data).letest('created_at').number + 1
+#         return MakingOrder.objects.filter(company=data).latest('created_at').number + 1
 #     except ValueError:
 #         return 1
 
