@@ -3,29 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bms_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/bms_backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/forms.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/forms.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/responsive.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/responsive.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/responsive_rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/responsive_rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/css/rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/css/rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/fonts/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Bold-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Bold-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Light-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Light-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Regular-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/fonts/Roboto-Regular-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/SelectFilter2.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/js/SelectFilter2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/admin/DateTimeShortcuts.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/js/admin/DateTimeShortcuts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/collapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/js/collapse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/admin/js/collapse.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/admin/js/collapse.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/docs/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/rest_framework/docs/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/rest_framework/js/csrf.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/rest_framework/js/csrf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchCost.vue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchCost.vue.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nginx/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/development.conf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -259,14 +236,7 @@
       <workItem from="1569374943425" duration="7824000" />
       <workItem from="1569476583868" duration="245000" />
       <workItem from="1569823736939" duration="5583000" />
-      <workItem from="1569829943500" duration="1533000" />
-    </task>
-    <task id="LOCAL-00075" summary="バックエンド、フロントエンド&#10;パスワード変更機能実装">
-      <created>1559932063633</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1559932063633</updated>
+      <workItem from="1569829943500" duration="4066000" />
     </task>
     <task id="LOCAL-00076" summary="バックエンド、フロントエンド&#10;パスワード変更機能実装">
       <created>1559932109175</created>
@@ -604,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569314991920</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="バックエンドDjangoバージョンアップ関係処理">
+      <created>1569831911183</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1569831911183</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -655,7 +632,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="バックエンド、工数登録API実装" />
     <MESSAGE value="バックエンド、工数マスタ名称変更" />
     <MESSAGE value="フロントエンド、バックエンド&#10;工数管理機能実装" />
     <MESSAGE value="工数集計機能実装" />
@@ -680,7 +656,8 @@
     <MESSAGE value="フロントエンドAPI連携部分修正" />
     <MESSAGE value="バックエンドDjangoバージョンアップ" />
     <MESSAGE value="バックエンドModel修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="バックエンドModel修正" />
+    <MESSAGE value="バックエンドDjangoバージョンアップ関係処理" />
+    <option name="LAST_COMMIT_MESSAGE" value="バックエンドDjangoバージョンアップ関係処理" />
   </component>
   <component name="masterDetails">
     <states>
