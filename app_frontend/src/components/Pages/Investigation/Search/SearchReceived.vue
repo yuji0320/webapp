@@ -120,7 +120,6 @@ export default {
           params: {
             company: this.loginUserData["companyId"],
             order__number: this.orderNumber,
-            is_received: true,
             order_by: this.orderBy,
           },
           title: title
@@ -132,7 +131,6 @@ export default {
             params: {
               company: this.loginUserData["companyId"],
               order__bill_of_material__job_order: this.jobOrderID,
-              is_received: true,
               order__supplier: this.supplierID,
               order_by: this.orderBy,
             },
@@ -144,7 +142,6 @@ export default {
           return {
             params: {
               company: this.loginUserData["companyId"],
-              is_received: true,
               no_bom: true,
               order__supplier: this.supplierID,
               order_by: this.orderBy,
@@ -167,17 +164,17 @@ export default {
       await this.getReceivingProcesses(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
-    // 仕入れファイル編集
+    // 仕入れファイル閲覧
     viewReceivingProcess(val) {
       this.setReceivingProcess(val);
       this.$refs["receive_dialog"].editReceivingProcess();
     },
-    // 発注ファイル編集
+    // 発注ファイル閲覧
     viewMakingOrder() {
       this.setMakingOrder(this.receivingProcess.orderData);
       this.$refs["order_dialog"].editMakingOrder();
     },
-    // 部品表ファイル編集
+    // 部品表ファイル閲覧
     viewBillOfMaterial() {
       this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
       this.$refs["bom_dialog"].editBillOfMaterial();
@@ -195,6 +192,7 @@ export default {
         this.getJobOrder(this.jobOrderID);
       }
       this.getList({params: this.switchParams.params});
+      console.log(this.switchParams.params);
     }
   },
   created() {

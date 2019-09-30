@@ -114,11 +114,10 @@
               </v-flex>
 
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchReceived" :disabled = "supplierReceived === '' && numberReceived === ''">
+                <v-btn large block outline @click="searchReceived" :disabled = "mfgNoReceived === '' && numberReceived === ''">
                   Search Received
                 </v-btn>
               </v-flex>
-
 
             </v-layout>
           </span>
