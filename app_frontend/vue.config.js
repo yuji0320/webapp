@@ -9,13 +9,16 @@ module.exports = {
     // public: "192.168.2.114",
     host: '0.0.0.0',
     port: 9000,
-    disableHostCheck: true,
-    proxy: {
-      '/websocket': {
-        target: 'http://localhost:4000',
-        ws: true,
-        changeOrigin: true
-      }
+    // disableHostCheck: true,
+    // proxy: {
+    //   '/websocket': {
+    //     target: 'http://localhost:4000',
+    //     ws: true,
+    //     changeOrigin: true
+    //   }
+    // },
+    watchOptions: {
+      poll: true
     }
     // headers: {
     //   ' Access-Control-Allow-Origin ': ' * ',

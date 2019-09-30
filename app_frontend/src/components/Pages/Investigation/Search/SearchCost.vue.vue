@@ -9,7 +9,7 @@
       <v-toolbar card>
         <v-icon>search</v-icon>
         <v-toolbar-title class="font-weight-light">
-          Search Parts Costs test
+          Search Parts Costs
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn @click="backToMenu">

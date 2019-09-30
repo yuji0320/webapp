@@ -5,7 +5,7 @@
       <v-flex xs12 md6>
         <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>search</v-icon></span>
-          <span slot="card-header-title">Search Bill of Material</span>
+          <span slot="card-header-title">Search Bill of Material test</span>
           <span slot="card-content">
             <v-layout row>
               <!-- 工事番号検索フォーム -->
