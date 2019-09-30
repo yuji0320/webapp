@@ -195,8 +195,7 @@ export default {
   },
   mounted() {
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
-    this.headers[7].text =
-      "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
+    this.headers[7].text = "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
   }
 };
 </script>

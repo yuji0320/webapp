@@ -19,8 +19,8 @@ dev_app_frontend:
   ports:
     - "9000:9000"
     - "9100:9100"
-  links:
-    - dev_app:app
+#  links:
+#    - dev_app:app
   volumes:
     - ./app_frontend:/usr/src/app_frontend
   command: npm run serve
@@ -41,9 +41,8 @@ dev_nginx:
     - ./nginx/development.conf:/etc/nginx/conf.d/development.conf
     - ./nginx/log:/var/log/nginx
     - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
-  volumes_from:
-    - dev_app
-    - dev_app_frontend
+    - ./app_frontend/dist:/usr/dist
+
 
 dev_mysql:
   build: ./mysql

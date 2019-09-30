@@ -86,7 +86,7 @@
         title: ""
       },
       // selectedDataList: [],
-      datForPDF: {
+      dataForPDF: {
         page: 0,
         data: []
       }
@@ -103,7 +103,7 @@
         job_order: this.jobOrderID,
         is_printed: this.reprint,
         order_by: this.orderBy,
-        page_size: 5000
+        page_size: 1000000
       };
     },
     headerData() {
@@ -146,7 +146,7 @@
       let cardText = "You can print unprinted parts list.";
 
       if(this.reprint) {
-        cardTitle = "Rerint Bill of Material (ALL) : ";
+        cardTitle = "Rerint Bill of Material : ";
         cardText = "You can print all parts list that already printed."
       }
       return {
@@ -165,15 +165,17 @@
     // 選択印刷
     async printSelected() {
       let selectedDataList = this.$refs.data_table.selected;
-      this.datForPDF.page = 1;
-      this.datForPDF.data[0] = {
+      this.dataForPDF.page = 1;
+      this.dataForPDF.data = [];
+      this.dataForPDF.data[0] = {
         id : this.tabs.refine,
         isProcessedParts : this.tabs.isProcessedParts,
         title : this.tabs.title,
         parts : selectedDataList
       };
       if(selectedDataList.length !== 0) {
-        this.createPrintData(this.datForPDF);
+        this.printPDF(this.createPrintData(this.dataForPDF));
+        // this.createPrintData(this.dataForPDF);
       } else {
         // データを選択していない場合はアラートを出し、ダイアログを閉じる
         this.showSnackbar({color:"red", snack:"No data selected."});
@@ -181,16 +183,18 @@
     },
     // 一括印刷
     async printAll() {
-      this.datForPDF.page = this.tabItems.length;
+      this.dataForPDF.page = this.tabItems.length;
+      this.dataForPDF.data = [];
       for (let c = 0, category; category = this.expenseCategories.results[c]; c++) {
         let partsData = {};
         partsData.id = category.id;
         partsData.title = category.categoryName;
         partsData.isProcessedParts = category.isProcessedParts;
         partsData.parts = this.partsData(category.id);
-        this.datForPDF.data.push(partsData);
+        this.dataForPDF.data.push(partsData);
       }
-      this.createPrintData(this.datForPDF);
+      this.printPDF(this.createPrintData(this.dataForPDF));
+      // this.createPrintData(this.dataForPDF);
     },
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);

@@ -257,7 +257,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
-    parts_detail = serializers.SerializerMethodField()
+    # parts_detail = serializers.SerializerMethodField()
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
         queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True, allow_null=True)
@@ -367,7 +367,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'supplier_data',
             'mfg_no',
             'is_processed',
-            'parts_detail'
+            # 'parts_detail'
         )
 
     # def update(self, instance, validated_data):

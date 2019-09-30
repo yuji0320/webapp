@@ -2,41 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrintMixin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint_bak.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/webapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webapp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/Card.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/DataTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/assets/excel_upload_template(BOM).xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/assets/ksalogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/ReportsMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/OpenPO.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/Sales/SalesReportCreatePDFMixin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPMaterialCosts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Reports/WorkInProcess/WIPMaterialCosts.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchBOM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchBOM.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchOrder.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderCreateMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderCreateMixin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/MakingOrder/MakingOrderPrint.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Master/Partner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrintMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/BillOfMaterial/BillOfMaterialPrintMixin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderPrintMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderPrintMixin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/vue.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/development.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/production.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/production.conf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,9 +61,6 @@
     <option name="ROOT_SYNC" value="SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="2ec3ee97-671e-4855-8228-b9396926c46d" />
-  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
@@ -114,7 +94,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -197,42 +177,7 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@1e8ab509" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2dec0f02" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7d91c3f4" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@daf07ad" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@34dec310" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@24002bb4" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@b9f4a39" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@206c6172" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -301,35 +246,11 @@
       <workItem from="1565050160897" duration="631000" />
       <workItem from="1565050915258" duration="22606000" />
       <workItem from="1569302488636" duration="26000" />
-      <workItem from="1569302541690" duration="1120000" />
-    </task>
-    <task id="LOCAL-00071" summary="システム全体微修正">
-      <created>1558692975464</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1558692975466</updated>
-    </task>
-    <task id="LOCAL-00072" summary="リファクタリング開始">
-      <created>1559824501967</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1559824501968</updated>
-    </task>
-    <task id="LOCAL-00073" summary="リファクタリング開始&#10;エラー修正">
-      <created>1559834606319</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1559834606319</updated>
-    </task>
-    <task id="LOCAL-00074" summary="リファクタリング開始&#10;部品表ダイアログ別コンポーネント化">
-      <created>1559914517213</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1559914517213</updated>
+      <workItem from="1569302541690" duration="1569000" />
+      <workItem from="1569309008008" duration="338000" />
+      <workItem from="1569314057479" duration="1900000" />
+      <workItem from="1569374943425" duration="7824000" />
+      <workItem from="1569476583868" duration="245000" />
     </task>
     <task id="LOCAL-00075" summary="バックエンド、フロントエンド&#10;パスワード変更機能実装">
       <created>1559932063633</created>
@@ -646,7 +567,35 @@
       <option name="project" value="LOCAL" />
       <updated>1565050252894</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="フロントエンドAPI連携部分修正">
+      <created>1569308681907</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1569308681908</updated>
+    </task>
+    <task id="LOCAL-00121" summary="バックエンドDjangoバージョンアップ">
+      <created>1569313985376</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1569313985377</updated>
+    </task>
+    <task id="LOCAL-00122" summary="バックエンドDjangoバージョンアップ">
+      <created>1569314222649</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1569314222650</updated>
+    </task>
+    <task id="LOCAL-00123" summary="バックエンドModel修正">
+      <created>1569314991920</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1569314991920</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -697,9 +646,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="フロントエンド・バックエンド&#10;工事番号なし発注機能実装、各共通機能コンポーネント化、ミックスイン化" />
-    <MESSAGE value="フロントエンド、仮仕入処理モデル作成" />
-    <MESSAGE value="フロントエンド、バックエンド&#10;原価計算マスタレート登録機能実装" />
     <MESSAGE value="バックエンド、工数登録API実装" />
     <MESSAGE value="バックエンド、工数マスタ名称変更" />
     <MESSAGE value="フロントエンド、バックエンド&#10;工数管理機能実装" />
@@ -722,7 +668,10 @@
     <MESSAGE value="仕入処理マイナス許容" />
     <MESSAGE value="gitignore修正" />
     <MESSAGE value="バックエンドstaticファイル、wsgiまわり修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="バックエンドstaticファイル、wsgiまわり修正" />
+    <MESSAGE value="フロントエンドAPI連携部分修正" />
+    <MESSAGE value="バックエンドDjangoバージョンアップ" />
+    <MESSAGE value="バックエンドModel修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="バックエンドModel修正" />
   </component>
   <component name="masterDetails">
     <states>

@@ -1,7 +1,5 @@
 export default {
-  computed: {
-    
-  },
+  computed: {},
   methods: {
     createPdfData() {
       let headerText = "Job Order";

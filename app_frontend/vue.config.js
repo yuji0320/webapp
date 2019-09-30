@@ -10,6 +10,13 @@ module.exports = {
     host: '0.0.0.0',
     port: 9000,
     disableHostCheck: true,
+    proxy: {
+      '/websocket': {
+        target: 'http://localhost:4000',
+        ws: true,
+        changeOrigin: true
+      }
+    }
     // headers: {
     //   ' Access-Control-Allow-Origin ': ' * ',
     //   // eslint-disable-next-line max-len
@@ -17,4 +24,6 @@ module.exports = {
     //   ' Access-Control-Allow-Headers ': ' Origin、X-Requested-With、Content-Type、Accept ',
     // },
   },
+  productionSourceMap: false,
+  publicPath: '/public/',
 };
