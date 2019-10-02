@@ -23,6 +23,7 @@ dev_app_frontend:
 #    - dev_app:app
   volumes:
     - ./app_frontend:/usr/src/app_frontend
+#  command: bash -c "npm run serve && vue ui -p 9100 -H 0.0.0.0"
   command: npm run serve
 
 

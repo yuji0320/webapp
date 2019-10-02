@@ -262,6 +262,12 @@
               </tr>
             </thead>
             <tr>
+              <td class="text-center">Shipping Cost</td>
+              <td class="text-right">{{ jobOrderData.shippingCostBudgetDisplay }}</td>
+              <td class="text-right">{{ jobOrderData.shippingCostResultDisplay }}</td>
+              <td class="text-right"></td>
+            </tr>
+            <tr>
               <td class="text-center">Manufacturing cost</td>
               <td class="text-right">{{ jobOrderData.manufacturingCostBudgetDisplay }}</td>
               <td class="text-right">{{ jobOrderData.manufacturingCostResultDisplay }}</td>
@@ -483,10 +489,12 @@ export default {
           jobOrder.laborCostResultDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalWorkHours * timeCharge).toFixed(2));
         }
         // 集計値予算
+        jobOrder.shippingCostBudgetDisplay = defaultDisplay + "0.00";
         jobOrder.manufacturingCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["manufacturingCostBudget"]);
         jobOrder.totalProfitBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["totalProfitBudget"]);
         jobOrder.totalProfitPercentageBudget =this.jobOrder["costs"]["totalProfitPercentage"] + "%";
         // 集計値実績
+        jobOrder.shippingCostResultDisplay = defaultDisplay + this.moneyComma(jobOrder.shippingCostResult);
         let manufacturingCostResult = 0;
         manufacturingCostResult = this.directCosts.directCost + (this.laborCost.totalWorkHours * timeCharge);
         let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));

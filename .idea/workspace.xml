@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Module/IncrementalModelSearch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderPrintMixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/JobOrder/JobOrderPrintMixin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -241,7 +243,8 @@
       <workItem from="1569823736939" duration="5583000" />
       <workItem from="1569829943500" duration="4249000" />
       <workItem from="1569924755661" duration="472000" />
-      <workItem from="1569925728348" duration="398000" />
+      <workItem from="1569925728348" duration="600000" />
+      <workItem from="1569990141280" duration="4003000" />
     </task>
     <task id="LOCAL-00078" summary="リファクタリング&#10;NPMパッケージ修正&#10;作業指図書、関係会社工事番号検索機能実装">
       <created>1560284399446</created>

@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "prod-serve": "vue-cli-service serve --mode production",
+    "prod-build": "vue-cli-service build --mode production"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",

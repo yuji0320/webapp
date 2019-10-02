@@ -30,7 +30,7 @@
       </v-toolbar>
 
       <v-card-text>
-        <v-form @submit.prevent="submitForm" id="submitJobOrder">
+        <v-form @submit.prevent="submitForm" id="submitJobOrder" ref="form" v-model="valid" lazy-validation>
           <v-layout wrap>
             <!-- エラー表示 -->
             <v-flex xs12>
@@ -92,6 +92,7 @@
               searchType="partner"
               filter="customer"
               :errorMessages="responseError.customer"
+              :required="rules"
               ></app-incremental-model-search>
             </v-flex>
             <!-- 納入先 -->
@@ -103,6 +104,7 @@
               searchType="partner"
               filter="delivery"
               :errorMessages="responseError.deliveryDestination"
+              :required="rules"
               ></app-incremental-model-search>
             </v-flex>
             <v-flex xs4></v-flex>
@@ -322,7 +324,7 @@
               ></v-text-field >
             </v-flex>
             <v-flex xs12>
-              <h3>shipping Cost Result</h3>
+              <h3>Shipping Cost Result</h3>
             </v-flex>
             <!-- 運送費実績 -->
             <v-flex xs4>
@@ -374,7 +376,11 @@ export default {
         commercialPartsBudget: 0,
         electricalPartsBudget: 0,
         processedPartsBudget: 0
-      }
+      },
+      valid: true,
+      rules: [
+        value => !!value || 'Required.',
+      ]
     };
   },
   computed: {
@@ -397,30 +403,35 @@ export default {
       this.showSnackbar(val.snack);
     },
     async submitForm() {
-      // console.log(this.jobOrder);
-      // コンポーネントの編集ステータスに応じて新規と更新を切り替える
-      let res = {};
-      if (!this.jobOrderStatus.isEditing) {
-        // 新規追加時の処理
-        this.jobOrder.company = this.loginUserData.companyId;
-        this.jobOrder.createdBy = this.loginUserData.id;
-        this.jobOrder.modifiedBy = this.loginUserData.id;
-        res = await this.postJobOrder(this.jobOrder);
+      // フロントエンドバリデーション
+      if(this.$refs.form.validate()) {
+        // コンポーネントの編集ステータスに応じて新規と更新を切り替える
+        let res = {};
+        if (!this.jobOrderStatus.isEditing) {
+          // 新規追加時の処理
+          this.jobOrder.company = this.loginUserData.companyId;
+          this.jobOrder.createdBy = this.loginUserData.id;
+          this.jobOrder.modifiedBy = this.loginUserData.id;
+          res = await this.postJobOrder(this.jobOrder);
+        } else {
+          // 更新時
+          this.jobOrder.modifiedBy = this.loginUserData.id;
+          res = await this.putJobOrder(this.jobOrder);
+        }
+        if (res.data) {
+          // 成功時
+          this.responseFunction(res);
+          this.setJobOrder(res.data);
+          this.setMfgNo(res.data.id);
+          this.$router.push({ name: "JobOrderDetail" });
+        } else {
+          // 失敗時
+          this.responseFunction(res);
+          console.log(res);
+        }
       } else {
-        // 更新時
-        this.jobOrder.modifiedBy = this.loginUserData.id;
-        res = await this.putJobOrder(this.jobOrder);
-      }
-      if (res.data) {
-        // 成功時
-        this.responseFunction(res);
-        this.setJobOrder(res.data);
-        this.setMfgNo(res.data.id);
-        this.$router.push({ name: "JobOrderDetail" });
-      } else {
-        // 失敗時
-        this.responseFunction(res);
-        console.log(res);
+        // バリデーションエラーの場合
+        this.showSnackbar({color:"red", snack:"Required field is blank!"});
       }
     },
     viewDetail() {

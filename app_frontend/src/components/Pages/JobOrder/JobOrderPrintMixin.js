@@ -231,6 +231,12 @@ export default {
           {text: "Failure", alignment:"center"},
         ],
         [
+          {text:"Shipping Cost", alignment:"center"},
+          {text: this.jobOrderData.shippingCostBudgetDisplay, alignment:"right"},
+          {text: this.jobOrderData.shippingCostResultDisplay, alignment:"right"},
+          {text: " - ", alignment:"center"},
+        ],
+        [
           {text:"Manufacturing cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
           {text: this.jobOrderData.manufacturingCostBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.manufacturingCostResultDisplay, alignment:"right", decoration: 'underline'},

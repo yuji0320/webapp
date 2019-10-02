@@ -12,6 +12,7 @@
         :label="label"
         :error-messages="errorMessages"
         :disabled="disabled"
+        :rules="required"
       ></v-autocomplete>
     </v-flex>
     <v-flex class="pt-3">
@@ -34,7 +35,10 @@ export default {
       isLoading: false,
       model: this.value,
       search: null,
-      items: []
+      items: [],
+      rules: [
+        value => !!value || 'Required.',
+      ],
     };
   },
   props: {
@@ -50,7 +54,8 @@ export default {
     // エラー情報
     errorMessages: { required: false },
     // disabled
-    disabled: { required: false }
+    disabled: { required: false },
+    required: { required: false },    
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
