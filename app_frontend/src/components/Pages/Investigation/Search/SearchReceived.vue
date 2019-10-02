@@ -27,7 +27,7 @@
       </span>
 
       <span slot="card-title-text">
-        <h2 class="font-weight-light">{{ userPartner.name }}</h2>
+        <p class="font-weight-light">* Green is already received.</p>
       </span>
 
       <span slot="card-content">
@@ -69,22 +69,22 @@ export default {
   data () {
     return {
       // データ関係
-      orderBy: 'suspense_received_date,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
+      orderBy: 'suspense_received_date,is_received,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
       // テーブルヘッダーデータ
       headers: [
         { text: "No", value: "orderData", nest:"number" },
         { text: "Part Name", value: "orderData", nest:"name" },
         { text: "Standard / Drawing No", value:"orderData", nest:"partsDetail" },
+        { text: "Supplier", value: "orderData" , nest: "supplierData", nestNest:"abbr"},
         { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
+        { text: "Suspense", value: "suspenseReceivedDate" },
         { text: "Received", value: "receivedDate" },
         { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
-        { text: "Received Amount", value: "amount", class: "text-xs-right" },
-        { text: "Order UP", value: "orderData", nest: "unitPrice", class: "text-xs-right" },
-        { text: "Received UP", value: "unitPrice", class: "text-xs-right" },
+        { text: "Order UP", value: "orderData", nest: "displayPrice", class: "text-xs-right" },
         { text: "Action", value: "action", class: "text-xs-center" }
       ],
       //  仕入完了時色変更
-      completeColumn: "isReceived",
+      completeColumn: "suspenseReceivedDate",
       // テーブル検索用データ
       incremental: {
         // 検索カラムリスト
@@ -197,7 +197,7 @@ export default {
   },
   created() {
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
-    if(!this.supplierID && !this.orderNumber) {
+    if(!this.hasMFGNo && !this.orderNumber) {
         this.$router.push({ name: "ReceivingProcessMenu" });
     } else {
         this.setReceivingProcessesList({});

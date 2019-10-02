@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="57a653e2-af32-4e92-a034-78c64071e905" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/development.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/apps/manufacturing_data/filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/src/components/Pages/Investigation/Search/SearchReceived.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_frontend/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app_frontend/vue.config.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -236,21 +239,9 @@
       <workItem from="1569374943425" duration="7824000" />
       <workItem from="1569476583868" duration="245000" />
       <workItem from="1569823736939" duration="5583000" />
-      <workItem from="1569829943500" duration="4066000" />
-    </task>
-    <task id="LOCAL-00076" summary="バックエンド、フロントエンド&#10;パスワード変更機能実装">
-      <created>1559932109175</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1559932109176</updated>
-    </task>
-    <task id="LOCAL-00077" summary="リファクタリング&#10;フロントエンドpackage-json修正">
-      <created>1559941351905</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1559941351906</updated>
+      <workItem from="1569829943500" duration="4249000" />
+      <workItem from="1569924755661" duration="472000" />
+      <workItem from="1569925728348" duration="398000" />
     </task>
     <task id="LOCAL-00078" summary="リファクタリング&#10;NPMパッケージ修正&#10;作業指図書、関係会社工事番号検索機能実装">
       <created>1560284399446</created>
@@ -581,7 +572,21 @@
       <option name="project" value="LOCAL" />
       <updated>1569831911183</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="開発環境nginx設定変更">
+      <created>1569835149590</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1569835149591</updated>
+    </task>
+    <task id="LOCAL-00126" summary="django staticファイル修正">
+      <created>1569835224334</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1569835224334</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -632,8 +637,6 @@
       <path value="$PROJECT_DIR$/app/bms_frontend" />
       <path value="$PROJECT_DIR$/app_frontend" />
     </ignored-roots>
-    <MESSAGE value="バックエンド、工数マスタ名称変更" />
-    <MESSAGE value="フロントエンド、バックエンド&#10;工数管理機能実装" />
     <MESSAGE value="工数集計機能実装" />
     <MESSAGE value="仮仕入処理実装&#10;工事完了済み売上未計上指図書の一括アップデートボタン実装&#10;部品表一括アップロード機能実装" />
     <MESSAGE value="バックエンドrequestment.txt修正" />
@@ -657,7 +660,9 @@
     <MESSAGE value="バックエンドDjangoバージョンアップ" />
     <MESSAGE value="バックエンドModel修正" />
     <MESSAGE value="バックエンドDjangoバージョンアップ関係処理" />
-    <option name="LAST_COMMIT_MESSAGE" value="バックエンドDjangoバージョンアップ関係処理" />
+    <MESSAGE value="開発環境nginx設定変更" />
+    <MESSAGE value="django staticファイル修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="django staticファイル修正" />
   </component>
   <component name="masterDetails">
     <states>

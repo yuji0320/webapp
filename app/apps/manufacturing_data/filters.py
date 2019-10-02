@@ -136,6 +136,7 @@ class ReceivingProcessFilter(filters.FilterSet):
             ('order__drawing_number', 'order__drawing_number'),
             ('order__supplier__name', 'order__supplier__name'),
             ('suspense_received_date', 'suspense_received_date'),
+            ('is_received', 'is_received'),
         ),
     )
 
