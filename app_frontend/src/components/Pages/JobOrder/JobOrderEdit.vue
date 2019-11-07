@@ -48,7 +48,7 @@
               </v-alert>
             </v-flex>
             <!-- 工事番号 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <v-text-field 
                 label="Manfacturing Number*"
                 v-model="jobOrder.mfgNo"
@@ -56,7 +56,7 @@
               ></v-text-field>
             </v-flex>
             <!-- 作業指図書作成者 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-incremental-model-search
               label="Publisher*"
               orderBy="ruby"
@@ -66,7 +66,7 @@
               ></app-incremental-model-search>
             </v-flex>
             <!-- 設計者 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-incremental-model-search
               label="Designer"
               orderBy="ruby"
@@ -84,7 +84,7 @@
               ></v-text-field>
             </v-flex>
             <!-- 取引先 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-incremental-model-search
               label="Customer"
               orderBy="name"
@@ -96,7 +96,7 @@
               ></app-incremental-model-search>
             </v-flex>
             <!-- 納入先 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-incremental-model-search
               label="Delivery Destination"
               orderBy="name"
@@ -107,9 +107,9 @@
               :required="rules"
               ></app-incremental-model-search>
             </v-flex>
-            <v-flex xs4></v-flex>
+            <v-flex xs12 sm12 md4></v-flex>
             <!-- 受注日 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-input-date 
                 label="Order Date"
                 v-model="jobOrder.orderDate"
@@ -117,7 +117,7 @@
               ></app-input-date >
             </v-flex>
             <!-- 納入日 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-input-date 
                 label="Delivery Date"
                 v-model="jobOrder.deliveryDate"
@@ -125,23 +125,24 @@
               ></app-input-date >
             </v-flex>
             <!-- 工事完了日 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-input-date 
                 label="Completion Date"
                 v-model="jobOrder.completionDate"
                 :errorMessages="responseError.completionDate"
               ></app-input-date >
             </v-flex>
-            <!-- 工事完了日 -->
-            <v-flex xs4>
+            <!-- 請求日 -->
+            <v-flex xs12 sm6 md4>
               <app-input-date 
                 label="Bill Date"
                 v-model="jobOrder.billDate"
                 :errorMessages="responseError.billDate"
               ></app-input-date >
             </v-flex>
+            <v-flex xs12 sm12 md8></v-flex>
             <!-- 受注金額 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <v-text-field 
                 label="Order Price*"
                 v-model="jobOrder.orderPrice"
@@ -150,7 +151,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 受注通貨 -->
-            <v-flex xs4>
+            <v-flex xs12 sm6 md4>
               <app-incremental-model-search
               label="Order Currency"
               orderBy="id"
@@ -160,7 +161,7 @@
               ></app-incremental-model-search>
             </v-flex>
             <!-- 受注レート -->
-            <v-flex xs2>
+            <v-flex xs12 sm4 md2>
               <v-text-field 
                 label="Order Rate"
                 v-model="jobOrder.orderRate"
@@ -172,7 +173,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 税率 -->
-            <v-flex xs2>
+            <v-flex xs12 sm4 md2>
               <v-text-field 
                 label="Tax Percent"
                 v-model="jobOrder.taxPercent"
@@ -201,7 +202,7 @@
               <h3>Direct Cost Budget</h3>
             </v-flex>
             <!-- 市販部品予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Commercial Parts Budget"
                 v-model="jobOrder.commercialPartsBudget"
@@ -211,7 +212,7 @@
               ></v-text-field >
             </v-flex>   
             <!-- 電気部品予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Electrical Parts Budget"
                 v-model="jobOrder.electricalPartsBudget"
@@ -221,7 +222,7 @@
               ></v-text-field >
             </v-flex>   
             <!-- 加工部品予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Processed Parts Budget"
                 v-model="jobOrder.processedPartsBudget"
@@ -231,7 +232,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 外注機構設計予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Outsourcing Mechanical Design Budget"
                 v-model="jobOrder.outsourcingMechanicalDesignBudget"
@@ -241,7 +242,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 外注電気設計予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Outsourcing Electrical DesignBudget"
                 v-model="jobOrder.outsourcingElectricalDesignBudget"
@@ -251,7 +252,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 外注その他予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Outsourcing Other Budget"
                 v-model="jobOrder.outsourcingOtherBudget"
@@ -261,7 +262,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 運送費予算 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Shipping Cost Budget"
                 v-model="jobOrder.shippingCostBudget"
@@ -274,7 +275,7 @@
               <h3>Budget Work Time</h3>
             </v-flex>
             <!-- 機械設計予算時間 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Mechanical Design Budget Hours"
                 v-model="jobOrder.mechanicalDesignBudgetHours"
@@ -284,7 +285,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 電気設計予算時間 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Electrical Design Budget Hours"
                 v-model="jobOrder.electricalDesignBudgetHours"
@@ -294,7 +295,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 組み立て調整予算時間 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Assembly Budget Hours"
                 v-model="jobOrder.assemblyBudgetHours"
@@ -304,7 +305,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 電気工事予算時間 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Electrical Wiring Budget Hours"
                 v-model="jobOrder.electricalWiringBudgetHours"
@@ -314,7 +315,7 @@
               ></v-text-field >
             </v-flex>
             <!-- 現地調整予算時間 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Installation BudgetHours"
                 v-model="jobOrder.installationBudgetHours"
@@ -327,7 +328,7 @@
               <h3>Shipping Cost Result</h3>
             </v-flex>
             <!-- 運送費実績 -->
-            <v-flex xs4>
+            <v-flex xs12 sm4 md3 xl2>
               <v-text-field 
                 label="Shipping Cost Result"
                 v-model="jobOrder.shippingCostResult"

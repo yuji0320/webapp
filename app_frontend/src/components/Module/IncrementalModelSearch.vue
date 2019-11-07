@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex>
+    <v-flex xs6 sm8 xl9>
       <v-autocomplete
         v-model="model"
         :items="searchItems"
@@ -15,7 +15,7 @@
         :rules="required"
       ></v-autocomplete>
     </v-flex>
-    <v-flex class="pt-3">
+    <v-flex class="pt-3" xs6 sm4 xl3>
       <v-btn
         @click="clearItem"
         :disabled="disabled"
