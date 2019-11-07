@@ -254,6 +254,7 @@ export default {
     async getList(data) {
       // console.log(data);
       this.search = data
+      console.log(this.search);
       this.$store.commit("systemConfig/setLoading", true);
       let list = await this.getPartners(this.search);
       this.$store.commit("systemConfig/setLoading", false);
@@ -343,6 +344,9 @@ export default {
     upload() {
       this.$router.push({ name: "PartnerUpload" });
     }
+  },
+  mounted () {
+    // console.log(process.env.VUE_APP_API_BASE_URL);
   }
 };
 </script>
