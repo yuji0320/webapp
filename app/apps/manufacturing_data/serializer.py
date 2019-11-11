@@ -168,6 +168,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
+    parts_detail = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -207,6 +208,17 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
         status = obj.type.is_processed_parts
         return status
 
+    # 部品詳細データ表示
+    @staticmethod
+    def get_parts_detail(obj):
+        # 加工部品かどうかを判断
+        status = obj.type.is_processed_parts
+        if status:
+            parts_detail = obj.drawing_number
+        else:
+            parts_detail = obj.standard
+        return parts_detail
+
     class Meta:
         model = BillOfMaterial
         fields = (
@@ -242,7 +254,8 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'order_amount',
             'manufacturer_data',
             'mfg_no',
-            'is_processed'
+            'is_processed',
+            'parts_detail'
         )
 
 
@@ -304,19 +317,19 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             status = False
         return status
 
-    # 部品詳細データ表示
-    @staticmethod
-    def get_parts_detail(obj):
-        # 加工部品かどうかを判断
-        if obj.bill_of_material:
-            status = obj.bill_of_material.type.is_processed_parts
-        else:
-            status = False
-        if status:
-            parts_detail = obj.drawing_number
-        else:
-            parts_detail = obj.standard
-        return parts_detail
+    # # 部品詳細データ表示
+    # @staticmethod
+    # def get_parts_detail(obj):
+    #     # 加工部品かどうかを判断
+    #     if obj.bill_of_material:
+    #         status = obj.bill_of_material.type.is_processed_parts
+    #     else:
+    #         status = False
+    #     if status:
+    #         parts_detail = obj.drawing_number
+    #     else:
+    #         parts_detail = obj.standard
+    #     return parts_detail
 
     def validate(self, data):
         if data['number']:

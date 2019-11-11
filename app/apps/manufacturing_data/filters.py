@@ -116,13 +116,20 @@ class ReceivingProcessFilter(filters.FilterSet):
     is_suspense_received = filters.BooleanFilter(field_name='suspense_received_date', lookup_expr='isnull')
     received_date = filters.DateFromToRangeFilter(field_name='received_date')
     mfg_no = filters.CharFilter(field_name='order__bill_of_material__job_order__mfg_no', lookup_expr='icontains')
+    parts_data = filters.CharFilter(field_name='partsData', method='parts_data_filter')
+
+    @staticmethod
+    def parts_data_filter(queryset, name, value):
+        return queryset.all().filter(
+            Q(order__bill_of_material__standard__icontains=value) | Q(order__bill_of_material__drawing_number__icontains=value)
+        )
 
     class Meta:
         model = ReceivingProcess
         fields = [
             'id', 'order__number', 'order__company', 'order__bill_of_material', 'order__bill_of_material__job_order',
-            'order__bill_of_material__type', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date',
-            'name', 'suspense_received_date', 'is_suspense_received', 'received_date', 'mfg_no'
+            'order__bill_of_material__type', 'order__bill_of_material__manufacturer', 'is_received', 'order__supplier', 'unit_price', 'desired_delivery_date',
+            'name', 'suspense_received_date', 'is_suspense_received', 'received_date', 'mfg_no', 'parts_data'
         ]
 
     order_by = filters.OrderingFilter(
