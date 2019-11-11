@@ -66,6 +66,8 @@ Vue.component('app-dialog', Dialog);
 import IncrementalModelSearch from '@/components/Module/IncrementalModelSearch.vue';
 /* eslint-enable max-len */
 Vue.component('app-incremental-model-search', IncrementalModelSearch);
+import Pagination from '@/components/Module/Pagination.vue';
+Vue.component('app-pagination', Pagination);
 // 入力関係
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
