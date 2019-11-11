@@ -60,7 +60,8 @@
             <template v-if="header.nest">
               <template v-if="header.nestNest">
                 <template v-if="props.item[header.value]">
-                  {{ props.item[header.value][header.nest][header.nestNest] }}
+                  <!-- nestがnullの場合は""を返す、存在する場合は孫データを送信 -->
+                  {{ (props.item[header.value][header.nest] === null) ? "" : props.item[header.value][header.nest][header.nestNest] }}
                 </template>
               </template>
               <template v-else>
