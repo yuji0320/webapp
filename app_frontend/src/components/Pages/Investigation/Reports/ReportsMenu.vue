@@ -80,7 +80,7 @@
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline disabled>
+                <v-btn large block outline @click="wipLabor()">
                   Work-in-process(Labor costs)
                 </v-btn>
               </v-flex>
@@ -118,6 +118,9 @@ export default {
     },
     wipMaterial() {
       this.$router.push({ name: "WIPMaterialCosts" });      
+    },
+    wipLabor() {
+      this.$router.push({ name: "WIPLaborCosts" });      
     }
   }
 }
