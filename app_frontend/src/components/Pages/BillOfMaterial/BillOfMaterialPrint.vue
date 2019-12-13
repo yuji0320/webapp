@@ -175,11 +175,12 @@
       };
       if(selectedDataList.length !== 0) {
         this.printPDF(this.createPrintData(this.dataForPDF));
-        // this.createPrintData(this.dataForPDF);
       } else {
         // データを選択していない場合はアラートを出し、ダイアログを閉じる
         this.showSnackbar({color:"red", snack:"No data selected."});
       }
+      // 印刷済ステータスの更新
+      this.updatePrintStatus(selectedDataList);
     },
     // 一括印刷
     async printAll() {
@@ -194,7 +195,23 @@
         this.dataForPDF.data.push(partsData);
       }
       this.printPDF(this.createPrintData(this.dataForPDF));
-      // this.createPrintData(this.dataForPDF);
+      // 印刷済ステータスの更新
+      this.updatePrintStatus(this.billOfMaterials.results);
+    },
+    // 初回印刷時は印刷ステータスの更新を行う
+    async updatePrintStatus(val) {
+      if(!this.reprint) {
+        // 部品データを展開
+        for (let index = 0; index < val.length; index++) {
+          let element = val[index];
+          // 未印刷の場合は更新処理
+          if (!element.isPrinted) {
+            element.isPrinted = true;
+            await this.putBillOfMaterial(element);
+          }
+        }
+        this.getList({params: this.params});
+      }
     },
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
