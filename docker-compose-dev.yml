@@ -45,7 +45,6 @@ dev_nginx:
     - ./app_frontend/dist:/usr/dist
     - ./app/static:/usr/src/app/static
 
-
 dev_mysql:
   build: ./mysql
   restart: always
