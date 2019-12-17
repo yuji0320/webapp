@@ -10,7 +10,9 @@ class JobOrderAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = JobOrderSerializer
-    queryset = JobOrder.objects.all()
+    queryset = (JobOrder.objects.select_related(
+        'company', 'publisher', 'designer', 'customer', 'delivery_destination', 'order_currency', 'created_by', 'modified_by')
+    )
     filter_class = JobOrderFilter
 
     # @multi_create(serializer_class=JobOrderSerializer)
@@ -31,7 +33,12 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = BillOfMaterialSerializer
-    queryset = BillOfMaterial.objects.all()
+    queryset = (
+        BillOfMaterial.objects.select_related(
+            'company', 'job_order', 'type', 'manufacturer', 'unit', 'currency', 'failure',
+            'job_order__customer', 'job_order__delivery_destination',
+        )
+    )
     filter_class = BillOfMaterialFilter
     # filter_backends = [filters.OrderingFilter]
 
@@ -45,7 +52,13 @@ class MakingOrderAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = MakingOrderSerializer
-    queryset = MakingOrder.objects.all()
+    queryset = (
+        MakingOrder.objects.select_related(
+            'company', 'bill_of_material', 'manufacturer', 'unit', 'currency', 'supplier',
+            'bill_of_material__job_order', 'bill_of_material__manufacturer', 'bill_of_material__currency',
+            'bill_of_material__type'
+        )
+    )
     filter_class = MakingOrderFilter
 
     # @multi_create(serializer_class=MakingOrderSerializer)
@@ -58,7 +71,15 @@ class ReceivingProcessAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = ReceivingProcessSerializer
-    queryset = ReceivingProcess.objects.all()
+    queryset = (
+        ReceivingProcess.objects.select_related(
+            'order', 'unit', 'currency', 'created_by', 'modified_by', 
+            'order__currency', 'order__supplier', 'order__manufacturer', 
+            'order__bill_of_material', 'order__bill_of_material__job_order', 'order__bill_of_material__manufacturer',
+            'order__bill_of_material__currency', 'order__bill_of_material__type', 
+        )
+    )
+    # queryset = (ReceivingProcess.objects.select_related('order',))
     filter_class = ReceivingProcessFilter
 
 
