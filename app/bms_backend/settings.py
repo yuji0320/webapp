@@ -177,3 +177,21 @@ JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+# デバック用ログ出力
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    }
+}
