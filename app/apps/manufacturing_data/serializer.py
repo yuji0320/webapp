@@ -262,6 +262,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
 # 発注ファイル
 class MakingOrderSerializer(serializers.ModelSerializer):
     total_default_currency_price = serializers.SerializerMethodField()
+    display_total_default_currency_price = serializers.SerializerMethodField()
     total_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     display_price_total = serializers.SerializerMethodField()
@@ -269,6 +270,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
+    job_order = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
     # parts_detail = serializers.SerializerMethodField()
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
@@ -280,6 +282,13 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     def get_total_default_currency_price(obj):
         total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
         return round(total_price, 2)
+
+    # デフォルト通貨での合計価格計算(表示用)
+    @staticmethod
+    def get_display_total_default_currency_price(obj):
+        total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        display_price = "{:,.2f}".format(total_price)
+        return display_price
 
     # 発注通貨での合計金額
     @staticmethod
@@ -308,6 +317,15 @@ class MakingOrderSerializer(serializers.ModelSerializer):
         else:
             mfg_no = ""
         return mfg_no
+
+        # 工事番号取得
+    @staticmethod
+    def get_job_order(obj):
+        if obj.bill_of_material:
+            job_order = obj.bill_of_material.job_order.id
+        else:
+            job_order = ""
+        return job_order
 
     @staticmethod
     def get_is_processed(obj):
@@ -372,6 +390,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'total_default_currency_price',
+            'display_total_default_currency_price',
             'total_price',
             'display_price',
             'display_price_total',
@@ -379,6 +398,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'manufacturer_data',
             'supplier_data',
             'mfg_no',
+            'job_order',
             'is_processed',
             # 'parts_detail'
         )

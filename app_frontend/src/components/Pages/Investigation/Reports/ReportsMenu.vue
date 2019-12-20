@@ -31,12 +31,12 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="purchasing" disabled>
+                <v-btn large block outline @click="purchasing(false)">
                   Purchasing Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="purchasing" disabled>
+                <v-btn large block outline @click="purchasing(true)">
                   Purchasing Detail
                 </v-btn>
               </v-flex>
@@ -103,13 +103,16 @@ export default {
   },
   computed: {
     ...mapState("manHourAPI", ["isAnnual"]),
+    ...mapState("receivingProcessAPI", ["isDetail"]),
   },
   methods: {
     ...mapActions("manHourAPI", ["setIsAnnual"]),
+    ...mapActions("receivingProcessAPI", ["setIsDetail"]),
     test() {
       console.log("test");
     },
-    purchasing() {
+    purchasing(val) {
+      this.setIsDetail(val);
       this.$router.push({ name: "PurchasingReport" });
     },
     manHourTotal(val) {

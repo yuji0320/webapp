@@ -87,7 +87,7 @@ class MakingOrderFilter(filters.FilterSet):
     class Meta:
         model = MakingOrder
         fields = [
-            'id', 'number', 'company', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type',
+            'id', 'number', 'company', 'manufacturer', 'bill_of_material', 'bill_of_material__job_order', 'bill_of_material__type',
             'name', 'standard', 'is_printed', 'supplier', 'no_supplier', 'unit_price', 'no_bom',
             'bill_of_material__type__is_processed_parts'
         ]
@@ -136,13 +136,15 @@ class ReceivingProcessFilter(filters.FilterSet):
         choices=(
             ('created_at', 'created_at'),
             ('modified_at', 'modified_at'),
+            ('suspense_received_date', 'suspense_received_date'),
+            ('order__name', 'order__name'),
             ('order__number', 'order__number'),
             ('order__desired_delivery_date', 'order__desired_delivery_date'),
             ('order__manufacturer__name', 'order__manufacturer__name'),
             ('order__standard', 'order__standard'),
             ('order__drawing_number', 'order__drawing_number'),
             ('order__supplier__name', 'order__supplier__name'),
-            ('suspense_received_date', 'suspense_received_date'),
+            ('order__bill_of_material__job_order', 'order__bill_of_material__job_order'),
             ('is_received', 'is_received'),
         ),
     )

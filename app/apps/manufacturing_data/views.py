@@ -74,7 +74,7 @@ class ReceivingProcessAPIView(viewsets.ModelViewSet):
     queryset = (
         ReceivingProcess.objects.select_related(
             'order', 'unit', 'currency', 'created_by', 'modified_by', 
-            'order__currency', 'order__supplier', 'order__manufacturer', 
+            'order__currency', 'order__supplier', 'order__manufacturer', 'order__unit', 
             'order__bill_of_material', 'order__bill_of_material__job_order', 'order__bill_of_material__manufacturer',
             'order__bill_of_material__currency', 'order__bill_of_material__type', 
         )

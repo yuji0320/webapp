@@ -71,6 +71,7 @@ export default {
       orderBy: 'is_printed,supplier__name,manufacturer__name,standard,drawing_number',
       // テーブルヘッダーデータ
       defaultHeadersTop: [
+        { text: "No", value: "number" },
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [

@@ -4,6 +4,7 @@ const receivingProcessState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
+  isDetail: false,
   supplierID: '',
   orderNumber: '',
   receivingProcesses: {},
@@ -15,6 +16,10 @@ export default {
   namespaced: true,
   state: receivingProcessState,
   mutations: {
+    // 詳細検索かどうか
+    setIsDetail(state, payload) {
+      state.isDetail = payload;
+    },
     // エラーハンドリング用
     error(state, payload) {
       state.responseError = payload;
@@ -48,6 +53,10 @@ export default {
     }
   },
   actions: {
+    // 詳細検索かどうか
+    setIsDetail({commit}, data) {
+      commit('setIsDetail', data);
+    },
     // 作業指図書IDセット
     setJobOrderID({commit}, data) {
       commit('setJobOrderID', data);
