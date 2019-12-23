@@ -64,7 +64,7 @@
                   <td colspan="4">{{ jobOrderData.deliveryDestinationName }}</td>
                 </tr>
                 <tr>						
-                  <td class="text-center">Order Date</td>				
+                  <td class="text-center">Order Date</td>
                   <td class="text-center">{{ jobOrderData.orderDate }}</td>				
                   <td class="text-center">Delivery Date</td>				
                   <td class="text-center">{{ jobOrderData.deliveryDate }}</td>				

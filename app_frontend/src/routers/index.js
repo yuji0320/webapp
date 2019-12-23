@@ -44,6 +44,7 @@ import PurchasingReport from '@/components/Pages/Investigation/Reports/Purchasin
 import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
 import WIPMaterialCosts from '@/components/Pages/Investigation/Reports//WorkInProcess/WIPMaterialCosts.vue';
 import WIPLaborCosts from '@/components/Pages/Investigation/Reports//WorkInProcess/WIPLaborCosts.vue';
+import CostingReport from '@/components/Pages/Investigation/Reports//CostingReport/CostingReport.vue';
 import SearchMenu from '@/components/Pages/Investigation/Search/SearchMenu.vue';
 import SearchBOM from '@/components/Pages/Investigation/Search/SearchBOM.vue';
 import SearchOrder from '@/components/Pages/Investigation/Search/SearchOrder.vue';
@@ -337,6 +338,11 @@ const router = new Router({
                       path: 'wip_labor_costs',
                       name: 'WIPLaborCosts',
                       component: WIPLaborCosts,
+                    },
+                    {
+                      path: 'costing_report',
+                      name: 'CostingReport',
+                      component: CostingReport,
                     },
                   ],
                 },

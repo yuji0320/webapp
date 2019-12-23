@@ -58,7 +58,7 @@
 
       <!-- データ表示 -->
       <span slot="card-content">
-        <template v-if="receivingProcesses.results">
+        <template v-if="dataList">
           <!-- 仕入総合計の表示 -->
           <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           <!-- 詳細表示の場合 -->
@@ -116,10 +116,10 @@ export default {
   name: "PurchasingReport",
   data() {
     return {
-      // date_from: "2019-10-01",
-      // date_to: "2019-10-31",
-      date_from: "",
-      date_to: "",
+      date_from: "2019-08-01",
+      date_to: "2019-10-31",
+      // date_from: "",
+      // date_to: "",
       orderBy: 'order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number,order__name',
       summaryBy: "",
       headersMfgNo: [
@@ -140,7 +140,8 @@ export default {
       headersSummary: [
         { text: "Detail", value: "value"},
         { text: "Total($)", value: "subTotal", class: "text-xs-right"},
-      ]
+      ],
+      dataList:[],
     }
   },
   computed: {
@@ -170,8 +171,8 @@ export default {
     // 合計金額計算
     totalPrice() {
       let total = 0;
-      if(this.receivingProcesses.results) {
-        for(var i=0,d;d=this.receivingProcesses.results[i];i++){
+      if(this.dataList) {
+        for(var i=0,d;d=this.dataList[i];i++){
           let price = parseFloat(d.orderData.totalDefaultCurrencyPrice);
           total += price;
         }
@@ -192,6 +193,9 @@ export default {
   methods: {
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setIsDetail"]),
+    moneyComma(value) {
+      return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+    },
     // 取引先別集計
     async sortByJobOrder() {
       this.summaryBy = "jobOrder";
@@ -203,6 +207,7 @@ export default {
       this.summaryBy = "supplier";
       this.orderBy = 'order__manufacturer__name,order__standard,order__drawing_number,order__name,order__bill_of_material__job_order';
       let res = await this.getObjects();
+
     },
     // 集計データ取得
     async getObjects() {
@@ -212,20 +217,32 @@ export default {
         received_date_after: this.date_from,
         received_date_before: this.date_to,
         order_by: this.orderBy,
-        page_size: 100000
+        // page_size: 100000
       }
+      let page = 1;
       this.$store.commit("systemConfig/setLoading", true);
       let res = await this.getReceivingProcesses({params: params});
+      let list = res.results;
+      // 次ページがある場合は再度検索を行う
+      for (let index = 0; index < res.pages-1; await index++) {
+        page += 1;
+        // console.log(page);
+        params.page = page;
+        let response = await this.getReceivingProcesses({params: params});
+        list = await list.concat(response.results);
+        // console.log(list);
+      }
+      this.dataList = list;
       this.$store.commit("systemConfig/setLoading", false);
-      return res;
+      return list;
     },
     // 工事番号別集計
     jobOrderList() {
       let jobOrderList = [];
       // リストの作成
-      if(this.receivingProcesses.results) {
+      if(this.dataList) {
         // 仕入ファイルから工事番号情報の抜き出し
-        for(var i=0,d;d=this.receivingProcesses.results[i];i++){
+        for(var i=0,d;d=this.dataList[i];i++){
           let array = {
             key: d.orderData.jobOrder,
             value: d.orderData.mfgNo,
@@ -240,9 +257,9 @@ export default {
         });
         // 工事番号別集計
         for(var i=0,d;d=jobOrderList[i];i++){
-          let list = this.receivingProcesses.results.filter(x => x.orderData.jobOrder === d.key);
+          let list = this.dataList.filter(x => x.orderData.jobOrder === d.key);
           let total = list.reduce((p, x) => p + parseFloat(x.orderData.totalDefaultCurrencyPrice), 0)
-          d.subTotal = (Math.round( total * 100) / 100).toFixed(2);
+          d.subTotal = this.moneyComma((Math.round( total * 100) / 100).toFixed(2));
           d.dataList = list;
         }
         // 名前順ソート
@@ -258,9 +275,9 @@ export default {
     supplierList() {
       let supplierList = [];
       // リストの作成
-      if(this.receivingProcesses.results) {
+      if(this.dataList) {
         // 仕入ファイルから仕入先情報の抜き出し
-        for(var i=0,d;d=this.receivingProcesses.results[i];i++){
+        for(var i=0,d;d=this.dataList[i];i++){
           let array = {
             key: d.orderData.supplierData.id,
             value: d.orderData.supplierData.name,
@@ -275,9 +292,9 @@ export default {
         });
         // 取引先別集計
         for(var i=0,d;d=supplierList[i];i++){
-          let list = this.receivingProcesses.results.filter(x => x.orderData.supplier === d.key);
+          let list = this.dataList.filter(x => x.orderData.supplier === d.key);
           let total = list.reduce((p, x) => p + parseFloat(x.orderData.totalDefaultCurrencyPrice), 0)
-          d.subTotal = (Math.round( total * 100) / 100).toFixed(2);
+          d.subTotal = this.moneyComma((Math.round( total * 100) / 100).toFixed(2));
           d.dataList = list;
         }
         // 名前順ソート

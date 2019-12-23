@@ -67,11 +67,11 @@
         </app-card>
       </v-flex>
 
+      <!-- 仕掛集計 -->
       <v-flex xs12 md6>
         <app-card noSearchBar="true">
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
-          <span slot="card-header-title">Costing Reports</span>
-
+          <span slot="card-header-title">Work In Process</span>
           <span slot="card-content">
             <v-layout row>
               <v-flex sm6 xs12>
@@ -82,6 +82,23 @@
               <v-flex sm6 xs12>
                 <v-btn large block outline @click="wipLabor()">
                   Work-in-process(Labor costs)
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </span>
+        </app-card>
+      </v-flex>
+
+
+      <v-flex xs12 md6>
+        <app-card noSearchBar="true">
+          <span slot="card-header-icon"><v-icon>poll</v-icon></span>
+          <span slot="card-header-title">Costing Report</span>
+          <span slot="card-content">
+            <v-layout row>
+              <v-flex sm6 xs12>
+                <v-btn large block outline @click="costingReport()">
+                  Costing Report
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -108,22 +125,28 @@ export default {
   methods: {
     ...mapActions("manHourAPI", ["setIsAnnual"]),
     ...mapActions("receivingProcessAPI", ["setIsDetail"]),
-    test() {
-      console.log("test");
-    },
+    // 仕入集計
     purchasing(val) {
       this.setIsDetail(val);
       this.$router.push({ name: "PurchasingReport" });
     },
+    // 工数集計
     manHourTotal(val) {
       this.setIsAnnual(val);
       this.$router.push({ name: "ManHourTotal" });
     },
+    // 仕掛材料費
     wipMaterial() {
       this.$router.push({ name: "WIPMaterialCosts" });      
     },
+    // 仕掛労務費
     wipLabor() {
       this.$router.push({ name: "WIPLaborCosts" });      
+    },
+    // 原価集計
+    costingReport() {
+      // console.log("test");
+      this.$router.push({ name: "CostingReport" });      
     }
   }
 }
