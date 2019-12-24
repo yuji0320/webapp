@@ -242,6 +242,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'desired_delivery_date',
             'failure',
             'is_customer_supplied',
+            'notes',
             'is_printed',
             'created_at',
             'created_by',

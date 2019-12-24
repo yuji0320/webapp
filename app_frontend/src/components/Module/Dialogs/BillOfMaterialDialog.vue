@@ -191,14 +191,23 @@
         <!-- 仕損費種別 -->
         <v-flex xs12 md8>
           <app-incremental-model-search
-          label="Failure"
-          orderBy="category_number"
-          v-model="billOfMaterial.failure"
-          searchType="failure"
-          :errorMessages="responseError.failure"
-          ref="failure"
-          :disabled="editDisable"
+            label="Failure"
+            orderBy="category_number"
+            v-model="billOfMaterial.failure"
+            searchType="failure"
+            :errorMessages="responseError.failure"
+            ref="failure"
+            :disabled="editDisable"
           ></app-incremental-model-search>
+        </v-flex>
+        <!-- メモ -->
+        <v-flex xs12>
+          <v-textarea
+            label="Notes"
+            v-model="billOfMaterial.notes"
+            :error-messages="responseError.notes"
+            :disabled="editDisable"
+          ></v-textarea>
         </v-flex>
       </v-layout>
     </span>

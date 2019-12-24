@@ -170,6 +170,7 @@ class BillOfMaterial(models.Model):
     )  # 仕損種別
     is_customer_supplied = models.BooleanField(_('is Customer supplied'), default=False)  # 支給品かどうか
     is_printed = models.BooleanField(_('is Printed'), default=False)  # 部品表印刷済みかどうか
+    notes = models.TextField(_('Notes'), blank=True)  # 備考
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     created_by = models.ForeignKey('system_users.User',
                                    related_name='%(class)s_requests_created',
