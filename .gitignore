@@ -6,3 +6,4 @@ mysql/.DS_Store
 /nginx/log/
 /mysql/backup/backup/
 /app_frontend/dist
+app_frontend/.env.prod
