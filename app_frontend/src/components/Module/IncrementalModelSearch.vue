@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex>
+    <v-flex xs6 sm8 xl9>
       <v-autocomplete
         v-model="model"
         :items="searchItems"
@@ -11,11 +11,14 @@
         :placeholder="label"
         :label="label"
         :error-messages="errorMessages"
+        :disabled="disabled"
+        :rules="required"
       ></v-autocomplete>
     </v-flex>
-    <v-flex x1 class="pt-3">
+    <v-flex class="pt-3" xs6 sm4 xl3>
       <v-btn
         @click="clearItem"
+        :disabled="disabled"
       >Clear</v-btn>
     </v-flex>
   </v-layout>
@@ -32,7 +35,10 @@ export default {
       isLoading: false,
       model: this.value,
       search: null,
-      items: []
+      items: [],
+      rules: [
+        value => !!value || 'Required.',
+      ],
     };
   },
   props: {
@@ -46,11 +52,14 @@ export default {
     // 検索先フィルター
     filter: { required: false },
     // エラー情報
-    errorMessages: { required: true }
+    errorMessages: { required: false },
+    // disabled
+    disabled: { required: false },
+    required: { required: false },    
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories"]),
+    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes"]),
     ...mapState("systemUserApi", [
       "searchUserStaffs",
       "searchUserPartners",
@@ -59,47 +68,50 @@ export default {
       "searchPartnerSuppliers",
       "searchPartnerManufacturers"
     ]),
-    ...mapState("jobOrderAPI", ["searchJobOrder"]),    
+    ...mapState("jobOrderAPI", ["searchJobOrder"]), 
     searchItems() {
       switch(this.searchType) {
         case "staff":
           return this.searchUserStaffs.results;
-          break;
+          // break;
         case "currency":
           return this.currencies.results;
-          break;
+          // break;
         case "unitType":
           return this.unitTypes.results;
-          break;
+          // break;
         case "failure":
           return this.failureCategories.results;
-          break;   
+          // break;
         case "partner":
           switch(this.filter) {
             case "customer":
               return this.searchPartnerCustomers.results;
-              break;
+              // break;
             case "delivery":
               return this.searchPartnerDeliveries.results;
-              break;
+              // break;
             case "supplier":
               return this.searchPartnerSuppliers.results;
-              break;
+              // break;
             case "manufacturer":
               return this.searchPartnerManufacturers.results;
-              break;
+              // break;
           }
           break;
         case "jobOrder":
           return this.searchJobOrder.results;
-          break;
+          // break;
+        case "jobType":
+          return this.jobTypes.results;
       }
     },
     // データ検索用共通パラメータを格納
     params() {
       return {
-        company: this.loginUserData.companyId,
-        order_by: this.orderBy
+        company: this.loginUserData["companyId"],
+        order_by: this.orderBy,
+        page_size: 100000
       };
     },
     fields() {
@@ -113,7 +125,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories"]),
+    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories", "getJobTypes"]),
     ...mapActions("systemUserApi", [
       "getSearchUserStaffs",
       "getSearchUserPartners",
@@ -161,6 +173,8 @@ export default {
         case "jobOrder":
           this.getSearchJobOrder(search);
           break;
+        case "jobType":
+          this.getJobTypes(search);
       }
     },
     clearItem() {

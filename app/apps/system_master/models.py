@@ -52,8 +52,10 @@ class SystemExpenseCategory(models.Model):
     # 費用項目リスト
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category_number = models.IntegerField(_('Category number'), unique=True)  # 項目番号
-    category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
+    category_name = models.CharField(_('Category name'), max_length=150, unique=True)  # 項目名
+    abbr = models.CharField(_('Abbreviation'), max_length=10, blank=True)  # 略称
     is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
+    is_calculate = models.BooleanField(_('is Calculate in WIP'), default=True)  # 仕掛で計算するかどうか
     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
@@ -70,7 +72,7 @@ class SystemFailureCategory(models.Model):
     # 仕損費種別マスタ
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category_number = models.IntegerField(_('Category number'), unique=True)  # 企業内での項目番号
-    category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
+    category_name = models.CharField(_('Category name'), max_length=150, unique=True)  # 項目名
     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
@@ -81,3 +83,21 @@ class SystemFailureCategory(models.Model):
         verbose_name_plural = _('System Failure Categories')
 
     def __str__(self): return self.category_name
+
+
+class SystemJobType(models.Model):
+    # 仕損費種別マスタ
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    number = models.IntegerField(_('Work Type number'), unique=True)  # 企業内での項目番号
+    name = models.CharField(_('Work Type name'), max_length=150, unique=True)  # 項目名
+    abbr = models.CharField(_('Abbreviation'), max_length=10, blank=True)  # 略称
+    is_calculate = models.BooleanField(_('is Calculate'), default=True)  # 計算するかどうか
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+
+    class Meta:
+        db_table = 'system_job_type'
+        verbose_name = _('System Job Type')
+        verbose_name_plural = _('System Job Types')
+
+    def __str__(self): return self.name

@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex sm8 md4 lg3 d-flex>
+    <v-flex xs12 sm8 lg5>
       <app-pagination
         v-model="search.page"
         :length="length"
@@ -8,13 +8,13 @@
       ></app-pagination>
     </v-flex>
 
-    <v-flex sm4 md2 lg2>
+    <v-flex xs12 sm4 lg2>
       <v-subheader>
         Total : {{ count }} items
       </v-subheader>
     </v-flex>
 
-    <v-flex sm12 md6 lg7>
+    <v-flex xs12 sm12 lg5>
       <app-search
         v-model="search.incremental"
       ></app-search>
@@ -38,7 +38,7 @@ export default {
         // 絞り込み検索初期値
         incremental: {}
       },
-      maxpage: 2
+      maxPage: 2
     };
   },
   props: {
@@ -51,13 +51,6 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    // データ検索用パラメータを格納
-    // params() {
-    //   return {
-    //     company: this.loginUserData.companyId,
-    //     order_by: this.orderBy
-    //   };
-    // }
   },
   watch: {
     // ページネーション部分検索
@@ -69,17 +62,17 @@ export default {
     // 頭出し検索反映
     "search.incremental.tableSearch": function(val) {
       // 検索パラメーターの初期化
-      var len = this.search.incremental.tableSelectItems;
-      for (var i = 0; i < len.length; i++) {
+      let len = this.search.incremental.tableSelectItems;
+      for (let i = 0; i < len.length; i++) {
         delete this.params[len[i].value];
       }
       // 検索パラメーターの代入
-      const keyname = this.search.incremental.tableSelectValue;
-      this.params[keyname] = val;
+      const keyName = this.search.incremental.tableSelectValue;
+      this.params[keyName] = val;
       // 頭出し検索時、強制的にページネーションを1にする
       this.search.page = 1;
       this.params.page = 1;
-      var search = { params: this.params };
+      let search = { params: this.params };
       this.$emit("search-list", search);
       // console.log(JSON.stringify(search));
     }

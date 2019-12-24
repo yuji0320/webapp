@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
@@ -28,110 +25,108 @@
         >
           <!-- フォーム内容 -->
           <span slot="dialog-contents">
-
-              <v-layout wrap>
-                <!-- エラー表示 -->
-                <v-flex xs12>
-                  <v-alert 
-                    value="true"
-                    type="error"
-                    v-if="responseError.nonFieldErrors"
+            <v-layout wrap>
+              <!-- エラー表示 -->
+              <v-flex xs12>
+                <v-alert 
+                  value="true"
+                  type="error"
+                  v-if="responseError.nonFieldErrors"
+                >
+                  <li
+                    v-for="(error, index) in responseError.nonFieldErrors"
+                    :key="index"
                   >
-                    <li
-                      v-for="(error, index) in responseError.nonFieldErrors"
-                      :key="index"
-                    >
-                      {{ error }}
-                    </li>
-                  </v-alert>
-                </v-flex>
-                <!-- ユーザーフォーム -->
-                <v-flex xs6>
-                  <v-text-field 
-                    label="Staff Number*"
-                    v-model="userStaff.staffNumber"
-                    :error-messages="responseError.staffNumber"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs6>
-                  <v-text-field 
-                    label="Company*"
-                    v-model="loginUserData.companyName"
-                    disabled
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs6>
-                  <v-text-field 
-                    label="Full Name*" 
-                    v-model="userStaff.fullName"
-                    :error-messages="responseError.fullName"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs6>
-                  <v-text-field 
-                    label="Ruby"
-                    v-model="userStaff.ruby"
-                    :error-messages="responseError.ruby"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field 
-                    label="Mobile"
-                    v-model="userStaff.mobile"
-                    :error-messages="responseError.mobile"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field 
-                    label="E-mail"
-                    v-model="userStaff.email"
-                    :error-messages="responseError.email"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field 
-                    label="Postal Code"
-                    v-model="userStaff.postalCode"
-                    :error-messages="responseError.postalCode"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea 
-                    label="Address"
-                    v-model="userStaff.address"
-                    :error-messages="responseError.address"
-                  ></v-textarea>
-                </v-flex>
-                <v-flex xs12 lg6>
-                  <app-input-date
-                    label="Date birth"
-                    v-model="userStaff.dateBirth"
-                    :errorMessages="responseError.dateBirth"
-                    ref="inputDate"
-                  ></app-input-date>
-                </v-flex>
-                <v-flex xs12 lg6>
-                  <app-input-date
-                    label="Date joined"
-                    v-model="userStaff.dateJoined"
-                    :errorMessages="responseError.dateJoined"
-                  ></app-input-date>
-                </v-flex>
-                <v-flex xs12 lg6>
-                  <app-input-date
-                    label="Date left"
-                    v-model="userStaff.dateLeft"
-                    :errorMessages="responseError.dateLeft"
-                  ></app-input-date>
-                </v-flex>
-                <v-flex xs12 lg6>
-                  <v-checkbox
-                    label="is loginUser"
-                    v-model="userStaff.isLoginUser"
-                  ></v-checkbox>
-                </v-flex>
-              </v-layout>
-        
+                    {{ error }}
+                  </li>
+                </v-alert>
+              </v-flex>
+              <!-- ユーザーフォーム -->
+              <v-flex xs6>
+                <v-text-field 
+                  label="Staff Number*"
+                  v-model="userStaff.staffNumber"
+                  :error-messages="responseError.staffNumber"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field 
+                  label="Company*"
+                  v-model="loginUserData.companyName"
+                  disabled
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field 
+                  label="Full Name*" 
+                  v-model="userStaff.fullName"
+                  :error-messages="responseError.fullName"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field 
+                  label="Ruby"
+                  v-model="userStaff.ruby"
+                  :error-messages="responseError.ruby"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field 
+                  label="Mobile"
+                  v-model="userStaff.mobile"
+                  :error-messages="responseError.mobile"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field 
+                  label="E-mail"
+                  v-model="userStaff.email"
+                  :error-messages="responseError.email"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field 
+                  label="Postal Code"
+                  v-model="userStaff.postalCode"
+                  :error-messages="responseError.postalCode"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea 
+                  label="Address"
+                  v-model="userStaff.address"
+                  :error-messages="responseError.address"
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs12 lg6>
+                <app-input-date
+                  label="Date birth"
+                  v-model="userStaff.dateBirth"
+                  :errorMessages="responseError.dateBirth"
+                  ref="inputDate"
+                ></app-input-date>
+              </v-flex>
+              <v-flex xs12 lg6>
+                <app-input-date
+                  label="Date joined"
+                  v-model="userStaff.dateJoined"
+                  :errorMessages="responseError.dateJoined"
+                ></app-input-date>
+              </v-flex>
+              <v-flex xs12 lg6>
+                <app-input-date
+                  label="Date left"
+                  v-model="userStaff.dateLeft"
+                  :errorMessages="responseError.dateLeft"
+                ></app-input-date>
+              </v-flex>
+              <v-flex xs12 lg6>
+                <v-checkbox
+                  label="is loginUser"
+                  v-model="userStaff.isLoginUser"
+                ></v-checkbox>
+              </v-flex>
+            </v-layout>
           </span>
         </app-dialog>
       </span>
@@ -157,7 +152,7 @@
           :orderBy="orderBy"
           :incremental="incremental"
           :params="params"
-          @search-list="getStaffs"
+          @search-list="getList"
         ></app-search-bar>
       </div>
 
@@ -174,7 +169,7 @@ export default {
   name: "Staff",
   data() {
     return {
-      orderBy: "-created_at",
+      orderBy: "staff_number",
       // テーブルヘッダー
       headers: [
         { text: "Staff number", value: "staffNumber" },
@@ -214,15 +209,13 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
-    ...mapActions("systemUserApi", [
-      "clearStaff",
-      "getStaffs",
-      "getStaff",
-      "setStaff",
-      "postStaff",
-      "putStaff",
-      "deleteStaff"
-    ]),
+    ...mapActions("systemUserApi", ["clearStaff","getStaffs","getStaff","setStaff","postStaff","putStaff","deleteStaff"]),
+    // リスト検索
+    async getList(data) {
+      this.$store.commit("systemConfig/setLoading", true);
+      let list = await this.getStaffs(data);
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     // 処理結果統合フォーム
     responseFunction(val) {
       // リストをリロード
@@ -274,6 +267,7 @@ export default {
         // Noの場合はスナックバーにキャンセルの旨を表示
         res.snack = { snack: "Delete is cancelled" };
       }
+      // console.log(res);
       this.responseFunction(res);
     },
     upload() {
@@ -282,9 +276,7 @@ export default {
   },
   created() {
     // ページ作成時にgetでデータを取得
-    this.getStaffs({
-      params: this.params
-    });
+    this.getStaffs({ params: this.params });
   }
 };
 </script>

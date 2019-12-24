@@ -3,6 +3,7 @@
     <!-- Cardヘッダー -->
     <v-toolbar card>
       <slot name="card-header-icon"></slot>
+      <!-- <v-icon>list</v-icon> -->
       <v-toolbar-title class="font-weight-light">
         <slot name="card-header-title"></slot>
       </v-toolbar-title>
@@ -55,7 +56,6 @@
             :key="index"
             :class="header.class"
           >
-            
             <!-- 文字列がtrueの場合緑チェック -->
             <template v-if="props.item[header.value] === true">
               <v-icon color="green">check</v-icon>
@@ -171,12 +171,12 @@ export default {
 </script>
 
 <style>
-.printed, .complete, .complete * v-icon {
+/* .printed, .complete, .complete * v-icon {
   background-color: #4CAF50;
   color: white;
-}
+} */
 
-.error {
+/* .error {
   background-color: #fb8c;
   color: white;
 }
@@ -184,5 +184,5 @@ export default {
 .dataList:hover {
   background-color: #607d8b;
   color: black;
-}
+} */
 </style>

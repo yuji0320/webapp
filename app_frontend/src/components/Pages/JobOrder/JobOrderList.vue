@@ -29,14 +29,19 @@
           @click="createJobOrder()"
           >New Item</v-btn>
 
+          <!-- 工事完了済み、売上未計上の部品の一括更新 -->
+          <!-- <span slot="card-header-button">
+            <bulk-bill-date></bulk-bill-date>
+          </span> -->
+
           <!-- エクセルアップロード -->
-          <v-btn
+          <!-- <v-btn
             fab
             small
             @click="upload"
           >
             <v-icon>cloud_upload</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-layout>
       </span>
 
@@ -68,13 +73,17 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import JobOrderBulkBillDate from "./JobOrderBulkBillDate.vue"
 
 export default {
   title: "Job Order",
   name: "JobOrder",
+  components: {
+    "bulk-bill-date": JobOrderBulkBillDate
+  },
   data() {
     return {
-      orderBy: "-created_at",
+      orderBy: "-mfg_no",
       headers: [
         { text: "MFG No.", value: "mfgNo" },
         { text: "Product name", value: "name" },
@@ -100,6 +109,7 @@ export default {
         // 検索カラムリスト
         tableSelectItems: [
           { label: "MFG No", value: "mfg_no" },
+          { label: "Related Party MFG No", value: "related_party_mfg_no" },
           { label: "Product Name", value: "name" }
         ],
         // 検索数値の初期値および返り値
@@ -118,7 +128,7 @@ export default {
     ]),
     params() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         order_by: this.orderBy
       };
     }
@@ -136,7 +146,7 @@ export default {
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       // console.log(this.$store.state.systemConfig.loading);
-      let list = await this.getJobOrders(data);
+      await this.getJobOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
       // console.log(this.$store.state.systemConfig.loading);
     },
@@ -185,8 +195,7 @@ export default {
   },
   mounted() {
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
-    this.headers[7].text =
-      "Order price" + " (" + this.loginUserData.defaultCurrencyCode + ")";
+    this.headers[7].text = "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
   }
 };
 </script>

@@ -8,6 +8,7 @@ routeList = (
     (r'unit_types', SystemUnitTypeAPIView),
     (r'expense_categories', SystemExpenseCategoryAPIView),
     (r'failure_categories', SystemFailureCategoryAPIView),
+    (r'job_types', SystemJobTypeAPIView),
 )
 
 router = routers.DefaultRouter()

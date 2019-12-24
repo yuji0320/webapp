@@ -1,13 +1,16 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
+    
+    <!-- 読み込み中ダイアログコンポーネント -->
+    <app-loading-dialog></app-loading-dialog>
+
     <app-excel-upload
       :headers="headerData"
       @back-to-list="backToList"
       @fix-json="fixJson"
       @submit-data="submitData"
+      @submit-all="submitAllData"
+      submitAll="true"
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>list</v-icon></span>
@@ -75,7 +78,7 @@ export default {
       return {
         company: this.loginUserData.companyId,
         is_manufacturer: true,
-        page_size: 1000
+        page_size: 100000
         // order_by: this.orderBy
       };
     },
@@ -122,7 +125,7 @@ export default {
 
         // メーカー情報の入力
         if(val[i].manufacturerName) {
-          // システム通貨マスタと通貨情報を突合
+          // 取引先マスタとメーカー入力値を突合
           for(let c in this.partnerList) {
             if(val[i].manufacturerName===this.partnerList[c].abbr) {
               val[i].manufacturer = this.partnerList[c].id;
@@ -166,7 +169,7 @@ export default {
               val[i].currency = this.currencyList[c].id;
             }
           }
-          // 値が未入力の場合はデフォルト通過を設定する
+          // 値が未入力の場合はデフォルト通貨を設定する
           if(!val[i].currency) {
             val[i].currency = this.loginUserData.defaultCurrencyId;
             val[i].currencyCode = this.loginUserData.defaultCurrencyCode;
@@ -176,12 +179,16 @@ export default {
         // レートが未入力の場合の場合"1"を入力
         if(!val[i].rate) { val[i].rate = 1 }
 
+        // 単価が未入力の場合の場合"0"を入力
+        if(!val[i].unitPrice) { val[i].unitPrice = 0 }
+
       }
       // データをVuexに格納
       this.setExcelJson(val);
     },
     // データ処理
     async submitData(val) {
+      this.$store.commit("systemConfig/setLoading", true);
       // console.log(val);
       let res = {};
       res = await this.postBillOfMaterial(val);
@@ -195,9 +202,36 @@ export default {
         this.excelJson[val.key].err = true;
         console.log(res.error);
       }
+      this.$store.commit("systemConfig/setLoading", false);
+    },
+    async submitAllData() {
+      this.$store.commit("systemConfig/setLoading", true);
+      let res = {};
+      res = await this.postBillOfMaterial(this.excelJson);
+
+      if (res.data) {
+        // console.log("success");
+        for(let i=0,success; success = this.excelJson[i]; i++){
+          success.updated = true;
+        }
+      } else {
+        // console.log(res.error.data);
+        for(let i=0,errprData; errprData = this.excelJson[i]; i++){
+          if(Object.keys(res.error.data[i]).length !== 0) {
+            // console.log(Object.keys(res.error.data[i]).length);
+            errprData.err = true;
+          }
+        }
+      }
+
+      // console.log(res);
+      
+      this.showSnackbar(res.snack);
+      this.$store.commit("systemConfig/setLoading", false);
     }
   },
   created() {
+    this.$store.commit("systemConfig/setLoading", false);
     // もし工事番号等がクリアの場合はメニューにリダイレクトする
     if(!this.partsType || !this.jobOrderID) {
       this.$router.push({ name: "BillOfMaterialMenu" });

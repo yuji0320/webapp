@@ -1,4 +1,7 @@
+from django.http import Http404
 from rest_framework import viewsets
+from rest_framework import status
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -54,6 +57,23 @@ class UserAPIView(viewsets.ModelViewSet):
             'default_currency_id': user.staff.company.default_currency.id,
             'staff_id': user.staff.id
         })
+
+    @action(methods=['put'], detail=False)
+    def set_password(self, request):
+        serializer = PasswordSerializer(data=request.data)
+        user = self.request.user
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.data.get('old_password')):
+                return Response({'old_password': ['Wrong password.']},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+            return Response({'status': 'password set'}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserPartnerAPIView(viewsets.ModelViewSet):

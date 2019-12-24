@@ -35,14 +35,24 @@ class UserStaffSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=False, required=False)
+    password = serializers.CharField(write_only=False, required=True)
+    username = serializers.CharField(required=True)
 
     class Meta:
         model = User
+        # fields = ('id', 'username', 'staff', 'is_staff', 'is_active', 'password')
         fields = '__all__'
 
     def create(self, validated_data):
         return User.objects.create_user(request_data=validated_data)
+
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            instance.set_password(validated_data['password'])
+        else:
+            instance = super().update(instance, validated_data)
+        instance.save()
+        return instance
 
 
 class UserPartnerSerializer(serializers.ModelSerializer):
@@ -56,6 +66,15 @@ class UserPartnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPartner
         fields = '__all__'
+
+
+class PasswordSerializer(serializers.Serializer):
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
 
 # class UserExpenseCategorySerializer(serializers.ModelSerializer):

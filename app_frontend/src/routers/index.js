@@ -11,33 +11,53 @@ import Login from '@/components/Login.vue';
 import Logout from '@/components/Logout.vue';
 import Top from '@/components/Top.vue';
 import Main from '@/components/Pages/Main.vue';
-import JobOrder from '@/components/Pages/JobOrder/JobOrder.vue';
+// 作業指図書
 import JobOrderList from '@/components/Pages/JobOrder/JobOrderList.vue';
 import JobOrderDetail from '@/components/Pages/JobOrder/JobOrderDetail.vue';
 import JobOrderEdit from '@/components/Pages/JobOrder/JobOrderEdit.vue';
 import JobOrderUpload from '@/components/Pages/JobOrder/JobOrderUpload.vue';
-import BillOfMaterial from '@/components/Pages/BillOfMaterial/BillOfMaterial.vue'; /* eslint-disable-line max-len */
+// 部品表
 import BillOfMaterialMenu from '@/components/Pages/BillOfMaterial/BillOfMaterialMenu.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialList from '@/components/Pages/BillOfMaterial/BillOfMaterialList.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialUpload from '@/components/Pages/BillOfMaterial/BillOfMaterialUpload.vue'; /* eslint-disable-line max-len */
 import BillOfMaterialPrint from '@/components/Pages/BillOfMaterial/BillOfMaterialPrint.vue'; /* eslint-disable-line max-len */
-import MakingOrder from '@/components/Pages/MakingOrder/MakingOrder.vue';
+// 発注
 import MakingOrderMenu from '@/components/Pages/MakingOrder/MakingOrderMenu.vue'; /* eslint-disable-line max-len */
 import MakingOrderList from '@/components/Pages/MakingOrder/MakingOrderList.vue'; /* eslint-disable-line max-len */
 import MakingOrderUpload from '@/components/Pages/MakingOrder/MakingOrderUpload.vue'; /* eslint-disable-line max-len */
 import MakingOrderPrint from '@/components/Pages/MakingOrder/MakingOrderPrint.vue'; /* eslint-disable-line max-len */
 import MakingOrderNotyet from '@/components/Pages/MakingOrder/MakingOrderNotyet.vue'; /* eslint-disable-line max-len */
-import ReceivingProcess from '@/components/Pages/ReceivingProcess/ReceivingProcess.vue'; /* eslint-disable-line max-len */
+// 仕入れ
 import ReceivingProcessMenu from '@/components/Pages/ReceivingProcess/ReceivingProcessMenu.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessNotyet from '@/components/Pages/ReceivingProcess/ReceivingProcessNotyet.vue'; /* eslint-disable-line max-len */
 import ReceivingProcessList from '@/components/Pages/ReceivingProcess/ReceivingProcessList.vue'; /* eslint-disable-line max-len */
-
-import Master from '@/components/Pages/Master/Master.vue';
+import ReceivingProcessEditList from '@/components/Pages/ReceivingProcess/ReceivingProcessEditList.vue'; /* eslint-disable-line max-len */
+import ReceivingProcessSuspense from '@/components/Pages/ReceivingProcess/ReceivingProcessSuspense.vue'; /* eslint-disable-line max-len */
+// 工数管理
+import ManHourMenu from '@/components/Pages/ManHour/ManHourMenu.vue';
+import ManHourList from '@/components/Pages/ManHour/ManHourList.vue';
+// 調査
+import ReportsMenu from '@/components/Pages/Investigation/Reports/ReportsMenu.vue';
+import SalesByPeriod from '@/components/Pages/Investigation/Reports/Sales/SalesByPeriod.vue';
+import OpenPO from '@/components/Pages/Investigation/Reports//Sales/OpenPO.vue';
+import PurchasingReport from '@/components/Pages/Investigation/Reports/Purchasing/PurchasingReport.vue';
+import ManHourTotal from '@/components/Pages/Investigation/Reports//ManHour/ManHourTotal.vue';
+import WIPMaterialCosts from '@/components/Pages/Investigation/Reports//WorkInProcess/WIPMaterialCosts.vue';
+import WIPLaborCosts from '@/components/Pages/Investigation/Reports//WorkInProcess/WIPLaborCosts.vue';
+import CostingReport from '@/components/Pages/Investigation/Reports//CostingReport/CostingReport.vue';
+import SearchMenu from '@/components/Pages/Investigation/Search/SearchMenu.vue';
+import SearchBOM from '@/components/Pages/Investigation/Search/SearchBOM.vue';
+import SearchOrder from '@/components/Pages/Investigation/Search/SearchOrder.vue';
+import SearchReceived from '@/components/Pages/Investigation/Search/SearchReceived.vue';
+import SearchCost from '@/components/Pages/Investigation/Search/SearchCost.vue';
+// マスター
 import Company from '@/components/Pages/Master/Company.vue';
 import Staff from '@/components/Pages/Master/Staff.vue';
 import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
 import Partner from '@/components/Pages/Master/Partner.vue';
 import PartnerUpload from '@/components/Pages/Master/PartnerUpload.vue';
+// ユーザー設定
+import ChangePassword from '@/components/Pages/UserSettings/ChangePassword.vue';
 
 
 import ExcelUpload from '@/components/Module/ExcelUpload.vue';
@@ -91,9 +111,21 @@ const router = new Router({
               component: ExcelUpload,
             },
             {
+              path: 'user_settings',
+              name: 'UserSettings',
+              component: Root,
+              children: [
+                {
+                  path: 'change_password',
+                  name: 'ChangePassword',
+                  component: ChangePassword,
+                },
+              ]
+            },
+            {
               path: 'job_order',
               name: 'JobOrder',
-              component: JobOrder,
+              component: Root,
               children: [
                 {
                   path: 'list',
@@ -125,7 +157,7 @@ const router = new Router({
             {
               path: 'bill_of_material',
               name: 'BillOfMaterial',
-              component: BillOfMaterial,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -152,7 +184,7 @@ const router = new Router({
             {
               path: 'making_order',
               name: 'MakingOrder',
-              component: MakingOrder,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -184,7 +216,7 @@ const router = new Router({
             {
               path: 'receiving_process',
               name: 'ReceivingProcess',
-              component: ReceivingProcess,
+              component: Root,
               children: [
                 {
                   path: 'menu',
@@ -192,9 +224,19 @@ const router = new Router({
                   component: ReceivingProcessMenu,
                 },
                 {
-                  path: 'notyet',
+                  path: 'suspense',
+                  name: 'ReceivingProcessSuspense',
+                  component: ReceivingProcessSuspense,
+                },
+                {
+                  path: 'receiving',
                   name: 'ReceivingProcessList',
                   component: ReceivingProcessList,
+                },
+                {
+                  path: 'edit',
+                  name: 'ReceivingProcessEditList',
+                  component: ReceivingProcessEditList,
                 },
                 {
                   path: 'notyet',
@@ -204,9 +246,112 @@ const router = new Router({
               ],
             },
             {
+              path: 'man_hour',
+              name: 'ManHour',
+              component: Root,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'ManHourMenu',
+                  component: ManHourMenu,
+                },     
+                {
+                  path: 'list',
+                  name: 'ManHourList',
+                  component: ManHourList,
+                },    
+              ]
+            },
+            {
+              path: 'investigation',
+              name: 'Investigation',
+              component: Root,
+              children: [
+                {
+                  path: 'search',
+                  name: 'Search',
+                  component: Root,
+                  children: [
+                    {
+                      path: 'menu',
+                      name: 'SearchMenu',
+                      component: SearchMenu,
+                    },               
+                    {
+                      path: 'search_bom',
+                      name: 'SearchBOM',
+                      component: SearchBOM,
+                    },
+                    {
+                      path: 'search_order',
+                      name: 'SearchOrder',
+                      component: SearchOrder,
+                    },
+                    {
+                      path: 'search_received',
+                      name: 'SearchReceived',
+                      component: SearchReceived,
+                    },
+                    {
+                      path: 'search_cost',
+                      name: 'SearchCost',
+                      component: SearchCost,
+                    },
+                  ]
+                },
+                {
+                  path: 'reports',
+                  name: 'Reports',
+                  component: Root,
+                  children: [
+                    {
+                      path: 'menu',
+                      name: 'ReportsMenu',
+                      component: ReportsMenu,
+                    },
+                    {
+                      path: 'sales_by_period',
+                      name: 'SalesByPeriod',
+                      component: SalesByPeriod,
+                    },
+                    {
+                      path: 'open_po',
+                      name: 'OpenPO',
+                      component: OpenPO,
+                    },
+                    {
+                      path: 'purchasing_report',
+                      name: 'PurchasingReport',
+                      component: PurchasingReport,
+                    },
+                    {
+                      path: 'man_hour_total',
+                      name: 'ManHourTotal',
+                      component: ManHourTotal,
+                    },
+                    {
+                      path: 'wip_material_costs',
+                      name: 'WIPMaterialCosts',
+                      component: WIPMaterialCosts,
+                    },
+                    {
+                      path: 'wip_labor_costs',
+                      name: 'WIPLaborCosts',
+                      component: WIPLaborCosts,
+                    },
+                    {
+                      path: 'costing_report',
+                      name: 'CostingReport',
+                      component: CostingReport,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
               path: 'master',
               name: 'Master',
-              component: Master,
+              component: Root,
               children: [
                 {
                   path: 'company',

@@ -1,12 +1,9 @@
 <template>
   <v-container fluid grid-list-lg>
-    <app-card-table
-      :headers="headers"
-      :items="receivingProcesses.results"
-    >
+    <app-card>
 
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-title"> Over date list</span>
+      <span slot="card-header-title"> Past due list</span>
 
       <!-- 戻るボタン -->
       <span slot="card-header-buck-button">
@@ -28,7 +25,17 @@
         ></app-search-bar>
       </div>
 
-    </app-card-table>
+      <span slot="card-content">
+        <!-- テーブル表示 -->
+        <app-data-table
+          :headers="headers"
+          :items="receivingProcesses.results"
+          :completeColumn="completeColumn"
+        >
+        </app-data-table>
+      </span>
+
+    </app-card>
   </v-container>
 </template>
 
@@ -52,14 +59,17 @@ export default {
         { text: "Desired Delivery Date", value: "orderData" , nest: "desiredDeliveryDate", class: "text-xs-center" },
         // { text: "Ordered date", value: "orderData" , nest: "orderedDate" },
       ],
+      //  仮仕入完了時色変更
+      completeColumn: "suspenseReceivedDate",
       // テーブル検索用データ
       incremental: {
         // 検索カラムリスト
         tableSelectItems: [
           { label: "Order Number", value: "order__number" },
+          { label: "MFG No", value: "mfg_no" },
         ],
         // 検索数値の初期値および返り値
-        tableSelectValue: "order__number",
+        tableSelectValue: "mfg_no",
         tableSearch: ""
       }      
     }

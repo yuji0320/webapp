@@ -1,4 +1,9 @@
 export default {
+  computed: {
+    todayISO() {
+      return new Date().toISOString().substr(0, 10);
+    }
+  },
   methods: {
     convertSn2Ut(val) {
       const COEFFICIENT = 24 * 60 * 60 * 1000; // 日数とミリ秒を変換する係数

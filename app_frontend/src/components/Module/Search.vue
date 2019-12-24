@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap justify-end>
-    <v-flex xs12 sm4 lg3 d-inline>
+    <v-flex xs12 sm5 lg5 d-inline>
       <!-- 検索カラムの指定 -->
       <v-select
         v-model="incremental.tableSelectValue"
@@ -10,7 +10,7 @@
         label="Select value"
       ></v-select>
     </v-flex>
-    <v-flex xs12 sm8 lg5 d-inline-flex>
+    <v-flex xs12 sm7 lg7 d-inline-flex>
       <!-- 検索文字列の入力 -->
       <v-text-field
         v-model="incremental.tableSearch"

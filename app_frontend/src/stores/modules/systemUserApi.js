@@ -13,6 +13,7 @@ const systemUserState = {
   searchPartnerDeliveries: {},
   searchPartnerSuppliers: {},
   searchPartnerManufacturers: {},
+  changePassword: {},
 };
 
 export default {
@@ -68,6 +69,10 @@ export default {
     setSearchPartnerManufacturers(state, payload) {
       state.searchPartnerManufacturers = payload;
     },
+    // メーカーインクリメンタル検索用
+    setChangePassword(state, payload) {
+      state.changePassword = payload;
+    },
   },
   // API非同期通信処理
   actions: {
@@ -100,6 +105,10 @@ export default {
       const url = 'system_user/user_staffs/' + data.id + '/';
       const commitName = 'setStaff';
       api.get({commit}, url, data, commitName);
+    },
+    // 従業員Stateセット
+    setStaffs({commit}, data) {
+      commit('setStaffs', data);
     },
     // 従業員State情報クリア
     clearStaff({commit}) {
@@ -216,6 +225,13 @@ export default {
       const url = 'system_user/user_partners/';
       const commitName = 'setSearchPartnerSuppliers';
       api.get({commit}, url, data, commitName);
+    },
+    // 仕入先インクリメンタル検索用
+    async putChangePassword({commit}, data) {
+      const url = 'system_user/users/set_password/';
+      const commitName = 'setChangePassword';
+      const res = await api.put({commit}, url, data, commitName);
+      return res;
     },
   },
 };

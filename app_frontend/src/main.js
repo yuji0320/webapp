@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import '@babel/polyfill';
 // 基本ライブラリのインポート
 import Vue from 'vue';
@@ -16,8 +17,6 @@ import dateFormetMixin from './util/dateFormat';
 import moment from 'moment';
 // バリデーションライブラリのインポート
 import VeeValidate from 'vee-validate';
-// pdfmakeフォントのインポート
-// import vfs_fonts from "./util/vfs_fonts";
 
 // Bootstrap Vueのインポート
 import BootstrapVue from 'bootstrap-vue';
@@ -46,6 +45,8 @@ Vue.use(moneyConfig);
 // コンポーネントのグローバル適用
 import Confirm from '@/components/Module/Confirm.vue';
 Vue.component('app-confirm', Confirm);
+import LoadingDialog from '@/components/Module/LoadingDialog.vue';
+Vue.component('app-loading-dialog', LoadingDialog);
 import ExcelUpload from '@/components/Module/ExcelUpload.vue';
 Vue.component('app-excel-upload', ExcelUpload);
 import ExcelDownload from '@/components/Module/ExcelDownload.vue';
@@ -54,6 +55,10 @@ import SearchBar from '@/components/Module/SearchBar.vue';
 Vue.component('app-search-bar', SearchBar);
 import CardTable from '@/components/Module/CardTable.vue';
 Vue.component('app-card-table', CardTable);
+import Card from '@/components/Module/Card.vue';
+Vue.component('app-card', Card);
+import DataTable from '@/components/Module/DataTable.vue';
+Vue.component('app-data-table', DataTable);
 import Dialog from '@/components/Module/Dialog.vue';
 Vue.component('app-dialog', Dialog);
 // 検索関係
@@ -61,9 +66,25 @@ Vue.component('app-dialog', Dialog);
 import IncrementalModelSearch from '@/components/Module/IncrementalModelSearch.vue';
 /* eslint-enable max-len */
 Vue.component('app-incremental-model-search', IncrementalModelSearch);
+import Pagination from '@/components/Module/Pagination.vue';
+Vue.component('app-pagination', Pagination);
 // 入力関係
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
+// PDF作成
+import PdfMakeMixin from '@/components/Module/PdfMake/PdfMakeMixin.js';
+Vue.mixin(PdfMakeMixin);
+
+// ダイアログコンポーネント
+// eslint-disable-next-line max-len
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+Vue.component('app-bom-dialog', BillOfMaterialDialog);
+import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
+Vue.component('app-order-dialog', MakingOrderDialog);
+import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
+Vue.component('app-received-dialog', ReceivingProcessDialog);
+import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
+Vue.component('app-man-hour-dialog', ManHourDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
@@ -82,6 +103,7 @@ Vue.filter('printDate', function(val) {
 
 Vue.filter('moneyDelemiter', function(value) {
   return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  // return value.toString().replace(/^(-?[0-9]+)(?=\.|$)/, function(s){ return s.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, '$1,');});
 });
 
 new Vue({

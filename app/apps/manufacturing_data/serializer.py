@@ -1,10 +1,16 @@
 import decimal
-
-from django.forms import IntegerField
-
+# from django.forms import IntegerField
 from .models import *
 from system_users.serializer import *
 from system_master.serializer import *
+
+
+class DirectCostBudgetSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=False)
+
+    class Meta:
+        model = DirectCostBudget
+        fields = '__all__'
 
 
 # 作業指図書
@@ -34,17 +40,42 @@ class JobOrderSerializer(serializers.ModelSerializer):
         # 受注金額合計
         order_total = order_price + tax_price
         # 予算直接原価
-        direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget
+        direct_cost_budget = obj.commercial_parts_budget + obj.electrical_parts_budget + obj.processed_parts_budget + \
+                             obj.outsourcing_mechanical_design_budget + obj.outsourcing_electrical_design_budget + \
+                             obj.outsourcing_other_budget + obj.shipping_cost_budget
+        # 限界利益予算額
         limit_profit_budget = order_price - direct_cost_budget
-        if limit_profit_budget > 0:
-            # 限界利益が正の場合
-            limit_profit_percentage = limit_profit_budget / order_price * 100
-        elif limit_profit_budget == 0:
-            # 限界利益がゼロの場合
+        if obj.order_price == 0:
             limit_profit_percentage = 0
         else:
-            # 限界利益が負の場合
-            limit_profit_percentage = (direct_cost_budget - order_price) / order_price * -100
+            if limit_profit_budget > 0:
+                # 限界利益が正の場合
+                limit_profit_percentage = limit_profit_budget / order_price * 100
+            elif limit_profit_budget == 0:
+                # 限界利益がゼロの場合
+                limit_profit_percentage = 0
+            else:
+                # 限界利益が負の場合
+                limit_profit_percentage = (direct_cost_budget - order_price) / order_price * -100
+        # 予算労務時間
+        working_hours_budget = obj.mechanical_design_budget_hours + obj.electrical_design_budget_hours + \
+                               obj.assembly_budget_hours + obj.electrical_wiring_budget_hours + obj.installation_budget_hours
+        # 予算労務費
+        labor_cost_budget = working_hours_budget * obj.company.time_charge
+        manufacturing_cost_budget = direct_cost_budget + labor_cost_budget
+        total_profit_budget = limit_profit_budget - labor_cost_budget
+        if obj.order_price == 0:
+            total_profit_percentage = 0
+        else:
+            if total_profit_budget > 0:
+                # 限界利益が正の場合
+                total_profit_percentage = total_profit_budget / order_price * 100
+            elif total_profit_budget == 0:
+                # 限界利益がゼロの場合
+                total_profit_percentage = 0
+            else:
+                # 限界利益が負の場合
+                total_profit_percentage = (labor_cost_budget + direct_cost_budget - order_price) / order_price * -100
 
         costs = {
             'tax_price': "{:,.2f}".format(tax_price),
@@ -52,6 +83,11 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'direct_cost_budget': "{:,.2f}".format(direct_cost_budget),
             'limit_profit_budget': "{:,.2f}".format(limit_profit_budget),
             'limit_profit_percentage_budget': "{:-,.2f}".format(limit_profit_percentage),
+            'working_hours_budget': "{:-,.2f}".format(working_hours_budget),
+            'labor_cost_budget': "{:-,.2f}".format(labor_cost_budget),
+            'manufacturing_cost_budget': "{:-,.2f}".format(manufacturing_cost_budget),
+            'total_profit_budget': "{:-,.2f}".format(total_profit_budget),
+            'total_profit_percentage': "{:-,.2f}".format(total_profit_percentage),
         }
         return costs
 
@@ -79,10 +115,22 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'order_date',
             'delivery_date',
             'completion_date',
+            'bill_date',
             'notes',
+            'related_party_mfg_no',
             'commercial_parts_budget',
             'electrical_parts_budget',
             'processed_parts_budget',
+            'outsourcing_mechanical_design_budget',
+            'outsourcing_electrical_design_budget',
+            'outsourcing_other_budget',
+            'shipping_cost_budget',
+            'mechanical_design_budget_hours',
+            'electrical_design_budget_hours',
+            'assembly_budget_hours',
+            'electrical_wiring_budget_hours',
+            'installation_budget_hours',
+            'shipping_cost_result',
             'created_at',
             'created_by',
             'modified_at',
@@ -119,6 +167,8 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     order_amount = serializers.SerializerMethodField()
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     mfg_no = serializers.SerializerMethodField()
+    is_processed = serializers.SerializerMethodField()
+    parts_detail = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -153,6 +203,22 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     def get_mfg_no(obj):
         return obj.job_order.mfg_no
 
+    @staticmethod
+    def get_is_processed(obj):
+        status = obj.type.is_processed_parts
+        return status
+
+    # 部品詳細データ表示
+    @staticmethod
+    def get_parts_detail(obj):
+        # 加工部品かどうかを判断
+        status = obj.type.is_processed_parts
+        if status:
+            parts_detail = obj.drawing_number
+        else:
+            parts_detail = obj.standard
+        return parts_detail
+
     class Meta:
         model = BillOfMaterial
         fields = (
@@ -176,6 +242,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'desired_delivery_date',
             'failure',
             'is_customer_supplied',
+            'notes',
             'is_printed',
             'created_at',
             'created_by',
@@ -188,12 +255,15 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'order_amount',
             'manufacturer_data',
             'mfg_no',
+            'is_processed',
+            'parts_detail'
         )
 
 
 # 発注ファイル
 class MakingOrderSerializer(serializers.ModelSerializer):
     total_default_currency_price = serializers.SerializerMethodField()
+    display_total_default_currency_price = serializers.SerializerMethodField()
     total_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     display_price_total = serializers.SerializerMethodField()
@@ -201,16 +271,25 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
-
+    job_order = serializers.SerializerMethodField()
+    is_processed = serializers.SerializerMethodField()
+    # parts_detail = serializers.SerializerMethodField()
     bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
     bill_of_material_id = serializers.PrimaryKeyRelatedField(
-        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True)
+        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True, allow_null=True)
 
     # デフォルト通貨での合計価格計算
     @staticmethod
     def get_total_default_currency_price(obj):
         total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
         return round(total_price, 2)
+
+    # デフォルト通貨での合計価格計算(表示用)
+    @staticmethod
+    def get_display_total_default_currency_price(obj):
+        total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        display_price = "{:,.2f}".format(total_price)
+        return display_price
 
     # 発注通貨での合計金額
     @staticmethod
@@ -221,7 +300,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     # 表示用単価作成(通貨記号付き文字列単価)
     @staticmethod
     def get_display_price(obj):
-        display_price = obj.currency.display + ' ' + "{:,.2f}".format(obj.unit_price)
+        display_price = obj.currency.display + ' ' + "{:-,.2f}".format(obj.unit_price)
         return display_price
 
     # 表示用合計金額作成(通貨記号付き文字列合計金額)
@@ -234,7 +313,42 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     # 工事番号取得
     @staticmethod
     def get_mfg_no(obj):
-        return obj.bill_of_material.job_order.mfg_no
+        if obj.bill_of_material:
+            mfg_no = obj.bill_of_material.job_order.mfg_no
+        else:
+            mfg_no = ""
+        return mfg_no
+
+        # 工事番号取得
+    @staticmethod
+    def get_job_order(obj):
+        if obj.bill_of_material:
+            job_order = obj.bill_of_material.job_order.id
+        else:
+            job_order = ""
+        return job_order
+
+    @staticmethod
+    def get_is_processed(obj):
+        if obj.bill_of_material:
+            status = obj.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        return status
+
+    # # 部品詳細データ表示
+    # @staticmethod
+    # def get_parts_detail(obj):
+    #     # 加工部品かどうかを判断
+    #     if obj.bill_of_material:
+    #         status = obj.bill_of_material.type.is_processed_parts
+    #     else:
+    #         status = False
+    #     if status:
+    #         parts_detail = obj.drawing_number
+    #     else:
+    #         parts_detail = obj.standard
+    #     return parts_detail
 
     def validate(self, data):
         if data['number']:
@@ -277,13 +391,17 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'total_default_currency_price',
+            'display_total_default_currency_price',
             'total_price',
             'display_price',
             'display_price_total',
             'currency_data',
             'manufacturer_data',
             'supplier_data',
-            'mfg_no'
+            'mfg_no',
+            'job_order',
+            'is_processed',
+            # 'parts_detail'
         )
 
     # def update(self, instance, validated_data):
@@ -310,6 +428,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'rate',
             'unit_price',
             'received_date',
+            'suspense_received_date',
             'is_received',
             'created_at',
             'created_by',
@@ -317,4 +436,101 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'modified_by',
             # read_only under here
             'order_data',
+            # 'parts_detail'
+        )
+
+
+class ManHourSerializer(serializers.ModelSerializer):
+    staff_data = UserStaffSerializer(source='staff', read_only=True)
+    type_data = SystemJobTypeSerializer(source='type', read_only=True)
+    failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
+    mfg_no = serializers.SerializerMethodField()
+    product_name = serializers.SerializerMethodField()
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        mfg_no = ""
+        if obj.job_order:
+            mfg_no = obj.job_order.mfg_no
+        return mfg_no
+
+    # 製品名取得
+    @staticmethod
+    def get_product_name(obj):
+        name = ""
+        if obj.job_order:
+            name = obj.job_order.name
+        return name
+
+    class Meta:
+        model = ManHour
+        fields = (
+            # 発注ファイル
+            'id',
+            'job_order',
+            'staff',
+            'type',
+            'work_hour',
+            'date',
+            'failure',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'staff_data',
+            'type_data',
+            'failure_data',
+            'mfg_no',
+            'product_name'
+        )
+
+
+class PartsSearchSerializer(serializers.ModelSerializer):
+    mfg_no = serializers.SerializerMethodField()
+    # order_data = serializers.SerializerMethodField()
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        return obj.job_order.mfg_no
+
+    # # 工事番号取得
+    # @staticmethod
+    # def get_order_data(obj):
+    #     try:
+    #         order_abstruct_contents = MakingOrder.objects.all().filter(
+    #             bill_of_material=obj.id).data
+    #         return order_abstruct_contents
+    #     except:
+    #         order_abstruct_contents = None
+    #         return order_abstruct_contents
+    #     # return BillOfMaterial.objects.values('id').get(id=obj.id)
+
+    class Meta:
+        model = BillOfMaterial
+        fields = (
+            'id',
+            'company',
+            'job_order',
+            'type',
+            'name',
+            'manufacturer',
+            'standard',
+            'drawing_number',
+            'amount',
+            'unit',
+            'currency',
+            'rate',
+            'unit_price',
+            'is_customer_supplied',
+            'is_printed',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+            'mfg_no',
+            # 'order_data'
         )

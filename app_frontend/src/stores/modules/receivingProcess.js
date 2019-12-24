@@ -4,15 +4,22 @@ const receivingProcessState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
+  isDetail: false,
   supplierID: '',
+  orderNumber: '',
   receivingProcesses: {},
   receivingProcess: {},
+  tableSelected: [],
 };
 
 export default {
   namespaced: true,
   state: receivingProcessState,
   mutations: {
+    // 詳細検索かどうか
+    setIsDetail(state, payload) {
+      state.isDetail = payload;
+    },
     // エラーハンドリング用
     error(state, payload) {
       state.responseError = payload;
@@ -29,6 +36,10 @@ export default {
     setSupplierID(state, payload) {
       state.supplierID = payload;
     },
+    // 発注番号設定
+    setOrderNumber(state, payload) {
+      state.orderNumber = payload;
+    },
     // 仕入れファイルリスト取得
     setReceivingProcesses(state, payload) {
       state.receivingProcesses = payload;
@@ -37,8 +48,15 @@ export default {
     setReceivingProcess(state, payload) {
       state.receivingProcess = payload;
     },
+    setTableSelected(state, payload) {
+      state.tableSelected = payload;
+    }
   },
   actions: {
+    // 詳細検索かどうか
+    setIsDetail({commit}, data) {
+      commit('setIsDetail', data);
+    },
     // 作業指図書IDセット
     setJobOrderID({commit}, data) {
       commit('setJobOrderID', data);
@@ -51,13 +69,16 @@ export default {
     setSupplierID({commit}, data) {
       commit('setSupplierID', data);
     },
+    // 発注番号セット
+    setOrderNumber({commit}, data) {
+      commit('setOrderNumber', data);
+    },
     // 仕入れファイルリスト取得
     async getReceivingProcesses({commit}, data) {
       const url = 'manufacturing_data/receiving_process/';
       const commitName = 'setReceivingProcesses';
-      const res = api.get({commit}, url, data, commitName);
       // console.log(res);
-      return res;
+      return api.get({commit}, url, data, commitName);
     },
     // 仕入れファイル単体セット
     setReceivingProcess({commit}, data) {
@@ -75,22 +96,22 @@ export default {
     async postReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/';
       const commitName = 'setReceivingProcess';
-      const res = await api.post({commit}, url, data, commitName);
-      return res;
+      return await api.post({commit}, url, data, commitName);
     },
     // 仕入れファイル情報更新
     async putReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/' + data.id + '/';
       const commitName = 'setReceivingProcess';
-      const res = await api.put({commit}, url, data, commitName);
-      return res;
+      return await api.put({commit}, url, data, commitName);
     },
     // 仕入れファイル削除
     async deleteReceivingProcess({commit}, data) {
       const url = 'manufacturing_data/receiving_process/' + data.id + '/';
       const commitName = 'setReceivingProcess';
-      const res = await api.delete({commit}, url, data, commitName);
-      return res;
+      return await api.delete({commit}, url, data, commitName);
     },
+    setTableSelected({commit}, data) {
+      commit('setTableSelected', data);
+    }
   },
 };

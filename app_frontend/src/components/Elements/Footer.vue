@@ -1,4 +1,3 @@
-<!-- フッター -->
 <template>
     <v-footer
       app

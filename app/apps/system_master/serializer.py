@@ -3,6 +3,8 @@ from .models import *
 
 
 class SystemCountrySerializer(serializers.ModelSerializer):
+    id = serializers.CharField(required=False)
+
     class Meta:
         model = SystemCountry
         fields = '__all__'
@@ -57,4 +59,17 @@ class SystemFailureCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SystemFailureCategory
+        fields = '__all__'
+
+
+class SystemJobTypeSerializer(serializers.ModelSerializer):
+    incremental_field = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_incremental_field(obj):
+        search_field = str(obj.number) + " : " + obj.name
+        return search_field
+
+    class Meta:
+        model = SystemJobType
         fields = '__all__'

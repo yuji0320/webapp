@@ -17,4 +17,5 @@ module.exports = {
   ],
   'rules': {
   },
+  "extends": ["plugin:vue/base"]
 };

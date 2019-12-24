@@ -132,6 +132,12 @@
                   v-model="userPartner.isManufacturer"
                 ></v-checkbox>
               </v-flex>
+              <v-flex xs12 lg6>
+                <v-checkbox
+                  label="is Related party"
+                  v-model="userPartner.isRelatedParty"
+                ></v-checkbox>
+              </v-flex>
             </v-layout>
           </span>
         </app-dialog>
@@ -162,6 +168,7 @@
         ></app-search-bar>
       </div>
 
+      <!-- 取引先種別タブ指定 -->
       <div slot="card-tabs">
         <v-tabs
           v-model="tabs.tab"
@@ -195,7 +202,7 @@ export default {
       orderBy: "-created_at",
       // テーブルヘッダー
       headers: [
-        { text: "Parnter number", value: "partnerNumber" },
+        { text: "Partner number", value: "partnerNumber" },
         { text: "Partner name", value: "name" },
         { text: "Abbreviation", value: "abbr" },
         { text: "is Customer", value: "isCustomer" },
@@ -226,16 +233,13 @@ export default {
           { title: "Supplier", refine: "is_supplier" },
           { title: "Manufacturer", refine: "is_manufacturer" }
         ]
-      }
+      },
+      search:""
     };
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemUserApi", [
-      "userPartners",
-      "userPartner",
-      "responseError"
-    ]),
+    ...mapState("systemUserApi", ["userPartners", "userPartner", "responseError"]),
     params() {
       return {
         company: this.loginUserData.companyId,
@@ -245,19 +249,20 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
-    ...mapActions("systemUserApi", [
-      "clearPartner",
-      "getPartners",
-      "setPartner",
-      "postPartner",
-      "putPartner",
-      "deletePartner"
-    ]),
+    ...mapActions("systemUserApi", ["clearPartner","getPartners","setPartner","postPartner","putPartner","deletePartner"]),
     // リスト検索
     async getList(data) {
+      // console.log(data);
+      this.search = data
+      console.log(this.search);
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getPartners(data);
+      let list = await this.getPartners(this.search);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    // タブ選択情報を更新
+    tabClicked(refine) {
+      this.tabs.refine = refine;
+      this.searchList();
     },
     // タブ絞り込み複合検索関数
     searchList(val) {
@@ -266,10 +271,10 @@ export default {
         this.tabs.params = val.params;
       }
       // paramsを宣言
-      var params = this.tabs.params;
+      let params = this.tabs.params;
       // タブ指定情報を初期化
-      var len = this.tabs.items;
-      for (var i = 1; i < len.length; i++) {
+      let len = this.tabs.items;
+      for (let i = 1; i < len.length; i++) {
         delete this.tabs.params[len[i].refine];
       }
       // タブ選択がAll以外の場合は検索要件を追加する
@@ -277,12 +282,7 @@ export default {
         params[this.tabs.refine] = true;
       }
       // 上記指定パラメーターで検索を行う
-      this.getPartners({ params: params });
-    },
-    // タブ選択情報を更新
-    tabClicked(refine) {
-      this.tabs.refine = refine;
-      this.searchList();
+      this.getList({ params: params });
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -344,6 +344,9 @@ export default {
     upload() {
       this.$router.push({ name: "PartnerUpload" });
     }
+  },
+  mounted () {
+    // console.log(process.env.VUE_APP_API_BASE_URL);
   }
 };
 </script>

@@ -4,6 +4,7 @@ const billOfMaterialState = {
   responseError: {},
   jobOrderID: '',
   partsType: '',
+  isProcessed: false,
   billOfMaterials: {},
   billOfMaterial: {},
   reprint: false,
@@ -24,6 +25,10 @@ export default {
     // 部品種別設定
     setPartsType(state, payload) {
       state.partsType = payload;
+    },
+    // 加工部品かどうか
+    setIsProcessed(state, payload) {
+      state.isProcessed = payload;
     },
     // 部品表リスト取得
     setBillOfMaterials(state, payload) {
@@ -47,6 +52,10 @@ export default {
     // 部品種別IDセット
     setPartsType({commit}, data) {
       commit('setPartsType', data);
+    },
+    // 加工部品かどうかセット
+    setIsProcessed({commit}, data) {
+      commit('setIsProcessed', data);
     },
     // 部品表リスト取得
     async getBillOfMaterials({commit}, data) {

@@ -4,12 +4,14 @@ dev_app:
   env_file: ./app/env
   ports:
     - "8000:8000"
+    - "8100:8100"
   links:
     - dev_mysql:db
     - dev_redis:redis
   volumes:
     - ./app:/usr/src/app
   command: ./manage.py runserver 0.0.0.0:8000
+#  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b :8000
 
 dev_app_frontend:
   build: ./app_frontend
@@ -17,10 +19,11 @@ dev_app_frontend:
   ports:
     - "9000:9000"
     - "9100:9100"
-  links:
-    - dev_app
+#  links:
+#    - dev_app:app
   volumes:
     - ./app_frontend:/usr/src/app_frontend
+#  command: bash -c "npm run serve && vue ui -p 9100 -H 0.0.0.0"
   command: npm run serve
 
 
@@ -37,13 +40,16 @@ dev_nginx:
     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     - ./nginx/ssl:/etc/nginx/ssl
     - ./nginx/development.conf:/etc/nginx/conf.d/development.conf
-  volumes_from:
-    - dev_app
-    - dev_app_frontend
+    - ./nginx/log:/var/log/nginx
+    - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+    - ./app_frontend/dist:/usr/dist
+    - ./app/static:/usr/src/app/static
 
 dev_mysql:
   build: ./mysql
   restart: always
+  volumes:
+  - ./mysql/backup:/tmp/backup
   ports:
     - "3306:3306"
   volumes_from:

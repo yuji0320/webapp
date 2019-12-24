@@ -3,11 +3,11 @@
     :label="label"
     v-model="internalValue"
     :error-messages="errorMessages"
-    hint="YYYY/MM/DD format"
-    persistent-hint
+    :disabled="disabled"
     type="date"
     min="1900-01-01" 
     max="2100-12-31"
+    :append-outer-icon="appendOuterIcon"
   >
   </v-text-field>
 </template>
@@ -22,8 +22,10 @@ export default {
   },
   props: {
     label: { required: true },
-    errorMessages: { required: true },
-    value: { required: true }
+    errorMessages: { required: false },
+    value: { required: true },
+    disabled: { required: false },
+    appendOuterIcon: { required: false },
   },
   computed: {
     internalValue: {

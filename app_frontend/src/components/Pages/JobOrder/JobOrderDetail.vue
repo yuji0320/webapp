@@ -1,42 +1,40 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
-    <v-card>
-      <v-toolbar card>
-        <v-icon>work</v-icon>
-        <v-toolbar-title class="font-weight-light">
-          Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <!-- 一覧へ戻る -->
-        <v-btn @click="backToList">
+  <v-container fluid grid-list-lg>
+
+    <!-- 読み込み中ダイアログコンポーネント -->
+    <app-loading-dialog></app-loading-dialog>
+
+    <app-card noSearchBar="true">
+      <span slot="card-header-icon"><v-icon>work</v-icon></span>
+      <span slot="card-header-title">Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}</span>
+
+      <!-- 戻るボタン -->
+      <span slot="card-header-buck-button">
+        <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
-          Back to List
+          Back to Menu
         </v-btn>
+      </span>
+
+      <!-- 拡張ボタン -->
+      <span slot="card-header-buck-button">
         <!-- 編集ボタン -->
-        <v-btn
-          fab
-          small
-          @click="edit"
-        >
+        <v-btn fab small @click="edit">
           <v-icon>edit</v-icon>
         </v-btn>
+        <!-- 印刷ボタン  -->
         <v-btn 
           @click="print"
           color="primary"
+          :disabled="!jobOrderData.totalProfitPercentageResult"
         ><v-icon>print</v-icon> Print</v-btn>
-      </v-toolbar>
+      </span>
 
-      <v-card-text>
-        <v-container 
-          fluid
-          grid-list-lg
-        >
-          <!-- 作業指図書表示グループ -->
-            <table class="table table-bordered">
-              <tbody>
+      <!-- 指図書データ -->
+      <span slot="card-content">
+        <v-container fluid　grid-list-lg>
+          <table class="table table-bordered">
+            <tbody>
                 <tr class="" style="visibility: hidden;">
                   <td style="width : 100px !important;"></td>
                   <td style="width : 100px !important;"></td>
@@ -46,457 +44,612 @@
                   <td style="width : 100px !important;"></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="text-center">{{ tableData[0][0].text }}</td>
-                  <td colspan="1">{{ tableData[0][1].text }}</td>
-                  <td colspan="1" class="text-center">{{ tableData[0][2].text }}</td>
-                  <td colspan="1" class="text-center">{{ tableData[0][3].text }}</td>
-                <td colspan="1" class="text-center">{{ tableData[0][4].text }}</td>
-                  <td colspan="1" class="text-center">{{ tableData[0][5].text }}</td>
+                  <td class="text-center">MFG No.</td>
+                  <td class="text-center">{{ jobOrderData.mfgNo }}</td>
+                  <td class="text-center">Publisher</td>
+                  <td class="text-center">{{ jobOrderData.publisherName }}</td>
+                  <td class="text-center">Designer</td>
+                  <td class="text-center">{{ jobOrderData.designerName }}</td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="text-center">{{ tableData[1][0].text }}</td>
-                  <td colspan="4">{{ tableData[1][2].text }}</td>
+                  <td colspan="2" class="text-center">Product Name</td>
+                  <td colspan="4">{{ jobOrderData.name }}</td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="text-center">{{ tableData[2][0].text }}</td>
-                  <td colspan="4">{{ tableData[2][2].text }}</td>
+                  <td colspan="2" class="text-center">Customer</td>
+                  <td colspan="4">{{ jobOrderData.customerName }}</td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="text-center">{{ tableData[3][0].text }}</td>
-                  <td colspan="4">{{ tableData[3][2].text }}</td>
+                  <td colspan="2" class="text-center">Delivery Destination	</td>
+                  <td colspan="4">{{ jobOrderData.deliveryDestinationName }}</td>
                 </tr>
                 <tr>						
-                  <td class="text-center">{{ tableData[4][0].text }}</td>				
-                  <td>{{ tableData[4][1].text }}</td>
-                  <td class="text-center">{{ tableData[4][2].text }}</td>					
-                  <td>{{ tableData[4][3].text }}</td>
-                  <td class="text-center">{{ tableData[4][4].text }}</td>
-                  <td>{{ tableData[4][5].text }}</td>
+                  <td class="text-center">Order Date</td>
+                  <td class="text-center">{{ jobOrderData.orderDate }}</td>				
+                  <td class="text-center">Delivery Date</td>				
+                  <td class="text-center">{{ jobOrderData.deliveryDate }}</td>				
+                  <td class="text-center">Completion Date</td>				
+                  <td class="text-center">{{ jobOrderData.completionDate }}</td>
+                </tr>
+                <tr>						
+                  <td class="text-center">Order Price</td>
+                  <td class="text-right">{{ jobOrderData.orderPriceDisplay }}</td>
+                  <td class="text-center">Order Currency</td>
+                  <td class="text-center">{{ jobOrderData.orderCurrencyCodeDisplay }}</td>
+                  <td class="text-center">Order Rate</td>
+                  <td class="text-center">{{ jobOrderData.orderRateDisplay }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center">{{ tableData[5][0].text }}</td>				
-                  <td class="text-right">{{ tableData[5][1].text }}</td>
-                  <td class="text-center">{{ tableData[5][2].text }}</td>					
-                  <td class="text-center">{{ tableData[5][3].text }}</td>
-                  <td class="text-center">{{ tableData[5][4].text }}</td>
-                  <td class="text-center">{{ tableData[5][5].text }}</td>                
-                </tr>
-
-                <tr>
-                  <td colspan="2" class="text-right">{{ tableData[6][0].text }}</td>
-                  <td colspan="2" class="text-right">{{ tableData[6][2].text }}</td>
-                  <td colspan="2">{{ tableData[6][4].text }}</td>
+                  <td colspan="2" class="text-right">Order Price ({{loginUserData.defaultCurrencyCode}} )</td>
+                  <td colspan="2" class="text-right">{{ jobOrderData.orderPriceDefault }}</td>
+                  <td colspan="2">(Exclude Tax)</td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="text-right">{{ tableData[7][0].text }}</td>
-                  <td colspan="2" class="text-right">{{ tableData[7][2].text }}</td>
-                  <td colspan="2">{{ tableData[7][4].text }}</td>
+                  <td colspan="2" class="text-right">Tax</td>
+                  <td colspan="2" class="text-right">{{ jobOrderData.taxPrice }}</td>
+                  <td colspan="2">{{ jobOrderData.taxPercentDisplay }}</td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="text-right"><strong>{{ tableData[8][0].text }}</strong></td>
-                  <td colspan="2" class="text-right"><strong>{{ tableData[8][2].text }}</strong></td>
+                  <td colspan="2" class="text-right"><strong>Total</strong></td>
+                  <td colspan="2" class="text-right"><strong>{{ jobOrderData.orderTotal }}</strong></td>
                   <td colspan="2"></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="text-center">{{ tableData[9][0].text }}</td>
-                  <td colspan="5">{{ tableData[9][1].text }}</td>
+                  <td colspan="2" class="text-center">Related Party's MFG No</td>
+                  <td colspan="2">{{ jobOrderData.relatedPartyMfgNo }}</td>
+                  <td class="text-center">Bill Date</td>				
+                  <td class="text-center">{{ jobOrderData.billDate }}</td>
                 </tr>
-              </tbody>
-            </table>
+                <tr>
+                  <td colspan="1" class="text-center">Notes</td>
+                  <td colspan="5">{{ jobOrderData.notes }}</td>
+                </tr>
+            </tbody>
+          </table>
 
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td class="text-center" style="width : 200px !important;">{{ tableData[10][0].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][3].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][4].text }}</td>
-                  <td class="text-center" style="width : 100px !important;">{{ tableData[10][5].text }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-center">{{ tableData[11][0].text }}</td>
-                  <td class="text-right">{{ tableData[11][3].text }}</td>
-                  <td class="text-right">{{ tableData[11][4].text }}</td>
-                  <td class="text-right">{{ tableData[11][5].text }}</td>
-                </tr>
-                <tr>
-                  <td class="text-center">{{ tableData[12][0].text }}</td>
-                  <td class="text-right">{{ tableData[12][3].text }}</td>
-                  <td class="text-right">{{ tableData[12][4].text }}</td>
-                  <td class="text-right">{{ tableData[12][5].text }}</td>
-                </tr>
-                <tr>
-                  <td class="text-center">{{ tableData[13][0].text }}</td>
-                  <td class="text-right">{{ tableData[13][3].text }}</td>
-                  <td class="text-right">{{ tableData[13][4].text }}</td>
-                  <td class="text-right">{{ tableData[13][5].text }}</td>
-                </tr>
-                <tr>
-                  <td class="text-center">{{ tableData[14][0].text }}</td>
-                  <td class="text-right">{{ tableData[14][3].text }}</td>
-                  <td class="text-right">{{ tableData[14][4].text }}</td>
-                  <td class="text-right">{{ tableData[14][5].text }}</td>
-                </tr>
-                <tr>
-                  <td class="text-center">{{ tableData[15][0].text }}</td>
-                  <td class="text-right">{{ tableData[15][3].text }}</td>
-                  <td class="text-right">{{ tableData[15][4].text }}</td>
-                  <td class="text-right">{{ tableData[15][5].text }}</td>
-                </tr>
-                <tr>
-                  <td class="text-center"><strong>{{ tableData[16][0].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][3].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][4].text }}</strong></td>
-                  <td class="text-right"><strong>{{ tableData[16][5].text }}</strong></td>
-                </tr>
-              </tbody>
-            </table>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center" style="width : 400px !important;">Material Cost</td>
+                <td class="text-center" style="width : 240px !important;">Budget</td>
+                <td class="text-center" style="width : 240px !important;">Results</td>
+                <td class="text-center" style="width : 240px !important;">Failure</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">Commercial parts costs</td>
+                <td class="text-right">{{ jobOrderData.commercialPartsBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.commercialPartsResult }}</td>
+                <td class="text-right">{{ jobOrderData.commercialPartsFailure }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Electrical parts costs</td>
+                <td class="text-right">{{ jobOrderData.electricalPartsBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalPartsResult }}</td>
+                <td class="text-right">{{ jobOrderData.electricalPartsFailure }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Processed parts costs</td>
+                <td class="text-right">{{ jobOrderData.processedPartsBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.processedPartsResult }}</td>
+                <td class="text-right">{{ jobOrderData.processedPartsFailure }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Outsourcing Mechanical Design Costs</td>
+                <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignResult }}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignFailure }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Outsourcing Electrical Design Costs</td>
+                <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignResult}}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignFailure}}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Outsourcing Other Costs</td>
+                <td class="text-right">{{ jobOrderData.outsourcingOtherBudgetDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingOtherResult }}</td>
+                <td class="text-right">{{ jobOrderData.outsourcingOtherFailure }}</td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Total Material Cost</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.directCostBudgetDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.directCostResult }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.directCostFailure }}</strong></td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Limit Profit</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.limitProfitBudgetDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.limitProfitResult }}</strong></td>
+                <td class="text-right">　−　</td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Limit Profit Percentage</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.limitProfitPercentageBudget }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.limitProfitPercentageResult }}</strong></td>
+                <td class="text-right"><strong>Failure cost rate ( {{ jobOrderData.failurePercentage }} )</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p class="text-xs-right">* Time Charge = $ {{ userCompany.timeCharge }} / Hour</p>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center" style="width : 400px !important;">Labor Cost</td>
+                <td class="text-center" style="width : 90px !important;">Hours</td>
+                <td class="text-center" style="width : 150px !important;">Budget(予算)</td>
+                <td class="text-center" style="width : 90px !important;">Hours</td>
+                <td class="text-center" style="width : 150px !important;">Results(実績)</td>
+                <td class="text-center" style="width : 90px !important;">Hour</td>
+                <td class="text-center" style="width : 150px !important;">Failure(仕損)</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">Mechanical Design</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignBudgetHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignBudgetPrice }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignResultHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignResultPrice }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignFailurePrice }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Electrical Design</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignBudgetHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignBudgetPrice }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignResultHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignResultPrice }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignFailurePrice }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Assembly and Adjustment</td>
+                <td class="text-right">{{ jobOrderData.assemblyBudgetHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyBudgetPrice }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyResultHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyResultPrice }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyFailurePrice }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Electrical Wiring</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringBudgetHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringBudgetPrice }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringResultHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringResultPrice }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringFailurePrice }}</td>
+              </tr>
+              <tr>
+                <td class="text-center">Installation</td>
+                <td class="text-right">{{ jobOrderData.installationBudgetHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.installationBudgetPrice }}</td>
+                <td class="text-right">{{ jobOrderData.installationResultHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.installationResultPrice }}</td>
+                <td class="text-right">{{ jobOrderData.installationFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.installationFailurePrice }}</td>
+              </tr>
+              <tr>
+                <td class="text-center"><strong>Total Labor Cost</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.workingHoursBudgetDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.laborCostBudgetDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.workingHoursResultDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.laborCostResultDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.workingHoursFailureDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.laborCostFailureDisplay }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center" style="width : 400px !important;"></td>
+                <td class="text-center" style="width : 240px !important;">Budget</td>
+                <td class="text-center" style="width : 240px !important;">Results</td>
+                <td class="text-center" style="width : 240px !important;">Failure</td>
+              </tr>
+            </thead>
+            <tr>
+              <td class="text-center">Shipping Cost</td>
+              <td class="text-right">{{ jobOrderData.shippingCostBudgetDisplay }}</td>
+              <td class="text-right">{{ jobOrderData.shippingCostResultDisplay }}</td>
+              <td class="text-right">　−　</td>
+            </tr>
+            <tr>
+              <td class="text-center">Manufacturing cost</td>
+              <td class="text-right">{{ jobOrderData.manufacturingCostBudgetDisplay }}</td>
+              <td class="text-right">{{ jobOrderData.manufacturingCostResultDisplay }}</td>
+              <td class="text-right">{{ jobOrderData.manufacturingCostFailureDisplay }}</td>
+            </tr>
+            <tr>
+              <td class="text-center"><strong>Profit</strong></td>
+              <td class="text-right"><strong>{{ jobOrderData.totalProfitBudgetDisplay }}</strong></td>
+              <td class="text-right"><strong>{{ jobOrderData.totalProfitResultDisplay }}</strong></td>
+              <td class="text-right">　−　</td>
+            </tr>
+            <tr>
+              <td class="text-center"><strong>Profit percentage</strong></td>
+              <td class="text-right"><strong>{{ jobOrderData.totalProfitPercentageBudget }}</strong></td>
+              <td class="text-right"><strong>{{ jobOrderData.totalProfitPercentageResult }}</strong></td>
+              <td class="text-right"><strong>Total failure cost rate ( {{ jobOrderData.totalFailurePercentage }} )</strong></td>
+            </tr>
+          </table>
+
         </v-container>
-      </v-card-text>
+      </span>
 
-      <!-- Cardフッター -->
-      <v-footer 
-        card
-        height="auto"
-      >
-      </v-footer>
-
-    </v-card>
-
+    </app-card>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import {mapActions, mapState} from "vuex";
+import JobOrderPrintMixin from "./JobOrderPrintMixin.js"
 
 export default {
   title: "Job Order Detail",
   name: "JobOrderDetail",
-  data() {
-    return {
-      orderBy: "-created_at"
-    };
-  },
+  mixins: [JobOrderPrintMixin],
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["expenseCategories"]),
-    ...mapState("jobOrderAPI", [
-      "responseError",
-      "mfgNo",
-      "jobOrders",
-      "jobOrder",
-      "jobOrderStatus"
-    ]),
+    ...mapState("systemMasterApi", ["expenseCategories", "jobTypes"]),
+    ...mapState("systemUserApi", ["userCompany"]),
+    ...mapState("jobOrderAPI", ["mfgNo", "jobOrder"]),
     ...mapState("billOfMaterialAPI", ["billOfMaterials"]),
-    params() {
+    ...mapState("manHourAPI", ["manHours"]),
+    paramsBOM() {
       return {
-        company: this.loginUserData.companyId,
+        company: this.loginUserData["companyId"],
         job_order: this.mfgNo,
-        order_by: this.orderBy,
-        page_size: 5000
+        page_size: 100000
       };
     },
     // 部品種別毎の部品表仕分け
-    partsData() {
+    partsList() {
       // PDF作成用のデータを構築
       return function (val) {
-        const list = this.billOfMaterials.results.filter(x => x.type === val);
-        return list
-      }
-    },
-    // 部品種別毎の部品表仕分け
-    partsTotal() {
-      // PDF作成用のデータを構築
-      return function (val) {
-        let total = 0
-        for(let t in val) {
-          total += val[t].totalDefaultCurrencyPrice;
+        if(this.billOfMaterials.results) {
+          return this.billOfMaterials.results.filter(x => x.type === val);
         }
-        return total
       }
     },
     // 直接原価集計
-    drectCosts() {
+    directCosts() {
       const categories = this.expenseCategories.results;
-      let results = []
-      let drectCost = 0
+      let results = [];
+      let directCost = 0;
+      let failure = [];
+      let directFailure = 0;
       for(let c in categories) {
         // 部品毎集計
-        let t = (Math.round(this.partsTotal(this.partsData(categories[c].id)) * 100) / 100);
+        let t = (Math.round(this.calcPartsTotal(this.partsList(categories[c].id)) * 100) / 100);
         // 合計金額への加算
-        drectCost += t
+        directCost += t;
         results.push(t);
+        // 仕損費集計
+        let f = (Math.round(this.calcPartsFailureTotal(this.partsList(categories[c].id)) * 100) / 100);
+        directFailure += f;
+        failure.push(f);
       }
-      drectCost = Math.round( drectCost * 100) / 100;
-      let orderAmount = Number(this.jobOrder.defaultCurrencyOrderAmount.split(',').join(''))
-      let limitProfit = (Math.round(( orderAmount - drectCost) * 100) / 100);
-      let limitProfitPercentage = 0
+      directCost = Math.round( (directCost + parseFloat(this.jobOrder.shippingCostResult) ) * 100) / 100;
+      let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
+      let limitProfit = (Math.round(( orderAmount - directCost) * 100) / 100);
+      let limitProfitPercentage = 0;
       if(limitProfit > 0) {
         limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       } else if(limitProfit < 0) {
         limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       }
+      // 仕損費率計算
+      let failurePercentage = 0;
+      if(directCost > 0) {
+        failurePercentage = Math.round((directFailure / directCost * 100) * 100) / 100;
+      }
       return {
         results: results,
-        drectCost: drectCost,
+        directCost: directCost,
         limitProfit: limitProfit,
-        limitProfitPercentage: limitProfitPercentage
+        limitProfitPercentage: limitProfitPercentage,
+        failure: failure,
+        directFailure: directFailure,
+        failurePercentage: failurePercentage,
       };
     },
-    tableData() {
+    // 工数用パラメーター
+    paramsManHour() {
+      return {
+        company: this.loginUserData["companyId"],
+        job_order: this.mfgNo,
+        page_size: 100000
+      };
+    },
+    // 部品種別毎の部品表仕分け
+    manHourList() {
+      // PDF作成用のデータを構築
+      return function (val) {
+        if(this.manHours.results) {
+          return this.manHours.results.filter(x => x.type === val);
+        }
+      }
+    },
+    laborCost() {
+      const types = this.jobTypes.results;
+      let results = [];
+      let totalWorkHours = 0;
+      let failure = [];
+      let totalFailure = 0;
+      if(types) {
+        for(let h=0, type; type=types[h]; h++) {
+          // 部品毎集計
+          let t = (Math.round(this.calcLaborTotal(this.manHourList(type.id)) * 100) / 100);
+          // 合計金額への加算
+          totalWorkHours += t;
+          results.push(t);        
+          // 仕損費集計
+          let f = (Math.round(this.calcLaborFailureTotal(this.manHourList(type.id)) * 100) / 100);
+          totalFailure += f;
+          failure.push(f);
+        }
+      }
+      return {
+        results: results,
+        totalWorkHours: totalWorkHours,
+        failure: failure,
+        totalFailure: totalFailure
+      };
+    },
+    jobOrderExists() {
+      let data = Object.keys(this.jobOrder).length
+      if(data === 0) {
+        return data
+      } else {
+        return data
+      }
+    },
+    // 作業指図書表示用データ作成
+    jobOrderData() {
       // デフォルト通貨記号
-      let defaultDisplay = this.loginUserData.defaultCurrencyDisplay + " ";
-
-      // 作業指図書発行者
-      let publisher = ""
-      if(this.jobOrder.publisher){
-        publisher = this.jobOrder.publisherData.staffNumber + " : " + this.jobOrder.publisherData.fullName
+      let defaultDisplay = this.loginUserData["defaultCurrencyDisplay"] + " ";
+      let timeCharge = this.userCompany.timeCharge;
+      let jobOrder = {};
+      Object.assign(jobOrder, this.jobOrder);
+      if (this.jobOrderExists) {
+        // 作業指図書発行者
+        jobOrder.publisherName = "";
+        if(this.jobOrder.publisher){
+          jobOrder.publisherName = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"];
+        }
+        // 設計者
+        jobOrder.designerName = "";
+        if(this.jobOrder.designer){
+          jobOrder.designerName = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"];
+        }
+        // 作業指図書発行者
+        jobOrder.customerName = "";
+        if(this.jobOrder.customer){
+          jobOrder.customerName = this.jobOrder["customerData"].name;
+        }
+        // 作業指図書発行者
+        jobOrder.deliveryDestinationName = "";
+        if(this.jobOrder.deliveryDestination){
+          jobOrder.deliveryDestinationName = this.jobOrder["deliveryDestinationData"].name;
+        }
+        // 受注金額
+        jobOrder.orderPriceDisplay = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
+        jobOrder.orderCurrencyCodeDisplay = this.jobOrder.orderCurrencyData.code;
+        // レート換算
+        jobOrder.orderRateDisplay = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
+        // 受注金額基準通貨
+        jobOrder.orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
+        // 税額
+        jobOrder.taxPrice = defaultDisplay + this.jobOrder.costs.taxPrice;
+        jobOrder.taxPercentDisplay = "(" + this.jobOrder.taxPercent + "%)";
+        // 合計金額
+        jobOrder.orderTotal = defaultDisplay + this.jobOrder.costs.orderTotal;
+        // 材料費予算
+        jobOrder.commercialPartsBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.commercialPartsBudget);
+        jobOrder.electricalPartsBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.electricalPartsBudget);
+        jobOrder.processedPartsBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.processedPartsBudget);
+        jobOrder.outsourcingMechanicalDesignBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingMechanicalDesignBudget);
+        jobOrder.outsourcingElectricalDesignBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingElectricalDesignBudget);
+        jobOrder.outsourcingOtherBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.outsourcingOtherBudget);
+        jobOrder.shippingCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder.shippingCostBudget);
+        jobOrder.directCostBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["directCostBudget"];
+        jobOrder.limitProfitBudgetDisplay = defaultDisplay + this.jobOrder["costs"]["limitProfitBudget"];
+        jobOrder.limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
+        // 材料費実績
+        if((this.directCosts.results).length !== 0) {
+          // 材料費集計結果
+          jobOrder.commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
+          jobOrder.electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
+          jobOrder.processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
+          jobOrder.outsourcingMechanicalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[3].toFixed(2));
+          jobOrder.outsourcingElectricalDesignResult = defaultDisplay + this.moneyComma(this.directCosts.results[4].toFixed(2));
+          jobOrder.outsourcingOtherResult = defaultDisplay + this.moneyComma(this.directCosts.results[5].toFixed(2));
+          jobOrder.shippingCostResultDisplay = defaultDisplay + this.moneyComma(this.jobOrder.shippingCostResult);
+          jobOrder.directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
+          jobOrder.limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
+          jobOrder.limitProfitPercentageResult =this.directCosts.limitProfitPercentage.toFixed(2) + "%";
+          // 仕損費集計結果
+          jobOrder.commercialPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[0].toFixed(2));
+          jobOrder.electricalPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[1].toFixed(2));
+          jobOrder.processedPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[2].toFixed(2));
+          jobOrder.outsourcingMechanicalDesignFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[3].toFixed(2));
+          jobOrder.outsourcingElectricalDesignFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[4].toFixed(2));
+          jobOrder.outsourcingOtherFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[5].toFixed(2));
+          jobOrder.directCostFailure = defaultDisplay + this.moneyComma(this.directCosts.directFailure.toFixed(2));
+          jobOrder.failurePercentage =this.directCosts.failurePercentage.toFixed(2) + "%";
+        }
+        // 労務費予算
+        jobOrder.mechanicalDesignBudgetHoursDisplay = this.jobOrder.mechanicalDesignBudgetHours + " h";
+        jobOrder.mechanicalDesignBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.mechanicalDesignBudgetHours * timeCharge).toFixed(2));
+        jobOrder.electricalDesignBudgetHoursDisplay = this.jobOrder.electricalDesignBudgetHours + " h";
+        jobOrder.electricalDesignBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.electricalDesignBudgetHours * timeCharge).toFixed(2));
+        jobOrder.assemblyBudgetHoursDisplay = this.jobOrder.assemblyBudgetHours + " h";
+        jobOrder.assemblyBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.assemblyBudgetHours * timeCharge).toFixed(2));
+        jobOrder.electricalWiringBudgetHoursDisplay = this.jobOrder.electricalWiringBudgetHours + " h";
+        jobOrder.electricalWiringBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.electricalWiringBudgetHours * timeCharge).toFixed(2));
+        jobOrder.installationBudgetHoursDisplay = this.jobOrder.installationBudgetHours + " h";
+        jobOrder.installationBudgetPrice = defaultDisplay + this.moneyComma((this.jobOrder.installationBudgetHours * timeCharge).toFixed(2));
+        jobOrder.workingHoursBudgetDisplay = this.jobOrder["costs"]["workingHoursBudget"] + " h";
+        jobOrder.laborCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["laborCostBudget"]);
+        // 労務費実績
+        if((this.laborCost.results).length !== 0) {
+          jobOrder.mechanicalDesignResultHoursDisplay = this.laborCost.results[0].toFixed(2) + " h";
+          jobOrder.mechanicalDesignResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[0] * timeCharge).toFixed(2));
+          jobOrder.electricalDesignResultHoursDisplay = this.laborCost.results[1].toFixed(2) + " h";
+          jobOrder.electricalDesignResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[1] * timeCharge).toFixed(2));
+          jobOrder.assemblyResultHoursDisplay = this.laborCost.results[2].toFixed(2) + " h";
+          jobOrder.assemblyResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[2] * timeCharge).toFixed(2));
+          jobOrder.electricalWiringResultHoursDisplay = this.laborCost.results[3].toFixed(2) + " h";
+          jobOrder.electricalWiringResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[3] * timeCharge).toFixed(2));
+          jobOrder.installationResultHoursDisplay = this.laborCost.results[4].toFixed(2) + " h";
+          jobOrder.installationResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[4] * timeCharge).toFixed(2));
+          jobOrder.workingHoursResultDisplay = this.laborCost.totalWorkHours.toFixed(2) + " h";
+          jobOrder.laborCostResultDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalWorkHours * timeCharge).toFixed(2));
+          // 仕損費集計結果
+          jobOrder.mechanicalDesignFailureHoursDisplay = this.laborCost.failure[0].toFixed(2) + " h";
+          jobOrder.mechanicalDesignFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[0] * timeCharge).toFixed(2));
+          jobOrder.electricalDesignFailureHoursDisplay = this.laborCost.failure[1].toFixed(2) + " h";
+          jobOrder.electricalDesignFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[1] * timeCharge).toFixed(2));
+          jobOrder.assemblyFailureHoursDisplay = this.laborCost.failure[2].toFixed(2) + " h";
+          jobOrder.assemblyFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[2] * timeCharge).toFixed(2));
+          jobOrder.electricalWiringFailureHoursDisplay = this.laborCost.failure[3].toFixed(2) + " h";
+          jobOrder.electricalWiringFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[3] * timeCharge).toFixed(2));
+          jobOrder.installationFailureHoursDisplay = this.laborCost.failure[4].toFixed(2) + " h";
+          jobOrder.installationFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[4] * timeCharge).toFixed(2));
+          jobOrder.workingHoursFailureDisplay = this.laborCost.totalWorkHours.toFixed(2) + " h";
+          jobOrder.laborCostFailureDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalFailure * timeCharge).toFixed(2));
+        }
+        // 集計値予算
+        jobOrder.shippingCostBudgetDisplay = defaultDisplay + "0.00";
+        jobOrder.manufacturingCostBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["manufacturingCostBudget"]);
+        jobOrder.totalProfitBudgetDisplay = defaultDisplay + this.moneyComma(this.jobOrder["costs"]["totalProfitBudget"]);
+        jobOrder.totalProfitPercentageBudget =this.jobOrder["costs"]["totalProfitPercentage"] + "%";
+        // 集計値実績
+        jobOrder.shippingCostResultDisplay = defaultDisplay + this.moneyComma(jobOrder.shippingCostResult);
+        let manufacturingCostResult = 0;
+        manufacturingCostResult = this.directCosts.directCost + (this.laborCost.totalWorkHours * timeCharge);
+        let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
+        let profitResult = 0;
+        profitResult = (Math.round(( orderAmount - manufacturingCostResult) * 100) / 100);
+        let profitPercentageResult = 0;
+        if(profitResult > 0) {
+          profitPercentageResult = Math.round((profitResult / orderAmount * 100) * 100) / 100;
+        } else if(profitResult < 0) {
+          profitPercentageResult = Math.round((profitResult / orderAmount * 100) * 100) / 100;
+        }
+        jobOrder.manufacturingCostResultDisplay = defaultDisplay + this.moneyComma(manufacturingCostResult.toFixed(2));
+        jobOrder.totalProfitResultDisplay = defaultDisplay + this.moneyComma(profitResult.toFixed(2));
+        jobOrder.totalProfitPercentageResult = profitPercentageResult.toFixed(2) + "%";
+        // 仕損費集計結果
+        let manufacturingCostFailure = 0;
+        manufacturingCostFailure = this.directCosts.directFailure + (this.laborCost.totalFailure * timeCharge);
+        let totalFailurePercentage = 0;
+        if(manufacturingCostResult > 0) {
+          totalFailurePercentage = Math.round((manufacturingCostFailure / manufacturingCostResult * 100) * 100) / 100;
+        }
+        jobOrder.manufacturingCostFailureDisplay = defaultDisplay + this.moneyComma(manufacturingCostFailure.toFixed(2));
+        jobOrder.totalFailurePercentage = totalFailurePercentage.toFixed(2) + "%";
       }
-      // 設計者
-      let designer = ""
-      if(this.jobOrder.designer){
-        designer = this.jobOrder.designerData.staffNumber + " : " + this.jobOrder.designerData.fullName
-      }
-      // 作業指図書発行者
-      let customer = ""
-      if(this.jobOrder.customer){
-        customer = this.jobOrder.customerData.name;
-      }
-      // 作業指図書発行者
-      let deliveryDestination = ""
-      if(this.jobOrder.deliveryDestination){
-        deliveryDestination = this.jobOrder.deliveryDestinationData.name;
-      }
-      // 受注金額
-      let orderPriceText = "Order Price (" + this.jobOrder.orderCurrencyData.code + ")";
-      let orderPrice = this.jobOrder.orderCurrencyData.display + " " + this.moneyComma(this.jobOrder.orderPrice);
-      // レート換算
-      // let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = " + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
-      let orderRate = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData.defaultCurrencyCode;
-      // 受注金額基準通貨
-      let orderPriceDefaultText = "Order Price (" + this.loginUserData.defaultCurrencyCode + ")";
-      let orderPriceDefault = defaultDisplay + this.jobOrder.defaultCurrencyOrderAmount;
-      // 税額
-      let taxPrice = defaultDisplay + this.jobOrder.costs.taxPrice;
-      let taxPercent = "(" + this.jobOrder.taxPercent + "%)"
-      // 合計金額
-      let orderTotal = defaultDisplay + this.jobOrder.costs.orderTotal;
-      let commercialPartsBudget = defaultDisplay + this.jobOrder.commercialPartsBudget;
-      let commercialPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[0].toFixed(2));
-      let electricalPartsBudget = defaultDisplay + this.jobOrder.electricalPartsBudget;
-      let electricalPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[1].toFixed(2));
-      let processedPartsBudget = defaultDisplay + this.jobOrder.processedPartsBudget;
-      let processedPartsResult = defaultDisplay + this.moneyComma(this.drectCosts.results[2].toFixed(2));
-      let directCostBudget = defaultDisplay + this.jobOrder.costs.directCostBudget;
-      let directCostResult = defaultDisplay + this.moneyComma(this.drectCosts.drectCost.toFixed(2));
-      let limitProfitBudget = defaultDisplay + this.jobOrder.costs.limitProfitBudget;
-      let limitProfitResult = defaultDisplay + this.moneyComma(this.drectCosts.limitProfit.toFixed(2));
-      let limitProfitPercentageBudget =this.jobOrder.costs.limitProfitPercentageBudget + "%";
-      let limitProfitPercentageResult =this.drectCosts.limitProfitPercentage + "%";
-
-      let tableData = [
-        [
-          {text: "MFG No.", alignment:"center"}, 
-          {text: this.jobOrder.mfgNo, alignment:"center"}, 
-          {text: "Publisher", alignment:"center"}, 
-          {text: publisher, alignment:"center"}, 
-          {text: "Designer", alignment:"center"}, 
-          {text: designer, alignment:"center"}, 
-        ],
-        [
-          {text: "Product Name", alignment:"center", colSpan: 2},{}, 
-          {text: this.jobOrder.name , colSpan: 4},{},{},{}, 
-        ],
-        [
-          {text: "Customer", alignment:"center", colSpan: 2},{}, 
-          {text: customer, colSpan: 4},{},{},{}, 
-        ],
-        [
-          {text: "Delivery Destination", alignment:"center", colSpan: 2},{}, 
-          {text: deliveryDestination, colSpan: 4},{},{},{}, 
-        ],
-        [
-          {text: "Order Date", alignment:"center"},
-          {text: this.jobOrder.orderDate, alignment:"center"},
-          {text: "Delivery Date", alignment:"center"},
-          {text: this.jobOrder.deliveryDate, alignment:"center"},
-          {text: "Completion Date", alignment:"center"},
-          {text: this.jobOrder.completionDate, alignment:"center"}
-        ],
-        [
-          {text: orderPriceText, alignment:"center"},
-          {text: orderPrice, alignment:"right"},
-          {text: "Order Currency", alignment:"center"},
-          {text: this.jobOrder.orderCurrencyData.code, alignment:"center"},
-          {text: "Order Rate", alignment:"center"},
-          {text: orderRate, alignment:"center"}
-        ],
-        [
-          {text: orderPriceDefaultText, alignment:"right", colSpan: 2},{},
-          {text: orderPriceDefault, alignment:"right", colSpan: 2},{},
-          {text: "(Exclude Tax)", alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text:"Tax", alignment:"right", colSpan: 2},{},
-          {text: taxPrice, alignment:"right", colSpan: 2},{},
-          {text: taxPercent, alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text:"Total", alignment:"right", colSpan: 2},{},
-          {text: orderTotal, alignment:"right", colSpan: 2},{},
-          {text: "", alignment:"left", colSpan: 2},{},
-        ],
-        [
-          {text: "Note", alignment:"center"}, 
-          {text: this.jobOrder.notes, colSpan: 5},{},{},{}, {}
-        ],
-        [
-          {text:"", alignment:"right", colSpan: 3},{},{},
-          {text: "Budjet", alignment:"center"},
-          {text: "Results", alignment:"center"},
-          {text: "Failure", alignment:"center"},
-        ],
-        [
-          {text:"Commercial parts costs", alignment:"center", colSpan: 3},{},{},
-          {text: commercialPartsBudget, alignment:"right"},
-          {text: commercialPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Electrical parts costs	", alignment:"center", colSpan: 3},{},{},
-          {text: electricalPartsBudget, alignment:"right"},
-          {text: electricalPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Processed parts costs	", alignment:"center", colSpan: 3},{},{},
-          {text: processedPartsBudget, alignment:"right"},
-          {text: processedPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Direct Cost", alignment:"center", colSpan: 3},{},{},
-          {text: directCostBudget, alignment:"right"},
-          {text: directCostResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Limit Profit", alignment:"center", colSpan: 3},{},{},
-          {text: limitProfitBudget, alignment:"right"},
-          {text: limitProfitResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Limit Profit Percentage", bold: true, alignment:"center", colSpan: 3},{},{},
-          {text: limitProfitPercentageBudget, alignment:"right"},
-          {text: limitProfitPercentageResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ]
-      ];
-      return tableData;
+      return jobOrder
     }
   },
   methods: {
+    ...mapActions("systemMasterApi", ["getExpenseCategories", "getJobTypes"]),
+    ...mapActions("systemUserApi", ["getCompany"]),
     ...mapActions("jobOrderAPI", ["getJobOrder", "isEdit"]),
-    ...mapActions("systemMasterApi", ["getExpenseCategories"]),
-    ...mapActions("billOfMaterialAPI", ["getBillOfMaterials"]),
+    ...mapActions("billOfMaterialAPI", ["getBillOfMaterials", "setBillOfMaterials"]),
+    ...mapActions("manHourAPI", ["getManHours", "setManHours"]),
+    // 三点カンマ作成関数
+    moneyComma(val) {
+      if(val) {
+        return val.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+      } else {
+        return 0
+      }
+    },
+    // 部品種別毎の部品表仕訳
+    calcPartsTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+          total += val[i].totalDefaultCurrencyPrice;
+        }
+      }
+      return total
+    },
+    // 直接原価仕損費集計
+    calcPartsFailureTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+          // failureがnullではない場合
+          if(val[i].failure !== null) {
+            total += val[i].totalDefaultCurrencyPrice;
+            // console.log(total);
+          }
+        }
+      }
+      return total
+    },
+    calcLaborTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+            total += parseFloat(val[i].workHour);
+        }
+      }
+      return total
+    },
+    calcLaborFailureTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+          // failureがnullではない場合
+          if(val[i].failure !== null) {
+            total += parseFloat(val[i].workHour);
+          }
+        }
+      }
+      return total
+    },
+    async getData() {
+      this.$store.commit("systemConfig/setLoading", true);
+      this.getExpenseCategories({params: {"order_by": "category_number"}});
+      this.getCompany({ detail: this.loginUserData["companyId"] });
+      this.getJobTypes({params: {"order_by": "number"}});
+      await this.getJobOrder(this.mfgNo);
+      await this.getBillOfMaterials({params: this.paramsBOM});
+      await this.getManHours({params: this.paramsManHour});
+      this.$store.commit("systemConfig/setLoading", false);
+    },
     edit() {
       this.isEdit();
       this.$router.push({ name: "JobOrderEdit" });
     },
-    backToList() {
-      this.$router.push({ name: "JobOrderList" });
-    },
-    moneyComma(value) {
-      return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
-    },
-    // 印刷実行
     print() {
-      let docDefinition = this.createData();
-      let pdfname = docDefinition.header().text + "_" + new Date();
-
-      let pdfData = {
-        "docDefinition": docDefinition,
-        "pdfName": pdfname
-      }
-
-      // プリントの実行
-      this.pdfgen(pdfData);
-
+      this.printPDF(this.createPdfData());
     },
-    // PDF用データ作成
-    createData() {
-      // ヘッダー用テキストを定義      
-      let headerText = "Job order " + " : " + this.jobOrder.mfgNo + " - " + this.jobOrder.name;
-
-      let tableData = {
-          style: 'tableStyle',
-          table: {
-            headerRows: 0,
-            widths: ["*", "*", "*", "*", "*", "*"],
-            heights: 190,
-            body: this.tableData
-          },
-          layout: {
-            paddingLeft: function(i, node) { return 5; },
-            paddingRight: function(i, node) { return 5; },
-            paddingTop: function(i, node) { return 5; },
-            paddingBottom: function(i, node) { return 5; }
-          }
-        }
-
-      var docDefinition = { 
-        // ヘッダー等
-        header: function(){
-          return {
-            text: headerText, 
-            margin: [50,20],
-            alignment: "center",
-            fonsSize: 20
-          };
-        },
-        // データ表示部分
-        content: [
-          tableData
-        ],
-        // 印刷プロパティ
-        pageSize: 'LETTER',
-        pageMargins: [20,60,20,50],
-        defaultStyle: {
-          font: 'GenShin',
-          fontSize: 9
-        },
-        styles: {
-          tableStyle: {
-            fontSize: 11,
-            margin: [ 0, 0, 0, 0]
-          }
-        },
-      }  
-      return docDefinition;
-    },
-    // プリント機能関数
-    pdfgen(val) {
-      pdfMake.fonts = {
-        // 日本語が使用可能なフォントを設定
-        GenShin: {
-          normal: "GenShinGothic-Normal-Sub.ttf",
-          bold: "GenShinGothic-Normal-Sub.ttf",
-          italics: "GenShinGothic-Normal-Sub.ttf",
-          bolditalics: "GenShinGothic-Normal-Sub.ttf"
-        }
-      };
-      // PDF発行
-      pdfMake.createPdf(val.docDefinition).download(val.pdfName);
-    },
+    backToMenu() {
+      this.$router.push({ name: "JobOrderList" });
+    }
   },
   created() {
-    this.getExpenseCategories({params: {"order_by": "category_number"}});
-  },
-  mounted() {
-    this.getJobOrder(this.mfgNo);
-    this.getBillOfMaterials({params: this.params});
+    this.$store.commit("systemConfig/setLoading", false);
+    this.setBillOfMaterials({});
+    this.setManHours({});
+    this.getData();
   }
-};
+}
 </script>
+
+<style>
+
+</style>

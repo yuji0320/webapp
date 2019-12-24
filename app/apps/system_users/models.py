@@ -16,6 +16,7 @@ class UserCompany(models.Model):
     phone = models.CharField('phone number', max_length=20)  # 電話番号
     fax = models.CharField('fax number', max_length=20, blank=True)  # FAX番号
     default_currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 会計通貨
+    time_charge = models.DecimalField(_('Time Charge'), max_digits=17, decimal_places=2, default=0)  # タイムチャージ
     logo_data = models.TextField('logo', blank=True, null=True, default=None)  # ロゴデータ
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
@@ -75,53 +76,35 @@ class UserStaff(models.Model):
 class UserAccountManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, username, password, **extra_fields):
+    def _create_user(self, request_data, **kwargs):
         """
         Create and save a user with the given username, and password.
         """
+        username = request_data['username'],
+        password = request_data['password'],
+        staff = request_data['staff']
         now = timezone.now()
         if not username:
             raise ValueError('The given username must be set')
-        username = self.model.normalize_username(username)
-        staff = extra_fields['staff']
+        if not password:
+            raise ValueError('The given password must be set')
         user = self.model(
-            username=username,
+            username=request_data['username'],
             staff=staff,
-            is_staff=True,
+            is_staff=request_data['is_staff'],
             is_active=True,
             last_login=now,
             created_at=now,
             modified_at=now
         )
-        user.set_password(password)
+        user.set_password(request_data['password'])
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(username, password, **extra_fields)
-
-    # def create_user(self, request_data):
-    #     now = timezone.now()
-    #
-    #     if not request_data['username']:
-    #         raise ValueError('Users must have an username.')
-    #
-    #     staff = request_data['staff']
-    #
-    #     user = self.model(
-    #         username=request_data['username'],
-    #         staff=staff,
-    #         last_login=now,
-    #         is_staff=True,
-    #         is_active=True,
-    #         created_at=now,
-    #         modified_at=now,
-    #     )
-    #     user.set_password(request_data['password'])
-    #     user.save(using=self._db)
-    #     return user
+    def create_user(self, request_data, **kwargs):
+        request_data.setdefault('is_staff', False)
+        request_data.setdefault('is_superuser', False)
+        return self._create_user(request_data, **kwargs)
 
     def create_superuser(self, username, password, staff):
         request_data = {
@@ -210,6 +193,7 @@ class UserPartner(models.Model):
     is_delivery_destination = models.BooleanField(_('is Delivery destination'), default=False)  # 納入先かどうか
     is_supplier = models.BooleanField(_('is Supplier'), default=False)  # 仕入先かどうか
     is_manufacturer = models.BooleanField(_('is Manufacturer'), default=False)  # メーカーかどうか
+    is_related_party = models.BooleanField(_('is Related party'), default=False)  # 関係会社かどうか
     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
     # データ作成者
     created_by = models.ForeignKey('User', related_name='%(class)s_requests_created', on_delete=models.PROTECT)
@@ -224,42 +208,3 @@ class UserPartner(models.Model):
         unique_together = (("company", "partner_number"),)  # 会社ごとの取引先番号ユニーク
 
     def __str__(self): return self.name
-
-
-# class UserExpenseCategory(models.Model):
-#     # 費用項目リスト
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
-#     category_number = models.IntegerField(_('Category number'))  # 企業内での項目番号
-#     is_processed_parts = models.BooleanField(_('is Processed parts'), default=False)  # 加工部品かどうか
-#     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#
-#     class Meta:
-#         db_table = 'expense_category'
-#         verbose_name = _('Expense Category')
-#         verbose_name_plural = _('Expense Categories')
-#         unique_together = (("company", "category_number"),)  # 会社ごとのカテゴリ番号ユニーク
-#
-#     def __str__(self): return self.category_name
-
-
-# class UserFailureCategory(models.Model):
-#     # 仕損費種別マスタ
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     category_number = models.IntegerField(_('Category number'))  # 企業内での項目番号
-#     category_name = models.CharField(_('Category name'), max_length=150)  # 項目名
-#     is_active = models.BooleanField(_('is Active'), default=True)  # 有効かどうか
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#
-#     class Meta:
-#         db_table = 'failure_category'
-#         verbose_name = _('Failure Category')
-#         verbose_name_plural = _('Failure Categories')
-#         unique_together = (("company", "category_number"),)  # 会社ごとのカテゴリ番号ユニーク
-#
-#     def __str__(self): return self.category_name

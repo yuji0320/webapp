@@ -35,21 +35,32 @@ const systemConfigState = {
         },
       ],
     },
-    // {
-    //   icon: 'account_box',
-    //   title: 'Man-hour management',
-    //   subMenus: [
-    //     {
-    //       icon: 'access_time',
-    //       title: 'Man Hour',
-    //       url: '',
-    //     },
-    //   ],
-    // },
+    {
+      icon: 'account_box',
+      title: 'Man-hour management',
+      subMenus: [
+        {
+          icon: 'access_time',
+          title: 'Man Hour',
+          url: {name: 'ManHourMenu'},
+        },
+      ],
+    },
     {
       icon: 'search',
       title: 'Investigation',
-      subMenus: [],
+      subMenus: [
+        {
+          icon: 'poll',
+          title: 'Reports',
+          url: {name: 'ReportsMenu'},
+        },
+        {
+          icon: 'search',
+          title: 'Search',
+          url: {name: 'SearchMenu'},
+        },
+      ],
     },
     {
       icon: 'settings_applications',
@@ -69,22 +80,24 @@ const systemConfigState = {
           icon: 'people_outline',
           title: 'Partner master',
           url: {name: 'Partner'},
-        },
-        {
-          icon: '',
-          title: 'Man-hour master',
-          url: '',
-        },
-      ],
-    },
+        }
+      ]
+    }
   ],
   snackbar: {
     snack: '',
     color: '',
     snackbarStatus: false,
-    timeout: 1000,
+    timeout: 3000,
   },
   excelJson: [],
+  moneySetting: {
+    prefix: '',
+    suffix: '',
+    thousands: ',',
+    decimal: '.',
+    precision: 2,
+  },
 };
 
 export default {
@@ -124,7 +137,7 @@ export default {
       commit('onSnackbar', {snack: snack, color: color});
       setTimeout(function() {
         commit('offSnackbar');
-      }, 2000);
+      }, 4000);
     },
     // jsonデータセット
     setExcelJson({commit}, data) {
@@ -133,6 +146,5 @@ export default {
     // setMenus({commit}) {
     //   commit('setMenus', this.systemConfigState.menus);
     // },
-
   },
 };
