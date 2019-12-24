@@ -7,3 +7,4 @@ mysql/.DS_Store
 /mysql/backup/backup/
 /app_frontend/dist
 app_frontend/.env.prod
+*.prod
