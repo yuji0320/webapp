@@ -121,61 +121,55 @@
                 <td class="text-center">Commercial parts costs</td>
                 <td class="text-right">{{ jobOrderData.commercialPartsBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.commercialPartsResult }}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.commercialPartsFailure }}</td>
               </tr>
               <tr>
                 <td class="text-center">Electrical parts costs</td>
                 <td class="text-right">{{ jobOrderData.electricalPartsBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.electricalPartsResult }}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.electricalPartsFailure }}</td>
               </tr>
               <tr>
                 <td class="text-center">Processed parts costs</td>
                 <td class="text-right">{{ jobOrderData.processedPartsBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.processedPartsResult }}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.processedPartsFailure }}</td>
               </tr>
               <tr>
                 <td class="text-center">Outsourcing Mechanical Design Costs</td>
                 <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignResult }}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.outsourcingMechanicalDesignFailure }}</td>
               </tr>
               <tr>
                 <td class="text-center">Outsourcing Electrical Design Costs</td>
                 <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignResult}}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.outsourcingElectricalDesignFailure}}</td>
               </tr>
               <tr>
                 <td class="text-center">Outsourcing Other Costs</td>
                 <td class="text-right">{{ jobOrderData.outsourcingOtherBudgetDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.outsourcingOtherResult }}</td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.outsourcingOtherFailure }}</td>
               </tr>
               <tr>
-                <td class="text-center">Shipping Costs</td>
-                <td class="text-right">{{ jobOrderData.shippingCostBudgetDisplay }}</td>
-                <td class="text-right">{{ jobOrderData.shippingCostResultDisplay }}</td>
-                <td class="text-right"></td>
-              </tr>
-              <tr>
-                <td class="text-center"><strong>Material Cost Total</strong></td>
+                <td class="text-center"><strong>Total Material Cost</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.directCostBudgetDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.directCostResult }}</strong></td>
-                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.directCostFailure }}</strong></td>
               </tr>
               <tr>
                 <td class="text-center"><strong>Limit Profit</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.limitProfitBudgetDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.limitProfitResult }}</strong></td>
-                <td class="text-right"><strong></strong></td>
+                <td class="text-right">　−　</td>
               </tr>
               <tr>
                 <td class="text-center"><strong>Limit Profit Percentage</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.limitProfitPercentageBudget }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.limitProfitPercentageResult }}</strong></td>
-                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong>Failure cost rate ( {{ jobOrderData.failurePercentage }} )</strong></td>
               </tr>
             </tbody>
           </table>
@@ -201,8 +195,8 @@
                 <td class="text-right">{{ jobOrderData.mechanicalDesignBudgetPrice }}</td>
                 <td class="text-right">{{ jobOrderData.mechanicalDesignResultHoursDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.mechanicalDesignResultPrice }}</td>
-                <td class="text-right"></td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.mechanicalDesignFailurePrice }}</td>
               </tr>
               <tr>
                 <td class="text-center">Electrical Design</td>
@@ -210,8 +204,8 @@
                 <td class="text-right">{{ jobOrderData.electricalDesignBudgetPrice }}</td>
                 <td class="text-right">{{ jobOrderData.electricalDesignResultHoursDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.electricalDesignResultPrice }}</td>
-                <td class="text-right"></td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.electricalDesignFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalDesignFailurePrice }}</td>
               </tr>
               <tr>
                 <td class="text-center">Assembly and Adjustment</td>
@@ -219,8 +213,8 @@
                 <td class="text-right">{{ jobOrderData.assemblyBudgetPrice }}</td>
                 <td class="text-right">{{ jobOrderData.assemblyResultHoursDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.assemblyResultPrice }}</td>
-                <td class="text-right"></td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.assemblyFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.assemblyFailurePrice }}</td>
               </tr>
               <tr>
                 <td class="text-center">Electrical Wiring</td>
@@ -228,8 +222,8 @@
                 <td class="text-right">{{ jobOrderData.electricalWiringBudgetPrice }}</td>
                 <td class="text-right">{{ jobOrderData.electricalWiringResultHoursDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.electricalWiringResultPrice }}</td>
-                <td class="text-right"></td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.electricalWiringFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.electricalWiringFailurePrice }}</td>
               </tr>
               <tr>
                 <td class="text-center">Installation</td>
@@ -237,17 +231,17 @@
                 <td class="text-right">{{ jobOrderData.installationBudgetPrice }}</td>
                 <td class="text-right">{{ jobOrderData.installationResultHoursDisplay }}</td>
                 <td class="text-right">{{ jobOrderData.installationResultPrice }}</td>
-                <td class="text-right"></td>
-                <td class="text-right"></td>
+                <td class="text-right">{{ jobOrderData.installationFailureHoursDisplay }}</td>
+                <td class="text-right">{{ jobOrderData.installationFailurePrice }}</td>
               </tr>
               <tr>
-                <td class="text-center"><strong>Labor Cost Total</strong></td>
+                <td class="text-center"><strong>Total Labor Cost</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.workingHoursBudgetDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.laborCostBudgetDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.workingHoursResultDisplay }}</strong></td>
                 <td class="text-right"><strong>{{ jobOrderData.laborCostResultDisplay }}</strong></td>
-                <td class="text-right"><strong></strong></td>
-                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.workingHoursFailureDisplay }}</strong></td>
+                <td class="text-right"><strong>{{ jobOrderData.laborCostFailureDisplay }}</strong></td>
               </tr>
             </tbody>
           </table>
@@ -265,25 +259,25 @@
               <td class="text-center">Shipping Cost</td>
               <td class="text-right">{{ jobOrderData.shippingCostBudgetDisplay }}</td>
               <td class="text-right">{{ jobOrderData.shippingCostResultDisplay }}</td>
-              <td class="text-right"></td>
+              <td class="text-right">　−　</td>
             </tr>
             <tr>
               <td class="text-center">Manufacturing cost</td>
               <td class="text-right">{{ jobOrderData.manufacturingCostBudgetDisplay }}</td>
               <td class="text-right">{{ jobOrderData.manufacturingCostResultDisplay }}</td>
-              <td class="text-right"></td>
+              <td class="text-right">{{ jobOrderData.manufacturingCostFailureDisplay }}</td>
             </tr>
             <tr>
               <td class="text-center"><strong>Profit</strong></td>
               <td class="text-right"><strong>{{ jobOrderData.totalProfitBudgetDisplay }}</strong></td>
               <td class="text-right"><strong>{{ jobOrderData.totalProfitResultDisplay }}</strong></td>
-              <td class="text-center"><strong>-</strong></td>
+              <td class="text-right">　−　</td>
             </tr>
             <tr>
               <td class="text-center"><strong>Profit percentage</strong></td>
               <td class="text-right"><strong>{{ jobOrderData.totalProfitPercentageBudget }}</strong></td>
               <td class="text-right"><strong>{{ jobOrderData.totalProfitPercentageResult }}</strong></td>
-              <td class="text-right"><strong></strong></td>
+              <td class="text-right"><strong>Total failure cost rate ( {{ jobOrderData.totalFailurePercentage }} )</strong></td>
             </tr>
           </table>
 
@@ -330,12 +324,18 @@ export default {
       const categories = this.expenseCategories.results;
       let results = [];
       let directCost = 0;
+      let failure = [];
+      let directFailure = 0;
       for(let c in categories) {
         // 部品毎集計
         let t = (Math.round(this.calcPartsTotal(this.partsList(categories[c].id)) * 100) / 100);
         // 合計金額への加算
         directCost += t;
         results.push(t);
+        // 仕損費集計
+        let f = (Math.round(this.calcPartsFailureTotal(this.partsList(categories[c].id)) * 100) / 100);
+        directFailure += f;
+        failure.push(f);
       }
       directCost = Math.round( (directCost + parseFloat(this.jobOrder.shippingCostResult) ) * 100) / 100;
       let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
@@ -346,11 +346,19 @@ export default {
       } else if(limitProfit < 0) {
         limitProfitPercentage = Math.round((limitProfit / orderAmount * 100) * 100) / 100;
       }
+      // 仕損費率計算
+      let failurePercentage = 0;
+      if(directCost > 0) {
+        failurePercentage = Math.round((directFailure / directCost * 100) * 100) / 100;
+      }
       return {
         results: results,
         directCost: directCost,
         limitProfit: limitProfit,
-        limitProfitPercentage: limitProfitPercentage
+        limitProfitPercentage: limitProfitPercentage,
+        failure: failure,
+        directFailure: directFailure,
+        failurePercentage: failurePercentage,
       };
     },
     // 工数用パラメーター
@@ -374,6 +382,8 @@ export default {
       const types = this.jobTypes.results;
       let results = [];
       let totalWorkHours = 0;
+      let failure = [];
+      let totalFailure = 0;
       if(types) {
         for(let h=0, type; type=types[h]; h++) {
           // 部品毎集計
@@ -381,11 +391,17 @@ export default {
           // 合計金額への加算
           totalWorkHours += t;
           results.push(t);        
+          // 仕損費集計
+          let f = (Math.round(this.calcLaborFailureTotal(this.manHourList(type.id)) * 100) / 100);
+          totalFailure += f;
+          failure.push(f);
         }
       }
       return {
         results: results,
-        totalWorkHours: totalWorkHours
+        totalWorkHours: totalWorkHours,
+        failure: failure,
+        totalFailure: totalFailure
       };
     },
     jobOrderExists() {
@@ -449,6 +465,7 @@ export default {
         jobOrder.limitProfitPercentageBudget =this.jobOrder["costs"]["limitProfitPercentageBudget"] + "%";
         // 材料費実績
         if((this.directCosts.results).length !== 0) {
+          // 材料費集計結果
           jobOrder.commercialPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[0].toFixed(2));
           jobOrder.electricalPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[1].toFixed(2));
           jobOrder.processedPartsResult = defaultDisplay + this.moneyComma(this.directCosts.results[2].toFixed(2));
@@ -458,7 +475,16 @@ export default {
           jobOrder.shippingCostResultDisplay = defaultDisplay + this.moneyComma(this.jobOrder.shippingCostResult);
           jobOrder.directCostResult = defaultDisplay + this.moneyComma(this.directCosts.directCost.toFixed(2));
           jobOrder.limitProfitResult = defaultDisplay + this.moneyComma(this.directCosts.limitProfit.toFixed(2));
-          jobOrder.limitProfitPercentageResult =this.directCosts.limitProfitPercentage + "%";
+          jobOrder.limitProfitPercentageResult =this.directCosts.limitProfitPercentage.toFixed(2) + "%";
+          // 仕損費集計結果
+          jobOrder.commercialPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[0].toFixed(2));
+          jobOrder.electricalPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[1].toFixed(2));
+          jobOrder.processedPartsFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[2].toFixed(2));
+          jobOrder.outsourcingMechanicalDesignFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[3].toFixed(2));
+          jobOrder.outsourcingElectricalDesignFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[4].toFixed(2));
+          jobOrder.outsourcingOtherFailure = defaultDisplay + this.moneyComma(this.directCosts.failure[5].toFixed(2));
+          jobOrder.directCostFailure = defaultDisplay + this.moneyComma(this.directCosts.directFailure.toFixed(2));
+          jobOrder.failurePercentage =this.directCosts.failurePercentage.toFixed(2) + "%";
         }
         // 労務費予算
         jobOrder.mechanicalDesignBudgetHoursDisplay = this.jobOrder.mechanicalDesignBudgetHours + " h";
@@ -487,6 +513,19 @@ export default {
           jobOrder.installationResultPrice = defaultDisplay + this.moneyComma((this.laborCost.results[4] * timeCharge).toFixed(2));
           jobOrder.workingHoursResultDisplay = this.laborCost.totalWorkHours.toFixed(2) + " h";
           jobOrder.laborCostResultDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalWorkHours * timeCharge).toFixed(2));
+          // 仕損費集計結果
+          jobOrder.mechanicalDesignFailureHoursDisplay = this.laborCost.failure[0].toFixed(2) + " h";
+          jobOrder.mechanicalDesignFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[0] * timeCharge).toFixed(2));
+          jobOrder.electricalDesignFailureHoursDisplay = this.laborCost.failure[1].toFixed(2) + " h";
+          jobOrder.electricalDesignFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[1] * timeCharge).toFixed(2));
+          jobOrder.assemblyFailureHoursDisplay = this.laborCost.failure[2].toFixed(2) + " h";
+          jobOrder.assemblyFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[2] * timeCharge).toFixed(2));
+          jobOrder.electricalWiringFailureHoursDisplay = this.laborCost.failure[3].toFixed(2) + " h";
+          jobOrder.electricalWiringFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[3] * timeCharge).toFixed(2));
+          jobOrder.installationFailureHoursDisplay = this.laborCost.failure[4].toFixed(2) + " h";
+          jobOrder.installationFailurePrice = defaultDisplay + this.moneyComma((this.laborCost.failure[4] * timeCharge).toFixed(2));
+          jobOrder.workingHoursFailureDisplay = this.laborCost.totalWorkHours.toFixed(2) + " h";
+          jobOrder.laborCostFailureDisplay = defaultDisplay + this.moneyComma((this.laborCost.totalFailure * timeCharge).toFixed(2));
         }
         // 集計値予算
         jobOrder.shippingCostBudgetDisplay = defaultDisplay + "0.00";
@@ -508,7 +547,16 @@ export default {
         }
         jobOrder.manufacturingCostResultDisplay = defaultDisplay + this.moneyComma(manufacturingCostResult.toFixed(2));
         jobOrder.totalProfitResultDisplay = defaultDisplay + this.moneyComma(profitResult.toFixed(2));
-        jobOrder.totalProfitPercentageResult = profitPercentageResult + "%";
+        jobOrder.totalProfitPercentageResult = profitPercentageResult.toFixed(2) + "%";
+        // 仕損費集計結果
+        let manufacturingCostFailure = 0;
+        manufacturingCostFailure = this.directCosts.directFailure + (this.laborCost.totalFailure * timeCharge);
+        let totalFailurePercentage = 0;
+        if(manufacturingCostResult > 0) {
+          totalFailurePercentage = Math.round((manufacturingCostFailure / manufacturingCostResult * 100) * 100) / 100;
+        }
+        jobOrder.manufacturingCostFailureDisplay = defaultDisplay + this.moneyComma(manufacturingCostFailure.toFixed(2));
+        jobOrder.totalFailurePercentage = totalFailurePercentage.toFixed(2) + "%";
       }
       return jobOrder
     }
@@ -532,7 +580,21 @@ export default {
       let total = 0;
       if(val) {
         for (let i = 0; i < val.length; i++) {
+          total += val[i].totalDefaultCurrencyPrice;
+        }
+      }
+      return total
+    },
+    // 直接原価仕損費集計
+    calcPartsFailureTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+          // failureがnullではない場合
+          if(val[i].failure !== null) {
             total += val[i].totalDefaultCurrencyPrice;
+            // console.log(total);
+          }
         }
       }
       return total
@@ -542,6 +604,18 @@ export default {
       if(val) {
         for (let i = 0; i < val.length; i++) {
             total += parseFloat(val[i].workHour);
+        }
+      }
+      return total
+    },
+    calcLaborFailureTotal(val) {
+      let total = 0;
+      if(val) {
+        for (let i = 0; i < val.length; i++) {
+          // failureがnullではない場合
+          if(val[i].failure !== null) {
+            total += parseFloat(val[i].workHour);
+          }
         }
       }
       return total

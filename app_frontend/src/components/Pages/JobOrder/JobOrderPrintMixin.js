@@ -97,61 +97,55 @@ export default {
           {text:"Commercial parts costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.commercialPartsBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.commercialPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.commercialPartsFailure, alignment:"right"},
         ],
         [
           {text:"Electrical parts costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.electricalPartsBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.electricalPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.electricalPartsFailure, alignment:"right"},
         ],
         [
           {text:"Processed parts costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.processedPartsBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.processedPartsResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.processedPartsFailure, alignment:"right"},
         ],
         [
           {text:"Outsourcing Mechanical Design Costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.outsourcingMechanicalDesignBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.outsourcingMechanicalDesignResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.outsourcingMechanicalDesignFailure, alignment:"right"},
         ],
         [
           {text:"Outsourcing Electrical Design Costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.outsourcingElectricalDesignBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.outsourcingElectricalDesignResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.outsourcingElectricalDesignFailure, alignment:"right"},
         ],
         [
           {text:"Outsourcing Other Costs", alignment:"left", margin:[10,0,0,0]},
           {text: this.jobOrderData.outsourcingOtherBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.outsourcingOtherResult, alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.outsourcingOtherFailure, alignment:"right"},
         ],
         [
-          {text:"Shipping Cost", alignment:"left", margin:[10,0,0,0]},
-          {text: this.jobOrderData.shippingCostBudgetDisplay, alignment:"right"},
-          {text: this.jobOrderData.shippingCostResult, alignment:"right"},
-          {text: "", alignment:"right"},
-        ],
-        [
-          {text:"Direct Cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
+          {text:"Total Material Cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
           {text: this.jobOrderData.directCostBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.directCostResult, alignment:"right", decoration: 'underline'},
-          {text: "", alignment:"right", decoration: 'underline'},
+          {text: this.jobOrderData.directCostFailure, alignment:"right", decoration: 'underline'},
         ],
         [
           {text:"Limit Profit", alignment:"left", margin:[10,0,0,0], decoration: 'underline', decorationStyle: 'double'},
           {text: this.jobOrderData.limitProfitBudgetDisplay, alignment:"right", decoration: 'underline', decorationStyle: 'double'},
           {text: this.jobOrderData.limitProfitResult, alignment:"right", decoration: 'underline', decorationStyle: 'double'},
-          {text: "", alignment:"right", decoration: 'underline', decorationStyle: 'double'},
+          {text: " - ", alignment:"right"},
         ],
         [
           {text:"Limit Profit Percentage", alignment:"left", margin:[10,0,0,0], decoration: 'underline', decorationStyle: 'wavy'},
           {text: this.jobOrderData.limitProfitPercentageBudget, alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
           {text: this.jobOrderData.limitProfitPercentageResult, alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
-          {text: "", alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
+          {text: "Failure cost rate ( " + this.jobOrderData.failurePercentage + " )", alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
         ]
       ];
       // 労務費集計
@@ -172,8 +166,8 @@ export default {
           {text: this.jobOrderData.mechanicalDesignBudgetPrice, alignment:"right"},
           {text: this.jobOrderData.mechanicalDesignResultHoursDisplay, alignment:"right"},
           {text: this.jobOrderData.mechanicalDesignResultPrice, alignment:"right"},
-          {text: "", alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.mechanicalDesignFailureHoursDisplay, alignment:"right"},
+          {text: this.jobOrderData.mechanicalDesignFailurePrice, alignment:"right"},
         ],
         [
           {text:"Electrical Design", alignment:"left", margin:[10,0,0,0]},
@@ -181,8 +175,8 @@ export default {
           {text: this.jobOrderData.electricalDesignBudgetPrice, alignment:"right"},
           {text: this.jobOrderData.electricalDesignResultHoursDisplay, alignment:"right"},
           {text: this.jobOrderData.electricalDesignResultPrice, alignment:"right"},
-          {text: "", alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.electricalDesignFailureHoursDisplay, alignment:"right"},
+          {text: this.jobOrderData.electricalDesignFailurePrice, alignment:"right"},
         ],
         [
           {text:"Assembly and Adjustment", alignment:"left", margin:[10,0,0,0]},
@@ -190,8 +184,8 @@ export default {
           {text: this.jobOrderData.assemblyBudgetPrice, alignment:"right"},
           {text: this.jobOrderData.assemblyResultHoursDisplay, alignment:"right"},
           {text: this.jobOrderData.assemblyResultPrice, alignment:"right"},
-          {text: "", alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.assemblyFailureHoursDisplay, alignment:"right"},
+          {text: this.jobOrderData.assemblyFailurePrice, alignment:"right"},
         ],
         [
           {text:"Electrical Wiring", alignment:"left", margin:[10,0,0,0]},
@@ -199,8 +193,8 @@ export default {
           {text: this.jobOrderData.electricalWiringBudgetPrice, alignment:"right"},
           {text: this.jobOrderData.electricalWiringResultHoursDisplay, alignment:"right"},
           {text: this.jobOrderData.electricalWiringResultPrice, alignment:"right"},
-          {text: "", alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.electricalWiringFailureHoursDisplay, alignment:"right"},
+          {text: this.jobOrderData.electricalWiringFailurePrice, alignment:"right"},
         ],
         [
           {text:"Installation", alignment:"left", margin:[10,0,0,0]},
@@ -208,17 +202,17 @@ export default {
           {text: this.jobOrderData.installationBudgetPrice, alignment:"right"},
           {text: this.jobOrderData.installationResultHoursDisplay, alignment:"right"},
           {text: this.jobOrderData.installationResultPrice, alignment:"right"},
-          {text: "", alignment:"right"},
-          {text: "", alignment:"right"},
+          {text: this.jobOrderData.installationFailureHoursDisplay, alignment:"right"},
+          {text: this.jobOrderData.installationFailurePrice, alignment:"right"},
         ],
         [
-          {text:"Labor Cost Total", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
+          {text:"Total Labor Cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
           {text: this.jobOrderData.workingHoursBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.laborCostBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.workingHoursResultDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.laborCostResultDisplay, alignment:"right", decoration: 'underline'},
-          {text: "", alignment:"right", decoration: 'underline'},
-          {text: "", alignment:"right", decoration: 'underline'},
+          {text: this.jobOrderData.workingHoursFailureDisplay, alignment:"right", decoration: 'underline'},
+          {text: this.jobOrderData.laborCostFailureDisplay, alignment:"right", decoration: 'underline'},
         ]
       ];
       // 総合計
@@ -234,25 +228,25 @@ export default {
           {text:"Shipping Cost", alignment:"center"},
           {text: this.jobOrderData.shippingCostBudgetDisplay, alignment:"right"},
           {text: this.jobOrderData.shippingCostResultDisplay, alignment:"right"},
-          {text: " - ", alignment:"center"},
+          {text: " - ", alignment:"right"},
         ],
         [
           {text:"Manufacturing cost", alignment:"left", margin:[10,0,0,0], decoration: 'underline'},
           {text: this.jobOrderData.manufacturingCostBudgetDisplay, alignment:"right", decoration: 'underline'},
           {text: this.jobOrderData.manufacturingCostResultDisplay, alignment:"right", decoration: 'underline'},
-          {text: "", alignment:"right", decoration: 'underline'},
+          {text: this.jobOrderData.manufacturingCostFailureDisplay, alignment:"right", decoration: 'underline'},
         ],
         [
           {text:"Profit", alignment:"left", margin:[10,0,0,0], decoration: 'underline', decorationStyle: 'double'},
           {text: this.jobOrderData.totalProfitBudgetDisplay, alignment:"right", decoration: 'underline', decorationStyle: 'double'},
           {text: this.jobOrderData.totalProfitResultDisplay, alignment:"right", decoration: 'underline', decorationStyle: 'double'},
-          {text: "", alignment:"right", decoration: 'underline', decorationStyle: 'double'},
+          {text: " - ", alignment:"right"},
         ],
         [
           {text:"Profit Percentage", alignment:"left", margin:[10,0,0,0], decoration: 'underline', decorationStyle: 'wavy'},
           {text: this.jobOrderData.totalProfitPercentageBudget, alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
           {text: this.jobOrderData.totalProfitPercentageResult, alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
-          {text: "", alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
+          {text: "Total Failure Rate ( " + this.jobOrderData.totalFailurePercentage + " )", alignment:"right", decoration: 'underline', decorationStyle: 'wavy'},
         ]
       ]
 

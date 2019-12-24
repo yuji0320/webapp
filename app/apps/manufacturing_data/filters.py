@@ -50,6 +50,8 @@ class BillOfMaterialFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
     parts_data = filters.CharFilter(field_name='partsData', method='parts_data_filter')
+    is_not_failure = filters.BooleanFilter(field_name='failure', lookup_expr='isnull')
+
 
     @staticmethod
     def parts_data_filter(queryset, name, value):
@@ -60,7 +62,7 @@ class BillOfMaterialFilter(filters.FilterSet):
     class Meta:
         model = BillOfMaterial
         fields = ['id', 'company', 'job_order', 'type', 'name', 'manufacturer', "standard", "is_printed", "parts_data",
-                  'type__is_processed_parts', ]
+                  'type__is_processed_parts', 'failure', 'is_not_failure' ]
 
     order_by = filters.OrderingFilter(
         choices=(
