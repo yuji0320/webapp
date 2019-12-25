@@ -21,7 +21,7 @@
         <v-btn 
           @click="print" 
           color="primary"
-          :disabled = "true"
+          :disabled="summaryBy === ''"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -110,14 +110,16 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import PurchasingReportPrint from "./PurchasingReportPrint.js";
 
 export default {
   title: "Purchasing Report",
   name: "PurchasingReport",
+  mixins: [PurchasingReportPrint],
   data() {
     return {
       date_from: "2019-08-01",
-      date_to: "2019-10-31",
+      date_to: "2019-08-31",
       // date_from: "",
       // date_to: "",
       orderBy: 'order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number,order__name',
@@ -308,11 +310,8 @@ export default {
     },
     // 印刷
     print() {
-      console.log("print");
-      // let headerText = "Sales Summary by Period : " + this.date_from + " to " + this.date_to;
-      // 子コンポーネントの印刷関数を呼び出し
-      // this.printPDF(this.createPdfData(headerText));
-      // console.log(this.createPdfData());
+      // this.createPdfData();
+      this.printPDF(this.createPdfData());
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });

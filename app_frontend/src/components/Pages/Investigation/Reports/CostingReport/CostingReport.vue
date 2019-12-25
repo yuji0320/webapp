@@ -70,10 +70,10 @@ export default {
   mixins: [CostingReportPrint],
   data () {
     return {
-      date_from: "2019-04-01",
-      date_to: "2019-04-30",
-      // date_from: "",
-      // date_to: "",
+      // date_from: "2019-04-01",
+      // date_to: "2019-04-30",
+      date_from: "",
+      date_to: "",
       orderBy: "-completion_date",
       headers: [
         { text: "MFG No", value: "mfgNo" },
