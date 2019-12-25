@@ -233,7 +233,7 @@ export default {
     print() {
       // 子コンポーネントの印刷関数を呼び出し
       this.printPDF(this.createPdfData());
-      console.log(this.createPdfData());
+      // console.log(this.createPdfData());
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });
