@@ -15,6 +15,15 @@
         </v-btn>
       </span>
 
+      <!-- 印刷ボタン -->
+      <span slot="card-header-buck-button">
+        <v-btn 
+          @click="print" 
+          color="primary"
+          :disabled="dataList.length === 0"
+        ><v-icon>print</v-icon> Print</v-btn>
+      </span>
+
       <span slot="search-bar">
         <v-layout row wrap>
           <!-- 検索開始日 -->
@@ -53,10 +62,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CostingReportPrint from "./CostingReportPrint.js";
 
 export default {
   title: "Costing Report",
   name: "CostingReport",
+  mixins: [CostingReportPrint],
   data () {
     return {
       // date_from: "2019-04-01",
@@ -72,7 +83,7 @@ export default {
         {text: "Direct Cost", value: "directCost", nest: "total", class: "text-xs-right"},
         {text: "Labor Cost", value: "laborCost", nest: "totalCosts", class: "text-xs-right"},
         {text: "Total Cost", value: "totalCost", class: "text-xs-right"},
-        {text: "Cost Rate", value: "costRate", class: "text-xs-right"},
+        {text: "Cost Rate(%)", value: "costRate", class: "text-xs-right"},
       ],
       dataList: [],
       grandTotal: 0
@@ -146,6 +157,7 @@ export default {
       }
       // 合計データ整形
       let totalRow = {
+        name: "Total",
         directCost: {},
         laborCost:{},
       };
@@ -216,6 +228,12 @@ export default {
       totalArray.failure = this.moneyComma(failureList.reduce((p, x) => p + parseFloat(x.totalDefaultCurrencyPrice), 0).toFixed(2));
       // 返り値
       return totalArray
+    },
+    // 印刷
+    print() {
+      // 子コンポーネントの印刷関数を呼び出し
+      this.printPDF(this.createPdfData());
+      // console.log(this.createPdfData());
     },
     backToMenu() {
       this.$router.push({ name: "ReportsMenu" });
