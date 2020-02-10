@@ -50,13 +50,15 @@ $ ./docker-compose.sh dev up --build
 
 3: Django のデータベースを migrate
 
-```$ docker exec -it <dev app container name or id> ./manage.py migrate
+```
+$ docker exec -it <dev app container name or id> ./manage.py migrate
 
 ```
 
 4: fixtures を読み込み初期データをインポート
 
-```$ docker exec -it <dev app container name or id> ./manage.py loaddata initial_data.json
+```
+$ docker exec -it <dev app container name or id> ./manage.py loaddata initial_data.json
 ```
 
 5: localhost にアクセス
@@ -65,7 +67,8 @@ $ ./docker-compose.sh dev up --build
 
 - initial data のエクスポート
 
-```$ docker exec -it <dev app container name or id> ./manage.py dumpdata app名.model名 > 保存場所ファイルパス/ファイル名.json
+```
+$ docker exec -it <dev app container name or id> ./manage.py dumpdata app名.model名 > 保存場所ファイルパス/ファイル名.json
 ```
 
 #### データベースのバックアップ
@@ -74,7 +77,9 @@ mysqlのコンテナに入る
 
 下記コマンドを入力
 
+```
 $ mysqldump --single-transaction -uroot bms_backend > ファイル保存先パス/ファイル名.dump
+```
 
 #### データベースの復元
 
@@ -82,4 +87,6 @@ $ mysqldump --single-transaction -uroot bms_backend > ファイル保存先パ�
 - バックアップデータのある場所へ移動
 - 下記コマンドを入力
 
+```
 $ mysql -u root -p bms_backend < ファイル名.dump
+```
