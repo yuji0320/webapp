@@ -45,8 +45,10 @@ Featuring:
 
 2: ディレクトリに移動し、ビルド
 
+```
 $ cd webapp
 $ ./docker-compose.sh dev up --build
+```
 
 3: Django のデータベースを migrate
 
