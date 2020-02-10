@@ -21,9 +21,11 @@ dev_app_frontend:
     - "9100:9100"
 #  links:
 #    - dev_app:app
+  tty: true
   volumes:
     - ./app_frontend:/usr/src/app_frontend
-#  command: bash -c "npm run serve && vue ui -p 9100 -H 0.0.0.0"
+  # command: bash -c "npm run serve && vue ui -p 9100 -H 0.0.0.0"
+  # command: /bin/bash
   command: npm run serve
 
 
