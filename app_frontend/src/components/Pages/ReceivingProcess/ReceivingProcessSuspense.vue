@@ -95,7 +95,7 @@ export default {
         { text: "", value: "checkbox" },
         { text: "No", value: "orderData", nest:"number" },
         { text: "Part Name", value: "orderData", nest:"name" },
-        { text: "Standard / Drawing No", value:"orderData", nest:"partsDetail" },
+        { text: "Standard / Drawing No", value:"orderData", nest:"billOfMaterial", nestNest:"partsDetail" },
         { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
         { text: "Suspense Received", value: "suspenseReceivedDate" },
         { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
