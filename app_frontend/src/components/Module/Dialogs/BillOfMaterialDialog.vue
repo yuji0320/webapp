@@ -38,7 +38,7 @@
         </v-flex>
 
         <!-- <template v-if="this.expenseCategory.isProcessedParts"> -->
-          <!-- 図面番号 -->
+        <!-- 図面番号 -->
         <v-flex xs12 v-show="isProcessedParts">
           <v-text-field 
             label="Drawing Number"
@@ -209,6 +209,21 @@
             :disabled="editDisable"
           ></v-textarea>
         </v-flex>
+
+        <!-- 部品種別選択 -->
+        <v-flex xs12>
+          <app-incremental-model-search
+            label="Parts Type"
+            orderBy="category_number"
+            v-model="billOfMaterial.type"
+            searchType="expenseCategory"
+            :errorMessages="responseError.type"
+            ref="type"
+            :disabled="editDisable"
+            hideClear="true"
+          ></app-incremental-model-search>
+        </v-flex>
+
       </v-layout>
     </span>
   </app-dialog>
@@ -274,6 +289,7 @@ export default {
       this.$refs.currency.setData(val.currency);
       // 仕損費データセット
       this.$refs.failure.setData(val.failure);
+      this.$refs.type.setData(val.type);
     },
     // デフォルト値設定
     setDefault() {

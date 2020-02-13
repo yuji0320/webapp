@@ -19,6 +19,7 @@
       <v-btn
         @click="clearItem"
         :disabled="disabled"
+        v-show="!hideClear"
       >Clear</v-btn>
     </v-flex>
   </v-layout>
@@ -56,10 +57,11 @@ export default {
     // disabled
     disabled: { required: false },
     required: { required: false },    
+    hideClear: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes"]),
+    ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes", "expenseCategories"]),
     ...mapState("systemUserApi", [
       "searchUserStaffs",
       "searchUserPartners",
@@ -104,6 +106,8 @@ export default {
           // break;
         case "jobType":
           return this.jobTypes.results;
+        case "expenseCategory":
+          return this.expenseCategories.results;
       }
     },
     // データ検索用共通パラメータを格納
@@ -125,7 +129,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories", "getJobTypes"]),
+    ...mapActions("systemMasterApi", ["getCurrencies", "getUnitTypes", "getFailureCategories", "getJobTypes", "getExpenseCategories"]),
     ...mapActions("systemUserApi", [
       "getSearchUserStaffs",
       "getSearchUserPartners",
@@ -175,6 +179,10 @@ export default {
           break;
         case "jobType":
           this.getJobTypes(search);
+          break;
+        case "expenseCategory":
+          this.getExpenseCategories(search);
+          break;
       }
     },
     clearItem() {
