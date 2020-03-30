@@ -1,6 +1,6 @@
 gunicorn==19.6.0
 redis==2.10.5
-Django==2.1.15
+Django==2.2.10
 PyMySQL==0.8.1
 djangorestframework==3.8.2
 djangorestframework-jwt==1.11.0
