@@ -9,7 +9,8 @@ RUN apk update && \
     npm install -g npm&& \
     npm uninstall -g vue-cli&& \
     npm install -g @vue/cli&& \
-    npm install -g npm install xlsx
+    npm install -g npm install xlsx&& \
+    npm install pdfmake
 
 RUN npm install -g @vue/cli-service-global
 

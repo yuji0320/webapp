@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "prod-serve": "vue-cli-service serve --mode production",
-    "prod-build": "vue-cli-service build --mode production"
+    "prod-build": "vue-cli-service build --mode production",
+    "build:dev": "vue-cli-service build --mode dev.build"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
@@ -19,6 +20,7 @@
     "jq": "^1.7.2",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.24.0",
+    "pdfmake": "^0.1.65",
     "roboto-fontface": "*",
     "v-money": "^0.8.1",
     "vee-validate": "^2.2.10",
