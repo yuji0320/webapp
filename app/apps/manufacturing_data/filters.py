@@ -26,7 +26,7 @@ class JobOrderFilter(filters.FilterSet):
     @staticmethod
     def open_po_filter(queryset, name, value):
         return queryset.all().filter(
-            Q(bill_date__isnull=True) | Q(bill_date__gte=value)
+            Q(bill_date__isnull=True) | Q(bill_date__gt=value)
         )
 
     class Meta:
