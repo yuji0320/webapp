@@ -84,6 +84,7 @@ Vue.component('app-order-dialog', MakingOrderDialog);
 import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
 Vue.component('app-received-dialog', ReceivingProcessDialog);
 import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
+import vuetify from './plugins/vuetify';
 Vue.component('app-man-hour-dialog', ManHourDialog);
 
 Vue.use(VeeValidate);
@@ -109,5 +110,6 @@ Vue.filter('moneyDelemiter', function(value) {
 new Vue({
   router: Router,
   store: Store,
-  render: (h) => h(App),
+  vuetify,
+  render: (h) => h(App)
 }).$mount('#app');
