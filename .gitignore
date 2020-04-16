@@ -9,3 +9,5 @@ mysql/.DS_Store
 /app_frontend/dist
 app_frontend/.env.prod
 *.prod
+app_frontend/.env.dev.build
+/storage

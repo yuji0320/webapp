@@ -19,9 +19,9 @@ import moment from 'moment';
 import VeeValidate from 'vee-validate';
 
 // Bootstrap Vueのインポート
-import BootstrapVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+// import BootstrapVue from 'bootstrap-vue';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 // v-moneyのインポート
 import money from 'v-money';
@@ -90,7 +90,7 @@ Vue.component('app-man-hour-dialog', ManHourDialog);
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 Vue.mixin(dateFormetMixin);
-Vue.use(BootstrapVue);
+// Vue.use(BootstrapVue);
 
 // 開発ステータスの定義
 Vue.config.productionTip = false;

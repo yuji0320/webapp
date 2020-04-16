@@ -10,8 +10,8 @@ dev_app:
     - dev_redis:redis
   volumes:
     - ./app:/usr/src/app
-  # command: ./manage.py runserver 0.0.0.0:8000
-  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
+  command: ./manage.py runserver 0.0.0.0:8000
+  # command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
 
 dev_app_frontend:
   build: ./app_frontend
@@ -22,8 +22,8 @@ dev_app_frontend:
   tty: true
   volumes:
     - ./app_frontend:/usr/src/app_frontend
-  command: bash -c "npm run serve && vue ui --port 9100 --host 0.0.0.0"
-  # command: npm run serve
+  # command: bash -c "npm run serve && vue ui --port 9100 --host 0.0.0.0"
+  command: npm run serve
 
 dev_nginx:
   build: ./nginx
