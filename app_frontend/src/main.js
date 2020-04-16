@@ -55,7 +55,7 @@ import SearchBar from '@/components/Module/SearchBar.vue';
 Vue.component('app-search-bar', SearchBar);
 import CardTable from '@/components/Module/CardTable.vue';
 Vue.component('app-card-table', CardTable);
-import Card from '@/components/Module/Card.vue';
+import Card from '@/components/Module/Cards/Card.vue';
 Vue.component('app-card', Card);
 import DataTable from '@/components/Module/DataTable.vue';
 Vue.component('app-data-table', DataTable);

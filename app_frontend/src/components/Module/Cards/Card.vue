@@ -1,7 +1,7 @@
 <template>
-  <v-card>
+  <v-card class="ma-2">
     <!-- Cardヘッダー -->
-    <v-toolbar card>
+    <v-app-bar flat>
       <slot name="card-header-icon"></slot>
       <!-- <v-icon>list</v-icon> -->
       <v-toolbar-title class="font-weight-light">
@@ -14,7 +14,7 @@
       <slot name="card-dialog"></slot>
       <!-- ボタン挿入 -->
       <slot name="card-header-button"></slot>
-    </v-toolbar>
+    </v-app-bar>
 
     <!-- Cardタイトル -->
     <v-card-title v-show="!noSearchBar">

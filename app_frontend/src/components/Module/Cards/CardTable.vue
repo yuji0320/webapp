@@ -1,5 +1,6 @@
 <template>
   <v-card class="ma-2">
+    <!-- Cardヘッダー -->
     <v-app-bar flat>
       <!-- ヘッダー表示挿入 -->
       <slot name="card-header-icon"></slot>

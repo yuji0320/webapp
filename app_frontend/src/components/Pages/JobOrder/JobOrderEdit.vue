@@ -1,39 +1,39 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <div class="pa-2">
+    <app-card noSearchBar="true">
+      <span slot="card-header-icon"><v-icon large left>work</v-icon></span>
+      <span slot="card-header-title">
+        Job order
+        <span v-if="jobOrderStatus.isEditing">Edit</span>
+        <span v-else>Create</span>
+      </span>
 
-    <v-card>
-      <v-toolbar card>
-        <v-icon>work</v-icon>
-        <v-toolbar-title class="font-weight-light">
-          Job Order
-          <span v-if="jobOrderStatus.isEditing">Edit</span>
-          <span v-else>Create</span>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <!-- 一覧へ戻る -->
-        <v-btn @click="backToList">
+      <!-- 戻るボタン -->
+      <span slot="card-header-buck-button">
+        <v-btn @click="backToList" class="me-2">
           <v-icon>reply</v-icon>
           Back to List
         </v-btn>
+      </span>    
+      <!-- 拡張ボタン -->
+      <span slot="card-header-buck-button">
         <!-- 詳細閲覧ボタン -->
         <v-btn
           fab
           small
           @click="viewDetail"
           v-show="jobOrderStatus.isEditing"
+          class="me-2"
         >
           <v-icon>visibility</v-icon>
         </v-btn>
-      </v-toolbar>
+      </span>
 
-      <v-card-text>
+      <span slot="card-content">
         <v-form @submit.prevent="submitForm" id="submitJobOrder" ref="form" v-model="valid" lazy-validation>
-          <v-layout wrap>
+          <v-row no-gutters>
             <!-- エラー表示 -->
-            <v-flex xs12>
+            <v-col class="ps-2" cols="12">
               <v-alert 
                 value="true"
                 type="error"
@@ -46,17 +46,17 @@
                   {{ error }}
                 </li>
               </v-alert>
-            </v-flex>
+            </v-col>
             <!-- 工事番号 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <v-text-field 
                 label="Manfacturing Number*"
                 v-model="jobOrder.mfgNo"
                 :error-messages="responseError.mfgNo"
               ></v-text-field>
-            </v-flex>
+            </v-col>
             <!-- 作業指図書作成者 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-incremental-model-search
               label="Publisher*"
               orderBy="ruby"
@@ -64,9 +64,9 @@
               searchType="staff"
               :errorMessages="responseError.publisher"
               ></app-incremental-model-search>
-            </v-flex>
+            </v-col>
             <!-- 設計者 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-incremental-model-search
               label="Designer"
               orderBy="ruby"
@@ -74,17 +74,17 @@
               searchType="staff"
               :errorMessages="responseError.designer"
               ></app-incremental-model-search>
-            </v-flex>
+            </v-col>
             <!-- 製品名 -->
-            <v-flex xs12>
+            <v-col class="ps-2" cols="12">
               <v-text-field 
                 label="Product Name*"
                 v-model="jobOrder.name"
                 :error-messages="responseError.name"
               ></v-text-field>
-            </v-flex>
+            </v-col>
             <!-- 取引先 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-incremental-model-search
               label="Customer"
               orderBy="name"
@@ -94,9 +94,9 @@
               :errorMessages="responseError.customer"
               :required="rules"
               ></app-incremental-model-search>
-            </v-flex>
+            </v-col>
             <!-- 納入先 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-incremental-model-search
               label="Delivery Destination"
               orderBy="name"
@@ -106,52 +106,52 @@
               :errorMessages="responseError.deliveryDestination"
               :required="rules"
               ></app-incremental-model-search>
-            </v-flex>
-            <v-flex xs12 sm12 md4></v-flex>
+            </v-col>
+            <v-col class="ps-2" cols="12" sm="6" md="4"></v-col>
             <!-- 受注日 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-input-date 
                 label="Order Date"
                 v-model="jobOrder.orderDate"
                 :errorMessages="responseError.orderDate"
               ></app-input-date >
-            </v-flex>
+            </v-col>
             <!-- 納入日 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-input-date 
                 label="Delivery Date"
                 v-model="jobOrder.deliveryDate"
                 :errorMessages="responseError.deliveryDate"
               ></app-input-date >
-            </v-flex>
+            </v-col>
             <!-- 工事完了日 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-input-date 
                 label="Completion Date"
                 v-model="jobOrder.completionDate"
                 :errorMessages="responseError.completionDate"
               ></app-input-date >
-            </v-flex>
+            </v-col>
             <!-- 請求日 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-input-date 
                 label="Bill Date"
                 v-model="jobOrder.billDate"
                 :errorMessages="responseError.billDate"
               ></app-input-date >
-            </v-flex>
-            <v-flex xs12 sm12 md8></v-flex>
+            </v-col>
+            <v-col class="ps-2" cols="12" sm="12" md="8"></v-col>
             <!-- 受注金額 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <v-text-field 
                 label="Order Price*"
                 v-model="jobOrder.orderPrice"
                 :error-messages="responseError.orderPrice"
                 class="right-input"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 受注通貨 -->
-            <v-flex xs12 sm6 md4>
+            <v-col class="ps-2" cols="12" sm="6" md="4">
               <app-incremental-model-search
               label="Order Currency"
               orderBy="id"
@@ -159,9 +159,9 @@
               searchType="currency"
               :errorMessages="responseError.orderCurrency"
               ></app-incremental-model-search>
-            </v-flex>
+            </v-col>
             <!-- 受注レート -->
-            <v-flex xs12 sm4 md2>
+            <v-col class="ps-2" cols="12" sm="4" md="2">
               <v-text-field 
                 label="Order Rate"
                 v-model="jobOrder.orderRate"
@@ -171,9 +171,9 @@
                 :persistent-hint="true"
                 class="right-input"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 税率 -->
-            <v-flex xs12 sm4 md2>
+            <v-col class="ps-2" cols="12" sm="4" md="2">
               <v-text-field 
                 label="Tax Percent"
                 v-model="jobOrder.taxPercent"
@@ -181,28 +181,28 @@
                 class="right-input"
                 suffix="%"
               ></v-text-field >
-            </v-flex>   
+            </v-col>   
             <!-- メモ -->
-            <v-flex xs12>
+            <v-col class="ps-2" cols="12">
               <v-textarea
                 label="Notes"
                 v-model="jobOrder.notes"
                 :error-messages="responseError.notes"
               ></v-textarea>
-            </v-flex>
+            </v-col>
             <!-- 製品名 -->
-            <v-flex xs12>
+            <v-col class="ps-2" cols="12">
               <v-text-field 
                 label="Related Party MFG No"
                 v-model="jobOrder.relatedPartyMfgNo"
                 :error-messages="responseError.relatedPartyMfgNo"
               ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
+            </v-col>
+            <v-col class="ps-2" cols="12">
               <h3>Direct Cost Budget</h3>
-            </v-flex>
+            </v-col>
             <!-- 市販部品予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Commercial Parts Budget"
                 v-model="jobOrder.commercialPartsBudget"
@@ -210,9 +210,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>   
+            </v-col>   
             <!-- 電気部品予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Electrical Parts Budget"
                 v-model="jobOrder.electricalPartsBudget"
@@ -220,9 +220,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>   
+            </v-col>   
             <!-- 加工部品予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Processed Parts Budget"
                 v-model="jobOrder.processedPartsBudget"
@@ -230,9 +230,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 外注機構設計予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Outsourcing Mechanical Design Budget"
                 v-model="jobOrder.outsourcingMechanicalDesignBudget"
@@ -240,9 +240,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 外注電気設計予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Outsourcing Electrical DesignBudget"
                 v-model="jobOrder.outsourcingElectricalDesignBudget"
@@ -250,9 +250,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 外注その他予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Outsourcing Other Budget"
                 v-model="jobOrder.outsourcingOtherBudget"
@@ -260,9 +260,9 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 運送費予算 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Shipping Cost Budget"
                 v-model="jobOrder.shippingCostBudget"
@@ -270,12 +270,12 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
-            <v-flex xs12>
+            </v-col>
+            <v-col class="ps-2" cols="12">
               <h3>Budget Work Time</h3>
-            </v-flex>
+            </v-col>
             <!-- 機械設計予算時間 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Mechanical Design Budget Hours"
                 v-model="jobOrder.mechanicalDesignBudgetHours"
@@ -283,9 +283,9 @@
                 class="right-input"
                 suffix="Hours"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 電気設計予算時間 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Electrical Design Budget Hours"
                 v-model="jobOrder.electricalDesignBudgetHours"
@@ -293,9 +293,9 @@
                 class="right-input"
                 suffix="Hours"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 組み立て調整予算時間 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Assembly Budget Hours"
                 v-model="jobOrder.assemblyBudgetHours"
@@ -303,9 +303,9 @@
                 class="right-input"
                 suffix="Hours"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 電気工事予算時間 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Electrical Wiring Budget Hours"
                 v-model="jobOrder.electricalWiringBudgetHours"
@@ -313,9 +313,9 @@
                 class="right-input"
                 suffix="Hours"
               ></v-text-field >
-            </v-flex>
+            </v-col>
             <!-- 現地調整予算時間 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Installation BudgetHours"
                 v-model="jobOrder.installationBudgetHours"
@@ -323,12 +323,12 @@
                 class="right-input"
                 suffix="Hours"
               ></v-text-field >
-            </v-flex>
-            <v-flex xs12>
+            </v-col>
+            <v-col class="ps-2" cols="12">
               <h3>Shipping Cost Result</h3>
-            </v-flex>
+            </v-col>
             <!-- 運送費実績 -->
-            <v-flex xs12 sm4 md3 xl2>
+            <v-col class="ps-2" cols="12" sm="4" md="3" lg="2">
               <v-text-field 
                 label="Shipping Cost Result"
                 v-model="jobOrder.shippingCostResult"
@@ -336,31 +336,25 @@
                 class="right-input"
                 :suffix="loginUserData.defaultCurrencyCode"
               ></v-text-field >
-            </v-flex>
-            <v-flex xs12 class="text-xs-right">
+            </v-col>
+            <v-col class="ps-2 text-right" cols="12">
               <v-btn 
+                outlined
                 color="darken-1"
+                class="me-2"
                 @click="clearJobOrder()"
-                outline
               >Clear</v-btn>
               <v-btn 
+                outlined
                 color="blue darken-1"
                 @click="submitForm()"
-                outline
               >Save</v-btn>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-form>
-      </v-card-text>
-
-      <!-- Cardフッター -->
-      <v-footer
-        card
-        height="auto"
-      >
-      </v-footer>
-    </v-card>
-  </v-container>
+      </span>
+    </app-card>
+  </div>
 </template>
 
 <script>

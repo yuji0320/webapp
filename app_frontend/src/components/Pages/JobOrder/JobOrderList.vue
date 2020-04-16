@@ -92,7 +92,7 @@
           <!-- 詳細検索フォーム -->
           <!-- <span slot="search-data-content-sub">
             <v-row no-gutters> 
-              
+
             </v-row>
           </span> -->
         </app-search-toolbar>
@@ -179,7 +179,7 @@ export default {
       this.$router.push({ name: "JobOrderCreate" });
     },
     viewJobOrder(val) {
-      // console.log(val.id);
+      // console.log(val);
       this.setMfgNo(val.id);
       this.setJobOrder(val);
       this.$router.push({ name: "JobOrderDetail" });
