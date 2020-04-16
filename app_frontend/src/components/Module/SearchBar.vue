@@ -37,8 +37,7 @@ export default {
         page: 1,
         // 絞り込み検索初期値
         incremental: {}
-      },
-      maxPage: 2
+      }
     };
   },
   props: {

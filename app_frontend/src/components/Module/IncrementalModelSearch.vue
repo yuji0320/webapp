@@ -1,6 +1,6 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs6 sm8 xl9>
+  <!-- <v-layout row wrap>
+    <v-flex xs6 sm8 xl9> -->
       <v-autocomplete
         v-model="model"
         :items="searchItems"
@@ -13,8 +13,21 @@
         :error-messages="errorMessages"
         :disabled="disabled"
         :rules="required"
-      ></v-autocomplete>
-    </v-flex>
+        class="pl-2"
+      >
+        <!-- Clearアイコン -->
+        <template v-slot:append-outer>
+          <v-icon
+            @click="clearItem"
+            :disabled="disabled"
+            v-show="!hideClear"
+            class="pr-2"
+          >
+            clear
+          </v-icon>
+        </template>
+      </v-autocomplete>
+    <!-- </v-flex>
     <v-flex class="pt-3" xs6 sm4 xl3>
       <v-btn
         @click="clearItem"
@@ -22,7 +35,7 @@
         v-show="!hideClear"
       >Clear</v-btn>
     </v-flex>
-  </v-layout>
+  </v-layout> -->
 </template>
 
 <script>
@@ -59,6 +72,12 @@ export default {
     required: { required: false },    
     hideClear: { required: false }
   },
+  // watch: {
+  //   value: function (val) {
+  //     console.log("test");
+  //     this.model = "";
+  //   },
+  // },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes", "expenseCategories"]),
