@@ -1,12 +1,8 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <div class="pa-2">
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
-    <!-- カード形式リストコンポーネント -->
     <app-card-table
       :headers="headers"
       :items="jobOrders.results"
@@ -15,107 +11,129 @@
       @view-item="viewJobOrder"
       @edit-item="editJobOrder"
       @delete-item="deleteJobOrderData"
+      @double-click="viewJobOrder"
     >
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-icon"><v-icon>work</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>work</v-icon></span>
       <span slot="card-header-title">Job Order</span>
-      <!-- 新規作成ボタン -->
       <span slot="card-header-button">
         <v-layout row wrap>
           <v-btn
-          color="primary"
-          class="mb-2"
-          dark
-          @click="createJobOrder()"
+            color="primary"
+            class="ma-2"
+            dark
+            @click="createJobOrder()"
           >New Item</v-btn>
-
-          <!-- 工事完了済み、売上未計上の部品の一括更新 -->
-          <!-- <span slot="card-header-button">
-            <bulk-bill-date></bulk-bill-date>
-          </span> -->
-
-          <!-- エクセルアップロード -->
-          <!-- <v-btn
-            fab
-            small
-            @click="upload"
-          >
-            <v-icon>cloud_upload</v-icon>
-          </v-btn> -->
         </v-layout>
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <v-layout row wrap>
-          <app-search-bar
-            :length="jobOrders.pages"
-            :count="jobOrders.count"
-            :orderBy="orderBy"
-            :incremental="incremental"
-            :params="params"
-            @search-list="getList"
-          ></app-search-bar>
-
-          <!-- excelダウンロード -->
-          <!-- <app-excel-download
-            fileName="job_order"
-            v-model="jobOrders.results"
-          ></app-excel-download> -->
-
-        </v-layout>
+        <app-search-toolbar
+          :length="jobOrders.pages"
+          :count="jobOrders.count"
+          :orderBy="orderBy"
+          :params="params"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
+        >
+          <!-- 絞り込み検索 -->
+          <!-- <span slot="search-data-header-close">
+            Header close text
+          </span> -->
+          <!-- <span slot="search-data-header-open">
+            Header open text
+          </span> -->
+          <!-- 絞り込み内容 -->
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Manfacturing Number"
+                  v-model="refineParams.mfg_no"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Customer"
+                orderBy="name"
+                v-model="refineParams.customer"
+                searchType="partner"
+                filter="customer"
+                :errorMessages="responseError.customer"
+                ref="customer"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Delivery Destination"
+                orderBy="name"
+                v-model="refineParams.delivery_destination"
+                searchType="partner"
+                filter="delivery"
+                :errorMessages="responseError.delivery_destination"
+                ref="delivery"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Product Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </span>
+          <!-- 詳細検索フォーム -->
+          <!-- <span slot="search-data-content-sub">
+            <v-row no-gutters> 
+              
+            </v-row>
+          </span> -->
+        </app-search-toolbar>
       </div>
 
     </app-card-table>
 
-  </v-container>
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import JobOrderBulkBillDate from "./JobOrderBulkBillDate.vue"
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 
 export default {
   title: "Job Order",
   name: "JobOrder",
   components: {
-    "bulk-bill-date": JobOrderBulkBillDate
+    "bulk-bill-date": JobOrderBulkBillDate,
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar
   },
   data() {
     return {
       orderBy: "-mfg_no",
       headers: [
-        { text: "MFG No.", value: "mfgNo" },
-        { text: "Product name", value: "name" },
-        { text: "Customer", value: "customerData", nest: "abbr" },
-        {
-          text: "Delivery",
-          value: "deliveryDestinationData",
-          nest: "abbr"
-        },
-        { text: "Order Date", value: "orderDate" },
-        { text: "Delivery Date", value: "deliveryDate" },
-        { text: "Completion Date", value: "completionDate" },
-        {
-          text: "Order price",
-          value: "defaultCurrencyOrderAmount",
-          class: "text-xs-right"
-        },
-        { text: "Action", value: "action" }
+        { text: "MFG No.", value: "mfgNo"},
+        { text: "Product name", value: "name"},
+        { text: "Customer", value: "customerData", nest: "abbr"},
+        { text: "Delivery", value: "deliveryDestinationData", nest: "abbr"},
+        { text: "Order Date", value: "orderDate"},
+        { text: "Delivery Date", value: "deliveryDate"},
+        { text: "Completion Date", value: "completionDate"},
+        { text: "Order price", value: "defaultCurrencyOrderAmount", class:"text-xs-right"},
+        { text: "Action", value: "action"}
       ],
       // 工事完了時色変更
       completeColumn: "completionDate",
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "MFG No", value: "mfg_no" },
-          { label: "Related Party MFG No", value: "related_party_mfg_no" },
-          { label: "Product Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams: {}
     };
   },
   computed: {
@@ -145,25 +163,28 @@ export default {
     ]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
-      // console.log(this.$store.state.systemConfig.loading);
       await this.getJobOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
-      // console.log(this.$store.state.systemConfig.loading);
+      // console.log(data);
+    },
+    clearParams() {
+      this.refineParams = {};
+      this.$refs.customer.clearItem();
+      this.$refs.delivery.clearItem();
+      // console.log(this.refineParams);
     },
     createJobOrder() {
-      // console.log("create new");
       this.setJobOrder({});
       this.createNew();
       this.$router.push({ name: "JobOrderCreate" });
     },
     viewJobOrder(val) {
+      // console.log(val.id);
       this.setMfgNo(val.id);
       this.setJobOrder(val);
-      // console.log(val.id);
       this.$router.push({ name: "JobOrderDetail" });
     },
     editJobOrder(val) {
-      // console.log("edit "+val.name);
       this.setMfgNo(val.id);
       this.setJobOrder(val);
       this.isEdit();
@@ -194,6 +215,9 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.jobOrders);
+    this.getList({params: this.params});
+    this.$store.commit("systemConfig/setLoading", false);
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
     this.headers[7].text = "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
   }

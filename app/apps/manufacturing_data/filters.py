@@ -32,7 +32,7 @@ class JobOrderFilter(filters.FilterSet):
     class Meta:
         model = JobOrder
         fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', 'bill_date',
-                  'search_open_po', 'delivery_date_isnull', 'order_date', ]
+                  'search_open_po', 'delivery_date_isnull', 'order_date', 'customer', 'delivery_destination', ]
 
     order_by = filters.OrderingFilter(
         fields=(
