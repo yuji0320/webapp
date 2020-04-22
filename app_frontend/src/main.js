@@ -51,16 +51,18 @@ import ExcelUpload from '@/components/Module/ExcelUpload.vue';
 Vue.component('app-excel-upload', ExcelUpload);
 import ExcelDownload from '@/components/Module/ExcelDownload.vue';
 Vue.component('app-excel-download', ExcelDownload);
-import SearchBar from '@/components/Module/SearchBar.vue';
-Vue.component('app-search-bar', SearchBar);
-import CardTable from '@/components/Module/CardTable.vue';
-Vue.component('app-card-table', CardTable);
+// import SearchToolbar from '@/components/Module/Search/SearchToolbar.vue';
+// Vue.component('app-search-toolbar', SearchToolbar);
+// import SearchBar from '@/components/Module/SearchBar.vue';
+// Vue.component('app-search-bar', SearchBar);
+// import CardTable from '@/components/Module/Cards/CardTable.vue';
+// Vue.component('app-card-table', CardTable);
 import Card from '@/components/Module/Cards/Card.vue';
 Vue.component('app-card', Card);
 import DataTable from '@/components/Module/DataTable.vue';
 Vue.component('app-data-table', DataTable);
-import Dialog from '@/components/Module/Dialog.vue';
-Vue.component('app-dialog', Dialog);
+// import Dialog from '@/components/Module/Dialog.vue';
+// Vue.component('app-dialog', Dialog);
 // 検索関係
 /* eslint-disable max-len */
 import IncrementalModelSearch from '@/components/Module/IncrementalModelSearch.vue';
