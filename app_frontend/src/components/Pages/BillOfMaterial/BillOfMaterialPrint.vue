@@ -2,18 +2,18 @@
   <v-container fluid grid-list-lg>
     <app-card no-search-bar="true">
 <!--       Cardヘッダー -->
-      <span slot="card-header-icon"><v-icon>print</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>print</v-icon></span>
       <span slot="card-header-title">{{ printStatus.cardTitle }}"{{ jobOrder.mfgNo }} - {{ jobOrder.name }}"</span>
 <!--       戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-        <v-btn @click="printSelected" color="primary" outline>
+        <v-btn @click="printSelected" color="primary" outlined class="ml-2">
           <v-icon>print</v-icon> Print Selected
         </v-btn>
-        <v-btn @click="printAll" color="primary">
+        <v-btn @click="printAll" color="primary" class="ml-2">
           <v-icon>print</v-icon> Print All
         </v-btn>
       </span>
@@ -34,15 +34,18 @@
 
 <!--        タブコンテンツ表示-->
         <br>
-        <app-data-table
+
+        <v-data-table
+          v-model="selected"
           :headers="headerData(tabs.isProcessedParts)"
           :items="partsData(tabs.refine)"
-          footer="true"
-          doNotChangeClass="true"
-          selectAll="true"
-          ref="data_table"
+          item-key="id"
+          show-select
+          class="elevation-1"
+          hide-default-footer
+          dense
         >
-        </app-data-table>
+        </v-data-table>
       </span>
     </app-card>
   </v-container>
@@ -64,12 +67,12 @@
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Amount", value: "amount", class: "text-xs-right" },
+        { text: "Amount", value: "amount", align: "end" },
         { text: "Delivery", value: "desiredDeliveryDate" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
-        { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
+        { text: "Manufacturer", value: "manufacturerAbbr"},
         { text: "Standard/Form", value: "standard" },
         { text: "Unit number", value: "unit_number" }
       ],
@@ -89,7 +92,8 @@
       dataForPDF: {
         page: 0,
         data: []
-      }
+      },
+      selected: []
     };
   },
   computed: {
@@ -164,7 +168,7 @@
     // プリント実行、データのアップデート
     // 選択印刷
     async printSelected() {
-      let selectedDataList = this.$refs.data_table.selected;
+      let selectedDataList = this.selected;
       this.dataForPDF.page = 1;
       this.dataForPDF.data = [];
       this.dataForPDF.data[0] = {

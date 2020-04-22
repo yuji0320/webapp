@@ -1,18 +1,11 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
-    <v-card>
-      <v-toolbar card>
-        <v-icon>list</v-icon>
-        <v-toolbar-title class="font-weight-light">
-          Bill of Material
-        </v-toolbar-title>
-      </v-toolbar>
+  <v-container fluid grid-list-lg>
+    <app-card>
+      <span slot="card-header-icon"><v-icon large left>list</v-icon></span>
+      <span slot="card-header-title">Bill of Material</span>
 
       <!-- 工事番号選択 -->
-      <v-card-title>
+      <span slot="search-bar">
         <app-incremental-model-search
           label="Job Order"
           orderBy="mfg_no"
@@ -21,70 +14,58 @@
           errorMessages=""
           @clear-item="clearJobOrderID"
         ></app-incremental-model-search>
-        
-      </v-card-title>
+      </span>
 
-      <v-card-text>
-        <v-layout row>
-          <v-flex 
+      <span slot="card-content">
+        <v-row>
+          <v-col 
             v-for="expense in expenseCategories.results"
             :key="expense.id"
-            xs6
+            cols="12" md="6"
           >
             <v-btn 
               large 
               block 
-              round
               color="primary"
               :disabled = "mfgNo === ''"
               @click="selectParts(expense.id)"
             >
               Add or Edit "{{ expense.categoryName }}"
             </v-btn>
-          </v-flex>
+          </v-col>
 
-          <v-flex xs12></v-flex>
+          <v-col cols="12"></v-col>
 
           <!-- 部品表印刷 -->
-          <v-flex xs6>
+          <v-col cols="12" md="6">
             <v-btn 
               large 
               block 
-              round
               color="success"
               :disabled = "mfgNo === ''"
               @click="printBillOfMaterials"
             >
-              <v-icon>print</v-icon>
+              <v-icon class="mr-2">print</v-icon>
               Print Bill of Material
             </v-btn>
-          </v-flex>
+          </v-col>
 
           <!-- 部品表際印刷 -->
-          <v-flex xs6>
+          <v-col xs6>
             <v-btn 
               large 
               block 
-              round
               color="success"
               :disabled = "mfgNo === ''"
               @click="reprintBillOfMaterials"
             >
-              <v-icon>print</v-icon>
+              <v-icon class="mr-2">print</v-icon>
               Rerint Bill of Material (ALL)
             </v-btn>
-          </v-flex>
-
-        </v-layout>
-
-      </v-card-text>
-      <!-- Cardフッター -->
-      <v-footer 
-        card
-        height="auto"
-      >
-      </v-footer>
-    </v-card>
+          </v-col>
+        </v-row>
+      </span>
+    </app-card>
   </v-container>
 </template>
 

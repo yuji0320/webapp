@@ -11,9 +11,9 @@
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
-      <v-layout wrap>
+      <v-row no-gutters>
         <!-- エラー表示 -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-alert 
             value="true"
             type="error"
@@ -26,50 +26,50 @@
               {{ error }}
             </li>
           </v-alert>
-        </v-flex>
+        </v-col>
         <!-- 部品表フォーム -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-text-field 
             label="Part Name*"
             v-model="billOfMaterial.name"
             :error-messages="responseError.name"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
 
         <!-- <template v-if="this.expenseCategory.isProcessedParts"> -->
         <!-- 図面番号 -->
-        <v-flex xs12 v-show="isProcessedParts">
+        <v-col cols="12" v-show="isProcessedParts">
           <v-text-field 
             label="Drawing Number"
             v-model="billOfMaterial.drawingNumber"
             :error-messages="responseError.drawingNumber"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 材質 -->
-        <v-flex xs12 md6 v-show="isProcessedParts">
+        <v-col cols="12" md="6" v-show="isProcessedParts" class="pr-2">
           <v-text-field 
             label="Material"
             v-model="billOfMaterial.material"
             :error-messages="responseError.material"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 表面処理 -->
-        <v-flex xs12 md6 v-show="isProcessedParts">
+        <v-col cols="12" md="6" v-show="isProcessedParts">
           <v-text-field 
             label="Surface treatment"
             v-model="billOfMaterial.surfaceTreatment"
             :error-messages="responseError.surfaceTreatment"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- </template> -->
 
         <!-- <template v-else> -->
           <!-- メーカー選択 -->
-          <v-flex xs12 v-show="!isProcessedParts">
+          <v-col cols="12" v-show="!isProcessedParts">
             <app-incremental-model-search
               label="Manufacturer"
               orderBy="name"
@@ -80,29 +80,29 @@
               ref="manufacturer"
               :disabled="editDisable"
             ></app-incremental-model-search>
-          </v-flex>
+          </v-col>
           <!-- 規格・寸法 -->
-          <v-flex xs12 md6 v-show="!isProcessedParts">
+          <v-col cols="12" md="6" v-show="!isProcessedParts" class="pr-2">
             <v-text-field 
               label="Standard/Form"
               v-model="billOfMaterial.standard"
               :error-messages="responseError.standard"
               :disabled="editDisable"
             ></v-text-field>
-          </v-flex>
+          </v-col>
           <!-- ユニット番号 -->
-          <v-flex xs12 md6 v-show="!isProcessedParts">
+          <v-col cols="12" md="6" v-show="!isProcessedParts">
             <v-text-field 
               label="Unit Number"
               v-model="billOfMaterial.unitNumber"
               :error-messages="responseError.unitNumber"
               :disabled="editDisable"
             ></v-text-field>
-          </v-flex>
+          </v-col>
         <!-- </template> -->
 
         <!-- 個数 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Amount"
             v-model="billOfMaterial.amount"
@@ -110,9 +110,9 @@
             :error-messages="responseError.amount"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 単位選択 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Unit Type"
             orderBy="number"
@@ -122,9 +122,9 @@
             ref="unitType"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 在庫充当個数 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" xs="4">
           <v-text-field 
             label="Stock Appropriation"
             v-model="billOfMaterial.stockAppropriation"
@@ -132,11 +132,11 @@
             :error-messages="responseError.stockAppropriation"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex> 
-        <v-flex xs12 md8>
-        </v-flex> 
+        </v-col> 
+        <v-col cols="12" md="8">
+        </v-col> 
         <!-- 金額 -->
-        <v-flex xs4>
+        <v-col cols="12" xs="4">
           <v-text-field 
             label="Unit Price"
             v-model="billOfMaterial.unitPrice"
@@ -144,9 +144,9 @@
             class="right-input"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 通貨 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
           label="Currency"
           orderBy="id"
@@ -156,9 +156,9 @@
           ref="currency"
           :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- レート -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Rate"
             v-model="billOfMaterial.rate"
@@ -169,27 +169,27 @@
             class="right-input"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 希望納期 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <app-input-date 
             label="Desired Delivery Date"
             v-model="billOfMaterial.desiredDeliveryDate"
             :errorMessages="responseError.desiredDeliveryDate"
             :disabled="editDisable"
           ></app-input-date >
-        </v-flex>       
+        </v-col>       
         <!-- 支給品Boolern -->
-        <v-flex xs12 md6>
+        <v-col cols="12" md="8">
           <v-checkbox
             label="is Customer Supplied"
             v-model="billOfMaterial.isCustomerSupplied"
             :errorMessages="responseError.isCustomerSupplied"
             :disabled="editDisable"
           ></v-checkbox>
-        </v-flex>
+        </v-col>
         <!-- 仕損費種別 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Failure"
             orderBy="category_number"
@@ -199,19 +199,19 @@
             ref="failure"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- メモ -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-textarea
             label="Notes"
             v-model="billOfMaterial.notes"
             :error-messages="responseError.notes"
             :disabled="editDisable"
           ></v-textarea>
-        </v-flex>
+        </v-col>
 
         <!-- 部品種別選択 -->
-        <v-flex xs12>
+        <v-col cols="12">
           <app-incremental-model-search
             label="Parts Type"
             orderBy="category_number"
@@ -222,9 +222,9 @@
             :disabled="editDisable"
             hideClear="true"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
 
-      </v-layout>
+      </v-row>
     </span>
   </app-dialog>
 
@@ -232,11 +232,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   props: {
     hideButtons: { required: false },
     editDisable: { required: false },
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -279,6 +283,7 @@ export default {
     ]),
     // 頭出しフォームに対するデータ反映
     setIncremental(val) {
+      // console.log(val);
       // メーカーデータをセット
       if(!this.isProcessedParts) {
         this.$refs.manufacturer.setData(val.manufacturer);
@@ -349,6 +354,9 @@ export default {
         console.log(res);
       }
     }
+  },
+  mounted() {
+    this.$refs.manufacturer.clearItem();
   }
 }
 </script>

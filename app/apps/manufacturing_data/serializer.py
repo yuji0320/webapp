@@ -211,10 +211,10 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     total_default_currency_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     order_amount = serializers.SerializerMethodField()
-    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
     parts_detail = serializers.SerializerMethodField()
+    manufacturer_abbr = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -265,6 +265,14 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             parts_detail = obj.standard
         return parts_detail
 
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.manufacturer:
+            manufacturer_abbr = obj.manufacturer.abbr
+        return manufacturer_abbr
+
     class Meta:
         model = BillOfMaterial
         fields = (
@@ -299,10 +307,10 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'total_default_currency_price',
             'display_price',
             'order_amount',
-            'manufacturer_data',
             'mfg_no',
             'is_processed',
-            'parts_detail'
+            'parts_detail',
+            'manufacturer_abbr'
         )
 
 

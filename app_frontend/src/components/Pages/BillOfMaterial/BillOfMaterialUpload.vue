@@ -15,10 +15,6 @@
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>list</v-icon></span>
       <span slot="card-header-title">Bill of Material Excel Upload : {{ expenseCategory.categoryName }}</span>
-    
-      <span slot="card-body">
-        <!-- {{ userPartners }} -->
-      </span>
 
     </app-excel-upload>
   </v-container>
@@ -38,14 +34,14 @@ export default {
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Amount", value: "amount", class: "text-xs-right", money: true },
+        { text: "Amount", value: "amount", class: "text-right", money: true },
         { text: "Unit", value: "unitType" },
-        { text: "Stock app", value: "stockAppropriation", class: "text-xs-right", money: true },
+        { text: "Stock app", value: "stockAppropriation", class: "text-right", money: true },
         { text: "Currency", value: "currencyCode" },
         { text: "rate", value: "rate", class: "text-xs-right" },
-        { text: "Unit Price", value: "unitPrice", class: "text-xs-right", money: true },
+        { text: "Unit Price", value: "unitPrice", class: "text-right", money: true },
         { text: "Delivery", value: "desiredDeliveryDate" },
-        { text: "Action", value: "action", class: "text-xs-center" }
+        { text: "Action", value: "action", class: "text-center" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [

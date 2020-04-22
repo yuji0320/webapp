@@ -36,7 +36,6 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
     queryset = (
         BillOfMaterial.objects.select_related(
             'company', 'job_order', 'type', 'manufacturer', 'unit', 'currency', 'failure',
-            'job_order__customer', 'job_order__delivery_destination',
         )
     )
     filter_class = BillOfMaterialFilter

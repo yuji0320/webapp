@@ -2,16 +2,12 @@
   <v-card class="ma-2">
     <!-- Cardヘッダー -->
     <v-app-bar flat>
+      <!-- ヘッダー表示挿入 -->
       <slot name="card-header-icon"></slot>
-      <!-- <v-icon>list</v-icon> -->
-      <v-toolbar-title class="font-weight-light">
+      <v-toolbar-title class="font-weight-light title">
         <slot name="card-header-title"></slot>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- 戻るボタン挿入 -->
-      <slot name="card-header-buck-button"></slot>
-      <!-- モーダルの挿入 -->
-      <slot name="card-dialog"></slot>
       <!-- ボタン挿入 -->
       <slot name="card-header-button"></slot>
     </v-app-bar>

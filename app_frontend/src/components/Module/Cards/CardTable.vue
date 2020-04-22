@@ -12,9 +12,8 @@
       <slot name="card-header-button" class=""></slot>
     </v-app-bar>
 
-
+    <!-- Cardタイトル -->
     <v-card>
-
       <slot name="search-bar"></slot>
       <!-- Cardタイトル -->
       <!-- <v-card-title>
@@ -42,7 +41,7 @@
             'dataList': true,
             'printed': item.item.isPrinted
             }"
-            @dblclick="doubleClick(item)"
+            @dblclick="doubleClick(item.item)"
           >
             <td 
               v-for="(header, index) in headers"

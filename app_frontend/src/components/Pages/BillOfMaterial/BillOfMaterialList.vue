@@ -10,55 +10,101 @@
       :viewIcon="false"
       @edit-item="editBillOfMaterial"
       @delete-item="deleteBillOfMaterialData"
+      @double-click="editBillOfMaterial"
     >
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-icon"><v-icon>list</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>list</v-icon></span>
       <span slot="card-header-title">BOM - {{ expenseCategory.categoryName }} : "{{ jobOrder.mfgNo }} - {{ jobOrder.name }}" </span>
 
-      <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- ダイアログ関係スロット -->
-      <span slot="card-dialog">
         <!-- 部品表登録編集ダイアログコンポーネント -->
         <app-bom-dialog @response-function="responseFunction" ref="bom_dialog"></app-bom-dialog>
-      </span>
 
-      <span slot="card-header-button">
         <!-- エクセルアップロード -->
-        <v-btn fab small @click="upload">
+        <v-btn fab small @click="upload" class="ml-2">
           <v-icon>cloud_upload</v-icon>
         </v-btn>
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <v-layout row wrap>
-          <app-search-bar
-            :length="billOfMaterials.pages"
-            :count="billOfMaterials.count"
-            :orderBy="orderBy"
-            :incremental="incremental"
-            :params="params"
-            @search-list="getList"
-          ></app-search-bar>
-        </v-layout>
+        <app-search-toolbar
+          :length="billOfMaterials.pages"
+          :count="billOfMaterials.count"
+          :orderBy="orderBy"
+          :params="params"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
+        >
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Parts Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!expenseCategory.isProcessedParts">
+                <app-incremental-model-search
+                label="Manufacturaer"
+                orderBy="name"
+                v-model="refineParams.manufacturer"
+                searchType="partner"
+                filter="manufacturer"
+                :errorMessages="responseError.manufacturer"
+                ref="manufacturer"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!expenseCategory.isProcessedParts">
+                <v-text-field 
+                  label="Standard/Form"
+                  v-model="refineParams.standard"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 加工部品の場合 -->
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="expenseCategory.isProcessedParts">
+                <v-text-field 
+                  label="Drawing Number"
+                  v-model="refineParams.drawing_number"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+
+
+
+            </v-row>
+          </span>
+        </app-search-toolbar>
       </div>
+
+
     </app-card-table>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 
 export default {
   title: "Bill of Material List",
   name: "BillOfMaterialList",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar
+  },
   data() {
     return {
       orderBy: 'manufacturer__name,standard,drawing_number',
@@ -67,16 +113,16 @@ export default {
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Amount", value: "amount", class: "text-xs-right" },
-        { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
-        { text: "Delivery", value: "desiredDeliveryDate" },
-        { text: "Action", value: "action", class: "text-xs-center" }
+        { text: "Amount", value: "amount", class: "text-right" },
+        { text: "Unit Price", value: "displayPrice", class: "text-right" },
+        { text: "Delivery(Preferred)", value: "desiredDeliveryDate", class: "text-center" },
+        { text: "Action", value: "action", class: "text-center" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
-        { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
+        { text: "Manufacturer", value: "manufacturerAbbr"},
         { text: "Standard/Form", value: "standard" },
-        { text: "Unit number", value: "unit_number" }
+        { text: "Unit number", value: "unitNumber" }
       ],
       // 加工部品テーブルヘッダー
       processedHeaders: [
@@ -84,16 +130,7 @@ export default {
         { text: "Surface treatment", value: "surfaceTreatment" },
         { text: "Material", value: "material" }
       ],
-      // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Part Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams: {}
     };
   },
   computed: {
@@ -139,6 +176,10 @@ export default {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    clearParams() {
+      this.refineParams = {};
+      console.log("test");
     },
     // 編集データ設定
     editBillOfMaterial(val) {
@@ -188,9 +229,9 @@ export default {
       this.setBillOfMaterials("");
       this.getExpenseCategory(this.partsType);
       this.getJobOrder(this.jobOrderID);
+      this.getList({params: this.params});
     }
-  },
-  mounted() {}
+  }
 }
 </script>
 
