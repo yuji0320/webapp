@@ -36,7 +36,7 @@
 
 <script>
 import { mapState } from "vuex";
-import Pagination from "@/components/Module/Pagination.vue";
+import Pagination from "@/components/Module/Search/Pagination.vue";
 import SearchData from "@/components/Module/Search/SearchData.vue";
 
 export default {
