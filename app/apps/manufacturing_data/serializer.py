@@ -17,12 +17,15 @@ class DirectCostBudgetSerializer(serializers.ModelSerializer):
 class JobOrderSerializer(serializers.ModelSerializer):
     default_currency_order_amount = serializers.SerializerMethodField()
     costs = serializers.SerializerMethodField()
-    publisher_data = UserStaffSerializer(source='publisher', read_only=True)
-    designer_data = UserStaffSerializer(source='designer', read_only=True)
-    customer_data = UserPartnerSerializer(source='customer', read_only=True)
-    delivery_destination_data = UserPartnerSerializer(source='delivery_destination', read_only=True)
-    order_currency_data = SystemCurrencySerializer(source='order_currency', read_only=True)
     incremental_field = serializers.SerializerMethodField()
+    customer_abbr = serializers.SerializerMethodField()
+    customer_name = serializers.SerializerMethodField()
+    delivery_destination_abbr = serializers.SerializerMethodField()
+    delivery_destination_name = serializers.SerializerMethodField()
+    order_currency_code = serializers.SerializerMethodField()
+    order_currency_display = serializers.SerializerMethodField()
+    publisher_name = serializers.SerializerMethodField()
+    designer_name = serializers.SerializerMethodField()
 
     # デフォルト通貨での受注価格計算
     @staticmethod
@@ -97,6 +100,58 @@ class JobOrderSerializer(serializers.ModelSerializer):
         search_field = str(obj.mfg_no) + " : " + obj.name
         return search_field
 
+    # 取引先略称
+    @staticmethod
+    def get_customer_abbr(obj):
+        abbr = obj.customer.abbr
+        return abbr
+
+    # 取引先名
+    @staticmethod
+    def get_customer_name(obj):
+        name = obj.customer.name
+        return name
+
+    # 納入先略称
+    @staticmethod
+    def get_delivery_destination_abbr(obj):
+        abbr = obj.delivery_destination.abbr
+        return abbr
+
+    # 納入先略称
+    @staticmethod
+    def get_delivery_destination_name(obj):
+        name = obj.delivery_destination.name
+        return name
+
+    # 取引通貨記号
+    @staticmethod
+    def get_order_currency_code(obj):
+        code = obj.order_currency.code
+        return code
+
+    # 取引通貨記号
+    @staticmethod
+    def get_order_currency_display(obj):
+        display = obj.order_currency.display
+        return display
+
+    # 作成者名
+    @staticmethod
+    def get_publisher_name(obj):
+        publisher_name = ""
+        if obj.publisher:
+            publisher_name = str(obj.publisher.staff_number) + " : " + str(obj.publisher.full_name)
+        return publisher_name
+    
+    # 設計者名
+    @staticmethod
+    def get_designer_name(obj):
+        designer_name = ""
+        if obj.designer:
+            designer_name = str(obj.designer.staff_number) + " : " + str(obj.designer.full_name)
+        return designer_name
+
     class Meta:
         model = JobOrder
         fields = (
@@ -138,25 +193,16 @@ class JobOrderSerializer(serializers.ModelSerializer):
             # read_only under here
             'default_currency_order_amount',
             'costs',
-            'publisher_data',
-            'designer_data',
-            'customer_data',
-            'delivery_destination_data',
-            'order_currency_data',
             'incremental_field',
+            'customer_abbr',
+            'customer_name',
+            'delivery_destination_abbr',
+            'delivery_destination_name',
+            'order_currency_code',
+            'order_currency_display',
+            'publisher_name',
+            'designer_name',
         )
-
-        # read_only_fields = (
-        #     'default_currency_order_amount',
-        #     'costs',
-        #     'publisher_data',
-        #     'customer_data',
-        #     'delivery_destination_data',
-        # )
-        #
-        # def update(self, instance, validated_data):
-        #     instance.order_price = validated_data.get('order_price', instance.order_price).replace(',', '')
-        #     return instance
 
 
 # 部品表

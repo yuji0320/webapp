@@ -4,7 +4,7 @@
     <app-loading-dialog></app-loading-dialog>
 
     <app-card noSearchBar="true">
-      <span slot="card-header-icon"><v-icon>work</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>work</v-icon></span>
       <span slot="card-header-title">Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}</span>
 
       <!-- 戻るボタン -->
@@ -427,28 +427,28 @@ export default {
         // 作業指図書発行者
         jobOrder.publisherName = "";
         if(this.jobOrder.publisher){
-          jobOrder.publisherName = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"];
+          jobOrder.publisherName = this.jobOrder.publisherName;
         }
         // 設計者
         jobOrder.designerName = "";
         if(this.jobOrder.designer){
-          jobOrder.designerName = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"];
+          jobOrder.designerName = this.jobOrder.designerName;
         }
         // 作業指図書発行者
         jobOrder.customerName = "";
         if(this.jobOrder.customer){
-          jobOrder.customerName = this.jobOrder["customerData"].name;
+          jobOrder.customerName = this.jobOrder["customerName"];
         }
         // 作業指図書発行者
         jobOrder.deliveryDestinationName = "";
         if(this.jobOrder.deliveryDestination){
-          jobOrder.deliveryDestinationName = this.jobOrder["deliveryDestinationData"].name;
+          jobOrder.deliveryDestinationName = this.jobOrder["deliveryDestinationName"];
         }
         // 受注金額
-        jobOrder.orderPriceDisplay = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
-        jobOrder.orderCurrencyCodeDisplay = this.jobOrder.orderCurrencyData.code;
+        jobOrder.orderPriceDisplay = this.jobOrder["orderCurrencyDisplay"] + " " + this.moneyComma(this.jobOrder["orderPrice"]);
+        jobOrder.orderCurrencyCodeDisplay = this.jobOrder.orderCurrencyCode;
         // レート換算
-        jobOrder.orderRateDisplay = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
+        jobOrder.orderRateDisplay = "1" + this.jobOrder.orderCurrencyCode + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
         // 受注金額基準通貨
         jobOrder.orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
         // 税額

@@ -123,12 +123,12 @@ export default {
       headers: [
         { text: "MFG No.", value: "mfgNo"},
         { text: "Product name", value: "name"},
-        { text: "Customer", value: "customerData", nest: "abbr"},
-        { text: "Delivery", value: "deliveryDestinationData", nest: "abbr"},
+        { text: "Customer", value: "customerAbbr"},
+        { text: "Delivery", value: "deliveryDestinationAbbr"},
         { text: "Order Date", value: "orderDate"},
         { text: "Delivery Date", value: "deliveryDate"},
         { text: "Completion Date", value: "completionDate"},
-        { text: "Order price", value: "defaultCurrencyOrderAmount", class:"text-xs-right"},
+        { text: "Order price", value: "defaultCurrencyOrderAmount", class:"text-right"},
         { text: "Action", value: "action"}
       ],
       // 工事完了時色変更

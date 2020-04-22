@@ -56,25 +56,28 @@
           </template>
           <!-- true, false以外の場合はデータを表示 -->
           <template v-else>
+            {{ props.item[header.value] }}
+
+
             <!-- jsonがネストしている場合はデータを抽出 -->
-            <template v-if="header.nest">
+            <!-- <template v-if="header.nest">
               <template v-if="header.nestNest">
-                <template v-if="props.item[header.value]">
+                <template v-if="props.item[header.value]"> -->
                   <!-- nestがnullの場合は""を返す、存在する場合は孫データを送信 -->
-                  {{ (props.item[header.value][header.nest] === null) ? "" : props.item[header.value][header.nest][header.nestNest] }}
-                </template>
+                  <!-- {{ (props.item[header.value][header.nest] === null) ? "" : props.item[header.value][header.nest][header.nestNest] }} -->
+                <!-- </template>
               </template>
-              <template v-else>
+              <template v-else> -->
                 <!-- ネスト元データが存在する場合のみ表示 -->
-                <template v-if="props.item[header.value]">
+                <!-- <template v-if="props.item[header.value]">
                   {{ props.item[header.value][header.nest] }}
-                </template>
-              </template>
-            </template>
+                </template> -->
+              <!-- </template>
+            </template> -->
             <!-- ネストしていない場合はデータを表示 -->
-            <template v-else>
+            <!-- <template v-else>
               {{ props.item[header.value] }}
-            </template>
+            </template> -->
           </template>
 
           <!-- 最終行のみ挿入可能スロットを追加する -->

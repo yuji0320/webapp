@@ -18,20 +18,20 @@
 
     <!-- Cardタイトル -->
     <v-card-title v-show="!noSearchBar">
-      <v-layout row wrap>
-        <v-flex xs12>
+      <v-row>
+        <v-col cols="12">
           <!-- 検索バー表示スロット -->
           <slot name="search-bar"></slot>
-        </v-flex>
-        <v-flex xs12>
+        </v-col>
+        <!-- <v-col cols="12"> -->
           <!-- タブ表示用スロット -->
-          <slot name="card-tabs"></slot>
-        </v-flex>
-        <v-flex xs12>
+          <!-- <slot name="card-tabs"></slot> -->
+        <!-- </v-col> -->
+        <!-- <v-col cols="12"> -->
           <!-- テキスト挿入用スロット -->
-          <slot name="card-title-text"></slot>
-        </v-flex>
-      </v-layout>
+          <!-- <slot name="card-title-text"></slot> -->
+        <!-- </v-col> -->
+      </v-row>
     </v-card-title>
 
     <v-card-text>

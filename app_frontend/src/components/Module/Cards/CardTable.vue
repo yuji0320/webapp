@@ -23,7 +23,7 @@
 
       <!-- テーブル内容 -->
       <v-data-table
-        :items-per-page="items.length"
+        :items-per-page="50"
         :headers="headers"
         :items="items"
         :loading="$store.state.systemConfig.loading"
@@ -59,25 +59,10 @@
               </template>
               <!-- true, false以外の場合はデータを表示 -->
               <template v-else>
-                <!-- jsonがネストしている場合はデータを抽出 -->
-                <template v-if="header.nest">
-                  <template v-if="header.nestNest">
-                    <template v-if="item.item[header.value]">
-                      {{ item.item[header.value][header.nest][header.nestNest] }}
-                    </template>
-                  </template>
-                  <template v-else>
-                    <!-- ネスト元データが存在する場合のみ表示 -->
-                    <template v-if="item.item[header.value]">
-                      {{ item.item[header.value][header.nest] }}
-                    </template>
-                  </template>
-                </template>
-                <!-- ネストしていない場合はデータを表示 -->
-                <template v-else>
-                  {{ item.item[header.value] }}
-                </template>
+                <!-- データを表示 -->
+                {{ item.item[header.value] }}
               </template>
+
               <!-- 最終行のみ挿入可能スロットを追加する -->
               <div v-show="header.value === 'action'">
                 <v-layout justify-center>

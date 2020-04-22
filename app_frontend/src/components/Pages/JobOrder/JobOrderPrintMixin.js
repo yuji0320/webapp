@@ -14,9 +14,9 @@ export default {
       if(this.jobOrder.completionDate){ completionDate = this.jobOrder.completionDate;}
       let billDate = "";
       if(this.jobOrder.billDate){ billDate = this.jobOrder.billDate;}
-      let orderPriceText = "Order Price (" + this.jobOrder["orderCurrencyData"].code + ")";
+      let orderPriceText = "Order Price (" + this.jobOrder.orderCurrencyCode + ")";
       let orderPriceDefaultText = "Order Price (" + this.loginUserData["defaultCurrencyCode"] + ")";
-      let orderRate = "1" + this.jobOrder["orderCurrencyData"].code + " = " + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
+      let orderRate = "1" + this.jobOrder.orderCurrencyCode + " = " + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
 
       // 作業指図書詳細情報
       let JobOrderDetail = {}
