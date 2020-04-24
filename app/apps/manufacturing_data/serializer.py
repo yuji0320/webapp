@@ -321,16 +321,15 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     display_price_total = serializers.SerializerMethodField()
-    currency_data = SystemCurrencySerializer(source='currency', read_only=True)
-    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
-    supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     job_order = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
     # parts_detail = serializers.SerializerMethodField()
-    bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
-    bill_of_material_id = serializers.PrimaryKeyRelatedField(
-        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True, allow_null=True)
+    manufacturer_abbr = serializers.SerializerMethodField()
+    supplier_abbr = serializers.SerializerMethodField()
+    bom_price = serializers.SerializerMethodField()
+    currency_display = serializers.SerializerMethodField()
+
 
     # デフォルト通貨での合計価格計算
     @staticmethod
@@ -373,7 +372,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             mfg_no = ""
         return mfg_no
 
-        # 工事番号取得
+    # 工事番号取得
     @staticmethod
     def get_job_order(obj):
         if obj.bill_of_material:
@@ -404,6 +403,37 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     #         parts_detail = obj.standard
     #     return parts_detail
 
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.manufacturer:
+            manufacturer_abbr = obj.manufacturer.abbr
+        return manufacturer_abbr
+
+    # 仕入れ先名名取得
+    @staticmethod
+    def get_supplier_abbr(obj):
+        supplier_abbr = ""
+        if obj.supplier:
+            supplier_abbr = obj.supplier.abbr
+        return supplier_abbr
+
+    # 部品表金額取得
+    @staticmethod
+    def get_bom_price(obj):
+        if obj.bill_of_material:
+            bom_price = str(obj.bill_of_material.unit_price)
+        else:
+            bom_price = ""
+        return bom_price
+
+    # 取引通貨記号
+    @staticmethod
+    def get_currency_display(obj):
+        display = obj.currency.display
+        return display
+
     def validate(self, data):
         if data['number']:
             return data
@@ -421,7 +451,6 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'company',
             'number',
             'bill_of_material',
-            'bill_of_material_id',
             'name',
             'manufacturer',
             'standard',
@@ -449,22 +478,15 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'total_price',
             'display_price',
             'display_price_total',
-            'currency_data',
-            'manufacturer_data',
-            'supplier_data',
             'mfg_no',
             'job_order',
             'is_processed',
             # 'parts_detail'
+            'manufacturer_abbr',
+            'supplier_abbr',
+            'bom_price',
+            'currency_display',
         )
-
-    # def update(self, instance, validated_data):
-    #     bom = validated_data.bill_of_material
-
-    # def to_representation(self, instance):
-    #     response = super().to_representation(instance)
-    #     response['bill_of_material'] = BillOfMaterialSerializer(instance.bill_of_material).data
-    #     return response
 
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
