@@ -12,6 +12,7 @@ dev_app:
     - ./app:/usr/src/app
   command: ./manage.py runserver 0.0.0.0:8000
   # command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
+  # command: ./manage.py 
 
 dev_app_frontend:
   build: ./app_frontend
