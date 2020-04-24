@@ -216,8 +216,8 @@ export default {
   },
   mounted() {
     // console.log(this.jobOrders);
-    this.getList({params: this.params});
     this.$store.commit("systemConfig/setLoading", false);
+    this.getList({params: this.params});
     // ページ作成時に基準通貨の通貨コードをテーブルヘッダーに反映
     this.headers[7].text = "Order price" + " (" + this.loginUserData["defaultCurrencyCode"] + ")";
   }

@@ -56,15 +56,61 @@
           @search-list="getList"
           @clear-params="clearParams"
           :refineDetail="false"
-        ></app-search-toolbar>
+        >
           <span slot="search-data-content">
             <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Parts Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <app-incremental-model-search
+                label="Manufacturaer"
+                orderBy="name"
+                v-model="refineParams.manufacturer"
+                searchType="partner"
+                filter="manufacturer"
+                :errorMessages="responseError.manufacturer"
+                ref="manufacturer"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <v-text-field 
+                  label="Standard/Form"
+                  v-model="refineParams.standard"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 加工部品の場合 -->
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="isProcessed">
+                <v-text-field 
+                  label="Drawing Number"
+                  v-model="refineParams.drawing_number"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 仕入れ先 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Supplier"
+                orderBy="name"
+                v-model="refineParams.supplier"
+                searchType="partner"
+                filter="supplier"
+                :errorMessages="responseError.supplier"
+                ref="supplier"
+                ></app-incremental-model-search>
+              </v-col>
 
-
-
-              
             </v-row>
           </span>
+        </app-search-toolbar>
       </div>
 
       <!-- ダイアログ関係スロット -->
@@ -141,7 +187,7 @@ export default {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
     ...mapState("billOfMaterialAPI", ["billOfMaterial"]),
-    ...mapState("makingOrderAPI", [ "jobOrderID", "isProcessed", "makingOrders", "makingOrder"]),
+    ...mapState("makingOrderAPI", [ "responseError", "jobOrderID", "isProcessed", "makingOrders", "makingOrder"]),
     hasMFGNo() {
       return !!this.jobOrderID;
     },
@@ -200,8 +246,11 @@ export default {
       await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
+    // 絞り込み検索のクリア
     clearParams() {
-
+      this.refineParams = {};
+      this.$refs.manufacturer.clearItem();
+      this.$refs.supplier.clearItem();
     },
     // 発注ファイル編集
     editMakingOrder: function (val) {
@@ -220,7 +269,7 @@ export default {
       this.getList({ params: this.switchParams.params });
       // Snackbar表示
       this.showSnackbar(val.snack);
-      console.log(val.snack);
+      // console.log(val.snack);
     },
     // 発注ファイル削除
     async deleteMakingOrderData(val) {
@@ -248,6 +297,7 @@ export default {
     },
   },
   created() {
+    this.$store.commit("systemConfig/setLoading", false);
     this.setMakingOrders({});
     if(this.jobOrderID) {
       this.getJobOrder(this.jobOrderID);

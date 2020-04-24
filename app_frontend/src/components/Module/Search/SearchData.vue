@@ -84,7 +84,7 @@
 export default {
   data() {
     return {
-      panel: [0],
+      panel: [1],
       expand: false,
     };
   },

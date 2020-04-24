@@ -179,9 +179,11 @@ export default {
       await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
+    // 絞り込み検索のクリア
     clearParams() {
       this.refineParams = {};
-      console.log("test");
+      this.$refs.manufacturer.clearItem();
+      // console.log("test");
     },
     // 編集データ設定
     editBillOfMaterial(val) {
