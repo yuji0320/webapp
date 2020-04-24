@@ -12,12 +12,12 @@
       <!-- 読み込み中ダイアログコンポーネント -->
       <app-loading-dialog></app-loading-dialog>
 
-      <v-layout wrap>
+      <v-row>
         <!-- 仕入先選択 -->
-        <v-flex xs1>
+        <v-col cols="1">
           <v-checkbox v-model="supplierIsAble"></v-checkbox>
-        </v-flex>
-        <v-flex xs11>
+        </v-col>
+        <v-col cols="11">
           <app-incremental-model-search
             label="Supplier"
             orderBy="name"
@@ -27,25 +27,26 @@
             ref="supplier"
             :disabled="!supplierIsAble"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 希望納期 -->
-        <v-flex xs1>
+        <v-col cols="1">
           <v-checkbox v-model="dateIsAble"></v-checkbox>
-        </v-flex>
-        <v-flex xs12 md4>
+        </v-col>
+        <v-col cols="12" md="4">
           <app-input-date 
             label="Desired Delivery Date"
             v-model="date"
             :disabled="!dateIsAble"
           ></app-input-date>
-        </v-flex>   
-      </v-layout>
+        </v-col>   
+      </v-row>
     </span>
   </app-dialog>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   data() {
@@ -55,6 +56,9 @@ export default {
       date: "",
       dateIsAble: true
     };
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

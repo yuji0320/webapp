@@ -64,6 +64,16 @@ export default {
       const res = api.get({commit}, url, data, commitName);
       return res;
     },
+    // 部品表単体取得
+    getBillOfMaterial({commit}, data) {
+      const url = 'manufacturing_data/bill_of_material/' + data + '/';
+      const commitName = 'setBillOfMaterial';
+      return api
+          .get({commit}, url, data, commitName)
+          .then(function(response) {
+            return response;
+          });
+    },
     // 部品表単体セット
     setBillOfMaterial({commit}, data) {
       commit('setBillOfMaterial', data);

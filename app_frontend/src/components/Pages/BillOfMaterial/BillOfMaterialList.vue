@@ -97,13 +97,15 @@
 import { mapState, mapActions } from "vuex";
 import CardTable from '@/components/Module/Cards/CardTable.vue';
 import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
 
 export default {
   title: "Bill of Material List",
   name: "BillOfMaterialList",
   components: {
     "app-card-table": CardTable,
-    "app-search-toolbar": SearchToolbar
+    "app-search-toolbar": SearchToolbar,
+    "app-bom-dialog": BillOfMaterialDialog
   },
   data() {
     return {
@@ -184,7 +186,7 @@ export default {
     // 編集データ設定
     editBillOfMaterial(val) {
       this.setBillOfMaterial(val);
-      this.$refs.bom_dialog.editBillOfMaterial();
+      this.$refs.bom_dialog.openDialogBOM();
     },
     // 処理結果統合フォーム
     responseFunction(val) {

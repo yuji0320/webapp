@@ -1,10 +1,14 @@
 <template>
   <v-container fluid grid-list-lg>
-    <app-card>
+    <app-card-table
+      :headers="headers"
+      :items="makingOrders.results"
+      :viewIcon="false"
+    >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-title">Not ordered list</span>
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu"><v-icon>reply</v-icon>Back to Menu</v-btn>
       </span>
 
@@ -12,35 +16,21 @@
       <span slot="card-title-text">*These parts are not ordered.</span>
 
       <!-- カード上部検索機能コンポーネント -->
-      <span slot="search-bar">
-        <v-layout row wrap>
-          <app-search-bar
-            :length="makingOrders.pages"
-            :count="makingOrders.count"
-            :orderBy="orderBy"
-            :incremental="incremental"
-            :params="params"
-            @search-list="getList"
-          ></app-search-bar>
-        </v-layout>
-      </span>
+      <div slot="search-bar">
+        <p class="ma-4">*These parts are not ordered.</p>
+      </div>
 
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="headers"
-          :items="makingOrders.results"
-        >
-        </app-data-table>
-      </span>
+      
 
-    </app-card>
+    </app-card-table>
 
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 
 export default {
   title: "Not orderd",
@@ -54,21 +44,16 @@ export default {
         { text: "Order No", value: "number" },
         { text: "Part Name", value: "name" },
         { text: "Standard / Dwaring No", value:"partsDetail" },
-        { text: "Supplier", value: "supplierData", nest: "name" },
+        { text: "Supplier", value: "supplierAbbr" },
         { text: "Delivery", value: "desiredDeliveryDate" },
       ],
       // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Order Number", value: "number" },
-          { label: "Part Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "number",
-        tableSearch: ""
-      }
+      refineParams:{}
     }
+  },
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -93,6 +78,9 @@ export default {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    clearParams() {
+
     },
     // メニューに戻る
     backToMenu() {

@@ -124,7 +124,7 @@
           ></app-incremental-model-search>
         </v-col>
         <!-- 在庫充当個数 -->
-        <v-col cols="12" xs="4">
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Stock Appropriation"
             v-model="billOfMaterial.stockAppropriation"
@@ -136,7 +136,7 @@
         <v-col cols="12" md="8">
         </v-col> 
         <!-- 金額 -->
-        <v-col cols="12" xs="4">
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Unit Price"
             v-model="billOfMaterial.unitPrice"
@@ -166,7 +166,7 @@
             :suffix="loginUserData.defaultCurrencyCode"
             hint="1 Order currency = "
             :persistent-hint="true"
-            class="right-input"
+            class="right-input mr-2"
             :disabled="editDisable"
           ></v-text-field >
         </v-col>
@@ -302,7 +302,7 @@ export default {
       this.setBillOfMaterial(this.defaultBillOfMaterial);
     },
     // 編集データ設定
-    editBillOfMaterial() {
+    openDialogBOM() {
       this.setIncremental(this.billOfMaterial);
       this.$refs.dialog.editForm();
     },
@@ -357,6 +357,7 @@ export default {
   },
   mounted() {
     this.$refs.manufacturer.clearItem();
+    // console.log("mounted BOM Dialog");
   }
 }
 </script>

@@ -10,15 +10,12 @@
       <v-spacer></v-spacer>
       <!-- ボタン挿入 -->
       <slot name="card-header-button" class=""></slot>
+      <slot name="card-dialog" class=""></slot>
     </v-app-bar>
 
-    <!-- Cardタイトル -->
-    <v-card>
+    <v-card flat>
+      <!-- {{ selected }} -->
       <slot name="search-bar"></slot>
-      <!-- Cardタイトル -->
-      <!-- <v-card-title>
-        <slot name="search-bar"></slot>
-      </v-card-title> -->
 
       <!-- テーブル内容 -->
       <v-data-table
@@ -26,22 +23,24 @@
         :headers="headers"
         :items="items"
         :loading="$store.state.systemConfig.loading"
+        v-model="selected"
+        item-key="id"
+        :show-select="selectAll"
         class="elevation-1"
         hide-default-footer
         dense
       >
-
         <!-- テーブルデータ -->
-        <template v-slot:item="item">
+        <template v-slot:item="props">
           <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
           <tr
             :class="{
-            'complete': item.item[completeColumn],
-            'error': item.item[errorColumn],
+            'complete': props.item[completeColumn],
+            'error': props.item[errorColumn],
             'dataList': true,
-            'printed': item.item.isPrinted
+            'printed': props.item.isPrinted
             }"
-            @dblclick="doubleClick(item.item)"
+            @dblclick="doubleClick(props.item)"
           >
             <td 
               v-for="(header, index) in headers"
@@ -49,18 +48,29 @@
               :class="header.class"
             >
               <!-- 文字列がtrueの場合緑チェック -->
-              <template v-if="item.item[header.value] === true">
+              <template v-if="props.item[header.value] === true">
                 <v-icon color="green">check</v-icon>
               </template>
               <!-- 文字列がtrueの場合赤バツ -->
-              <template v-else-if="item.item[header.value] === false">
+              <template v-else-if="props.item[header.value] === false">
                 <v-icon color="red">close</v-icon>
               </template>
               <!-- true, false以外の場合はデータを表示 -->
               <template v-else>
                 <!-- データを表示 -->
-                {{ item.item[header.value] }}
+                {{ props.item[header.value] }}
               </template>
+
+              <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
+              <div v-show="header.value === 'checkbox'">
+                <v-checkbox 
+                  :input-value="props.isSelected" 
+                  @change="props.select($event)"
+                  hide-details 
+                  style="margin:0px;padding:0px" 
+                  :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
+                />
+              </div>
 
               <!-- 最終行のみ挿入可能スロットを追加する -->
               <div v-show="header.value === 'action'">
@@ -69,7 +79,7 @@
                   <v-icon
                     small
                     class="mr-2"
-                    @click="viewItem(item.item)"
+                    @click="viewItem(props.item)"
                     v-if="viewIcon"
                   >
                     visibility
@@ -78,7 +88,7 @@
                   <v-icon
                     small
                     class="mr-2"
-                    @click="editItem(item.item)"
+                    @click="editItem(props.item)"
                   >
                     edit
                   </v-icon>
@@ -86,7 +96,7 @@
                   <v-icon
                     small
                     class="mr-2"
-                    @click="deleteItem(item.item)"
+                    @click="deleteItem(props.item)"
                   >
                     delete
                   </v-icon>
@@ -114,7 +124,8 @@ export default {
   data() {
     return {
       loading: false,
-      expand: false
+      expand: false,
+      selected: []
     };
   },
   props: {
@@ -123,7 +134,29 @@ export default {
     items: { required: false },
     completeColumn: { required: false },
     errorColumn: { required: false },
-    viewIcon: { required: false }
+    viewIcon: { required: false },
+    selectAll: { required: false },
+    doNotChangeClass: { required: false },
+    completeDisabled: { required: false },
+    editDisabled: { required: false },
+  },
+  computed: {
+    addClass() {
+      return function (val) {
+        if(!this.doNotChangeClass) {
+          return val
+        }
+      }
+    },
+    disabledActions() {
+      return function (val) {
+        if(this.completeDisabled && val) {
+          return true
+        } else {
+          return false
+        }
+      }     
+    }
   },
   methods: {
     doubleClick(item) {

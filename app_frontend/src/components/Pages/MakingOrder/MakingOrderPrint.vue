@@ -11,20 +11,18 @@
       <span slot="card-header-icon"><v-icon>print</v-icon></span>
       <span slot="card-header-title">{{ switchParams.cardTitle }}</span>
 
-      <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <!-- ボタン -->
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
 
-      <!-- 印刷ボタン -->
-      <span slot="card-header-button">
         <v-btn 
           @click="print"
           color="primary"
           :disabled="printAble"
+          class="ml-2"
         ><v-icon>print</v-icon> Print Data</v-btn>
       </span>
 
@@ -53,11 +51,11 @@
               v-model="selectedItems[key].selected"
               :headers="headerData(category.isProcessedParts)"
               :items="category.parts"
-              :hide-actions="true"
+              hide-default-footer
               class="elevation-1 mb-4"
-              select-all=true
+              show-select
               item-key="id"
-              disable-initial-sort
+              disable-sort
             >
               <!-- テーブルデータ -->
               <template slot="items" slot-scope="props">
@@ -75,17 +73,7 @@
                     :key="index"
                     :class="header.class"
                   >
-                    <!-- jsonがネストしている場合はデータを抽出 -->
-                    <template v-if="header.nest">
-                      <!-- ネスト元データが存在する場合のみ表示 -->
-                      <template v-if="props.item[header.value]">
-                        {{ props.item[header.value][header.nest] }}
-                      </template>
-                    </template>
-                    <!-- ネストしていない場合はデータを表示 -->
-                    <template v-else>
-                      {{ props.item[header.value] }}
-                    </template>
+                    {{ props.item[header.value] }}
                   </td>
                 </tr>
               </template>
@@ -110,18 +98,18 @@ export default {
     return {
       orderBy: "number",
       defaultHeadersTop: [
-        { text: "No.", value: "number", class: "text-xs-right"},
+        { text: "No.", value: "number", align: "end"},
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Qty", value: "amount", class: "text-xs-right" },
-        { text: "Unit price", value: "displayPrice", class: "text-xs-right" },
-        { text: "Price", value: "displayPriceTotal", class: "text-xs-right" },
-        { text: "Delivery", value: "desiredDeliveryDate", class: "text-xs-center"  }
+        { text: "Qty", value: "amount", align: "end" },
+        { text: "Unit price", value: "displayPrice", align: "end" },
+        { text: "Price", value: "displayPriceTotal", align: "end" },
+        { text: "Delivery", value: "desiredDeliveryDate", align: "center"  }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
-        { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
+        { text: "Manufacturer", value: "manufacturerAbbr"},
         { text: "Part Number", value: "standard" },
       ],
       // 加工部品テーブルヘッダー

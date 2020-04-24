@@ -64,12 +64,10 @@ Vue.component('app-data-table', DataTable);
 // import Dialog from '@/components/Module/Dialog.vue';
 // Vue.component('app-dialog', Dialog);
 // 検索関係
-/* eslint-disable max-len */
 import IncrementalModelSearch from '@/components/Module/IncrementalModelSearch.vue';
-/* eslint-enable max-len */
 Vue.component('app-incremental-model-search', IncrementalModelSearch);
-import Pagination from '@/components/Module/Search/Pagination.vue';
-Vue.component('app-pagination', Pagination);
+// import Pagination from '@/components/Module/Search/Pagination.vue';
+// Vue.component('app-pagination', Pagination);
 // 入力関係
 import InputDate from '@/components/Module/InputDate.vue';
 Vue.component('app-input-date', InputDate);
@@ -79,15 +77,16 @@ Vue.mixin(PdfMakeMixin);
 
 // ダイアログコンポーネント
 // eslint-disable-next-line max-len
-import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
-Vue.component('app-bom-dialog', BillOfMaterialDialog);
-import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
-Vue.component('app-order-dialog', MakingOrderDialog);
-import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
-Vue.component('app-received-dialog', ReceivingProcessDialog);
-import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
+// import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+// Vue.component('app-bom-dialog', BillOfMaterialDialog);
+// import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
+// Vue.component('app-order-dialog', MakingOrderDialog);
+// import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
+// Vue.component('app-received-dialog', ReceivingProcessDialog);
+// import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
+// Vue.component('app-man-hour-dialog', ManHourDialog);
+
 import vuetify from './plugins/vuetify';
-Vue.component('app-man-hour-dialog', ManHourDialog);
 
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
