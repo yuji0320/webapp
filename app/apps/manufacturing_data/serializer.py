@@ -465,7 +465,6 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'unit_price',
             'supplier',
             'desired_delivery_date',
-            'supplier',
             'ordered_date',
             'is_printed',
             'created_at',
