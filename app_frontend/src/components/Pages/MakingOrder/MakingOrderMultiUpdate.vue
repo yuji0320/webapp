@@ -10,7 +10,7 @@
     <span slot="dialog-contents">
 
       <!-- 読み込み中ダイアログコンポーネント -->
-      <app-loading-dialog></app-loading-dialog>
+      <!-- <app-loading-dialog></app-loading-dialog> -->
 
       <v-row>
         <!-- 仕入先選択 -->
@@ -141,9 +141,6 @@ export default {
         this.$refs.dialog.closeDialog();
       }
     }
-  },
-  created () {
-    this.$store.commit("systemConfig/setLoading", false);
   }
 }
 </script>
