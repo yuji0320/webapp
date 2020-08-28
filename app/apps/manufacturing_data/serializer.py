@@ -489,7 +489,68 @@ class MakingOrderSerializer(serializers.ModelSerializer):
 
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
-    order_data = MakingOrderSerializer(source='order', read_only=True)
+    # order_data = MakingOrderSerializer(source='order', read_only=True)
+    order_number = serializers.SerializerMethodField()
+    part_name = serializers.SerializerMethodField()
+    part_detail = serializers.SerializerMethodField()
+    desired_delivery_date = serializers.SerializerMethodField()
+    order_amount = serializers.SerializerMethodField()
+    mfg_no = serializers.SerializerMethodField()
+    supplier_abbr = serializers.SerializerMethodField()
+
+    # 発注番号取得
+    @staticmethod
+    def get_order_number(obj):
+        order_number = obj.order.number
+        return order_number
+
+    # 部品名取得
+    @staticmethod
+    def get_part_name(obj):
+        part_name = obj.order.name
+        return part_name
+
+    # 部品詳細データ表示
+    @staticmethod
+    def get_part_detail(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            status = obj.order.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        if status:
+            part_detail = obj.order.drawing_number
+        else:
+            part_detail = obj.order.standard
+        return part_detail
+
+    # 希望納期取得
+    @staticmethod
+    def get_desired_delivery_date(obj):
+        desired_delivery_date = obj.order.desired_delivery_date
+        return desired_delivery_date
+
+    # 発注個数取得
+    @staticmethod
+    def get_order_amount(obj):
+        order_amount = obj.order.amount
+        return order_amount
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            mfg_no = obj.order.bill_of_material.job_order.mfg_no
+        else:
+            mfg_no = "N/A"
+        return mfg_no
+
+    # 仕入先名取得
+    @staticmethod
+    def get_supplier_abbr(obj):
+        supplier_abbr = obj.order.supplier.abbr
+        return supplier_abbr
 
     class Meta:
         model = ReceivingProcess
@@ -510,8 +571,14 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'modified_at',
             'modified_by',
             # read_only under here
-            'order_data',
-            # 'parts_detail'
+            'order_number',
+            'part_name',
+            'part_detail',
+            'desired_delivery_date',
+            'order_amount',
+            'mfg_no',
+            'supplier_abbr',
+            # 'order_data',
         )
 
 

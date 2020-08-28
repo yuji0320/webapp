@@ -28,8 +28,10 @@
         :show-select="selectAll"
         class="elevation-1"
         hide-default-footer
+        disable-sort
         dense
       >
+
         <!-- テーブルデータ -->
         <template v-slot:item="props">
           <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
@@ -42,10 +44,23 @@
             }"
             @dblclick="doubleClick(props.item)"
           >
+            <!-- SelectAllがTrueの場合はチェックボックスを表示する -->
+            <td v-if="selectAll">
+              <v-checkbox 
+                :input-value="props.isSelected" 
+                @change="props.select($event)"
+                hide-details 
+                style="margin:0px;padding:0px" 
+                :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
+              />
+            </td>
+
+            <!-- チェックボックス以外のtd要素 -->
             <td 
               v-for="(header, index) in headers"
               :key="index"
               :class="header.class"
+              :align="header.align"
             >
               <!-- 文字列がtrueの場合緑チェック -->
               <template v-if="props.item[header.value] === true">
@@ -62,7 +77,7 @@
               </template>
 
               <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
-              <div v-show="header.value === 'checkbox'">
+              <div v-if="header.value === 'checkbox'">
                 <v-checkbox 
                   :input-value="props.isSelected" 
                   @change="props.select($event)"

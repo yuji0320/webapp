@@ -4,13 +4,23 @@
     <app-confirm ref="confirm"></app-confirm>
 
     <!-- カードコンポーネント -->
-    <app-card>
+    <app-card-table
+      :headers="headers"
+      :items="receivingProcesses.results"
+      :completeColumn="completeColumn"
+      @edit-item="editReceivingProcess"
+      @double-click="editReceivingProcess"
+      @delete-item="deleteReceivingProcessData"
+      completeDisabled=true
+      ref="card_table"
+      :selectAll="true"
+    >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>move_to_inbox</v-icon></span>
       <span slot="card-header-title">Suspense Receive {{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
@@ -19,8 +29,9 @@
         <!-- 一括編集ボタン -->
         <v-btn 
           @click="multiUpdate" 
-          outline 
+          outlined 
           color="primary"
+          class="ml-2"
         >
           Multi Update
         </v-btn>       
@@ -28,7 +39,7 @@
 
       <!-- カード上部検索機能コンポーネント -->
       <span slot="search-bar">
-        <v-layout row wrap>
+        <!-- <v-layout row wrap>
           <app-search-bar
             :length="receivingProcesses.pages"
             :count="receivingProcesses.count"
@@ -37,53 +48,45 @@
             :params="switchParams.params"
             @search-list="getList"
           ></app-search-bar>
-        </v-layout>
+        </v-layout> -->
       </span>
+    </app-card-table>
 
-      <span slot="card-title-text">
-        <h2 class="font-weight-light">{{ userPartner.name }}</h2>
-      </span>
-
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="headers"
-          :items="receivingProcesses.results"
-          :completeColumn="completeColumn"
-          @edit-item="editReceivingProcess"
-          @double-clicked="editReceivingProcess"
-          @delete-item="deleteReceivingProcessData"
-          completeDisabled=true
-          ref="data_table"
-        >
-        </app-data-table>
-      </span>
-    </app-card>
 
     <app-received-dialog @response-function="responseFunction" ref="receive_dialog">
       <span slot="edit-order" d-inline-flex>
         <v-btn color="primary" dark @click="editMakingOrder">Edit Order File</v-btn>
-        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Order File</v-btn>
+        <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo" class="ml-2">Edit Order File</v-btn>
       </span>
     </app-received-dialog>
 
     <!-- 発注ファイル -->
-    <app-order-dialog @response-function="responseFunction" ref="order_dialog"></app-order-dialog>
+    <app-order-dialog @response-function="responseFunction" ref="order_dialog" :hideButtons="true"></app-order-dialog>
     <!-- 部品票ダイアログ -->
     <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
 
-    <multi-update @response-function="responseFunction" ref="multi_update"></multi-update>
+    <!-- <multi-update @response-function="responseFunction" ref="multi_update"></multi-update> -->
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import ReceivingProcessDialog from '@/components/Module/Dialogs/ReceivingProcessDialog.vue';
+import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
 import ReceivingProcessMultiUpdate from "./ReceivingProcessMultiUpdate.vue"
 
 export default {
   title: "Suspense Receive",
   name: "ReceivingProcessSuspense",
   components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-received-dialog": ReceivingProcessDialog,
+    "app-order-dialog": MakingOrderDialog,
+    "app-bom-dialog": BillOfMaterialDialog,
     "multi-update": ReceivingProcessMultiUpdate
   },
   data() {
@@ -92,30 +95,19 @@ export default {
       orderBy: 'suspense_received_date,order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number',
       // テーブルヘッダーデータ
       headers: [
-        { text: "", value: "checkbox" },
-        { text: "No", value: "orderData", nest:"number" },
-        { text: "Part Name", value: "orderData", nest:"name" },
-        { text: "Standard / Drawing No", value:"orderData", nest:"billOfMaterial", nestNest:"partsDetail" },
-        { text: "Delivery", value: "orderData", nest:"desiredDeliveryDate" },
+        { text: "No", value: "orderNumber"},
+        { text: "Part Name", value: "partName" },
+        { text: "Standard / Drawing No", value:"partDetail"},
+        { text: "Delivery", value: "desiredDeliveryDate"},
         { text: "Suspense Received", value: "suspenseReceivedDate" },
-        { text: "Order Amount", value: "orderData", nest: "amount", class: "text-xs-right" },
-        { text: "Received Amount", value: "amount", class: "text-xs-right" },
-        // { text: "Order UP", value: "orderData", nest: "unitPrice", class: "text-xs-right" },
-        // { text: "Received UP", value: "unitPrice", class: "text-xs-right" },
+        { text: "Order Amount", value: "orderAmount", align: "right" },
+        { text: "Received Amount", value: "amount", align: "right" },
         { text: "Action", value: "action", class: "text-xs-center" }
       ],
       //  仮仕入完了時色変更
       completeColumn: "suspenseReceivedDate",
       // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Part Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams:{}
     }
   },
   computed: {
@@ -183,7 +175,7 @@ export default {
     ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setReceivingProcess", "deleteReceivingProcess", "setTableSelected"]),
     // 一括編集機能
     multiUpdate() {
-      this.setTableSelected(this.$refs.data_table.selected);
+      this.setTableSelected(this.$refs.card_table.selected);
       // console.log(test);
       this.$refs.multi_update.openDialog();
     },
@@ -195,46 +187,49 @@ export default {
     // 仕入れファイル編集
     editReceivingProcess(val) {
       this.setReceivingProcess(val);
-      this.$refs["receive_dialog"].editReceivingProcess();
+      this.$refs.receive_dialog.openDialogReceive();
     },
     // 発注ファイル編集
     editMakingOrder() {
-      this.setMakingOrder(this.receivingProcess.orderData);
-      this.$refs["order_dialog"].editMakingOrder();
+      // this.setMakingOrder(this.receivingProcess.orderData);
+      // this.$refs["order_dialog"].editMakingOrder();
+      console.log("edit order");
     },
     // 部品表ファイル編集
     editBillOfMaterial() {
-      this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
-      this.$refs["bom_dialog"].editBillOfMaterial();
+      // this.setBillOfMaterial(this.receivingProcess.orderData.billOfMaterial);
+      // this.$refs["bom_dialog"].editBillOfMaterial();
+      console.log("edit bom");
     },
-    // 発注ファイル削除
+    // 仕入ファイル削除
     async deleteReceivingProcessData(val) {
-      let res = {};
-      // 削除確認
-      if (
-        await this.$refs.confirm.open(
-          "Delete",
-          "Are you sure delete this data?",
-          { color: "red" }
-        )
-      ) {
-        // Yesの場合は削除処理
-        // 発注ファイルのフラグ修正
-        val.orderData.isPrinted = false;
-        if(val.orderData.billOfMaterial) {
-          console.log(val.orderData.billOfMaterial);
-          val.orderData.billOfMaterialId = val.orderData.billOfMaterial.id;
-        } else {
-          val.orderData.billOfMaterialId = null;
-        }
-        await this.putMakingOrder(val.orderData);
-        // 仕入ファイルの削除
-        res = await this.deleteReceivingProcess(val);
-      } else {
-        // Noの場合はスナックバーにキャンセルの旨を表示
-        res.snack = { snack: "Delete is cancelled" };
-      }
-      this.responseFunction(res);
+      console.log("dalete : ", val);
+      // let res = {};
+      // // 削除確認
+      // if (
+      //   await this.$refs.confirm.open(
+      //     "Delete",
+      //     "Are you sure delete this data?",
+      //     { color: "red" }
+      //   )
+      // ) {
+      //   // Yesの場合は削除処理
+      //   // 発注ファイルのフラグ修正
+      //   val.orderData.isPrinted = false;
+      //   if(val.orderData.billOfMaterial) {
+      //     console.log(val.orderData.billOfMaterial);
+      //     val.orderData.billOfMaterialId = val.orderData.billOfMaterial.id;
+      //   } else {
+      //     val.orderData.billOfMaterialId = null;
+      //   }
+      //   await this.putMakingOrder(val.orderData);
+      //   // 仕入ファイルの削除
+      //   res = await this.deleteReceivingProcess(val);
+      // } else {
+      //   // Noの場合はスナックバーにキャンセルの旨を表示
+      //   res.snack = { snack: "Delete is cancelled" };
+      // }
+      // this.responseFunction(res);
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -242,7 +237,7 @@ export default {
       this.getList({ params: this.switchParams.params });
       // Snackbar表示
       this.showSnackbar(val.snack);
-      this.$refs.data_table.selected = [];
+      this.$refs.card_table.selected = [];
     },
     backToMenu() {
       this.$router.push({ name: "ReceivingProcessMenu" });

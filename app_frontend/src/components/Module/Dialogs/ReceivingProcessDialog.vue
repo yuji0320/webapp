@@ -7,15 +7,16 @@
     @submit-form="submitReceivingProcess"
     ref="dialog"
     :editDisable="editDisable"
+    eager
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
       <!-- 確認ダイアログ -->
       <app-confirm ref="confirm"></app-confirm>
 
-      <v-layout wrap>
+      <v-row>
         <!-- エラー表示 -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-alert 
             value="true"
             type="error"
@@ -28,51 +29,51 @@
               {{ error }}
             </li>
           </v-alert>
-        </v-flex>
+        </v-col>
         <!-- 工事番号 -->
-        <v-flex xs2 md2>
+        <v-col cols="12" xs="2" md="2">
           <v-text-field 
             label="MFG No"
             class="right-input"
             disabled
             v-model="mfgNo"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 発注番号 -->
-        <v-flex xs2 md2>
+        <v-col cols="12" xs="2" md="2">
           <v-text-field 
             label="Order No"
             class="right-input"
             disabled
             v-model="number"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 部品名 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <v-text-field 
             label="Part Name"
             disabled
             v-model="partName"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 仕入先 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Supplier"
             disabled
             v-model="supplier"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 部品詳細 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <v-text-field 
             label="Standard / Drawing No"
             disabled
-            v-model="partsDetail"
+            v-model="receivingProcess.partDetail"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 個数 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Amount"
             v-model="receivingProcess.amount"
@@ -80,9 +81,9 @@
             :error-messages="responseError.amount"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 単位選択 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Unit Type"
             orderBy="number"
@@ -92,9 +93,9 @@
             ref="unitType"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 金額 -->
-        <v-flex xs4>
+        <v-col cols="12" xs="4">
           <v-text-field 
             label="Unit Price"
             v-model="receivingProcess.unitPrice"
@@ -103,9 +104,9 @@
             @blur="checkPrice"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 通貨 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Currency"
             orderBy="id"
@@ -115,9 +116,9 @@
             ref="currency"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- レート -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Rate"
             v-model="receivingProcess.rate"
@@ -128,26 +129,26 @@
             class="right-input"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 希望納期 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="6">
           <app-input-date 
             label="Suspense Received Date"
             v-model="receivingProcess['suspenseReceivedDate']"
             :errorMessages="responseError['suspenseReceivedDate']"
             :disabled="editDisable"
           ></app-input-date>
-        </v-flex>
+        </v-col>
         <!-- 仕入日 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="6">
           <app-input-date 
             label="Received Date"
             v-model="receivingProcess['receivedDate']"
             :errorMessages="responseError['receivedDate']"
             :disabled="editDisable"
           ></app-input-date>
-        </v-flex>   
-      </v-layout>
+        </v-col>   
+      </v-row>
     </span>
 
     <!-- 拡張ボタンスロット -->
@@ -159,6 +160,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   data() {
@@ -168,6 +170,9 @@ export default {
       supplier: "",
       partName: ""
     }
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   props: {
     editDisable: { required: false },
@@ -199,13 +204,13 @@ export default {
     },
     setData(val) {
       // console.log(val);
-      this.mfgNo = val.orderData.mfgNo;
-      this.number = val.orderData.number;
-      this.supplier = val.orderData["supplierData"].name;
-      this.partName = val.orderData.name;
+      this.mfgNo = val.mfgNo;
+      this.number = val.orderNumber;
+      this.supplier = val.supplierAbbr;
+      this.partName = val.partName;
     },
     // 発注ファイル編集
-    editReceivingProcess() {
+    openDialogReceive() {
       this.clearReceivingProcessError();
       this.setIncremental(this.receivingProcess);
       this.setData(this.receivingProcess);
