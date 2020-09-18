@@ -96,7 +96,7 @@ export default {
   mixins: [MakingOrderPrintPdf],
   data() {
     return {
-      orderBy: "number",
+      orderBy: 'is_printed,supplier__name,manufacturer__name,standard,drawing_number',
       defaultHeadersTop: [
         { text: "No.", value: "number", align: "end"},
         { text: "Part Name", value: "name" }
