@@ -493,8 +493,11 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
     order_number = serializers.SerializerMethodField()
     part_name = serializers.SerializerMethodField()
     part_detail = serializers.SerializerMethodField()
+    part_detail_other = serializers.SerializerMethodField()
     desired_delivery_date = serializers.SerializerMethodField()
     order_amount = serializers.SerializerMethodField()
+    order_price = serializers.SerializerMethodField()
+    order_price_display = serializers.SerializerMethodField()
     mfg_no = serializers.SerializerMethodField()
     supplier_abbr = serializers.SerializerMethodField()
 
@@ -524,6 +527,23 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             part_detail = obj.order.standard
         return part_detail
 
+    # 部品詳細その他データ表示
+    @staticmethod
+    def get_part_detail_other(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            status = obj.order.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        if status:
+            part_detail = obj.order.material
+        else:
+            if obj.order.manufacturer:
+                part_detail = obj.order.manufacturer.abbr
+            else :
+                part_detail = ""
+        return part_detail
+
     # 希望納期取得
     @staticmethod
     def get_desired_delivery_date(obj):
@@ -535,6 +555,18 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
     def get_order_amount(obj):
         order_amount = obj.order.amount
         return order_amount
+
+    # 発注金額取得
+    @staticmethod
+    def get_order_price(obj):
+        order_price = obj.order.unit_price
+        return order_price
+
+    # 発注金額取得
+    @staticmethod
+    def get_order_price_display(obj):
+        order_price_display = obj.currency.display + "{:-,.2f}".format(obj.order.unit_price)
+        return order_price_display
 
     # 工事番号取得
     @staticmethod
@@ -549,7 +581,9 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
     # 仕入先名取得
     @staticmethod
     def get_supplier_abbr(obj):
-        supplier_abbr = obj.order.supplier.abbr
+        supplier_abbr = ""
+        if(obj.order.supplier) :
+            supplier_abbr = obj.order.supplier.abbr
         return supplier_abbr
 
     class Meta:
@@ -574,8 +608,11 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'order_number',
             'part_name',
             'part_detail',
+            'part_detail_other',
             'desired_delivery_date',
             'order_amount',
+            'order_price',
+            'order_price_display',
             'mfg_no',
             'supplier_abbr',
             # 'order_data',

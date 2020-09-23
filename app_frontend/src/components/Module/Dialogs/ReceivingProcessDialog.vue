@@ -220,7 +220,7 @@ export default {
     async submitReceivingProcess() {
       let res = {};
       this.receivingProcess.modifiedBy = this.loginUserData.id;
-      this.receivingProcess.order = this.receivingProcess.orderData.id;
+      this.receivingProcess.order = this.receivingProcess.order;
       // 日付がブランクの場合nullをセットおする
       if(this.receivingProcess.suspenseReceivedDate==="") {
         this.receivingProcess.suspenseReceivedDate = null
@@ -228,40 +228,48 @@ export default {
       if(this.receivingProcess.receivedDate==="") {
         this.receivingProcess.receivedDate = null
       }
-      // console.log(this.receivingProcess);
-      res = await this.putReceivingProcess(this.receivingProcess);
-      if (res.data) {
-        // 更新成功時はモーダルを閉じる
-        this.$refs.dialog.closeDialog();
-        // 登録完了後、親コンポーネントで連携関数を実施する
-        this.$emit("response-function", res);
+
+      // 金額一致確認
+      let check = await this.checkPrice();
+      // console.log(check);
+
+      if(check) {
+        // console.log("OK");
+        // 発注金額と仕入金額が一致しているor空白の場合は更新処理
+        res = await this.putReceivingProcess(this.receivingProcess);
+
+        if (res.data) {
+          // 更新成功時はモーダルを閉じる
+          this.$refs.dialog.closeDialog();
+          // 登録完了後、親コンポーネントで連携関数を実施する
+          this.$emit("response-function", res);
+        } else {
+          // 失敗時
+          console.log("Failed");
+          console.log(res);
+        }
+
       } else {
-        // 失敗時
-        console.log("Failed");
-        console.log(res);
+          // Noの場合はスナックバーにキャンセルの旨を表示
+          res.snack = { snack: "Update is Failed" };
+          this.showSnackbar(res.snack);
       }
     },
     // 仕入ファイルと発注の金額差チェック
     async checkPrice() {
       let res = {};
-      let received = this.receivingProcess.unitPrice;
-      let order = this.receivingProcess.orderData.unitPrice;
-      let bom = "";
-      if (this.receivingProcess.orderData.billOfMaterial) {
-        bom = this.receivingProcess.orderData.billOfMaterial.unitPrice;
+      let received = parseFloat(this.receivingProcess.unitPrice);
+      let order = this.receivingProcess.orderPrice;
+      // 値が0の場合はnullを代入
+      if(received===0) {
+        this.receivingProcess.unitPrice = null;
       }
-      if(received!==order) {
-        // 発注ファイルと部品表で単価が違う場合
+      if(received!==order && received) {
+        // 発注ファイルと部品表で単価が違う場合        
         // アラート文
-        let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                "\nAre you sure change Order's unit price?");
-        if (bom !== "") {
-          alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                  "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                  "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
-                  "\nAre you sure change Order's unit price and Bill ob material's unit price?");
-        }
+        let alertText = ("'\Receiving's unit price is '" + parseFloat(received).toFixed(2).toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                "'\nOrder's unit price is '" + order.toFixed(2).toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
+                "\nYou have to edit Order data first");
         if (
           await this.$refs.confirm.open(
             "Unit Price is different!",
@@ -269,33 +277,18 @@ export default {
             { color: "blue" }
           )
         ) {
-          // Yesの場合は上書き処理
-          this.setMakingOrder(this.receivingProcess.orderData);
-          // 部品表の編集
-          if (bom !== "") {
-            // 部品表の編集
-            this.setBillOfMaterial(orderData.billOfMaterial);
-            this.billOfMaterial.unitPrice = received;
-            this.billOfMaterial.modifiedBy = this.loginUserData.id;
-            res = await this.putBillOfMaterial(this.billOfMaterial);
-            this.makingOrder.billOfMaterialId = orderData.billOfMaterial.id;
-          } else {
-            this.makingOrder.billOfMaterialId = null;
-          }
-          // 発注ファイルの上書き
-          this.makingOrder.unitPrice = received;
-          this.makingOrder.modifiedBy = this.loginUserData.id;
-          // this.makingOrder.billOfMaterialId = this.receivingProcess.orderData.billOfMaterial.id;
-          this.receivingProcess.orderData = this.makingOrder;
-          res = await this.putMakingOrder(this.makingOrder);
-          this.showSnackbar(res.snack);
+          // 同意した場合はnullを代入
+          this.receivingProcess.unitPrice = null;
+          return false;
         } else {
           // Noの場合はスナックバーにキャンセルの旨を表示
           res.snack = { snack: "Price is not changed." };
           this.showSnackbar(res.snack);
+          return false;
         }
       } else {
         // 単価が同じ場合は処理しない
+        return true;
       }
     }
   }

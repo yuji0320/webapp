@@ -14,70 +14,44 @@
     </v-app-bar>
 
     <v-card flat>
-      <!-- {{ selected }} -->
       <slot name="search-bar"></slot>
 
-      <!-- テーブル内容 -->
-      <v-data-table
-        :items-per-page="50"
-        :headers="headers"
-        :items="items"
-        :loading="$store.state.systemConfig.loading"
-        v-model="selected"
-        item-key="id"
-        :show-select="selectAll"
-        class="elevation-1"
-        hide-default-footer
-        disable-sort
-        dense
-      >
+      <!-- 修正可能テーブルの表示の際 -->
+      <span v-if="editableCard">
+        <slot name="editable-card"></slot>
+      </span>
+      
+      <!-- テーブル表示の場合 -->
+      <span v-else>
+        <!-- テーブル内容 -->
+        <v-data-table
+          :items-per-page="50"
+          :headers="headers"
+          :items="items"
+          :loading="$store.state.systemConfig.loading"
+          v-model="selected"
+          item-key="id"
+          :show-select="selectAll"
+          class="elevation-1"
+          hide-default-footer
+          disable-sort
+          dense
+        >
 
-        <!-- テーブルデータ -->
-        <template v-slot:item="props">
-          <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
-          <tr
-            :class="{
-            'complete': props.item[completeColumn],
-            'error': props.item[errorColumn],
-            'dataList': true,
-            'printed': props.item.isPrinted
-            }"
-            @dblclick="doubleClick(props.item)"
-          >
-            <!-- SelectAllがTrueの場合はチェックボックスを表示する -->
-            <td v-if="selectAll">
-              <v-checkbox 
-                :input-value="props.isSelected" 
-                @change="props.select($event)"
-                hide-details 
-                style="margin:0px;padding:0px" 
-                :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
-              />
-            </td>
-
-            <!-- チェックボックス以外のtd要素 -->
-            <td 
-              v-for="(header, index) in headers"
-              :key="index"
-              :class="header.class"
-              :align="header.align"
+          <!-- テーブルデータ -->
+          <template v-slot:item="props">
+            <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
+            <tr
+              :class="{
+              'complete': props.item[completeColumn],
+              'error': props.item[errorColumn],
+              'dataList': true,
+              'printed': props.item.isPrinted
+              }"
+              @dblclick="doubleClick(props.item)"
             >
-              <!-- 文字列がtrueの場合緑チェック -->
-              <template v-if="props.item[header.value] === true">
-                <v-icon color="green">check</v-icon>
-              </template>
-              <!-- 文字列がtrueの場合赤バツ -->
-              <template v-else-if="props.item[header.value] === false">
-                <v-icon color="red">close</v-icon>
-              </template>
-              <!-- true, false以外の場合はデータを表示 -->
-              <template v-else>
-                <!-- データを表示 -->
-                {{ props.item[header.value] }}
-              </template>
-
-              <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
-              <div v-if="header.value === 'checkbox'">
+              <!-- SelectAllがTrueの場合はチェックボックスを表示する -->
+              <td v-if="selectAll">
                 <v-checkbox 
                   :input-value="props.isSelected" 
                   @change="props.select($event)"
@@ -85,43 +59,79 @@
                   style="margin:0px;padding:0px" 
                   :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
                 />
-              </div>
+              </td>
 
-              <!-- 最終行のみ挿入可能スロットを追加する -->
-              <div v-show="header.value === 'action'">
-                <v-layout justify-center>
-                  <!-- 閲覧ボタン -->
-                  <v-icon
-                    small
-                    class="mr-2"
-                    @click="viewItem(props.item)"
-                    v-if="viewIcon"
-                  >
-                    visibility
-                  </v-icon> 
-                  <!-- 編集ボタン -->
-                  <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(props.item)"
-                  >
-                    edit
-                  </v-icon>
-                  <!-- 削除ボタン -->
-                  <v-icon
-                    small
-                    class="mr-2"
-                    @click="deleteItem(props.item)"
-                  >
-                    delete
-                  </v-icon>
-                </v-layout>
-              </div>
-            </td>            
-          </tr>
-        </template>
+              <!-- チェックボックス以外のtd要素 -->
+              <td 
+                v-for="(header, index) in headers"
+                :key="index"
+                :class="header.class"
+                :align="header.align"
+              >
+                <!-- 文字列がtrueの場合緑チェック -->
+                <template v-if="props.item[header.value] === true">
+                  <v-icon color="green">check</v-icon>
+                </template>
+                <!-- 文字列がtrueの場合赤バツ -->
+                <template v-else-if="props.item[header.value] === false">
+                  <v-icon color="red">close</v-icon>
+                </template>
+                <!-- true, false以外の場合はデータを表示 -->
+                <template v-else>
+                  <!-- データを表示 -->
+                  {{ props.item[header.value] }}
+                </template>
 
-      </v-data-table>
+                <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
+                <div v-if="header.value === 'checkbox'">
+                  <v-checkbox 
+                    :input-value="props.isSelected" 
+                    @change="props.select($event)"
+                    hide-details 
+                    style="margin:0px;padding:0px" 
+                    :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
+                  />
+                </div>
+
+                <!-- 最終行のみ挿入可能スロットを追加する -->
+                <div v-show="header.value === 'action'">
+                  <v-layout justify-center>
+                    <!-- 閲覧ボタン -->
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="viewItem(props.item)"
+                      v-if="viewIcon"
+                    >
+                      visibility
+                    </v-icon> 
+                    <!-- 編集ボタン -->
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="editItem(props.item)"
+                    >
+                      edit
+                    </v-icon>
+                    <!-- 削除ボタン -->
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="deleteItem(props.item)"
+                    >
+                      delete
+                    </v-icon>
+                  </v-layout>
+                </div>
+              </td>            
+            </tr>
+          </template>
+
+        </v-data-table>
+      </span>
+
+
+
 
       <!-- Cardフッター -->
       <v-footer card height="auto">
@@ -154,6 +164,7 @@ export default {
     doNotChangeClass: { required: false },
     completeDisabled: { required: false },
     editDisabled: { required: false },
+    editableCard: { required: false },
   },
   computed: {
     addClass() {

@@ -124,7 +124,7 @@ class ReceivingProcessFilter(filters.FilterSet):
     @staticmethod
     def parts_data_filter(queryset, name, value):
         return queryset.all().filter(
-            Q(order__bill_of_material__standard__icontains=value) | Q(order__bill_of_material__drawing_number__icontains=value)
+            Q(order__standard__icontains=value) | Q(order__drawing_number__icontains=value)
         )
 
     class Meta:

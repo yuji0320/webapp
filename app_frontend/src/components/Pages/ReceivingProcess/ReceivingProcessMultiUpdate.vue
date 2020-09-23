@@ -27,6 +27,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   data() {
@@ -34,6 +35,9 @@ export default {
       date: "",
       // dateIsAble: true
     };
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),

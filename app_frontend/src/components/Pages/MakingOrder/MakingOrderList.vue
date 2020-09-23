@@ -122,7 +122,7 @@
           </span>
         </app-order-dialog>
         <!-- 部品表ダイアログ -->
-        <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
+        <app-bom-dialog @response-function="responseFunction" ref="bomDialog" :hideButtons="true"></app-bom-dialog>
       </span>
       
     </app-card-table>
@@ -261,7 +261,7 @@ export default {
       let res = await this.getBillOfMaterial(this.makingOrder.billOfMaterial);
       this.setBillOfMaterial(res);
       // console.log(res);
-      this.$refs.bom_dialog.openDialogBOM();
+      this.$refs.bomDialog.openDialogBOM();
     },
     // 処理結果統合フォーム
     responseFunction(val) {
