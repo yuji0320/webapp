@@ -163,7 +163,7 @@ class ManHourFilter(filters.FilterSet):
     class Meta:
         model = ManHour
         fields = [
-            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains'
+            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains',
         ]
 
     order_by = filters.OrderingFilter(

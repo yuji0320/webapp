@@ -80,9 +80,6 @@
                   class="ps-2"
                 ></v-text-field>
               </v-col>
-
-
-
             </v-row>
           </span>
         </app-search-toolbar>

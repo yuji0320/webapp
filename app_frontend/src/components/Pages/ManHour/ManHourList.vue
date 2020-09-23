@@ -3,21 +3,91 @@
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
-    <app-card>
+    <app-card-table
+      :headers="headers"
+      :items="manHours.results"
+      :viewIcon="false"
+      @edit-item="editManHour"
+      @double-clicked="editManHour"
+      @delete-item="deleteManHourData"
+      ref="card_table"
+    >
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-icon"><v-icon>access_time</v-icon></span>
-      <span slot="card-header-title">{{ switchParams.title }}</span>
+      <!-- <span slot="card-header-icon"><v-icon>access_time</v-icon></span>
+      <span slot="card-header-title">{{ switchParams.title }}</span> -->
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
+        <app-man-hour-dialog @response-function="responseFunction" ref="man_hour_dialog"></app-man-hour-dialog>
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
-      <span slot="search-bar">
+      <div slot="search-bar">
+
+        <app-search-toolbar
+          :length="manHours.pages"
+          :count="manHours.count"
+          :orderBy="orderBy"
+          :params="switchParams.params"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
+        >
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <!-- 従業員検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Staff"
+                orderBy="full_name"
+                v-model="refineParams.staff"
+                searchType="staff"
+                :errorMessages="responseError.staff"
+                ref="staff"
+                ></app-incremental-model-search>
+              </v-col>
+              <!-- 工事番号検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Job Order"
+                orderBy="name"
+                v-model="refineParams.job_order"
+                searchType="jobOrder"
+                :errorMessages="responseError.job_order"
+                ref="jobOrder"
+                ></app-incremental-model-search>
+              </v-col>
+              <!-- 作業種別検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Job Type"
+                orderBy="number"
+                v-model="refineParams.type"
+                searchType="jobType"
+                :errorMessages="responseError.type"
+                ref="jobType"
+                ></app-incremental-model-search>
+              </v-col>
+            </v-row>
+            <v-row no-gutters>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-input-date label="Date from" v-model="refineParams.work_date_range_after" appendOuterIcon="〜"></app-input-date>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-input-date label="Date to" v-model="refineParams.work_date_range_before"></app-input-date>
+              </v-col>
+            </v-row>
+          </span>
+        </app-search-toolbar>
+      </div>
+
+      <!-- カード上部検索機能コンポーネント -->
+      <!-- <span slot="search-bar">
         <v-layout row wrap>
           <app-search-bar
             :length="manHours.pages"
@@ -28,64 +98,47 @@
             @search-list="getList"
           ></app-search-bar>
         </v-layout>
-      </span>
+      </span> -->
 
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="headers"
-          :items="manHours.results"
-          @edit-item="editManHour"
-          @double-clicked="editManHour"
-          @delete-item="deleteManHourData"
-        >
-        </app-data-table>
-      </span>
-      <!-- ダイアログ拡張スロット -->
-      <span slot="card-dialog">
-        <app-man-hour-dialog @response-function="responseFunction" ref="man_hour_dialog"></app-man-hour-dialog>
-      </span>
-    </app-card>
+    </app-card-table>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import ManHourDialog from '@/components/Module/Dialogs/ManHourDialog.vue';
 
 export default {
   title: "Man Hour List",
   name: "ManHourList",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-man-hour-dialog": ManHourDialog
+  },
   data() {
     return {
       orderBy: "-date",
       // テーブルヘッダーデータ
       headers: [
-        { text: "Staff Name", value: "staffData", nest:"fullName" },
+        { text: "Staff Name", value: "staffName" },
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value:"productName" },
-        { text: "Job type", value: "typeData", nest:"incrementalField" },
-        { text: "Hours", value: "workHour", class: "text-xs-right" },
+        { text: "Job type", value: "jobType"},
+        { text: "Hours", value: "workHour", align: "right" },
         { text: "Date", value: "date" },
-        { text: "Action", value: "action", class: "text-xs-center" }
+        { text: "Action", value: "action", align: "center" }
       ],
       // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Staff Name", value: "name" },
-          { label: "MFG No", value: "mfg_no" },
-          { label: "Date", value: "date_icontains" },
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams: {}
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["jobTypes"]),
-    ...mapState("manHourAPI", ["isAdmin", "manHour", "manHours"]),
+    ...mapState("manHourAPI", ["responseError", "isAdmin", "manHour", "manHours"]),
     // ページごとの設定
     switchParams: function () {
       let title = "Add or Edit Man Hour ";
@@ -93,11 +146,13 @@ export default {
       if(this.isAdmin) {
         title += "(Admin)";
         params = {
+          staff__company: this.loginUserData.staffId,
           order_by: this.orderBy
         };
       } else {
         title += "(Personal)";
         params = {
+          staff__company: this.loginUserData.staffId,
           staff: this.loginUserData.staffId,
           order_by: this.orderBy
         };
@@ -150,10 +205,17 @@ export default {
     backToMenu() {
       this.$router.push({ name: "ManHourMenu" });
     },
+    clearParams() {
+      this.refineParams = {};
+      this.$refs.staff.clearItem();
+      this.$refs.jobOrder.clearItem();
+
+    }
   },
   created () {
     this.setManHours({});
     this.getJobTypes({params:{order_by:"number"}});
+    this.getList({params: this.switchParams.params});
   }
 }
 </script>

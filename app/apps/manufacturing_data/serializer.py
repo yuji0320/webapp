@@ -620,11 +620,10 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
 
 
 class ManHourSerializer(serializers.ModelSerializer):
-    staff_data = UserStaffSerializer(source='staff', read_only=True)
-    type_data = SystemJobTypeSerializer(source='type', read_only=True)
-    failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     product_name = serializers.SerializerMethodField()
+    staff_name = serializers.SerializerMethodField()
+    job_type = serializers.SerializerMethodField()
 
     # 工事番号取得
     @staticmethod
@@ -642,6 +641,18 @@ class ManHourSerializer(serializers.ModelSerializer):
             name = obj.job_order.name
         return name
 
+    # 従業員名取得
+    @staticmethod
+    def get_staff_name(obj):
+        staff_name = obj.staff.full_name
+        return staff_name
+
+    # 作業区分取得
+    @staticmethod
+    def get_job_type(obj):
+        job_type = obj.type.name
+        return job_type
+
     class Meta:
         model = ManHour
         fields = (
@@ -658,11 +669,10 @@ class ManHourSerializer(serializers.ModelSerializer):
             'modified_at',
             'modified_by',
             # read_only under here
-            'staff_data',
-            'type_data',
-            'failure_data',
             'mfg_no',
-            'product_name'
+            'product_name',
+            'staff_name',
+            'job_type',
         )
 
 

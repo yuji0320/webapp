@@ -91,7 +91,12 @@ class ManHourAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = ManHourSerializer
-    queryset = ManHour.objects.all()
+    queryset = (
+        ManHour.objects.select_related(
+            'staff', 'type', 'failure', 'created_by', 'modified_by', 'job_order', 'staff__company', 
+            'staff__user', 'staff__company'
+        )
+    )
     filter_class = ManHourFilter
 
 

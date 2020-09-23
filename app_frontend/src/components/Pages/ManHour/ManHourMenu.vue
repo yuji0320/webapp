@@ -15,7 +15,6 @@
             <v-btn 
               large 
               block 
-              round
               color="primary"
               @click="manHour(false)"
             >
@@ -26,7 +25,6 @@
             <v-btn 
               large 
               block 
-              round
               color="primary"
               @click="manHour(true)"
             >
@@ -52,7 +50,6 @@ export default {
   },
   computed: {
     ...mapState("manHourAPI", ["isAdmin"]),
-
   },
   methods: {
     ...mapActions("manHourAPI", ["setIsAdmin"]),
