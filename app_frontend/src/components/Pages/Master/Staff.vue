@@ -9,6 +9,7 @@
       :items="userStaffs.results"
       :errorColumn="errorColumn"
       @edit-item="editStaff"
+      @double-click="editStaff"
       @delete-item="deleteStaffData"
     >
       <!-- ヘッダー部分スロット -->
@@ -131,42 +132,65 @@
         </app-dialog>
       </span>
 
-      <span slot="card-header-button">
-        <v-layout row wrap>
-          <!-- エクセルアップロード -->
-          <v-btn
-            fab
-            small
-            @click="upload"
-          >
-            <v-icon>cloud_upload</v-icon>
-          </v-btn>
-        </v-layout>
-      </span>
-
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <app-search-bar
+        <app-search-toolbar
           :length="userStaffs.pages"
           :count="userStaffs.count"
           :orderBy="orderBy"
-          :incremental="incremental"
           :params="params"
+          :refineParams="refineParams"
           @search-list="getList"
-        ></app-search-bar>
+          @clear-params="clearParams"
+          :refineDetail="false"
+        >
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Staff Number"
+                  v-model="refineParams.staffNumber"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Full Name"
+                  v-model="refineParams.fullName"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_tenure"
+                  :label="`is Tenture`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </span>
+        </app-search-toolbar>
       </div>
-
     </app-card-table>
-
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   title: "Staff master",
   name: "Staff",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-dialog": Dialog,
+  },
   data() {
     return {
       orderBy: "staff_number",
@@ -184,17 +208,7 @@ export default {
         { text: "Action", value: "action" }
       ],
       errorColumn: "dateLeft",
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Staff Number", value: "staffNumber" },
-          { label: "Full Name", value: "fullName" },
-          { label: "Ruby", value: "ruby" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "ruby",
-        tableSearch: ""
-      }
+      refineParams: {}
     };
   },
   computed: {
@@ -215,6 +229,9 @@ export default {
       this.$store.commit("systemConfig/setLoading", true);
       let list = await this.getStaffs(data);
       this.$store.commit("systemConfig/setLoading", false);
+    },
+    clearParams() {
+      this.refineParams = {};
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -244,6 +261,7 @@ export default {
       if (res.data) {
         // 成功時はモーダルを閉じる
         this.$refs.dialog.closeDialog();
+        this.responseFunction(res);
       } else {
         // 失敗時
         console.log("Failed");
@@ -276,7 +294,7 @@ export default {
   },
   created() {
     // ページ作成時にgetでデータを取得
-    this.getStaffs({ params: this.params });
+    this.getList({ params: this.params });
   }
 };
 </script>

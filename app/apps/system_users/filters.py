@@ -71,7 +71,7 @@ class UserPartnerFilter(filters.FilterSet):
     class Meta:
         model = UserPartner
         fields = ['id', 'company', 'name', 'partnerNumber', 'is_customer', 'is_delivery_destination', 'is_supplier',
-                  'is_manufacturer']
+                  'is_manufacturer', 'abbr']
 
     order_by = filters.OrderingFilter(
         fields=(
