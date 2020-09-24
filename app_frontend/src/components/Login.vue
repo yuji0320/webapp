@@ -2,16 +2,16 @@
   <v-container fluid>
 
     <!-- ヘッダーツールバー -->
-    <v-toolbar app >
+    <!-- <v-toolbar app >
       <v-toolbar-title v-text="headerTitle"></v-toolbar-title>
       <v-spacer></v-spacer>
-    </v-toolbar>
+    </v-toolbar> -->
 
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
-            <v-toolbar-title>Login form test</v-toolbar-title>
+            <v-toolbar-title>Login form of {{ headerTitle }}</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>
