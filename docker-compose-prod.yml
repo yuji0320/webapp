@@ -10,8 +10,8 @@ dev_app:
     - dev_redis:redis
   volumes:
     - ./app:/usr/src/app
-  command: ./manage.py runserver 0.0.0.0:8000
-  # command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
+  # command: ./manage.py runserver 0.0.0.0:8000
+  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
 
 dev_app_frontend:
   build: ./app_frontend
@@ -40,6 +40,7 @@ dev_nginx:
     - ./nginx/log:/var/log/nginx
     - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
     - ./app_frontend/dist:/var/www/html
+    - ./app_frontend/dist:/usr/src/app/test
     - ./app/static:/usr/src/app/static
 
 dev_mysql:
