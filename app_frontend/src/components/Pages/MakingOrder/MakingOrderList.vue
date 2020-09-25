@@ -138,7 +138,7 @@ import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 import MakingOrderMultiDeleteMixin from "./MakingOrderMultiDeleteMixin.js"
 import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
 import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
-import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue"
+import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue";
 
 export default {
   title: "Making Order",

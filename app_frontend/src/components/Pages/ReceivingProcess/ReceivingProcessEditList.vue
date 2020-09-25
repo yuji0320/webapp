@@ -196,7 +196,7 @@ export default {
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("systemUserApi", ["getPartner", "getCompany"]),
     ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial", "getBillOfMaterial"]),
-    ...mapActions("makingOrderAPI", ["setMakingOrder", "postMakingOrder", "putMakingOrder", "getMakingOrder"]),
+    ...mapActions("makingOrderAPI", ["setMakingOrder", "putMakingOrder", "getMakingOrder"]),
     ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setReceivingProcess", "deleteReceivingProcess"]),
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);

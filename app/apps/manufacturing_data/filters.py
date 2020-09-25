@@ -84,6 +84,7 @@ class BillOfMaterialFilter(filters.FilterSet):
 class MakingOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+    drawing_number = filters.CharFilter(field_name='drawing_number', lookup_expr='icontains')
     no_supplier = filters.BooleanFilter(field_name='supplier', lookup_expr='isnull')
     no_bom = filters.BooleanFilter(field_name='bill_of_material', lookup_expr='isnull')
 

@@ -1,65 +1,100 @@
 <template>
   <v-container fluid grid-list-lg>
-    <app-card>
+    <app-card-table
+      :headers="switchParams.headers"
+      :items="billOfMaterials.results"
+      :editDisabled="true"
+      :viewIcon="true"
+      @view-item="viewBillOfMaterial"
+      @double-click="viewBillOfMaterial"
+      ref="data_table"
+    >
       <span slot="card-header-icon"><v-icon>search</v-icon></span>
       <span slot="card-header-title">{{ switchParams.title }}</span>
-
-      <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
       </span>
 
+      <span slot="card-dialog">
+        <app-bom-dialog ref="bomDialog" :hideButtons="true" :editDisable="true"></app-bom-dialog>
+      </span>
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <v-layout row wrap>
-          <app-search-bar
-            :length="billOfMaterials.pages"
-            :count="billOfMaterials.count"
-            :orderBy="orderBy"
-            :incremental="incremental"
-            :params="params"
-            @search-list="getList"
-          ></app-search-bar>
-        </v-layout>
-      </div>
+        <v-card-text>* Green is already printed.</v-card-text>
 
-      <div slot="card-title-text">
-        <p>* Green is already printed.</p>
-      </div>
-
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="switchParams.headers"
-          :items="billOfMaterials.results"
-          :checkbox="true"
-          :editDisabled="true"
-          :viewIcon="true"
-          @view-item="viewBillOfMaterial"
-          @double-clicked="viewBillOfMaterial"
-          ref="data_table"
+        <app-search-toolbar
+          :length="billOfMaterials.pages"
+          :count="billOfMaterials.count"
+          :orderBy="orderBy"
+          :params="params"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
         >
-        </app-data-table>
-      </span>
-
-      <!-- ダイアログ関係スロット -->
-      <span slot="card-dialog">
-        <!-- 部品表登録編集ダイアログコンポーネント -->
-        <app-bom-dialog ref="bom_dialog" :hideButtons="true" :editDisable="true"></app-bom-dialog>
-      </span>
-
-    </app-card>
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Parts Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <app-incremental-model-search
+                label="Manufacturaer"
+                orderBy="name"
+                v-model="refineParams.manufacturer"
+                searchType="partner"
+                filter="manufacturer"
+                :errorMessages="responseError.manufacturer"
+                ref="manufacturer"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <v-text-field 
+                  label="Standard/Form"
+                  v-model="refineParams.standard"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 加工部品の場合 -->
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="isProcessed">
+                <v-text-field 
+                  label="Drawing Number"
+                  v-model="refineParams.drawing_number"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </span>
+        </app-search-toolbar>
+      </div>
+    </app-card-table>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+
 export default {
   title: "Search BOM",
   name: "SearchBillOfMaterial",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-bom-dialog": BillOfMaterialDialog
+  },
   data () {
     return {
       orderBy: 'manufacturer__name,standard,drawing_number',
@@ -68,14 +103,14 @@ export default {
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Amount", value: "amount", class: "text-xs-right" },
-        { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
-        { text: "Delivery", value: "desiredDeliveryDate" },
-        { text: "Action", value: "action", class: "text-xs-center" }
+        { text: "Amount", value: "amount", class: "text-xs-right", align:"right" },
+        { text: "Unit Price", value: "displayPrice", class: "text-xs-right", align:"right" },
+        { text: "Delivery", value: "desiredDeliveryDate", align:"right" },
+        { text: "Action", value: "action", class: "text-xs-center", align:"center" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
-        { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
+        { text: "Manufacturer", value: "manufacturerAbbr"},
         { text: "Standard/Form", value: "standard" },
         { text: "Unit number", value: "unit_number" }
       ],
@@ -85,22 +120,13 @@ export default {
         { text: "Surface treatment", value: "surfaceTreatment" },
         { text: "Material", value: "material" }
       ],
-      // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Part Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams: {}
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
-    ...mapState("billOfMaterialAPI", ["jobOrderID", "isProcessed", "billOfMaterials", "billOfMaterial"]),
+    ...mapState("billOfMaterialAPI", ["responseError","jobOrderID", "isProcessed", "billOfMaterials", "billOfMaterial"]),
     params() {
       return {
         company: this.loginUserData["companyId"],
@@ -116,7 +142,7 @@ export default {
         title += "(Processed Parts)";
         headers = this.defaultHeadersTop.concat(this.processedHeaders, this.defaultHeadersEnd);
       } else {
-        title += "(Other)";
+        title += "(Not Processed Parts)";
         headers = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
       }
       return {
@@ -136,16 +162,20 @@ export default {
     // 編集データ設定
     viewBillOfMaterial(val) {
       this.setBillOfMaterial(val);
-      this.$refs.bom_dialog.editBillOfMaterial();
+      this.$refs.bomDialog.openDialogBOM();
     },
     // メニューに戻る
     backToMenu() {
       this.$router.push({ name: "SearchMenu" });
+    },
+    clearParams() {
+      this.refineParams = {};
+      this.$refs.manufacturer.clearItem();
     }
   },
   created () {
     this.setBillOfMaterials({});
-    // this.getList({params: this.params})
+    this.getList({params: this.params})
     this.getJobOrder(this.jobOrderID);
   }
 }

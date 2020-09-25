@@ -15,7 +15,12 @@
         </v-col>
         <v-col cols="12">
           <!-- 絞り込み検索 -->
-          <app-search-data @refine="refine" @clearData="clearData" :refineDetail="refineDetail">
+          <app-search-data 
+            @refine="refine" 
+            @clearData="clearData" 
+            :refineDetail="refineDetail"
+            v-show="!hideToolbar"
+          >
             <span slot="search-data-header-open">
               <slot name="search-data-header-open"></slot>
             </span>
@@ -54,6 +59,9 @@ export default {
     params: { required: true },
     refineParams: { required: true },
     refineDetail:　{ required: false },
+    // *上下pagenation利用時のみ
+    value:　{ required: false },
+    hideToolbar:　{ required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -64,8 +72,13 @@ export default {
       this.params.page = val;
       const search = { params: Object.assign(this.refineParams, this.params)};
       this.$emit("search-list", search);
-      // console.log(val, this.params);
+      // *上下pagenation利用時のみ
+      this.$emit("update-page-value", this.pageValue);
     },
+    // *上下pagenation利用時のみ
+    value() {
+      this.pageValue = this.value;
+    }
   },
   methods: {
     refine() {
@@ -73,17 +86,16 @@ export default {
       this.params.page = 1;
       const search = {params: Object.assign(this.refineParams, this.params)};
       this.$emit("search-list", search);
-      // console.log(search);
+      // *上下pagenation利用時のみ
+      this.$emit("update-page-value", this.pageValue);
     },
     clearData() {
-      this.$emit("clear-params");
-      // console.log("test");
-      
+      this.$emit("clear-params");      
     }
   },
   components: {
     "app-pagination": Pagination,
     "app-search-data": SearchData
-  }
+  },
 };
 </script>

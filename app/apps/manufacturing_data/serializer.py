@@ -505,6 +505,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
     supplier_abbr = serializers.SerializerMethodField()
     supplier = serializers.SerializerMethodField()
     part_type = serializers.SerializerMethodField()
+    ordered_date = serializers.SerializerMethodField()
 
     # 発注番号取得
     @staticmethod
@@ -632,6 +633,11 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             part_type = obj.order.bill_of_material.type.id
         return part_type
 
+    # 発注日取得
+    @staticmethod
+    def get_ordered_date(obj):
+        ordered_date = obj.order.ordered_date
+        return ordered_date
 
     class Meta:
         model = ReceivingProcess
@@ -667,6 +673,7 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'supplier',
             'supplier_abbr',
             'part_type',
+            'ordered_date',
         )
 
 

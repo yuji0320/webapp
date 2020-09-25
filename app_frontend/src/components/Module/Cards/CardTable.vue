@@ -37,7 +37,6 @@
           disable-sort
           dense
         >
-
           <!-- テーブルデータ -->
           <template v-slot:item="props">
             <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
@@ -110,6 +109,7 @@
                       small
                       class="mr-2"
                       @click="editItem(props.item)"
+                      v-show="!editDisabled"
                     >
                       edit
                     </v-icon>
@@ -118,6 +118,7 @@
                       small
                       class="mr-2"
                       @click="deleteItem(props.item)"
+                      v-show="!editDisabled"
                     >
                       delete
                     </v-icon>
@@ -126,12 +127,10 @@
               </td>            
             </tr>
           </template>
-
         </v-data-table>
       </span>
 
-
-
+      <slot name="bottom-contents"></slot>
 
       <!-- Cardフッター -->
       <v-footer card height="auto">
