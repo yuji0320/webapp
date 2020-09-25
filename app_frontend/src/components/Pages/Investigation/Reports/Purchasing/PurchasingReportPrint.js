@@ -56,7 +56,7 @@ export default {
       } else {
         // 合計表示の場合
         headerData = this.headersSummary;
-        tableWidths = [200,100];
+        tableWidths = ["*","*"];
         // ヘッダーの整形、追加
         tablebody.push(this.headerList(headerData));
         // コンテンツの入力
@@ -71,11 +71,13 @@ export default {
       }
       // テーブル定義
       let tableData = {
+        width: 'auto',
+        alignment: "justify",
         table: {
           headerRows: 1,
           widths: tableWidths,
           body: tablebody,
-          alignment: "justify",
+          alignment: "center",
         }
       }
       // 出力データ整形

@@ -19,14 +19,6 @@
           <!-- 検索バー表示スロット -->
           <slot name="search-bar"></slot>
         </v-col>
-        <!-- <v-col cols="12"> -->
-          <!-- タブ表示用スロット -->
-          <!-- <slot name="card-tabs"></slot> -->
-        <!-- </v-col> -->
-        <!-- <v-col cols="12"> -->
-          <!-- テキスト挿入用スロット -->
-          <!-- <slot name="card-title-text"></slot> -->
-        <!-- </v-col> -->
       </v-row>
     </v-card-title>
 

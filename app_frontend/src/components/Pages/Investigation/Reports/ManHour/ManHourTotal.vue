@@ -9,7 +9,7 @@
       <span slot="card-header-title">{{ switchParams.title }}</span>
 
             <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn :to="{ name: 'ReportsMenu' }" >
           <v-icon>reply</v-icon>
           Back to Menu
@@ -31,7 +31,7 @@
             <!-- 取引先別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="search"
               :disabled = "date_from === '' || date_to === '' "
             >Search</v-btn>
@@ -40,14 +40,18 @@
       </span>
 
       <span slot="card-content">
-        <h2 class="text-xs-right">Grand Total : {{ grandTotal }}h</h2>
+        <h2 class="text-right">Grand Total : {{ grandTotal }}h</h2>
         <!-- テーブル表示 -->
-        <app-data-table
+        <v-data-table
           :headers="tableHeader"
           :items="results"
+          hide-default-footer
+          disable-sort
+          class="elevation-1 mb-4"
+          :items-per-page="results.length"
+          dense
         >
-        </app-data-table>
-        <!-- <h2 class="text-xs-right">Grand Total : {{ grandTotal }}h</h2> -->
+        </v-data-table>
 
         <!-- 注意書き -->
         <p>*
@@ -128,9 +132,10 @@ export default {
           headerObjekt.text = h.number + ":" + h.abbr;
           headerObjekt.value = h.id;
           headerObjekt.class = "text-xs-right";
+          headerObjekt.align = "right";
           array.push(headerObjekt);
         }
-        array.push({ text: "Total", value: "total", class: "text-xs-right" });
+        array.push({ text: "Total", value: "total", class: "text-xs-right", align:"right" });
       }
       return array
     }
@@ -143,6 +148,7 @@ export default {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getStaffs({params: this.paramsStaff})
       await this.getManHours({params: this.paramsManHour})
+      // console.log(this.userStaffs.results);
       let list  = await this.createData();
       this.results = list.array;
       this.grandTotal = list.grandTotal;

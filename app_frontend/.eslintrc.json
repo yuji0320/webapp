@@ -19,5 +19,6 @@
         "vue"
     ],
     "rules": {
+        "valid-v-slot": "off"
     }
 }

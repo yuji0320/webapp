@@ -8,19 +8,17 @@
       <span slot="card-header-title">Costing Report</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- 印刷ボタン -->
-      <span slot="card-header-buck-button">
+        <!-- 印刷ボタン -->
         <v-btn 
           @click="print" 
           color="primary"
           :disabled="dataList.length === 0"
+          class="ms-2"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -39,7 +37,7 @@
             <!-- 取引先別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="search"
               :disabled = "date_from === '' || date_to === '' "
             >Search</v-btn>
@@ -49,12 +47,16 @@
 
       <span slot="card-content">
         <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ grandTotal | moneyDelemiter }}</h2>
-        <app-data-table
+        <v-data-table
           :headers="headers"
           :items="dataList"
-          :footer="true"
+          hide-default-footer
+          disable-sort
+          class="elevation-1 mb-4"
+          :items-per-page="dataList.length"
+          dense
         >
-        </app-data-table>
+        </v-data-table>
       </span>
     </app-card>
   </v-container>
@@ -79,11 +81,11 @@ export default {
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
         { text: "Completion Date", value: "completionDate", class: "text-xs-center" },
-        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"},
-        {text: "Direct Cost", value: "directCost", nest: "total", class: "text-xs-right"},
-        {text: "Labor Cost", value: "laborCost", nest: "totalCosts", class: "text-xs-right"},
-        {text: "Total Cost", value: "totalCost", class: "text-xs-right"},
-        {text: "Cost Rate(%)", value: "costRate", class: "text-xs-right"},
+        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right", align:"right"},
+        {text: "Direct Cost", value: "directCostTotal", class: "text-xs-right", align:"right"},
+        {text: "Labor Cost", value: "laborCostTotal", class: "text-xs-right", align:"right"},
+        {text: "Total Cost", value: "totalCost", class: "text-xs-right", align:"right"},
+        {text: "Cost Rate(%)", value: "costRate", class: "text-xs-right", align:"right"},
       ],
       dataList: [],
       grandTotal: 0
@@ -143,8 +145,10 @@ export default {
       for(let i=0, JobOrder; JobOrder=dataList[i]; i++) {
         // 仕入データ集計
         JobOrder.directCost = await this.getBillOfMaterialList(JobOrder.id);
+        JobOrder.directCostTotal = JobOrder.directCost.total;
         // 工数データ取得
         JobOrder.laborCost = await this.getManHourList(JobOrder.id);
+        JobOrder.laborCostTotal = JobOrder.laborCost.totalCosts;
         // 集計
         JobOrder.totalCost = this.moneyComma((this.removeCamma(JobOrder.directCost.total) + this.removeCamma(JobOrder.laborCost.totalCosts)).toFixed(2));
         // 原価率の集計
@@ -162,8 +166,8 @@ export default {
         laborCost:{},
       };
       totalRow.defaultCurrencyOrderAmount = this.moneyComma(totalSales.toFixed(2));
-      totalRow.directCost.total = this.moneyComma(totalDirectCost.toFixed(2));
-      totalRow.laborCost.totalCosts = this.moneyComma(totalLaborCost.toFixed(2));
+      totalRow.directCostTotal = this.moneyComma(totalDirectCost.toFixed(2));
+      totalRow.laborCostTotal = this.moneyComma(totalLaborCost.toFixed(2));
       totalRow.totalCost = this.moneyComma(totalCosts.toFixed(2));
       totalRow.costRate = (totalCosts / totalSales * 100).toFixed(2);
       // console.log(totalRow);

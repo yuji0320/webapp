@@ -9,19 +9,17 @@
       <span slot="card-header-title">{{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- 印刷ボタン -->
-      <span slot="card-header-buck-button">
+        <!-- 印刷ボタン -->
         <v-btn 
           @click="print" 
           color="primary"
           :disabled="summaryBy === ''"
+          class="ms-2"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -41,14 +39,14 @@
             <!-- 取引先別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="sortByJobOrder"
               :disabled = "date_from === '' || date_to === '' "
             >Search(Sort by Job Order)</v-btn>
             <!-- 年月別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="sortBySupplier"
               :disabled = "date_from === '' || date_to === '' "
             >Search(Sort by Supplier)</v-btn>
@@ -60,9 +58,10 @@
       <span slot="card-content">
         <template v-if="dataList">
           <!-- 仕入総合計の表示 -->
-          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+          <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           <!-- 詳細表示の場合 -->
           <template v-if="isDetail">
+            <!-- {{ summaryList }} -->
             <div
               v-for="(list, id) in summaryList"
               :key="id"
@@ -70,18 +69,24 @@
               <!-- 項目名 -->
               <h2 class="title font-weight-light">{{ list.value }}</h2>
                 <!-- テーブル表示 -->
-                <app-data-table
+                <v-data-table
                   :headers="headers"
                   :items="list.dataList"
-                  :footer="true"
+                  hide-default-footer
+                  disable-sort
+                  class="elevation-1 mb-4"
+                  :items-per-page="summaryList.length"
+                  dense
                 >
-                  <!-- 小計 -->
-                  <span slot="data-table-footer">
-                    <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
-                  </span>
-                </app-data-table>
+                  <!-- footer表示 -->
+                  <template v-slot:[bodyAppend()]>
+                    <td :colspan="headers.length" align="right">
+                      <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
+                    </td>
+                  </template>
+                </v-data-table>
             </div>
-            <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+            <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           </template>
           <!-- 集計のみ表示の場合 -->
           <template v-else>
@@ -89,16 +94,22 @@
               <!-- 表示サイズの調整 -->
               <v-flex xs12 lg6>
                 <!-- テーブル表示 -->
-                <app-data-table
+                <v-data-table
                   :headers="headersSummary"
                   :items="summaryList"
-                  :footer="true"
+                  hide-default-footer
+                  disable-sort
+                  class="elevation-1 mb-4"
+                  :items-per-page="summaryList.length"
+                  dense
                 >
                   <!-- 仕入総合計の表示 -->
-                  <span slot="data-table-footer">
-                    <strong>Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</strong>
-                  </span>
-                </app-data-table>     
+                  <template v-slot:[bodyAppend()]>
+                    <td :colspan="headers.length" align="right">
+                      <strong>Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</strong>
+                    </td>
+                  </template>
+                </v-data-table>     
               </v-flex>
             </v-layout>
           </template>
@@ -118,30 +129,30 @@ export default {
   mixins: [PurchasingReportPrint],
   data() {
     return {
-      date_from: "2019-08-01",
-      date_to: "2019-08-31",
+      date_from: "",
+      date_to: "",
       // date_from: "",
       // date_to: "",
       orderBy: 'order__supplier__name,order__manufacturer__name,order__standard,order__drawing_number,order__name',
       summaryBy: "",
       headersMfgNo: [
-        { text: "MFG No", value: "orderData", nest:"mfgNo" },
+        { text: "MFG No", value: "mfgNo"},
       ],
       headersSupplier: [
-        { text: "Supplier", value: "orderData", nest:"supplierData", nestNest:"abbr" },
+        { text: "Supplier", value: "supplierAbbr"},
       ],
       headersDetail: [
-        { text: "Name", value: "orderData", nest:"name" },
-        { text: "mfr.", value: "orderData", nest:"manufacturerData", nestNest:"abbr" },
-        { text: "Detail", value: "orderData", nest:"billOfMaterial", nestNest:"partsDetail" },
+        { text: "Name", value: "partName"},
+        { text: "mfr.", value: "manufacturerAbbr"},
+        { text: "Detail", value: "partDetail"},
         { text: "Date", value: "receivedDate", class: "text-xs-center" },
         { text: "Qty", value: "amount", class: "text-xs-right" },
-        { text: "Price", value: "orderData", nest:"displayPrice", class: "text-xs-right" },
-        { text: "Total($)", value: "orderData", nest:"displayTotalDefaultCurrencyPrice", class: "text-xs-right"},
+        { text: "Price", value: "orderPriceDisplay", class: "text-xs-right", align:"right" },
+        { text: "Total($)", value: "displayTotalDefaultCurrencyPrice", class: "text-xs-right", align:"right"},
       ],
       headersSummary: [
         { text: "Detail", value: "value"},
-        { text: "Total($)", value: "subTotal", class: "text-xs-right"},
+        { text: "Total($)", value: "subTotal", class: "text-xs-right", align:"right"},
       ],
       dataList:[],
     }
@@ -175,7 +186,7 @@ export default {
       let total = 0;
       if(this.dataList) {
         for(var i=0,d;d=this.dataList[i];i++){
-          let price = parseFloat(d.orderData.totalDefaultCurrencyPrice);
+          let price = parseFloat(d.totalDefaultCurrencyPrice);
           total += price;
         }
         total = Math.round( total * 100) / 100;
@@ -195,6 +206,10 @@ export default {
   methods: {
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
     ...mapActions("receivingProcessAPI", ["getReceivingProcesses", "setReceivingProcessesList", "setIsDetail"]),
+    // data-tableのディレクティブ操作
+    bodyAppend() {
+      return `body.append`;
+    },
     moneyComma(value) {
       return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
     },
@@ -246,8 +261,8 @@ export default {
         // 仕入ファイルから工事番号情報の抜き出し
         for(var i=0,d;d=this.dataList[i];i++){
           let array = {
-            key: d.orderData.jobOrder,
-            value: d.orderData.mfgNo,
+            key: d.mfgNo,
+            value: d.mfgNo,
           }
           jobOrderList.push(array);
         }
@@ -259,8 +274,8 @@ export default {
         });
         // 工事番号別集計
         for(var i=0,d;d=jobOrderList[i];i++){
-          let list = this.dataList.filter(x => x.orderData.jobOrder === d.key);
-          let total = list.reduce((p, x) => p + parseFloat(x.orderData.totalDefaultCurrencyPrice), 0)
+          let list = this.dataList.filter(x => x.mfgNo === d.key);
+          let total = list.reduce((p, x) => p + parseFloat(x.totalDefaultCurrencyPrice), 0)
           d.subTotal = this.moneyComma((Math.round( total * 100) / 100).toFixed(2));
           d.dataList = list;
         }
@@ -281,8 +296,8 @@ export default {
         // 仕入ファイルから仕入先情報の抜き出し
         for(var i=0,d;d=this.dataList[i];i++){
           let array = {
-            key: d.orderData.supplierData.id,
-            value: d.orderData.supplierData.name,
+            key: d.supplier,
+            value: d.supplierAbbr,
           }
           supplierList.push(array);
         }
@@ -294,8 +309,8 @@ export default {
         });
         // 取引先別集計
         for(var i=0,d;d=supplierList[i];i++){
-          let list = this.dataList.filter(x => x.orderData.supplier === d.key);
-          let total = list.reduce((p, x) => p + parseFloat(x.orderData.totalDefaultCurrencyPrice), 0)
+          let list = this.dataList.filter(x => x.supplier === d.key);
+          let total = list.reduce((p, x) => p + parseFloat(x.totalDefaultCurrencyPrice), 0)
           d.subTotal = this.moneyComma((Math.round( total * 100) / 100).toFixed(2));
           d.dataList = list;
         }

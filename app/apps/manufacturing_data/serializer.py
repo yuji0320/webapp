@@ -498,8 +498,13 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
     order_amount = serializers.SerializerMethodField()
     order_price = serializers.SerializerMethodField()
     order_price_display = serializers.SerializerMethodField()
+    total_default_currency_price = serializers.SerializerMethodField()
+    display_total_default_currency_price = serializers.SerializerMethodField()
     mfg_no = serializers.SerializerMethodField()
+    manufacturer_abbr = serializers.SerializerMethodField()
     supplier_abbr = serializers.SerializerMethodField()
+    supplier = serializers.SerializerMethodField()
+    part_type = serializers.SerializerMethodField()
 
     # 発注番号取得
     @staticmethod
@@ -568,6 +573,23 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
         order_price_display = obj.currency.display + "{:-,.2f}".format(obj.order.unit_price)
         return order_price_display
 
+    # デフォルト通貨での合計価格計算
+    @staticmethod
+    def get_total_default_currency_price(obj):
+        total_price = 0
+        if(obj.is_received): 
+            total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        return round(total_price, 2)
+
+    # デフォルト通貨での合計価格計算(表示用)
+    @staticmethod
+    def get_display_total_default_currency_price(obj):
+        total_price = 0
+        if(obj.is_received): 
+            total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        display_price = "{:,.2f}".format(total_price)
+        return display_price
+
     # 工事番号取得
     @staticmethod
     def get_mfg_no(obj):
@@ -578,6 +600,22 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             mfg_no = "N/A"
         return mfg_no
 
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.order.manufacturer:
+            manufacturer_abbr = obj.order.manufacturer.abbr
+        return manufacturer_abbr
+
+    # 仕入先id取得
+    @staticmethod
+    def get_supplier(obj):
+        supplier = ""
+        if(obj.order.supplier) :
+            supplier = obj.order.supplier.id
+        return supplier
+
     # 仕入先名取得
     @staticmethod
     def get_supplier_abbr(obj):
@@ -585,6 +623,15 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
         if(obj.order.supplier) :
             supplier_abbr = obj.order.supplier.abbr
         return supplier_abbr
+
+    # 部品種別取得
+    @staticmethod
+    def get_part_type(obj):
+        part_type = ""
+        if(obj.order.bill_of_material) :
+            part_type = obj.order.bill_of_material.type.id
+        return part_type
+
 
     class Meta:
         model = ReceivingProcess
@@ -613,9 +660,13 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'order_amount',
             'order_price',
             'order_price_display',
+            'total_default_currency_price',
+            'display_total_default_currency_price',
             'mfg_no',
+            'manufacturer_abbr',
+            'supplier',
             'supplier_abbr',
-            # 'order_data',
+            'part_type',
         )
 
 

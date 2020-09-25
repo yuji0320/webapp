@@ -24,7 +24,7 @@
         }"
         @dblclick="doubleClick(item)"
         :active="selected"
-      >
+      >      
         <td 
           v-for="(header, index) in headers"
           :key="index"

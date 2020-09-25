@@ -9,19 +9,17 @@
       <span slot="card-header-title">Work In Process (Material Costs)</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- 印刷ボタン -->
-      <span slot="card-header-buck-button">
+        <!-- 印刷ボタン -->
         <v-btn 
           @click="print" 
           color="primary"
           :disabled="dataList.length === 0"
+          class="ms-2"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -36,7 +34,7 @@
             <!-- 年月別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="search"
               :disabled = "date === '' "
             >Search</v-btn>
@@ -45,13 +43,17 @@
       </span>
 
       <span slot="card-content">
-        <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ grandTotal | moneyDelemiter }}</h2>
-        <app-data-table
+        <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ grandTotal | moneyDelemiter }}</h2>
+        <v-data-table
           :headers="tableHeaders"
           :items="dataList"
-          :footer="true"
+          disable-sort
+          class="elevation-1 mb-4"
+          hide-default-footer
+          :items-per-page="dataList.length"
+          dense
         >
-        </app-data-table>
+        </v-data-table>
       </span>
     </app-card>
   </v-container>
@@ -72,9 +74,9 @@ export default {
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
         { text: "Delivery Date", value: "deliveryDate", class: "text-xs-center" },
-        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"},
+        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right", align:"right"},
       ],
-      totalCol: {text: "Total", value: "totalArray", nest: "total", class: "text-xs-right"},
+      totalCol: {text: "Total", value: "total", class: "text-xs-right", align:"right"},
       dataList: [],
       grandTotal: 0
     }
@@ -90,7 +92,6 @@ export default {
         search_open_po: this.date,
         delivery_date_isnull: false,
         order_date_isnull:false,
-        // order_date_before: this.date,
         order_by: "delivery_date",
         page_size: 100000
       }
@@ -98,18 +99,6 @@ export default {
     // テーブルヘッダー作成
     tableHeaders() {
       let headerList = [];
-      // if(this.expenseCategories.results) {
-      //   let list = this.expenseCategories.results;
-      //   for (let i=0,expense; expense=list[i]; i++) {
-      //     let col = {
-      //       text: expense.abbr,
-      //       value: "totalArray",
-      //       nest: expense.id,
-      //       class: "text-xs-right"
-      //     };
-      //     headerList.push(col);
-      //   }
-      // }
       headerList.push(this.totalCol);
       let results = this.defaultHeaders.concat(headerList);
       return results
@@ -125,6 +114,7 @@ export default {
     async search() {
       this.$store.commit("systemConfig/setLoading", true);
       this.dataList = await this.getJobOrderList();
+      // console.log(this.dataList);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 作業指図書情報取得
@@ -134,6 +124,9 @@ export default {
       for(let i=0, JobOrder; JobOrder=dataList[i]; i++) {
         // 仕入データ取得
         JobOrder.totalArray = await this.getReceivedList(JobOrder.id);
+        JobOrder.total = JobOrder.totalArray.total;
+        // console.log(JobOrder.mfgNo);
+        // console.log(JobOrder.total);
       }
       // 総合計の計算
       let grandTotalArray = {};
@@ -146,7 +139,8 @@ export default {
       let totalData = {
         name:"Total",
         totalArray:grandTotalArray,
-        defaultCurrencyOrderAmount: defaultCurrencyOrderAmount
+        defaultCurrencyOrderAmount: defaultCurrencyOrderAmount,
+        total:grandTotalArray.total
       }
       dataList.push(totalData);
       return dataList;
@@ -168,8 +162,8 @@ export default {
       // 部品種別ごとに集計
       for(let c=0,category; category=this.expenseCategories.results[c]; c++) {
         // カテゴリごとの合計計算
-        let categoryList = receivedList.filter(x => x.orderData.billOfMaterial.type === category.id);
-        let total = categoryList.reduce((p, x) => p + parseFloat(x.orderData.totalDefaultCurrencyPrice), 0);
+        let categoryList = receivedList.filter(x => x.partType === category.id);
+        let total = categoryList.reduce((p, x) => p + parseFloat(x.totalDefaultCurrencyPrice), 0);
         // 工事番号ごとの集計
         totalPlice += total
         totalArray[category.id] = this.moneyComma(total.toFixed(2));
