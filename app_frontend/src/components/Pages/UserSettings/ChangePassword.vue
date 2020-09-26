@@ -1,105 +1,95 @@
 <template>
   <v-container fluid grid-list-lg>
-    <v-card>
-      <!-- Cardヘッダー -->
-      <v-toolbar card>
-        <v-icon>account_circle</v-icon>
-        <v-toolbar-title class="font-weight-light">
-          Change Password
-        </v-toolbar-title>
-      </v-toolbar>
+    <app-card>
+      <!-- ヘッダー部分スロット -->
+      <span slot="card-header-icon"><v-icon>account_circle</v-icon></span>
+      <span slot="card-header-title">Change Password</span>
 
       <!-- Card内容 -->
-      <v-card-text>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <!-- パスワード変更フォーム -->
-            <template v-if="!success">
-              <v-form @submit.prevent="submitPassword" id="PasswordChangeForm">
-                <!-- エラー表示 -->
-                <v-flex xs12>
-                  <v-alert 
-                    value="true"
-                    type="error"
-                    v-if="responseError.nonFieldErrors"
-                  >
-                    <li
-                      v-for="(error, index) in responseError.nonFieldErrors"
-                      :key="index"
+      <span slot="card-content">
+        <v-card-text>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+              <!-- パスワード変更フォーム -->
+              <template v-if="!success">
+                <v-form @submit.prevent="submitPassword" id="PasswordChangeForm">
+                  <!-- エラー表示 -->
+                  <v-flex xs12>
+                    <v-alert 
+                      value="true"
+                      type="error"
+                      v-if="responseError.nonFieldErrors"
                     >
-                      {{ error }}
-                    </li>
-                  </v-alert>
-                </v-flex>
+                      <li
+                        v-for="(error, index) in responseError.nonFieldErrors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </li>
+                    </v-alert>
+                  </v-flex>
 
-                <!-- 古いパスワード -->
+                  <!-- 古いパスワード -->
+                  <v-flex xs12>
+                    <v-text-field 
+                      label="Old Password*"
+                      v-model="changePassword.oldPassword"
+                      :error-messages="responseError.oldPassword"
+                      outlined
+                      type="password"
+                    ></v-text-field>
+                  </v-flex>
+
+                  <!-- 新しいパスワード -->
+                  <v-flex xs12>
+                    <v-text-field 
+                      label="New Password*"
+                      v-model="changePassword.newPassword1"
+                      :error-messages="error.newPassword1"
+                      outlined
+                      type="password"
+                    ></v-text-field>
+                  </v-flex>
+
+                  <!-- パスワード確認 -->
+                  <v-flex xs12>
+                    <v-text-field 
+                      label="Confirm Password*"
+                      v-model="changePassword.newPassword2"
+                      :error-messages="error.newPassword2"
+                      outlined
+                      type="password"
+                    ></v-text-field>
+                  </v-flex>
+                </v-form>
+
+
                 <v-flex xs12>
-                  <v-text-field 
-                    label="Old Password*"
-                    v-model="changePassword.oldPassword"
-                    :error-messages="responseError.oldPassword"
-                    outline
-                    type="password"
-                  ></v-text-field>
+                  <div class="text-xs-right">
+                    <v-btn 
+                      color="primary"
+                      form="PasswordChangeForm"
+                      type="submit"
+                      outlined
+                      large
+                    >Submit</v-btn> 
+                  </div>
                 </v-flex>
 
-                <!-- 新しいパスワード -->
-                <v-flex xs12>
-                  <v-text-field 
-                    label="New Password*"
-                    v-model="changePassword.newPassword1"
-                    :error-messages="error.newPassword1"
-                    outline
-                    type="password"
-                  ></v-text-field>
+              </template>
+
+              <!-- 成功時表示ページ -->
+              <template v-if="success">
+                <v-flex text-xs-center>
+                  <h3>Passward successfully changed.</h3>
                 </v-flex>
+              </template>
 
-                <!-- パスワード確認 -->
-                <v-flex xs12>
-                  <v-text-field 
-                    label="Confirm Password*"
-                    v-model="changePassword.newPassword2"
-                    :error-messages="error.newPassword2"
-                    outline
-                    type="password"
-                  ></v-text-field>
-                </v-flex>
-              </v-form>
-
-
-              <v-flex xs12>
-                <div class="text-xs-right">
-                  <v-btn 
-                    color="primary"
-                    form="PasswordChangeForm"
-                    type="submit"
-                    outline
-                    large
-                  >Submit</v-btn> 
-                </div>
-              </v-flex>
-
-            </template>
-
-            <!-- 成功時表示ページ -->
-            <template v-if="success">
-              <v-flex text-xs-center>
-                <h3>Passward successfully changed.</h3>
-              </v-flex>
-            </template>
-
-          </v-flex>
-        </v-layout>
-      </v-card-text>
-
-      <!-- Cardフッター -->
-      <v-footer 
-        card
-        height="auto"
-      ></v-footer>
-
-    </v-card>
-
+            </v-flex>
+          </v-layout>
+        </v-card-text>
+      </span>
+    </app-card>
   </v-container>
 </template>
 

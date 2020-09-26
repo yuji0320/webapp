@@ -26,13 +26,13 @@ class JobOrderFilter(filters.FilterSet):
     @staticmethod
     def open_po_filter(queryset, name, value):
         return queryset.all().filter(
-            Q(bill_date__isnull=True) | Q(bill_date__gte=value)
+            Q(bill_date__isnull=True) | Q(bill_date__gt=value)
         )
 
     class Meta:
         model = JobOrder
         fields = ['id', 'company', 'name', 'mfg_no', 'related_party_mfg_no', 'completion_date', 'bill_date',
-                  'search_open_po', 'delivery_date_isnull', 'order_date', ]
+                  'search_open_po', 'delivery_date_isnull', 'order_date', 'customer', 'delivery_destination', ]
 
     order_by = filters.OrderingFilter(
         fields=(
@@ -49,6 +49,7 @@ class JobOrderFilter(filters.FilterSet):
 class BillOfMaterialFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+    drawing_number = filters.CharFilter(field_name='drawing_number', lookup_expr='icontains')
     parts_data = filters.CharFilter(field_name='partsData', method='parts_data_filter')
     is_not_failure = filters.BooleanFilter(field_name='failure', lookup_expr='isnull')
 
@@ -62,7 +63,7 @@ class BillOfMaterialFilter(filters.FilterSet):
     class Meta:
         model = BillOfMaterial
         fields = ['id', 'company', 'job_order', 'type', 'name', 'manufacturer', "standard", "is_printed", "parts_data",
-                  'type__is_processed_parts', 'failure', 'is_not_failure' ]
+                  'type__is_processed_parts', 'failure', 'is_not_failure', 'drawing_number' ]
 
     order_by = filters.OrderingFilter(
         choices=(
@@ -83,6 +84,7 @@ class BillOfMaterialFilter(filters.FilterSet):
 class MakingOrderFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     standard = filters.CharFilter(field_name='standard', lookup_expr='icontains')
+    drawing_number = filters.CharFilter(field_name='drawing_number', lookup_expr='icontains')
     no_supplier = filters.BooleanFilter(field_name='supplier', lookup_expr='isnull')
     no_bom = filters.BooleanFilter(field_name='bill_of_material', lookup_expr='isnull')
 
@@ -123,7 +125,7 @@ class ReceivingProcessFilter(filters.FilterSet):
     @staticmethod
     def parts_data_filter(queryset, name, value):
         return queryset.all().filter(
-            Q(order__bill_of_material__standard__icontains=value) | Q(order__bill_of_material__drawing_number__icontains=value)
+            Q(order__standard__icontains=value) | Q(order__drawing_number__icontains=value)
         )
 
     class Meta:
@@ -162,7 +164,7 @@ class ManHourFilter(filters.FilterSet):
     class Meta:
         model = ManHour
         fields = [
-            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains'
+            'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains',
         ]
 
     order_by = filters.OrderingFilter(

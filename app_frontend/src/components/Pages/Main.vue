@@ -1,50 +1,36 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
+  <v-card 
+    class="d-block pa-2" 
+    color="grey lighten-2"
+    flat
   >
-    <v-layout row wrap>
-      <v-flex tag="h1" class="headline">Dashbord</v-flex>
-      <!-- <v-btn @click=ajax>test</v-btn> -->
-      <v-flex d-flex lg12 order-xs5>
-        <v-layout column>
-          <v-flex
-            v-for="menu in menus"
-            :key="menu.title"
+    <v-card
+      class="d-block pa-2 ma-2" 
+      v-for="menu in menus"
+      :key="menu.title"
+    >
+      <v-card-title class="headline">{{ menu.title }}</v-card-title>
+      <v-row dense class="pa-4">
+        <v-col 
+          v-for="subMenu in menu.subMenus"
+          :key="subMenu.title"
+          cols="12" sm="3"
+        >
+          <v-card 
+            color="blue-grey darken-2" 
+            class="white--text"
           >
-            <v-card fluid>
-              <v-container 
-                fluid
-                grid-list-lg
-              >
-              <v-flex xs12>
-                <h2>{{ menu.title }}</h2>
-              </v-flex>
-              <v-layout row wrap offset-xs1>
-                <v-flex 
-                  v-for="subMenu in menu.subMenus"
-                  :key="subMenu.title"
-                  xs12
-                  sm3
-                  d-flex
-                >
-                  <v-card color="blue-grey darken-2" class="white--text">
-                    <v-card-title primary-title>
-                      <div class="headline">{{ subMenu.title }}</div>
-                    </v-card-title>
-                    <v-card-actions primary>
-                      <v-btn flat dark :to="subMenu.url">Go!</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-flex>
-              </v-layout> 
-              </v-container>          
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+            <v-card-title primary-title>
+              <div class="headline">{{ subMenu.title }}</div>
+            </v-card-title>
+            <v-card-actions primary>
+              <v-btn :to="subMenu.url">Go!</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-card>
 </template>
 
 <style scoped>

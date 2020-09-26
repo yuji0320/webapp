@@ -1,3 +1,5 @@
+import pdfMake from 'pdfmake/build/pdfmake';
+import './vfs_fonts.js';
 export default {
   data() {
     return {

@@ -5,11 +5,12 @@ WORKDIR /usr/src/app_frontend
 ENV HOST 0.0.0.0
 
 RUN apk update && \
-    apk add curl curl-dev jq bash && \
+    apk add curl curl-dev jq bash python3 make g++ && \
     npm install -g npm&& \
-    npm uninstall -g vue-cli&& \
+    # npm uninstall -g vue-cli&& \
     npm install -g @vue/cli&& \
-    npm install -g npm install xlsx
+    npm install -g npm install xlsx&& \
+    npm install pdfmake
 
 RUN npm install -g @vue/cli-service-global
 

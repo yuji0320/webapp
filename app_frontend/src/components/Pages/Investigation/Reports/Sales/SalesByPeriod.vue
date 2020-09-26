@@ -9,19 +9,17 @@
       <span slot="card-header-title">Sales by Period</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
-        <v-btn @click="backToMenu" >
+      <span slot="card-header-button">
+        <v-btn @click="backToMenu">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- 印刷ボタン -->
-      <span slot="card-header-buck-button">
+        <!-- 印刷ボタン -->
         <v-btn 
           @click="print" 
           color="primary"
           :disabled = "summaryBy === ''"
+          class="ms-2"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
 
@@ -40,14 +38,14 @@
             <!-- 取引先別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="searchByCustomer"
               :disabled = "date_from === '' || date_to === '' "
             >Search(Sort by Customer)</v-btn>
             <!-- 年月別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="searchByMonth"
               :disabled = "date_from === '' || date_to === '' "
             >Search(Sort by Month)</v-btn>
@@ -57,7 +55,7 @@
 
       <span slot="card-content">
         <template v-if="jobOrders.results">
-          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+          <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
           <div
             v-for="(list, id) in summaryList"
             :key="id"
@@ -65,19 +63,26 @@
             <!-- 項目名 -->
             <h2 class="title font-weight-light">{{ list.value }}</h2>
             <!-- テーブル表示 -->
-            <app-data-table
+            <v-data-table
               :headers="headers"
               :items="list.dataList"
-              :footer="true"
+              hide-default-footer
+              disable-sort
+              class="elevation-1 mb-4"
+              :items-per-page="list.dataList.length"
+              dense
             >
-              <span slot="data-table-footer">
-                <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
-              </span>
-            </app-data-table>
+              <!-- footer表示 -->
+              <template v-slot:[bodyAppend()]>
+                <td :colspan="headers.length" align="right">
+                  <strong>Sub Total : {{ loginUserData.defaultCurrencyDisplay }} {{ list.subTotal | moneyDelemiter }}</strong>
+                </td>
+              </template>
+            </v-data-table>
             <!-- レイアウト調整用改行タグ -->
             <br><br>
           </div>
-          <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
+          <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ totalPrice | moneyDelemiter }}</h2>
         </template>
       </span>
     </app-card>
@@ -102,10 +107,10 @@ export default {
       headers: [
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
-        { text: "Delivery", value: "deliveryDestinationData", nest: "abbr" },
-        { text: "Customer", value: "customerData", nest: "abbr" },
+        { text: "Delivery", value: "deliveryDestinationAbbr"},
+        { text: "Customer", value: "customerAbbr"},
         { text: "Bill Date", value: "billDate" },
-        { text: "Order price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"}
+        { text: "Order price", value: "defaultCurrencyOrderAmount", class:"text-xs-right", align: "right"}
       ],
     };
   },
@@ -132,8 +137,8 @@ export default {
         // 指図書データから取引先情報の抜き出し
         for(let i=0,d;d=this.jobOrders.results[i];i++){
           let array = {
-            key: d.customerData.id,
-            value: d.customerData.name,
+            key: d.customer,
+            value: d.customerName,
           }
           customerList.push(array);
         }
@@ -204,6 +209,10 @@ export default {
   },
   methods: {
     ...mapActions("jobOrderAPI", ["getJobOrders", "clearJobOrders"]),
+    // data-tableのディレクティブ操作
+    bodyAppend() {
+      return `body.append`;
+    },
     // 取引先別集計
     async searchByCustomer() {
       this.orderBy = "customer__name";

@@ -21,12 +21,12 @@
               </v-flex>
               <!-- 移動ボタン -->
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchBOM(true)" :disabled="mfgNoBOM ===''">
+                <v-btn large block outlined @click="searchBOM(true)" :disabled="mfgNoBOM ===''">
                   Processing Parts
                 </v-btn>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchBOM(false)" :disabled="mfgNoBOM ===''">
+                <v-btn large block outlined @click="searchBOM(false)" :disabled="mfgNoBOM ===''">
                   Other Parts
                 </v-btn>
               </v-flex>
@@ -54,17 +54,17 @@
               </v-flex>
               <!-- 移動ボタン -->
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchOrder(true)" :disabled="mfgNoOrder ===''">
+                <v-btn large block outlined @click="searchOrder(true)" :disabled="mfgNoOrder ===''">
                   Processing Parts
                 </v-btn>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchOrder(false)" :disabled="mfgNoOrder ===''">
+                <v-btn large block outlined @click="searchOrder(false)" :disabled="mfgNoOrder ===''">
                   Other Parts
                 </v-btn>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchOrderWithoutMFGNo">
+                <v-btn large block outlined @click="searchOrderWithoutMFGNo">
                   Without MFG No
                 </v-btn>
               </v-flex>
@@ -114,7 +114,7 @@
               </v-flex>
 
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchReceived" :disabled = "mfgNoReceived === '' && numberReceived === ''">
+                <v-btn large block outlined @click="searchReceived" :disabled = "mfgNoReceived === '' && numberReceived === ''">
                   Search Received
                 </v-btn>
               </v-flex>
@@ -131,7 +131,8 @@
           <span slot="card-content">
             <v-layout row>
               <v-flex xs12 sm6>
-                <v-btn large block outline @click="searchCost">
+                <br>
+                <v-btn large block outlined @click="searchCost">
                   Search Parts Cost
                 </v-btn>
               </v-flex>
@@ -192,8 +193,6 @@ export default {
     searchOrder(isProcessed) {
       this.setJobOrderIDOrder(this.mfgNoOrder);
       this.setIsProcessedOrder(isProcessed);
-      // console.log(this.isProcessedOrder);
-      // // this.setSupplierIDOrder(this.supplierOrder);
       this.$router.push({ name: "SearchOrder" });
     },
     searchOrderWithoutMFGNo() {
@@ -209,9 +208,6 @@ export default {
       this.setJobOrderIDReceived(this.mfgNoReceived);
       this.setOrderNumberReceived(this.numberReceived);
       this.setSupplierIDReceived(this.supplierReceived);
-      // console.log(this.mfgNoReceived);
-      // console.log(this.numberReceived);
-      // console.log(this.supplierReceived);
       this.$router.push({ name: "SearchReceived" });
     },
     searchCost() {

@@ -11,13 +11,21 @@ from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
 
 class UserCompanySerializer(viewsets.ModelViewSet):
     serializer_class = UserCompanySerializer
-    queryset = UserCompany.objects.all()
+    queryset = (
+        UserCompany.objects.select_related(
+            'country',
+        )
+    )
     filter_class = UserCompanyFilter
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
     serializer_class = UserStaffSerializer
-    queryset = UserStaff.objects.all()
+    queryset = (
+        UserStaff.objects.select_related(
+            'company', 'default_currency'
+        )
+    )
     filter_class = UserStaffFilter
 
     def get_queryset(self):

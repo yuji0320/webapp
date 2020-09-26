@@ -10,8 +10,12 @@ class JobOrderAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = JobOrderSerializer
-    queryset = (JobOrder.objects.select_related(
-        'company', 'publisher', 'designer', 'customer', 'delivery_destination', 'order_currency', 'created_by', 'modified_by')
+    queryset = (
+        JobOrder.objects
+        .select_related(
+            'company', 'publisher', 'designer', 'customer', 'delivery_destination', 'order_currency', 
+            # 'created_by', 'modified_by',
+        )
     )
     filter_class = JobOrderFilter
 
@@ -36,11 +40,10 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
     queryset = (
         BillOfMaterial.objects.select_related(
             'company', 'job_order', 'type', 'manufacturer', 'unit', 'currency', 'failure',
-            'job_order__customer', 'job_order__delivery_destination',
+            # 'created_by', 'modified_by'
         )
     )
     filter_class = BillOfMaterialFilter
-    # filter_backends = [filters.OrderingFilter]
 
     @multi_create(serializer_class=BillOfMaterialSerializer)
     def create(self, request, **kwargs):
@@ -55,8 +58,8 @@ class MakingOrderAPIView(viewsets.ModelViewSet):
     queryset = (
         MakingOrder.objects.select_related(
             'company', 'bill_of_material', 'manufacturer', 'unit', 'currency', 'supplier',
-            'bill_of_material__job_order', 'bill_of_material__manufacturer', 'bill_of_material__currency',
-            'bill_of_material__type'
+            'bill_of_material__job_order', 
+            'bill_of_material__type',
         )
     )
     filter_class = MakingOrderFilter
@@ -88,7 +91,12 @@ class ManHourAPIView(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     serializer_class = ManHourSerializer
-    queryset = ManHour.objects.all()
+    queryset = (
+        ManHour.objects.select_related(
+            'staff', 'type', 'failure', 'created_by', 'modified_by', 'job_order', 'staff__company', 
+            'staff__user', 'staff__company'
+        )
+    )
     filter_class = ManHourFilter
 
 

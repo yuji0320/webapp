@@ -3,13 +3,21 @@
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
-    <app-card>
+    <app-card-table
+      :headers="switchParams.headers"
+      :items="makingOrders.results"
+      :viewIcon="false"
+      @edit-item="editMakingOrder"
+      @double-click="editMakingOrder"
+      @delete-item="deleteMakingOrderData"
+      ref="card_table"
+    >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>send</v-icon></span>
       <span slot="card-header-title">Order {{ switchParams.title }}</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
@@ -18,8 +26,9 @@
         <!-- 一括編集ボタン -->
         <v-btn 
           @click="multiUpdate" 
-          outline 
+          outlined
           color="primary"
+          class="ml-2"
         >
           Multi Update
         </v-btn>
@@ -27,55 +36,96 @@
         <!-- 一括削除ボタン -->
         <v-btn 
           @click="multiDelete" 
-          outline 
+          outlined 
           color="error"
+          class="ml-2"
         >
           Multi Delete
         </v-btn>
-
       </span>
 
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="switchParams.headers"
-          :items="makingOrders.results"
-          :checkbox="true"
-          @edit-item="editMakingOrder"
-          @double-clicked="editMakingOrder"
-          @delete-item="deleteMakingOrderData"
-          ref="data_table"
-        >
-        </app-data-table>
-      </span>
 
       <!-- カード上部検索機能コンポーネント -->
       <div slot="search-bar">
-        <v-layout row wrap>
-          <app-search-bar
-            :length="makingOrders.pages"
-            :count="makingOrders.count"
-            :orderBy="orderBy"
-            :incremental="incremental"
-            :params="switchParams.params"
-            @search-list="getList"
-          ></app-search-bar>
-        </v-layout>
+        <app-search-toolbar
+          :length="makingOrders.pages"
+          :count="makingOrders.count"
+          :orderBy="orderBy"
+          :params="switchParams.params"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
+        >
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Parts Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <app-incremental-model-search
+                label="Manufacturaer"
+                orderBy="name"
+                v-model="refineParams.manufacturer"
+                searchType="partner"
+                filter="manufacturer"
+                :errorMessages="responseError.manufacturer"
+                ref="manufacturer"
+                ></app-incremental-model-search>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="!isProcessed">
+                <v-text-field 
+                  label="Standard/Form"
+                  v-model="refineParams.standard"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 加工部品の場合 -->
+              <v-col cols="12" sm="6" md="4" lg="3" v-show="isProcessed">
+                <v-text-field 
+                  label="Drawing Number"
+                  v-model="refineParams.drawing_number"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 仕入れ先 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Supplier"
+                orderBy="name"
+                v-model="refineParams.supplier"
+                searchType="partner"
+                filter="supplier"
+                :errorMessages="responseError.supplier"
+                ref="supplier"
+                ></app-incremental-model-search>
+              </v-col>
+
+            </v-row>
+          </span>
+        </app-search-toolbar>
       </div>
 
       <!-- ダイアログ関係スロット -->
       <span slot="card-dialog">
         <!-- 発注ファイルダイアログ -->
-        <app-order-dialog @response-function="responseFunction" :showAdd="!hasMFGNo" ref="order_dialog">
+        <app-order-dialog @response-function="responseFunction" :showAdd="!hasMFGNo" ref="orderDialog">
           <span d-inline-flex slot="edit-bom">
             <v-btn color="primary" dark @click="editBillOfMaterial" v-if="hasMFGNo">Edit Bill of Material</v-btn>
           </span>
         </app-order-dialog>
         <!-- 部品表ダイアログ -->
-        <app-bom-dialog @response-function="responseFunction" ref="bom_dialog" :hideButtons="true"></app-bom-dialog>
+        <app-bom-dialog @response-function="responseFunction" ref="bomDialog" :hideButtons="true"></app-bom-dialog>
       </span>
       
-    </app-card>
+    </app-card-table>
 
     <multi-update @response-function="responseFunction" ref="multi_update"></multi-update>
   </v-container>
@@ -83,14 +133,22 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue"
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 import MakingOrderMultiDeleteMixin from "./MakingOrderMultiDeleteMixin.js"
+import MakingOrderDialog from '@/components/Module/Dialogs/MakingOrderDialog.vue';
+import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+import MakingOrderMultiUpdate from "./MakingOrderMultiUpdate.vue";
 
 export default {
   title: "Making Order",
   name: "MakingOrder",
   mixins: [MakingOrderMultiDeleteMixin],
   components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-order-dialog": MakingOrderDialog,
+    "app-bom-dialog": BillOfMaterialDialog,
     "multi-update": MakingOrderMultiUpdate,
   },
   data() {
@@ -103,15 +161,15 @@ export default {
         { text: "Part Name", value: "name" }
       ],
       defaultHeadersEnd: [
-        { text: "Supplier", value: "supplierData" , nest: "abbr"},
-        { text: "Amount", value: "amount", class: "text-xs-right" },
-        { text: "Unit Price", value: "displayPrice", class: "text-xs-right" },
+        { text: "Supplier", value: "supplierAbbr" , nest: "abbr"},
+        { text: "Amount", value: "amount", class: "text-right" },
+        { text: "Unit Price", value: "displayPrice", class: "text-right" },
         { text: "Delivery", value: "desiredDeliveryDate" },
-        { text: "Action", value: "action", class: "text-xs-center" }
+        { text: "Action", value: "action", class: "text-center" }
       ],
       // 市販部品テーブルヘッダー
       commercialHeaders: [
-        { text: "Manufacturer", value: "manufacturerData" , nest: "abbr"},
+        { text: "Manufacturer", value: "manufacturerAbbr"},
         { text: "Standard/Form", value: "standard" },
         { text: "Unit number", value: "unitNumber" }
       ],
@@ -122,22 +180,14 @@ export default {
         { text: "Material", value: "material" }
       ],
       // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Part Name", value: "name" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      }
+      refineParams:{}
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("jobOrderAPI", ["jobOrder"]),
     ...mapState("billOfMaterialAPI", ["billOfMaterial"]),
-    ...mapState("makingOrderAPI", [ "jobOrderID", "isProcessed", "makingOrders", "makingOrder"]),
+    ...mapState("makingOrderAPI", [ "responseError", "jobOrderID", "isProcessed", "makingOrders", "makingOrder"]),
     hasMFGNo() {
       return !!this.jobOrderID;
     },
@@ -184,11 +234,11 @@ export default {
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
     ...mapActions("jobOrderAPI", ["getJobOrder"]),
-    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial"]),
+    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "getBillOfMaterial"]),
     ...mapActions("makingOrderAPI", ["getMakingOrders", "setMakingOrder", "setMakingOrders", "postMakingOrder", "deleteMakingOrder", "setTableSelected"]),
     // 一括編集機能
     multiUpdate() {
-      this.setTableSelected(this.$refs.data_table.selected);
+      this.setTableSelected(this.$refs.card_table.selected);
       this.$refs.multi_update.openDialog();
     },
     async getList(data) {
@@ -196,14 +246,22 @@ export default {
       await this.getMakingOrders(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
+    // 絞り込み検索のクリア
+    clearParams() {
+      this.refineParams = {};
+      this.$refs.manufacturer.clearItem();
+      this.$refs.supplier.clearItem();
+    },
     // 発注ファイル編集
     editMakingOrder: function (val) {
       this.setMakingOrder(val);
-      this.$refs.order_dialog.editMakingOrder();
+      this.$refs.orderDialog.openDialogMO();
     },
-    editBillOfMaterial() {
-      this.setBillOfMaterial(this.makingOrder.billOfMaterial);
-      this.$refs.bom_dialog.editBillOfMaterial();
+    async editBillOfMaterial() {
+      let res = await this.getBillOfMaterial(this.makingOrder.billOfMaterial);
+      this.setBillOfMaterial(res);
+      // console.log(res);
+      this.$refs.bomDialog.openDialogBOM();
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -211,6 +269,7 @@ export default {
       this.getList({ params: this.switchParams.params });
       // Snackbar表示
       this.showSnackbar(val.snack);
+      // console.log(val.snack);
     },
     // 発注ファイル削除
     async deleteMakingOrderData(val) {
@@ -225,14 +284,12 @@ export default {
       ) {
         // Yesの場合は削除処理
         res = await this.deleteMakingOrder(val);
+        console.log(res.snack);
       } else {
         // Noの場合はスナックバーにキャンセルの旨を表示
         res.snack = { snack: "Delete is cancelled" };
       }
-      // リストをリロード
-      this.getMakingOrders({ params: this.switchParams.params });
-      // Snackbar表示
-      this.showSnackbar(res.snack.snack, res.snack.color);
+      this.responseFunction(res);
     },
     // メニューに戻る
     backToMenu() {
@@ -240,11 +297,13 @@ export default {
     },
   },
   created() {
+    this.$store.commit("systemConfig/setLoading", false);
     this.setMakingOrders({});
     if(this.jobOrderID) {
       this.getJobOrder(this.jobOrderID);
       this.setTableSelected([]);
     }
+    this.getList({params: this.switchParams.params});
   }
 }
 </script>

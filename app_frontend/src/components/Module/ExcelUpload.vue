@@ -1,13 +1,8 @@
 <template>
-  <v-card>
-    <v-toolbar card>
-      <!-- カードヘッダータイトルスロット -->
-      <slot name="card-header-icon"></slot>
-      <v-toolbar-title class="font-weight-light">
-        <slot name="card-header-title"></slot>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <!-- 一覧へ戻るボタン -->
+  <app-card>
+    <span slot="card-header-icon"><slot name="card-header-icon"></slot></span>
+    <span slot="card-header-title"><slot name="card-header-title"></slot></span>
+    <span slot="card-header-button">
       <v-btn
         @click="backToList"
       >
@@ -19,13 +14,15 @@
         color="primary"
         v-if="submitAll"
         :disabled="disabledSubmitAll"
+        class="ml-2"
       >
         <v-icon></v-icon>
         Submit All
       </v-btn>
-    </v-toolbar>
+    </span>
 
-    <v-card-title>
+    <span slot="search-bar">
+      <v-row class="ps-2">
       <!-- データ読み込み用HTML部分 -->
       <v-text-field label="Select xlsx file" @click="pickFile" v-model="dataName" prepend-icon="attach_file"></v-text-field>
       <input 
@@ -37,72 +34,69 @@
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         v-if="view"
       >
-      <v-btn 
+      <v-icon 
         color="darken-1"
         @click="clearData"
-        outline
-      >Clear Data</v-btn>
-    </v-card-title>
+        outlined
+      >clear</v-icon>
+      </v-row>
+    </span>
 
-    <!-- テーブル内容 -->
-    <v-data-table
-      :headers="headers"
-      :items="excelJson"
-      :hide-actions="true"
-      class="elevation-1"
-      disable-initial-sort
-    >
-      <template slot="items" slot-scope="props">
-        <tr 
-          class="dataList"
-          :class="{
-            'complete': props.item.updated,
-            'error': props.item.err
-          }"
-        >
-          <td 
-            v-for="(header, index) in headers"
-            :key="index"
-            :class="header.class"
+    <span slot="card-content">
+      <!-- テーブル内容 -->
+      <v-data-table
+        :items-per-page="50"
+        :headers="headers"
+        :items="excelJson"
+        hide-default-footer
+        class="elevation-1"
+        dense
+      >
+        <template v-slot:item="item">
+          <tr 
+            class="dataList"
+            :class="{
+              'complete': item.item.updated,
+              'error': item.item.err
+            }"
           >
-            <template 
-              v-if="header.money"
+            <td 
+              v-for="(header, index) in headers"
+              :key="index"
+              :class="header.class"
             >
-              {{ props.item[header.value] | moneyDelemiter }}
-            </template>
-            <template v-else>
-              {{ props.item[header.value] }}
-            </template>
-            
-            <!-- 最終行のみ挿入可能スロットを追加する -->
-            <div v-show="header.value == 'action'">
-              <v-layout justify-center>
-                <!-- 閲覧ボタン -->
-                <v-btn
-                  @click="upload(props.item)"
-                  color="primary"
-                  dark
-                  :disabled="props.item.updated"
-                >
-                  Upload
-                </v-btn>
-              </v-layout>
-            </div>
+              <template 
+                v-if="header.money"
+              >
+                {{ item.item[header.value] | moneyDelemiter }}
+              </template>
+              <template v-else>
+                {{ item.item[header.value] }}
+              </template>
+              
+              <!-- 最終行のみ挿入可能スロットを追加する -->
+              <div v-show="header.value == 'action'">
+                <v-layout justify-center>
+                  <!-- 閲覧ボタン -->
+                  <v-btn
+                    @click="upload(item.item)"
+                    color="primary"
+                    dark
+                    x-small
+                    :disabled="item.item.updated"
+                  >
+                    Upload
+                  </v-btn>
+                </v-layout>
+              </div>
 
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
-
-    <slot name="card-body"></slot>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+    </span>
     
-    <!-- Cardフッター -->
-    <v-footer 
-      card
-      height="auto"
-    >
-    </v-footer>
-  </v-card>
+  </app-card>
 </template>
 
 <script>

@@ -1,4 +1,4 @@
-app:
+dev_app:
   build: ./app
   restart: always
   env_file: ./app/env
@@ -6,63 +6,62 @@ app:
     - "8000:8000"
     - "8100:8100"
   links:
-    - mysql:db
-    - redis:redis
+    - dev_mysql:db
+    - dev_redis:redis
   volumes:
     - ./app:/usr/src/app
-#  command: ./manage.py runserver 0.0.0.0:8000
-  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b :8000
+  # command: ./manage.py runserver 0.0.0.0:8000
+  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b 0.0.0.0:8000
 
-app_frontend:
+dev_app_frontend:
   build: ./app_frontend
   restart: always
   ports:
     - "9000:9000"
     - "9100:9100"
-  links:
-    - app:app
+  tty: true
   volumes:
     - ./app_frontend:/usr/src/app_frontend
   command: npm run serve
 
-
-nginx:
+dev_nginx:
   build: ./nginx
   restart: always
   ports:
     - "80:80"
-    - "443:443"
+    # - "443:443"
   links:
-    - app:app
-    - app_frontend:frontend
+    - dev_app:app
+    - dev_app_frontend:frontend
   volumes:
     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     - ./nginx/ssl:/etc/nginx/ssl
     - ./nginx/development.conf:/etc/nginx/conf.d/development.conf
     - ./nginx/log:/var/log/nginx
     - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
-  volumes_from:
-    - app
-    - app_frontend
+    - ./app_frontend/dist:/var/www/html
+    - ./app_frontend/dist:/usr/src/app/test
+    - ./app/static:/usr/src/app/static
 
-mysql:
+dev_mysql:
   build: ./mysql
   restart: always
   volumes:
-  - ./mysql/backup:/tmp/backup
+    - ./mysql/backup:/tmp/backup
+    - ./storage/volume:/var/lib/mysql
   ports:
     - "3306:3306"
   volumes_from:
-    - storage
+    - dev_storage
 
-redis:
+dev_redis:
   image: redis:latest
   restart: always
   ports:
     - "6379:6379"
   volumes_from:
-    - storage
+    - dev_storage
   command: redis-server --appendonly yes
 
-storage:
+dev_storage:
   build: ./storage

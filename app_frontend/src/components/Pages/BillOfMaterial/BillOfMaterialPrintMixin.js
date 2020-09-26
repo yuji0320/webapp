@@ -18,7 +18,7 @@ export default {
   methods: {
     createPrintData(val) {
       // PDFヘッダー
-      let headerText = "Bill of Material _"+ this.jobOrder.mfgNo + "-" + this.jobOrder.name + "_" + this.date;
+      let headerText = "Bill of Material _"+ this.jobOrder.mfgNo + "-" + this.jobOrder.name;
       // 印刷用テーブルデータ作成
       let contentList = [];
       for(let p=0,page;page=val.data[p];p++){
@@ -44,13 +44,13 @@ export default {
           for(var h=0,head;head=tableHeaderData[h];h++){
             let d = item[head.value];
             // データがネストしている場合はネスト先データを表示
-            if(tableHeaderData[h].nest) {
-              if(d) {
-                d = d[tableHeaderData[h].nest];
-              }
-            }
+            // if(tableHeaderData[h].nest) {
+            //   if(d) {
+            //     d = d[tableHeaderData[h].nest];
+            //   }
+            // }
             // データが右寄せ(数値)の場合は右寄せ処理
-            if(tableHeaderData[h].class=="text-xs-right") {
+            if(tableHeaderData[h].align=="end") {
               d = {"text": d, alignment: "right"}
               // console.log(d);
             }

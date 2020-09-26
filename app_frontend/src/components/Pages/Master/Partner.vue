@@ -1,8 +1,5 @@
 <template>
-  <v-container 
-    fluid
-    grid-list-lg
-  >
+  <v-container fluid grid-list-lg>
     <!-- 確認ダイアログ -->
     <app-confirm ref="confirm"></app-confirm>
 
@@ -11,6 +8,7 @@
       :headers="headers"
       :items="userPartners.results"
       @edit-item="editPartner"
+      @double-click="editPartner"
       @delete-item="deletePartnerData"
     >
 
@@ -23,7 +21,7 @@
         <app-dialog
           :formName="'partnerForm'"
           @clear-form="clearPartner"
-          @submit-form="submitStaff"
+          @submit-form="submitPartner"
           ref="dialog"
         >
           <!-- フォーム内容 -->
@@ -143,21 +141,8 @@
         </app-dialog>
       </span>
 
-      <span slot="card-header-button">
-        <v-layout row wrap>
-          <!-- エクセルアップロード -->
-          <v-btn
-            fab
-            small
-            @click="upload"
-          >
-            <v-icon>cloud_upload</v-icon>
-          </v-btn>
-        </v-layout>
-      </span>      
-
       <!-- カード上部検索機能コンポーネント -->
-      <div slot="search-bar">
+      <!-- <div slot="search-bar">
         <app-search-bar
           :length="userPartners.pages"
           :count="userPartners.count"
@@ -166,24 +151,88 @@
           :params="params"
           @search-list="getList"
         ></app-search-bar>
-      </div>
+      </div> -->
 
-      <!-- 取引先種別タブ指定 -->
-      <div slot="card-tabs">
-        <v-tabs
-          v-model="tabs.tab"
-          align-with-title
-          grow
+      <!-- カード上部検索機能コンポーネント -->
+      <div slot="search-bar">
+        <app-search-toolbar
+          :length="userPartners.pages"
+          :count="userPartners.count"
+          :params="params"
+          :orderBy="orderBy"
+          :refineParams="refineParams"
+          @search-list="getList"
+          @clear-params="clearParams"
+          :refineDetail="false"
         >
-          <v-tabs-slider></v-tabs-slider>
-          <v-tab 
-            v-for="item in tabs.items" :key="item.id"
-            @click="tabClicked(item.refine)"
-          >
-            {{ item.title }}
-          </v-tab>
-
-        </v-tabs>
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Partner Number"
+                  v-model="refineParams.partnerNumber"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Partner Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Abbr"
+                  v-model="refineParams.abbr"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- ソート機能 *修正中 -->
+              <!-- <v-col cols="12" sm="6" md="4" lg="3">
+                <v-select
+                  v-model="refineParams.order_by"
+                  :items="orderSelect"
+                  label="Order by"
+                  class="ps-2"
+                ></v-select>
+              </v-col> -->
+            </v-row>
+            <v-row no-gutters>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_customer"
+                  :label="`is Customer`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_delivery_destination"
+                  :label="`is Delivery Destination`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_supplier"
+                  :label="`is Supplier`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_manufacturer"
+                  :label="`is Manufacturer`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </span>
+        </app-search-toolbar>
       </div>
 
     </app-card-table>
@@ -193,10 +242,18 @@
   
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   title: "Partner master",
   name: "Partner",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar,
+    "app-dialog": Dialog,
+  },
   data() {
     return {
       orderBy: "-created_at",
@@ -211,30 +268,8 @@ export default {
         { text: "is Manufacturer", value: "isManufacturer" },
         { text: "Action", value: "action" }
       ],
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Partner Number", value: "partnerNumber" },
-          { label: "Partner Name", value: "name" },
-          { label: "Abbreviation", value: "abbr" }
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "name",
-        tableSearch: ""
-      },
-      tabs: {
-        tab: 0,
-        refine: "",
-        params: {},
-        items: [
-          { title: "All", refine: "" },
-          { title: "Customer", refine: "is_customer" },
-          { title: "Delivery Destination", refine: "is_delivery_destination" },
-          { title: "Supplier", refine: "is_supplier" },
-          { title: "Manufacturer", refine: "is_manufacturer" }
-        ]
-      },
-      search:""
+      refineParams: {},
+      orderSelect: [ "-name", "name" ],
     };
   },
   computed: {
@@ -253,36 +288,12 @@ export default {
     // リスト検索
     async getList(data) {
       // console.log(data);
-      this.search = data
-      console.log(this.search);
       this.$store.commit("systemConfig/setLoading", true);
-      let list = await this.getPartners(this.search);
+      let list = await this.getPartners(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
-    // タブ選択情報を更新
-    tabClicked(refine) {
-      this.tabs.refine = refine;
-      this.searchList();
-    },
-    // タブ絞り込み複合検索関数
-    searchList(val) {
-      // 検索情報が入力された場合はdataを更新する
-      if (val) {
-        this.tabs.params = val.params;
-      }
-      // paramsを宣言
-      let params = this.tabs.params;
-      // タブ指定情報を初期化
-      let len = this.tabs.items;
-      for (let i = 1; i < len.length; i++) {
-        delete this.tabs.params[len[i].refine];
-      }
-      // タブ選択がAll以外の場合は検索要件を追加する
-      if (!this.tabs.refine == "") {
-        params[this.tabs.refine] = true;
-      }
-      // 上記指定パラメーターで検索を行う
-      this.getList({ params: params });
+    clearParams() {
+      this.refineParams = {};
     },
     // 処理結果統合フォーム
     responseFunction(val) {
@@ -298,7 +309,7 @@ export default {
       this.$refs.dialog.editForm();
     },
     // Submit時処理
-    async submitStaff() {
+    async submitPartner() {
       // コンポーネントの編集ステータスに応じて新規と更新を切り替える
       let res = {};
       if (this.$refs.dialog.editedIndex == -1) {
@@ -323,7 +334,6 @@ export default {
     },
     // 削除処理
     async deletePartnerData(val) {
-      // console.log(val);
       let res = {};
       // 削除確認
       if (
@@ -345,8 +355,9 @@ export default {
       this.$router.push({ name: "PartnerUpload" });
     }
   },
-  mounted () {
-    // console.log(process.env.VUE_APP_API_BASE_URL);
+  created () {
+    this.getList({ params: this.params });
+    // console.log({ params: this.params });
   }
 };
 </script>

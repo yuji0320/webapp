@@ -109,8 +109,16 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
+  props: {
+    hideButtons: { required: false },
+    editDisable: { required: false },
+  },
+  components: {
+    "app-dialog": Dialog,
+  },
   data() {
     return {
 

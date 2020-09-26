@@ -28,7 +28,7 @@ export default {
   methods: {
     // 配列内のデータ存在チェック
     getHashProperties(array, val){
-      return array.filter(x => x.billOfMaterial.id === val)
+      return array.filter(x => x.billOfMaterial === val)
     },
     createOrderFile: async function () {
       // ロード開始
@@ -44,13 +44,14 @@ export default {
         if (billOfMaterialList[bom]["orderAmount"] > 0) {
           // 発注ファイルの存在を確認
           let exist = this.getHashProperties(makingOrderList, billOfMaterialList[bom].id);
+          // console.log(exist);
           if (exist.length === 0) {
             // 発注ファイルが存在しない場合は新規発注ファイルを定義し、
             let newMakingOrder = {};
             // 部品表情報を代入し
             newMakingOrder.company = billOfMaterialList[bom].company;
             newMakingOrder.number = null;
-            newMakingOrder.billOfMaterialId = billOfMaterialList[bom].id;
+            newMakingOrder.billOfMaterial = billOfMaterialList[bom].id;
             newMakingOrder.name = billOfMaterialList[bom].name;
             newMakingOrder.manufacturer = billOfMaterialList[bom].manufacturer;
             newMakingOrder.standard = billOfMaterialList[bom].standard;

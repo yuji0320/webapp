@@ -2,7 +2,7 @@
   <v-container fluid grid-list-lg>
     <app-card>
       <!-- ヘッダー部分スロット -->
-      <span slot="card-header-icon"><v-icon>move_to_inbox</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>move_to_inbox</v-icon></span>
       <span slot="card-header-title">Receive</span>
 
       <!-- 仕入済、仮仕入未処理の部品の一括更新 -->
@@ -10,10 +10,10 @@
         <bulk-suspense></bulk-suspense>
       </span> -->
 
-      <span slot="card-title-text">
+      <span slot="search-bar">
         <!-- 工事番号、仕入先選択 -->
-        <v-layout row wrap>
-          <v-flex xs12 sm6 md4>
+        <v-row>
+          <v-col cols="12" sm="6" md="4">
             <app-incremental-model-search
                     label="Job Order"
                     orderBy="-mfg_no"
@@ -22,8 +22,8 @@
                     errorMessages=""
                     @clear-item="clearJobOrderID"
             ></app-incremental-model-search>
-          </v-flex>
-          <v-flex xs12 sm6 md4>
+          </v-col>
+          <v-col cols="12" sm="6" md="4">
             <app-incremental-model-search
                     label="Supplier"
                     orderBy="name"
@@ -34,52 +34,41 @@
                     :errorMessages="supplier.err"
                     @clear-item="clearSupplierID"
             ></app-incremental-model-search>
-          </v-flex>
+          </v-col>
           <!--発注番号検索-->
-          <v-flex xs12 sm6 md4>
-            <v-layout>
-              <v-flex>
-                <v-text-field label="Order Number" v-model="number"></v-text-field>
-              </v-flex>
-              <v-flex class="pt-3">
-                <v-btn @click="clearOrderNumber">Clear</v-btn>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
+          <v-col cols="12" sm="6" md="4">
+            <v-text-field label="Order Number" placeholder="Order Number" v-model="number" clearable></v-text-field>
+          </v-col>
+        </v-row>
       </span>
 
       <!-- 仕入れ処理 -->
       <span slot="card-content">
         <v-container fluid grid-list-lg>
-          <v-layout row wrap>
-            <v-flex xs12 md6>
-              <v-card>
-                <v-toolbar card>
-                  <v-toolbar-title class="font-weight-light">
-                    Receive
-                  </v-toolbar-title>
-                </v-toolbar>
-                <v-card-text>
-                  <v-layout row>
-                    <v-flex xs12>
+          <v-row row wrap>
+            <v-col cols="12" md="6">
+              <app-card noSearchBar="ture">
+                <span slot="card-header-title">Receive</span>
+                <span slot="card-content">
+                  <v-row>
+                    <v-col cols="12">
                       <v-btn
                         large
                         block
-                        round
                         color="primary"
                         :disabled = "supplier === '' && number === ''"
                         @click="suspense"
+                        class="mb-2"
                       >
                         Suspense Receive
                       </v-btn>
                       <v-btn
                         large
                         block
-                        round
                         color="primary"
                         :disabled = "supplier === '' && number === ''"
                         @click="receive"
+                        class="mb-2"
                       >
                         Receiving Process
                       </v-btn>
@@ -87,47 +76,42 @@
                       <v-btn
                         large
                         block
-                        round
                         color="primary"
                         :disabled = "supplier === '' && number === ''"
                         @click="editReceivingFile"
+                        class="mb-2"
                       >
                         Edit Receiving File
                       </v-btn>
 
-                    </v-flex>
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </v-flex>
+                    </v-col>
+                  </v-row>
+                </span>
+              </app-card>
+            </v-col>
 
             <!-- 未処理チェック -->
-            <v-flex xs12 md6>
-              <v-card>
-                <v-toolbar card>
-                  <v-toolbar-title class="font-weight-light">
-                    Check Received
-                  </v-toolbar-title>
-                </v-toolbar>
-                <v-card-text>
-                  <v-layout>
+            <v-col cols="12" md="6">
+              <app-card noSearchBar="ture">
+                <span slot="card-header-title">Check Received</span>
+                <span slot="card-content">
+                  <v-row>
                     <!-- 納期経過分リスト -->
-                    <v-flex xs12>
+                    <v-col cols="12">
                       <v-btn
                         large
                         block
-                        round
                         color="warning"
                         @click="notYet"
                       >
                         Past due list
                       </v-btn>
-                    </v-flex>
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
+                    </v-col>
+                  </v-row>
+                </span>
+              </app-card>
+            </v-col>
+          </v-row>
         </v-container>
       </span>
     </app-card>
@@ -136,14 +120,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import ReceivingProcessBulkSuspenseReceived from "./ReceivingProcessBulkSuspenseReceived.vue"
+// import ReceivingProcessBulkSuspenseReceived from "./ReceivingProcessBulkSuspenseReceived.vue"
 
 export default {
   title: "Receiving Process Menu",
   name: "ReceivingProcessMenu",
-  components: {
-    "bulk-suspense": ReceivingProcessBulkSuspenseReceived
-  },
+  // components: {
+  //   "bulk-suspense": ReceivingProcessBulkSuspenseReceived
+  // },
   data() {
     return {
       mfgNo: "",

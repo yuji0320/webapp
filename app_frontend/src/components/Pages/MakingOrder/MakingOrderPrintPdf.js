@@ -158,7 +158,7 @@ export default {
               orderAmount = Math.round(orderAmount * 100) / 100;
               // 部品挿入行の定義
               let partRow = [];
-              currency.push(selectedData[key].selected[p]["currencyData"].display);
+              currency.push(selectedData[key].selected[p]["currencyDisplay"]);
               // ヘッダーを参照して各カラムのデータを入力する
               for (let h in tableHeaderData) {
                 let d = selectedData[key].selected[p][tableHeaderData[h].value];
@@ -177,7 +177,7 @@ export default {
                   }
                 }
                 // データが右寄せ(数値)の場合は右寄せ処理
-                if (tableHeaderData[h].class === "text-xs-right") {
+                if (tableHeaderData[h].align === "end") {
                   d = {"text": d, alignment: "right"}
                 }
                 // データが未定義の場合はblankを入力

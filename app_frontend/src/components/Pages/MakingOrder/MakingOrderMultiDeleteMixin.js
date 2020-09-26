@@ -2,7 +2,7 @@ export default {
   computed: {
     // 一つ以上選択されている場合のみTrueを返す
     selectedDataExists() {
-      return (this.$refs.data_table.selected).length > 0;
+      return (this.$refs.card_table.selected).length > 0;
     }
   },
   methods: {
@@ -17,10 +17,11 @@ export default {
           )
         ) { 
           // Yesの場合は削除処理
-          for(let o=0,order; order = this.$refs.data_table.selected[o]; o++){
+          for(let o=0,order; order = this.$refs.card_table.selected[o]; o++){
             console.log(order);
             res = await this.deleteMakingOrder(order);
           }
+          this.$refs.card_table.selected = [];
         } else {
           // Noの場合はスナックバーにキャンセルの旨を表示
           res.snack = { snack: "Delete is cancelled" };

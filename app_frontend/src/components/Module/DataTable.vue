@@ -1,80 +1,55 @@
 <template>
   <v-data-table
+    v-model="selected"
     :headers="headers"
     :items="items"
-    :hide-actions="true"
-    class="elevation-1 mb-4"
-    disable-initial-sort
-    :loading="$store.state.systemConfig.loading"
-    v-model="selected"
-    :select-all="selectAll"
     item-key="id"
+    show-select
+    :loading="$store.state.systemConfig.loading"
+    class="elevation-1 mb-4"
+    disable-sort
+    hide-default-footer
   >
+
     <!-- テーブルデータ -->
-    <template slot="items" slot-scope="props">
+    <template v-slot:item="{item}">
       <!-- 特定ステータスを保持している場合はtrにクラスを付与 -->
       <tr
         :class="{
-          'complete': addClass(props.item[completeColumn]),
-          'error': props.item[errorColumn],
+          'complete': addClass(item[completeColumn]),
+          'error': item[errorColumn],
           'dataList': true,
-          'printed': addClass(props.item.isPrinted),
-          'selected': addClass(props.selected)
+          'printed': addClass(item.isPrinted),
+          'selected': addClass(selected)
         }"
-        @dblclick="doubleClick(props.item)"
-        :active="props.selected"
-      >
-        <td v-if="selectAll">
-          <v-checkbox
-            v-model="props.selected"
-            primary
-            hide-details
-            :disabled="addClass(props.item.isPrinted)"
-          ></v-checkbox>
-        </td>  
+        @dblclick="doubleClick(item)"
+        :active="selected"
+      >      
         <td 
           v-for="(header, index) in headers"
           :key="index"
           :class="header.class"
         >
           <!-- 文字列がtrueの場合緑チェック -->
-          <template v-if="props.item[header.value] === true">
+          <template v-if="item[header.value] === true">
             <v-icon color="green">check</v-icon>
           </template>
           <!-- 文字列がtrueの場合赤バツ -->
-          <template v-else-if="props.item[header.value] === false">
+          <template v-else-if="item[header.value] === false">
             <v-icon color="red">close</v-icon>
           </template>
           <!-- チェックボックスがTrueの場合は表示(selectAllをfalseにする場合) -->
-          <template v-else-if="header.value === 'checkbox'">
+          <!-- <template v-else-if="header.value === 'checkbox'">
             <v-checkbox
-              v-model="props.selected"
+              v-model="selected"
               primary
               hide-details
-              :disabled="addClass(props.item.isPrinted) || disabledActions(props.item[completeColumn])"
+              :disabled="addClass(item.isPrinted) || disabledActions(item[completeColumn])"
             ></v-checkbox>
-          </template>
+          </template> -->
           <!-- true, false以外の場合はデータを表示 -->
           <template v-else>
-            <!-- jsonがネストしている場合はデータを抽出 -->
-            <template v-if="header.nest">
-              <template v-if="header.nestNest">
-                <template v-if="props.item[header.value]">
-                  <!-- nestがnullの場合は""を返す、存在する場合は孫データを送信 -->
-                  {{ (props.item[header.value][header.nest] === null) ? "" : props.item[header.value][header.nest][header.nestNest] }}
-                </template>
-              </template>
-              <template v-else>
-                <!-- ネスト元データが存在する場合のみ表示 -->
-                <template v-if="props.item[header.value]">
-                  {{ props.item[header.value][header.nest] }}
-                </template>
-              </template>
-            </template>
-            <!-- ネストしていない場合はデータを表示 -->
-            <template v-else>
-              {{ props.item[header.value] }}
-            </template>
+            {{ item[header.value] }}
           </template>
 
           <!-- 最終行のみ挿入可能スロットを追加する -->
@@ -84,7 +59,7 @@
               <v-icon
                 small
                 class="mr-2"
-                @click="viewItem(props.item)"
+                @click="viewItem(item)"
                 v-if="viewIcon"
               >
                 visibility
@@ -93,8 +68,8 @@
               <v-icon
                 small
                 class="mr-2"
-                @click="editItem(props.item)"
-                :disabled="disabledActions(props.item[completeColumn])"
+                @click="editItem(item)"
+                :disabled="disabledActions(item[completeColumn])"
                 v-show="!editDisabled"
               >
                 edit
@@ -103,8 +78,8 @@
               <v-icon
                 small
                 class="mr-2"
-                @click="deleteItem(props.item)"
-                :disabled="disabledActions(props.item[completeColumn])"
+                @click="deleteItem(item)"
+                :disabled="disabledActions(item[completeColumn])"
                 v-show="!editDisabled"
               >
                 delete

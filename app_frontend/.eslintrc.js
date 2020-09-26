@@ -4,18 +4,19 @@ module.exports = {
     'es6': true,
   },
   'extends': 'google',
+  "extends": ["plugin:vue/base"],
   'globals': {
     'Atomics': 'readonly',
     'SharedArrayBuffer': 'readonly',
   },
   'parserOptions': {
-    'ecmaVersion': 2018,
+    'ecmaVersion': 2017,
     'sourceType': 'module',
   },
   'plugins': [
     'vue',
   ],
   'rules': {
-  },
-  "extends": ["plugin:vue/base"]
+    "no-console": "warn"
+  }
 };

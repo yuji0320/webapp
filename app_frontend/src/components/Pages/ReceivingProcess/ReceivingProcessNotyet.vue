@@ -1,12 +1,16 @@
 <template>
   <v-container fluid grid-list-lg>
-    <app-card>
+    <app-card-table
+      :headers="headers"
+      :items="receivingProcesses.results"
+      :completeColumn="completeColumn"
+    >
 
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-title"> Past due list</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
@@ -14,69 +18,100 @@
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
-      <div slot="search-bar">
-        <app-search-bar
+      <span slot="search-bar">
+        <app-search-toolbar
           :length="receivingProcesses.pages"
           :count="receivingProcesses.count"
           :orderBy="orderBy"
-          :incremental="incremental"
           :params="params"
+          :refineParams="refineParams"
           @search-list="getList"
-        ></app-search-bar>
-      </div>
-
-      <span slot="card-content">
-        <!-- テーブル表示 -->
-        <app-data-table
-          :headers="headers"
-          :items="receivingProcesses.results"
-          :completeColumn="completeColumn"
+          @clear-params="clearParams"
+          :refineDetail="false"
         >
-        </app-data-table>
+          <span slot="search-data-content">
+            <v-row no-gutters> 
+              <!-- 部品名検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Parts Name"
+                  v-model="refineParams.name"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 部品情報検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-text-field 
+                  label="Standard / Drawing No"
+                  v-model="refineParams.parts_data"
+                  clearable
+                  class="ps-2"
+                ></v-text-field>
+              </v-col>
+              <!-- 仕入れ先検索 -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <app-incremental-model-search
+                label="Supplier"
+                orderBy="name"
+                v-model="refineParams.order__supplier"
+                searchType="partner"
+                filter="supplier"
+                :errorMessages="responseError.order__supplier"
+                ref="supplier"
+                ></app-incremental-model-search>
+              </v-col>
+              <!-- 仮仕入済み -->
+              <v-col cols="12" sm="6" md="4" lg="3">
+                <v-checkbox
+                  v-model="refineParams.is_suspense_received"
+                  :label="`Not suspense received`"
+                  class="ps-2"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </span>
+        </app-search-toolbar>
       </span>
-
-    </app-card>
+    </app-card-table>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import CardTable from '@/components/Module/Cards/CardTable.vue';
+import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 
 export default {
   title: "Over date list",
   name: "ReceivedProcessNotyet",
+  components: {
+    "app-card-table": CardTable,
+    "app-search-toolbar": SearchToolbar
+  },
   data() {
     return {
       orderBy: "order__desired_delivery_date",
       // テーブルヘッダー
       headers: [
-        { text: "No", value: "orderData" , nest: "number" },
-        { text: "MFG No", value: "orderData" , nest: "mfgNo" },
-        { text: "Part Name", value: "orderData" , nest: "name" },
-        { text: "Supplier", value: "orderData" , nest: "supplierData", nestNest: "abbr" },
-        { text: "Amount", value: "orderData" , nest: "amount", class: "text-xs-right" },
-        { text: "Unit price", value: "orderData" , nest: "displayPrice", class: "text-xs-right" },
-        { text: "Desired Delivery Date", value: "orderData" , nest: "desiredDeliveryDate", class: "text-xs-center" },
+        { text: "No", value: "orderNumber"},
+        { text: "MFG No", value: "mfgNo" },
+        { text: "Part Name", value: "partName" },
+        { text: "Standard / Drawing No", value:"partDetail"},
+        { text: "Supplier", value: "supplierAbbr"},
+        { text: "Amount", value: "orderAmount"},
+        { text: "Unit price", value: "orderPriceDisplay"},
+        { text: "Desired Delivery Date", value: "desiredDeliveryDate"},
         // { text: "Ordered date", value: "orderData" , nest: "orderedDate" },
       ],
       //  仮仕入完了時色変更
-      completeColumn: "suspenseReceivedDate",
-      // テーブル検索用データ
-      incremental: {
-        // 検索カラムリスト
-        tableSelectItems: [
-          { label: "Order Number", value: "order__number" },
-          { label: "MFG No", value: "mfg_no" },
-        ],
-        // 検索数値の初期値および返り値
-        tableSelectValue: "mfg_no",
-        tableSearch: ""
-      }      
+      completeColumn: "suspenseReceivedDate", 
+      refineParams: {}
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
-    ...mapState("receivingProcessAPI", ["receivingProcesses"]),  
+    ...mapState("receivingProcessAPI", ["responseError", "receivingProcesses"]),  
     // 今日の日付をISO形式で取得
     todayISO() {
       // 日付取得
@@ -90,7 +125,7 @@ export default {
     },
     params() {
       return {
-        order_company: this.loginUserData.companyId,
+        order__company: this.loginUserData.companyId,
         is_received: false,
         desired_delivery_date_before: this.todayISO,
         order_by: this.orderBy,
@@ -108,9 +143,13 @@ export default {
       let list = await this.getReceivingProcesses(data);
       this.$store.commit("systemConfig/setLoading", false);
     },    
+    clearParams() {
+      this.refineParams = {};
+      this.$refs.supplier.clearItem();
+    }
   },
   created() {
-    // this.getReceivingProcesses({params: this.params});
+    this.getList({params: this.params});
     // console.log(this.params);
   }
 

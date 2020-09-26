@@ -36,11 +36,11 @@ export default {
     setSupplierID(state, payload) {
       state.supplierID = payload;
     },
-    // 部品表リスト取得
+    // 発注ファイルリスト取得
     setMakingOrders(state, payload) {
       state.makingOrders = payload;
     },
-    // 部品表単体取得
+    // 発注ファイル単体取得
     setMakingOrder(state, payload) {
       state.makingOrder = payload;
     },
@@ -69,40 +69,50 @@ export default {
     setSupplierID({commit}, data) {
       commit('setSupplierID', data);
     },
-    // 部品表リスト取得
+    // 発注ファイルリスト取得
     async getMakingOrders({commit}, data) {
       const url = 'manufacturing_data/making_order/';
       const commitName = 'setMakingOrders';
       const res = api.get({commit}, url, data, commitName);
       return res;
     },
-    // 部品表単体セット
+    // 発注ファイル単体取得
+    async getMakingOrder({commit}, data) {
+      const url = 'manufacturing_data/making_order/' + data + '/';
+      const commitName = 'setMakingOrder';
+      return api
+          .get({commit}, url, data, commitName)
+          .then(function(response) {
+            return response;
+          });
+    },
+    // 発注ファイル単体セット
     setMakingOrder({commit}, data) {
       commit('setMakingOrder', data);
     },
-    // 部品表エラーState情報クリア
+    // 発注ファイルエラーState情報クリア
     clearMakingOrderError({commit}) {
       commit('error', {});
     },
-    // 部品表リストセット
+    // 発注ファイルリストセット
     setMakingOrders({commit}, data) {
       commit('setMakingOrders', data);
     },
-    // 部品表新規登録
+    // 発注ファイル新規登録
     async postMakingOrder({commit}, data) {
       const url = 'manufacturing_data/making_order/';
       const commitName = 'setMakingOrder';
       const res = await api.post({commit}, url, data, commitName);
       return res;
     },
-    // 部品表情報更新
+    // 発注ファイル情報更新
     async putMakingOrder({commit}, data) {
       const url = 'manufacturing_data/making_order/' + data.id + '/';
       const commitName = 'setMakingOrder';
       const res = await api.put({commit}, url, data, commitName);
       return res;
     },
-    // 部品表削除
+    // 発注ファイル削除
     async deleteMakingOrder({commit}, data) {
       const url = 'manufacturing_data/making_order/' + data.id + '/';
       const commitName = 'setMakingOrder';

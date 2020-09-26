@@ -9,17 +9,18 @@
     @set-default="setDefault"
     ref="dialog"
     :editDisable="editDisable"
+    eager
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
       <!-- 確認ダイアログ -->
       <app-confirm ref="confirm"></app-confirm>
 
-      <v-layout wrap>
+      <v-row>
         <!-- 発注ファイルフォーム -->
 
         <!-- エラー表示 -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-alert 
             value="true"
             type="error"
@@ -32,59 +33,59 @@
               {{ error }}
             </li>
           </v-alert>
-        </v-flex>
+        </v-col>
 
         <!-- 発注番号 -->
-        <v-flex xs2 md2>
+        <v-col cols="12" md="2">
           <v-text-field 
             label="No"
             class="right-input"
             disabled
             v-model="makingOrder.number"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 部品名 -->
-        <v-flex xs2 md10>
+        <v-col cols="12" md="10">
           <v-text-field 
             label="Part Name*"
             v-model="makingOrder.name"
             :error-messages="responseError.name"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
 
         <!-- 加工部品の場合 -->
         <!-- 図面番号 -->
-        <v-flex xs12 v-show="isProcessedParts">
+        <v-col cols="12" v-show="isProcessedParts">
           <v-text-field 
             label="Drawing Number"
             v-model="makingOrder.drawingNumber"
             :error-messages="responseError.drawingNumber"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 材質 -->
-        <v-flex xs12 md6 v-show="isProcessedParts">
+        <v-col cols="12" md="6" v-show="isProcessedParts">
           <v-text-field 
             label="Material"
             v-model="makingOrder.material"
             :error-messages="responseError.material"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 表面処理 -->
-        <v-flex xs12 md6 v-show="isProcessedParts">
+        <v-col cols="12" md="6" v-show="isProcessedParts">
           <v-text-field 
             label="Surface treatment"
             v-model="makingOrder.surfaceTreatment"
             :error-messages="responseError.surfaceTreatment"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
 
         <!-- 加工部品以外の場合 -->
         <!-- メーカー選択 -->
-        <v-flex xs12 v-show="!isProcessedParts">
+        <v-col cols="12" v-show="!isProcessedParts">
           <app-incremental-model-search
             label="Manufacturer"
             orderBy="name"
@@ -95,28 +96,28 @@
             ref="manufacturer"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 規格・寸法 -->
-        <v-flex xs12 md6 v-show="!isProcessedParts">
+        <v-col cols="12" md="6" v-show="!isProcessedParts">
           <v-text-field 
             label="Standard/Form"
             v-model="makingOrder.standard"
             :error-messages="responseError.standard"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- ユニット番号 -->
-        <v-flex xs12 md6 v-show="!isProcessedParts">
+        <v-col cols="12" md="6" v-show="!isProcessedParts">
           <v-text-field 
             label="Unit Number"
             v-model="makingOrder.unitNumber"
             :error-messages="responseError.unitNumber"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
 
         <!-- 個数 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Amount"
             v-model="makingOrder.amount"
@@ -124,9 +125,9 @@
             :error-messages="responseError.amount"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 単位選択 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Unit Type"
             orderBy="number"
@@ -136,20 +137,20 @@
             ref="unitType"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 金額 -->
-        <v-flex xs4>
+        <v-col cols="12" sm="4">
           <v-text-field 
             label="Unit Price"
             v-model="makingOrder.unitPrice"
             :error-messages="responseError.unitPrice"
             class="right-input"
-            @blur="checkPrice"
+            @keyup="checkPrice"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 通貨 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
           label="Currency"
           orderBy="id"
@@ -159,9 +160,9 @@
           ref="currency"
           :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- レート -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Rate"
             v-model="makingOrder.rate"
@@ -172,9 +173,9 @@
             class="right-input"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 仕入先選択 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Supplier"
             orderBy="name"
@@ -185,17 +186,17 @@
             ref="supplier"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 希望納期 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <app-input-date 
             label="Desired Delivery Date"
             v-model="makingOrder.desiredDeliveryDate"
             :errorMessages="responseError.desiredDeliveryDate"
             :disabled="editDisable"
           ></app-input-date>
-        </v-flex>       
-      </v-layout>
+        </v-col>       
+      </v-row>
     </span>
 
     <!-- 拡張ボタンスロット -->
@@ -208,11 +209,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   props: {
     showAdd: { required: false },
     editDisable: { required: false },
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -247,7 +252,7 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["showSnackbar"]),
-    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "putBillOfMaterial"]),
+    ...mapActions("billOfMaterialAPI", ["setBillOfMaterial", "getBillOfMaterial", "putBillOfMaterial"]),
     ...mapActions("makingOrderAPI", [
       "setJobOrderID", "setPartsType", "getMakingOrders", "setMakingOrder" ,"clearMakingOrderError", "setMakingOrders",
       "postMakingOrder", "putMakingOrder", "deleteMakingOrder"
@@ -271,7 +276,7 @@ export default {
       this.setMakingOrder(this.defaultMakingOrder);
     },
     // 発注ファイル編集
-    editMakingOrder() {
+    openDialogMO() {
       this.setIncremental(this.makingOrder);
       this.$refs.dialog.editForm();
     },
@@ -332,15 +337,15 @@ export default {
     // 発注ファイルと部品表の金額差チェック
     async checkPrice() {
       let res = {};
-      if(this.makingOrder.billOfMaterial) {
+      if(this.makingOrder.bomPrice) {
         let order = this.makingOrder.unitPrice;
-        let bom = this.makingOrder.billOfMaterial.unitPrice;
+        let bom = this.makingOrder.bomPrice;
         if(order!=bom) {
           // 発注ファイルと部品表で単価が違う場合
           // アラート文
           let alertText = ("Order's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + 
                           "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" + 
-                          "\nAre you sure change Bill ob material's unit price?")
+                          "\nAre you sure change Bill of material's unit price?")
           if (
             await this.$refs.confirm.open(
               "Unit Price is different!",
@@ -349,10 +354,10 @@ export default {
             )
           ) {
             // Yesの場合は上書き処理
-            this.setBillOfMaterial(this.makingOrder.billOfMaterial);
+            await this.getBillOfMaterial(this.makingOrder.billOfMaterial);
             this.billOfMaterial.unitPrice = order;
             this.billOfMaterial.modifiedBy = this.loginUserData.id;
-            this.makingOrder.billOfMaterial = this.billOfMaterial;
+            this.makingOrder.bomPrice = order;
             res = await this.putBillOfMaterial(this.billOfMaterial);
           } else {
             // Noの場合はスナックバーにキャンセルの旨を表示
@@ -364,6 +369,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    // console.log("mounted MO Dialog");
   }
 }
 </script>

@@ -1,28 +1,30 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs6 sm8 xl9>
-      <v-autocomplete
-        v-model="model"
-        :items="searchItems"
-        :search-input.sync="search"
-        item-text="incrementalField"
-        item-value="id"
-        :cache-items="true"
-        :placeholder="label"
-        :label="label"
-        :error-messages="errorMessages"
-        :disabled="disabled"
-        :rules="required"
-      ></v-autocomplete>
-    </v-flex>
-    <v-flex class="pt-3" xs6 sm4 xl3>
-      <v-btn
+  <v-autocomplete
+    v-model="model"
+    :items="searchItems"
+    :search-input.sync="search"
+    item-text="incrementalField"
+    item-value="id"
+    :cache-items="true"
+    :placeholder="label"
+    :label="label"
+    :error-messages="errorMessages"
+    :disabled="disabled"
+    :rules="required"
+    class="pl-2"
+  >
+    <!-- Clearアイコン -->
+    <template v-slot:append-outer>
+      <v-icon
         @click="clearItem"
         :disabled="disabled"
         v-show="!hideClear"
-      >Clear</v-btn>
-    </v-flex>
-  </v-layout>
+        class="pr-2"
+      >
+        clear
+      </v-icon>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
@@ -59,6 +61,12 @@ export default {
     required: { required: false },    
     hideClear: { required: false }
   },
+  // watch: {
+  //   value: function (val) {
+  //     console.log("test");
+  //     this.model = "";
+  //   },
+  // },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemMasterApi", ["currencies", "unitTypes", "failureCategories", "jobTypes", "expenseCategories"]),

@@ -9,18 +9,16 @@
       <span slot="card-header-title">Work In Process (Labor Costs)</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" >
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
-      </span>
-
-      <!-- 印刷ボタン -->
-      <span slot="card-header-buck-button">
+        <!-- 印刷ボタン -->
         <v-btn 
           @click="print" 
           color="primary"
+          class="ms-2" 
           :disabled="dataList.length === 0"
         ><v-icon>print</v-icon> Print</v-btn>
       </span>
@@ -37,7 +35,7 @@
             <!-- 年月別集計 -->
             <v-btn 
               color="primary" 
-              class="mb-2" 
+              class="ms-2" 
               @click="search"
               :disabled = "date === '' "
             >Search</v-btn>
@@ -46,13 +44,17 @@
       </span>
 
       <span slot="card-content">
-        <h2 class="text-xs-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ grandTotal | moneyDelemiter }}</h2>
-        <app-data-table
+        <h2 class="text-right">Grand Total : {{ loginUserData.defaultCurrencyDisplay }} {{ grandTotal | moneyDelemiter }}</h2>
+        <v-data-table
           :headers="tableHeaders"
           :items="dataList"
-          :footer="true"
+          hide-default-footer
+          disable-sort
+          class="elevation-1 mb-4"
+          :items-per-page="dataList.length"
+          dense
         >
-        </app-data-table>
+        </v-data-table>
       </span>
 
 
@@ -76,10 +78,10 @@ export default {
         { text: "MFG No", value: "mfgNo" },
         { text: "Product Name", value: "name" },
         { text: "Delivery Date", value: "deliveryDate", class: "text-xs-center" },
-        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right"},
+        { text: "Sale price", value: "defaultCurrencyOrderAmount", class: "text-xs-right", align:"right"},
       ],
-      totalHours: {text: "Total(h)", value: "totalArray", nest: "totalHours", class: "text-xs-right"},
-      totalCosts: {text: "Total(Cost)", value: "totalArray", nest: "totalCosts", class: "text-xs-right"},
+      totalHours: {text: "Total(h)", value: "totalHours", class: "text-xs-right", align:"right"},
+      totalCosts: {text: "Total(Cost)", value: "totalCosts", class: "text-xs-right", align:"right"},
       dataList: [],
       grandTotal: 0
     }
@@ -131,6 +133,8 @@ export default {
       for(let i=0, JobOrder; JobOrder=dataList[i]; i++) {
         // 工数データ取得
         JobOrder.totalArray = await this.getReceivedList(JobOrder.id);
+        JobOrder.totalHours = JobOrder.totalArray.totalHours;
+        JobOrder.totalCosts = this.moneyComma(parseFloat(JobOrder.totalArray.totalCosts).toFixed(2));
       }
       // 総合計の計算
       let grandTotalArray = {};
@@ -142,7 +146,9 @@ export default {
       let totalData = {
         name:"Total",
         totalArray:grandTotalArray,
-        defaultCurrencyOrderAmount: defaultCurrencyOrderAmount
+        defaultCurrencyOrderAmount: defaultCurrencyOrderAmount,
+        totalHours: grandTotalArray.totalHours,
+        totalCosts: grandTotalArray.totalCosts
       }
       dataList.push(totalData);
       return dataList;

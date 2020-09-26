@@ -1,6 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" scrollable :max-width="width">
-    <v-btn slot="activator" color="primary" dark class="mb-2" v-show="!hideButtons">{{ openButton }}</v-btn>
+  <v-dialog v-model="dialog" scrollable :max-width="width" eager>
+    
+    <template v-slot:activator="{ on }">
+      <v-btn v-on="on" color="primary" dark class="ml-2" v-show="!hideButtons">{{ openButton }}</v-btn>
+    </template>
+
     <v-card>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
@@ -12,7 +16,7 @@
       <v-divider></v-divider>
       <!-- フォーム内容 -->
       <v-card-text id="card-text">
-        <v-container grid-list-md>
+        <v-container>
 
             <!-- フォームコンテンツスロット -->
             <slot name="dialog-contents"></slot>
@@ -23,7 +27,7 @@
       <v-divider></v-divider>
       <!-- フォーム操作 -->
       <v-card-actions>
-        <v-btn color="darken-1" outline @click="dialog = false" v-show="!editDisable">Cancel</v-btn>
+        <v-btn color="red darken-1" outlined @click="dialog = false" v-show="!editDisable">Cancel</v-btn>
 
         <v-spacer></v-spacer>
 
@@ -34,7 +38,7 @@
 
         <v-btn 
           color="darken-1"
-          outline
+          outlined
           @click="clearForm"
           v-show="!hideButtons"
         >Clear</v-btn>
@@ -43,7 +47,7 @@
           :form="formName"
           color="blue darken-1"
           type="submit"
-          outline
+          outlined
           @click="submitForm"
           v-show="!editDisable"
         >Save</v-btn>
@@ -51,7 +55,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
 </template>
 
 <script>

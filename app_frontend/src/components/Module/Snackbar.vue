@@ -8,8 +8,7 @@
     >
       {{ snackbar.snack }}
       <v-btn
-        dark
-        flat
+        outlined
         @click="snackbar.snackbarStatus = false"
       >
         Close

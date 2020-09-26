@@ -1,15 +1,10 @@
 // Storeのインポート
 import Store from '@/stores';
 import axios from 'axios';
-// const env = require('./.env');
 
 // axios を require してインスタンスを生成する
 const axiosBase = axios;
 const host = process.env.VUE_APP_API_BASE_URL;
-
-// const host = 'dev_app/api/';
-// const host = 'http://192.168.1.15/api/';
-// const host = 'https://192.168.2.200/api/';
 
 export default {
   async request(method, url, params) {

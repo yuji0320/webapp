@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -11,6 +12,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 # Swagger関係(API Lists)
 from rest_framework_swagger.views import get_swagger_view
+# ドキュメント
+from rest_framework.documentation import include_docs_urls
 
 # swagger viewの定義
 schema_view = get_swagger_view(title='API Lists')
@@ -31,6 +34,7 @@ for routeList in routeLists:
 urlpatterns = [
     path('', index, name='index'),
     path('admin/', admin.site.urls),
+    path('docs/', include_docs_urls(title='documentation')),
     path('api/', include(router.urls)),
     path('api/system_master/', include(system_urls.router.urls)),
     path('api/system_user/', include(user_urls.router.urls)),
@@ -41,3 +45,7 @@ urlpatterns = [
     # swagger
     path('api/swagger/', schema_view),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns

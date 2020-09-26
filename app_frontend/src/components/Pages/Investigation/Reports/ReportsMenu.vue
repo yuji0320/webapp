@@ -7,14 +7,15 @@
           <span slot="card-header-title">Sales Reports</span>
 
           <span slot="card-content">
+            <br>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline :to="{ name: 'SalesByPeriod' }">
+                <v-btn large block outlined :to="{ name: 'SalesByPeriod' }">
                   Sales by period
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline :to="{ name: 'OpenPO' }">
+                <v-btn large block outlined :to="{ name: 'OpenPO' }">
                   Open PO
                 </v-btn>
               </v-flex>
@@ -29,14 +30,15 @@
           <span slot="card-header-title">Purchasing Reports</span>
 
           <span slot="card-content">
+            <br>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="purchasing(false)">
+                <v-btn large block outlined @click="purchasing(false)">
                   Purchasing Summary
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="purchasing(true)">
+                <v-btn large block outlined @click="purchasing(true)">
                   Purchasing Detail
                 </v-btn>
               </v-flex>
@@ -51,14 +53,15 @@
           <span slot="card-header-title">Man Hour Reports</span>
 
           <span slot="card-content">
+            <br>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="manHourTotal(false)">
+                <v-btn large block outlined @click="manHourTotal(false)">
                   Monthly Total Reports
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="manHourTotal(true)">
+                <v-btn large block outlined @click="manHourTotal(true)">
                   Annual Reports for Costing
                 </v-btn>
               </v-flex>
@@ -73,14 +76,15 @@
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Work In Process</span>
           <span slot="card-content">
+            <br>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="wipMaterial()">
+                <v-btn large block outlined @click="wipMaterial()">
                   Work-in-process(Material costs)
                 </v-btn>
               </v-flex>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="wipLabor()">
+                <v-btn large block outlined @click="wipLabor()">
                   Work-in-process(Labor costs)
                 </v-btn>
               </v-flex>
@@ -95,9 +99,10 @@
           <span slot="card-header-icon"><v-icon>poll</v-icon></span>
           <span slot="card-header-title">Costing Report</span>
           <span slot="card-content">
+            <br>
             <v-layout row>
               <v-flex sm6 xs12>
-                <v-btn large block outline @click="costingReport()">
+                <v-btn large block outlined @click="costingReport()">
                   Costing Report
                 </v-btn>
               </v-flex>

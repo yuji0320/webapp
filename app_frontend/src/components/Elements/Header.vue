@@ -1,77 +1,58 @@
 <template>
   <div>
-    <!-- サイドバー -->
     <v-navigation-drawer
-    persistent
-    :clipped="!clipped"
-    v-model="drawer"
-    enable-resize-watcher
-    fixed
-    app
+      v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
+      app
     >
+      <v-list dense>
+        <!-- <v-list-item :to="{ name: 'Main'}" >
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item> -->
 
-      <!-- <v-toolbar flat>
-        <v-list>
-          <v-list-tile>
-            <v-list-tile-title class="title text-xs-center">
-              Side Menu
-            </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-toolbar> -->
-
-      <!-- <v-divider></v-divider> -->
-
-      <v-list>
-        <v-list-tile 
-          :to="{ name: 'Main'}" 
-        >
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>
-              Dashbord
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>   
-        <!-- サイドバー項目はVuex Steteから取得 -->
         <v-list-group
           v-for="menu in menus"
-          :key="menu.title"
+          :key="menu.text"
           :prepend-icon="menu.icon"
           no-action
-          disable-route-watcher 
-          enable-resize-watcher
         >
-          <v-list-tile slot="activator">
-            <v-list-tile-content>
-              <v-list-tile-title v-text="menu.title"></v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          
-          <!-- サブメニュー -->
-          <v-list-tile
+          <template v-slot:activator>
+              <v-list-item-title >
+                {{ menu.title }}
+              </v-list-item-title>
+          </template>
+
+          <v-list-item
             v-for="subMenu in menu.subMenus"
             :key="subMenu.title"
+            link
             :to="subMenu.url"
           >
-            <v-list-tile-content>
-              <v-list-tile-title>{{ subMenu.title }}</v-list-tile-title>
-            </v-list-tile-content>
-
-            <v-list-tile-action>
+            <v-list-item-title>
+              {{ subMenu.title }}
+            </v-list-item-title>
+            <v-list-item-icon v-if="subMenu.icon">
               <v-icon>{{ subMenu.icon }}</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-icon>
+          </v-list-item>
+
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
-    <!-- ヘッダーツールバー -->
-    <v-toolbar app :clipped-left="!clipped" dark color="primary" class="white--text">
+
+
+    <v-app-bar
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      app
+      color="primary"
+      dark
+    >
       <!-- サイドバー操作 -->
-      <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
+      <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-divider
         class="mx-3"
         inset
@@ -90,6 +71,7 @@
         <v-icon>home</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
+
       <!-- ログインユーザー情報 -->
       <span class="subheading" v-if="!$vuetify.breakpoint.xs">
         Logged in as {{ loginUserData.fullname }}
@@ -99,27 +81,39 @@
         inset
         vertical
       ></v-divider>
+
       <!-- 右メニュー -->
       <v-menu offset-y>
-        <v-toolbar-title slot="activator">
-          <v-icon>settings</v-icon>
-        </v-toolbar-title>
-        <v-list>
-          <v-list-tile
-            v-for="(menu, i) in settingMenus"
-            :key="i"
-            :to="menu.url"
+
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
           >
-            <v-list-tile-action>
-              <v-icon v-html="menu.icon"></v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-text="menu.title"></v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item-group>
+            <v-list-item
+              v-for="(menu, i) in settingMenus"
+              :key="i"
+              :to="menu.url"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="menu.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="menu.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-menu>
-    </v-toolbar>  
+      
+    </v-app-bar>
   </div>
 </template>
 
@@ -132,11 +126,6 @@ export default {
     return {
       clipped: false,
       settingMenus: [
-        // {
-        //   icon: "settings",
-        //   title: "Setting",
-        //   url: ""
-        // },
         {
           icon: "account_circle",
           title: "User Settings",

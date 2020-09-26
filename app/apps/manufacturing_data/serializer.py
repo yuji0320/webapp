@@ -17,12 +17,15 @@ class DirectCostBudgetSerializer(serializers.ModelSerializer):
 class JobOrderSerializer(serializers.ModelSerializer):
     default_currency_order_amount = serializers.SerializerMethodField()
     costs = serializers.SerializerMethodField()
-    publisher_data = UserStaffSerializer(source='publisher', read_only=True)
-    designer_data = UserStaffSerializer(source='designer', read_only=True)
-    customer_data = UserPartnerSerializer(source='customer', read_only=True)
-    delivery_destination_data = UserPartnerSerializer(source='delivery_destination', read_only=True)
-    order_currency_data = SystemCurrencySerializer(source='order_currency', read_only=True)
     incremental_field = serializers.SerializerMethodField()
+    customer_abbr = serializers.SerializerMethodField()
+    customer_name = serializers.SerializerMethodField()
+    delivery_destination_abbr = serializers.SerializerMethodField()
+    delivery_destination_name = serializers.SerializerMethodField()
+    order_currency_code = serializers.SerializerMethodField()
+    order_currency_display = serializers.SerializerMethodField()
+    publisher_name = serializers.SerializerMethodField()
+    designer_name = serializers.SerializerMethodField()
 
     # デフォルト通貨での受注価格計算
     @staticmethod
@@ -97,6 +100,58 @@ class JobOrderSerializer(serializers.ModelSerializer):
         search_field = str(obj.mfg_no) + " : " + obj.name
         return search_field
 
+    # 取引先略称
+    @staticmethod
+    def get_customer_abbr(obj):
+        abbr = obj.customer.abbr
+        return abbr
+
+    # 取引先名
+    @staticmethod
+    def get_customer_name(obj):
+        name = obj.customer.name
+        return name
+
+    # 納入先略称
+    @staticmethod
+    def get_delivery_destination_abbr(obj):
+        abbr = obj.delivery_destination.abbr
+        return abbr
+
+    # 納入先略称
+    @staticmethod
+    def get_delivery_destination_name(obj):
+        name = obj.delivery_destination.name
+        return name
+
+    # 取引通貨記号
+    @staticmethod
+    def get_order_currency_code(obj):
+        code = obj.order_currency.code
+        return code
+
+    # 取引通貨記号
+    @staticmethod
+    def get_order_currency_display(obj):
+        display = obj.order_currency.display
+        return display
+
+    # 作成者名
+    @staticmethod
+    def get_publisher_name(obj):
+        publisher_name = ""
+        if obj.publisher:
+            publisher_name = str(obj.publisher.staff_number) + " : " + str(obj.publisher.full_name)
+        return publisher_name
+    
+    # 設計者名
+    @staticmethod
+    def get_designer_name(obj):
+        designer_name = ""
+        if obj.designer:
+            designer_name = str(obj.designer.staff_number) + " : " + str(obj.designer.full_name)
+        return designer_name
+
     class Meta:
         model = JobOrder
         fields = (
@@ -138,25 +193,16 @@ class JobOrderSerializer(serializers.ModelSerializer):
             # read_only under here
             'default_currency_order_amount',
             'costs',
-            'publisher_data',
-            'designer_data',
-            'customer_data',
-            'delivery_destination_data',
-            'order_currency_data',
             'incremental_field',
+            'customer_abbr',
+            'customer_name',
+            'delivery_destination_abbr',
+            'delivery_destination_name',
+            'order_currency_code',
+            'order_currency_display',
+            'publisher_name',
+            'designer_name',
         )
-
-        # read_only_fields = (
-        #     'default_currency_order_amount',
-        #     'costs',
-        #     'publisher_data',
-        #     'customer_data',
-        #     'delivery_destination_data',
-        # )
-        #
-        # def update(self, instance, validated_data):
-        #     instance.order_price = validated_data.get('order_price', instance.order_price).replace(',', '')
-        #     return instance
 
 
 # 部品表
@@ -165,10 +211,10 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
     total_default_currency_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     order_amount = serializers.SerializerMethodField()
-    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
     parts_detail = serializers.SerializerMethodField()
+    manufacturer_abbr = serializers.SerializerMethodField()
 
     # デフォルト通貨での単価計算
     @staticmethod
@@ -219,6 +265,14 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             parts_detail = obj.standard
         return parts_detail
 
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.manufacturer:
+            manufacturer_abbr = obj.manufacturer.abbr
+        return manufacturer_abbr
+
     class Meta:
         model = BillOfMaterial
         fields = (
@@ -253,10 +307,10 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'total_default_currency_price',
             'display_price',
             'order_amount',
-            'manufacturer_data',
             'mfg_no',
             'is_processed',
-            'parts_detail'
+            'parts_detail',
+            'manufacturer_abbr'
         )
 
 
@@ -267,16 +321,15 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField()
     display_price = serializers.SerializerMethodField()
     display_price_total = serializers.SerializerMethodField()
-    currency_data = SystemCurrencySerializer(source='currency', read_only=True)
-    manufacturer_data = UserPartnerSerializer(source='manufacturer', read_only=True)
-    supplier_data = UserPartnerSerializer(source='supplier', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     job_order = serializers.SerializerMethodField()
     is_processed = serializers.SerializerMethodField()
     # parts_detail = serializers.SerializerMethodField()
-    bill_of_material = BillOfMaterialSerializer(many=False, read_only=True)
-    bill_of_material_id = serializers.PrimaryKeyRelatedField(
-        queryset=BillOfMaterial.objects.all(), source='bill_of_material', write_only=True, allow_null=True)
+    manufacturer_abbr = serializers.SerializerMethodField()
+    supplier_abbr = serializers.SerializerMethodField()
+    bom_price = serializers.SerializerMethodField()
+    currency_display = serializers.SerializerMethodField()
+
 
     # デフォルト通貨での合計価格計算
     @staticmethod
@@ -319,7 +372,7 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             mfg_no = ""
         return mfg_no
 
-        # 工事番号取得
+    # 工事番号取得
     @staticmethod
     def get_job_order(obj):
         if obj.bill_of_material:
@@ -350,6 +403,37 @@ class MakingOrderSerializer(serializers.ModelSerializer):
     #         parts_detail = obj.standard
     #     return parts_detail
 
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.manufacturer:
+            manufacturer_abbr = obj.manufacturer.abbr
+        return manufacturer_abbr
+
+    # 仕入れ先名名取得
+    @staticmethod
+    def get_supplier_abbr(obj):
+        supplier_abbr = ""
+        if obj.supplier:
+            supplier_abbr = obj.supplier.abbr
+        return supplier_abbr
+
+    # 部品表金額取得
+    @staticmethod
+    def get_bom_price(obj):
+        if obj.bill_of_material:
+            bom_price = str(obj.bill_of_material.unit_price)
+        else:
+            bom_price = ""
+        return bom_price
+
+    # 取引通貨記号
+    @staticmethod
+    def get_currency_display(obj):
+        display = obj.currency.display
+        return display
+
     def validate(self, data):
         if data['number']:
             return data
@@ -367,7 +451,6 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'company',
             'number',
             'bill_of_material',
-            'bill_of_material_id',
             'name',
             'manufacturer',
             'standard',
@@ -382,7 +465,6 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'unit_price',
             'supplier',
             'desired_delivery_date',
-            'supplier',
             'ordered_date',
             'is_printed',
             'created_at',
@@ -395,26 +477,167 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'total_price',
             'display_price',
             'display_price_total',
-            'currency_data',
-            'manufacturer_data',
-            'supplier_data',
             'mfg_no',
             'job_order',
             'is_processed',
             # 'parts_detail'
+            'manufacturer_abbr',
+            'supplier_abbr',
+            'bom_price',
+            'currency_display',
         )
-
-    # def update(self, instance, validated_data):
-    #     bom = validated_data.bill_of_material
-
-    # def to_representation(self, instance):
-    #     response = super().to_representation(instance)
-    #     response['bill_of_material'] = BillOfMaterialSerializer(instance.bill_of_material).data
-    #     return response
 
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
-    order_data = MakingOrderSerializer(source='order', read_only=True)
+    # order_data = MakingOrderSerializer(source='order', read_only=True)
+    order_number = serializers.SerializerMethodField()
+    part_name = serializers.SerializerMethodField()
+    part_detail = serializers.SerializerMethodField()
+    part_detail_other = serializers.SerializerMethodField()
+    desired_delivery_date = serializers.SerializerMethodField()
+    order_amount = serializers.SerializerMethodField()
+    order_price = serializers.SerializerMethodField()
+    order_price_display = serializers.SerializerMethodField()
+    total_default_currency_price = serializers.SerializerMethodField()
+    display_total_default_currency_price = serializers.SerializerMethodField()
+    mfg_no = serializers.SerializerMethodField()
+    manufacturer_abbr = serializers.SerializerMethodField()
+    supplier_abbr = serializers.SerializerMethodField()
+    supplier = serializers.SerializerMethodField()
+    part_type = serializers.SerializerMethodField()
+    ordered_date = serializers.SerializerMethodField()
+
+    # 発注番号取得
+    @staticmethod
+    def get_order_number(obj):
+        order_number = obj.order.number
+        return order_number
+
+    # 部品名取得
+    @staticmethod
+    def get_part_name(obj):
+        part_name = obj.order.name
+        return part_name
+
+    # 部品詳細データ表示
+    @staticmethod
+    def get_part_detail(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            status = obj.order.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        if status:
+            part_detail = obj.order.drawing_number
+        else:
+            part_detail = obj.order.standard
+        return part_detail
+
+    # 部品詳細その他データ表示
+    @staticmethod
+    def get_part_detail_other(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            status = obj.order.bill_of_material.type.is_processed_parts
+        else:
+            status = False
+        if status:
+            part_detail = obj.order.material
+        else:
+            if obj.order.manufacturer:
+                part_detail = obj.order.manufacturer.abbr
+            else :
+                part_detail = ""
+        return part_detail
+
+    # 希望納期取得
+    @staticmethod
+    def get_desired_delivery_date(obj):
+        desired_delivery_date = obj.order.desired_delivery_date
+        return desired_delivery_date
+
+    # 発注個数取得
+    @staticmethod
+    def get_order_amount(obj):
+        order_amount = obj.order.amount
+        return order_amount
+
+    # 発注金額取得
+    @staticmethod
+    def get_order_price(obj):
+        order_price = obj.order.unit_price
+        return order_price
+
+    # 発注金額取得
+    @staticmethod
+    def get_order_price_display(obj):
+        order_price_display = obj.currency.display + "{:-,.2f}".format(obj.order.unit_price)
+        return order_price_display
+
+    # デフォルト通貨での合計価格計算
+    @staticmethod
+    def get_total_default_currency_price(obj):
+        total_price = 0
+        if(obj.is_received): 
+            total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        return round(total_price, 2)
+
+    # デフォルト通貨での合計価格計算(表示用)
+    @staticmethod
+    def get_display_total_default_currency_price(obj):
+        total_price = 0
+        if(obj.is_received): 
+            total_price = obj.unit_price * decimal.Decimal(float(obj.rate)) * decimal.Decimal(float(obj.amount))
+        display_price = "{:,.2f}".format(total_price)
+        return display_price
+
+    # 工事番号取得
+    @staticmethod
+    def get_mfg_no(obj):
+        # 加工部品かどうかを判断
+        if obj.order.bill_of_material:
+            mfg_no = obj.order.bill_of_material.job_order.mfg_no
+        else:
+            mfg_no = "N/A"
+        return mfg_no
+
+    # メーカー名取得
+    @staticmethod
+    def get_manufacturer_abbr(obj):
+        manufacturer_abbr = ""
+        if obj.order.manufacturer:
+            manufacturer_abbr = obj.order.manufacturer.abbr
+        return manufacturer_abbr
+
+    # 仕入先id取得
+    @staticmethod
+    def get_supplier(obj):
+        supplier = ""
+        if(obj.order.supplier) :
+            supplier = obj.order.supplier.id
+        return supplier
+
+    # 仕入先名取得
+    @staticmethod
+    def get_supplier_abbr(obj):
+        supplier_abbr = ""
+        if(obj.order.supplier) :
+            supplier_abbr = obj.order.supplier.abbr
+        return supplier_abbr
+
+    # 部品種別取得
+    @staticmethod
+    def get_part_type(obj):
+        part_type = ""
+        if(obj.order.bill_of_material) :
+            part_type = obj.order.bill_of_material.type.id
+        return part_type
+
+    # 発注日取得
+    @staticmethod
+    def get_ordered_date(obj):
+        ordered_date = obj.order.ordered_date
+        return ordered_date
 
     class Meta:
         model = ReceivingProcess
@@ -435,17 +658,30 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'modified_at',
             'modified_by',
             # read_only under here
-            'order_data',
-            # 'parts_detail'
+            'order_number',
+            'part_name',
+            'part_detail',
+            'part_detail_other',
+            'desired_delivery_date',
+            'order_amount',
+            'order_price',
+            'order_price_display',
+            'total_default_currency_price',
+            'display_total_default_currency_price',
+            'mfg_no',
+            'manufacturer_abbr',
+            'supplier',
+            'supplier_abbr',
+            'part_type',
+            'ordered_date',
         )
 
 
 class ManHourSerializer(serializers.ModelSerializer):
-    staff_data = UserStaffSerializer(source='staff', read_only=True)
-    type_data = SystemJobTypeSerializer(source='type', read_only=True)
-    failure_data = SystemFailureCategorySerializer(source='failure', read_only=True)
     mfg_no = serializers.SerializerMethodField()
     product_name = serializers.SerializerMethodField()
+    staff_name = serializers.SerializerMethodField()
+    job_type = serializers.SerializerMethodField()
 
     # 工事番号取得
     @staticmethod
@@ -463,6 +699,18 @@ class ManHourSerializer(serializers.ModelSerializer):
             name = obj.job_order.name
         return name
 
+    # 従業員名取得
+    @staticmethod
+    def get_staff_name(obj):
+        staff_name = obj.staff.full_name
+        return staff_name
+
+    # 作業区分取得
+    @staticmethod
+    def get_job_type(obj):
+        job_type = obj.type.name
+        return job_type
+
     class Meta:
         model = ManHour
         fields = (
@@ -479,11 +727,10 @@ class ManHourSerializer(serializers.ModelSerializer):
             'modified_at',
             'modified_by',
             # read_only under here
-            'staff_data',
-            'type_data',
-            'failure_data',
             'mfg_no',
-            'product_name'
+            'product_name',
+            'staff_name',
+            'job_type',
         )
 
 

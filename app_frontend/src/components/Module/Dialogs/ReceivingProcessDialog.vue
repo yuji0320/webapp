@@ -7,15 +7,16 @@
     @submit-form="submitReceivingProcess"
     ref="dialog"
     :editDisable="editDisable"
+    eager
   >
     <!-- フォーム内容 -->
     <span slot="dialog-contents">
       <!-- 確認ダイアログ -->
       <app-confirm ref="confirm"></app-confirm>
 
-      <v-layout wrap>
+      <v-row>
         <!-- エラー表示 -->
-        <v-flex xs12>
+        <v-col cols="12">
           <v-alert 
             value="true"
             type="error"
@@ -28,51 +29,51 @@
               {{ error }}
             </li>
           </v-alert>
-        </v-flex>
+        </v-col>
         <!-- 工事番号 -->
-        <v-flex xs2 md2>
+        <v-col cols="12" xs="2" md="2">
           <v-text-field 
             label="MFG No"
             class="right-input"
             disabled
             v-model="mfgNo"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 発注番号 -->
-        <v-flex xs2 md2>
+        <v-col cols="12" xs="2" md="2">
           <v-text-field 
             label="Order No"
             class="right-input"
             disabled
             v-model="number"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 部品名 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <v-text-field 
             label="Part Name"
             disabled
             v-model="partName"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 仕入先 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Supplier"
             disabled
             v-model="supplier"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 部品詳細 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <v-text-field 
             label="Standard / Drawing No"
             disabled
-            v-model="partsDetail"
+            v-model="receivingProcess.partDetail"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 個数 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Amount"
             v-model="receivingProcess.amount"
@@ -80,9 +81,9 @@
             :error-messages="responseError.amount"
             :disabled="editDisable"
           ></v-text-field>
-        </v-flex>
+        </v-col>
         <!-- 単位選択 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Unit Type"
             orderBy="number"
@@ -92,9 +93,9 @@
             ref="unitType"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- 金額 -->
-        <v-flex xs4>
+        <v-col cols="12" xs="4">
           <v-text-field 
             label="Unit Price"
             v-model="receivingProcess.unitPrice"
@@ -103,9 +104,9 @@
             @blur="checkPrice"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 通貨 -->
-        <v-flex xs12 md8>
+        <v-col cols="12" md="8">
           <app-incremental-model-search
             label="Currency"
             orderBy="id"
@@ -115,9 +116,9 @@
             ref="currency"
             :disabled="editDisable"
           ></app-incremental-model-search>
-        </v-flex>
+        </v-col>
         <!-- レート -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="4">
           <v-text-field 
             label="Rate"
             v-model="receivingProcess.rate"
@@ -128,26 +129,26 @@
             class="right-input"
             :disabled="editDisable"
           ></v-text-field >
-        </v-flex>
+        </v-col>
         <!-- 希望納期 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="6">
           <app-input-date 
             label="Suspense Received Date"
             v-model="receivingProcess['suspenseReceivedDate']"
             :errorMessages="responseError['suspenseReceivedDate']"
             :disabled="editDisable"
           ></app-input-date>
-        </v-flex>
+        </v-col>
         <!-- 仕入日 -->
-        <v-flex xs12 md4>
+        <v-col cols="12" md="6">
           <app-input-date 
             label="Received Date"
             v-model="receivingProcess['receivedDate']"
             :errorMessages="responseError['receivedDate']"
             :disabled="editDisable"
           ></app-input-date>
-        </v-flex>   
-      </v-layout>
+        </v-col>   
+      </v-row>
     </span>
 
     <!-- 拡張ボタンスロット -->
@@ -159,6 +160,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Dialog from '@/components/Module/Dialogs/Dialog.vue';
 
 export default {
   data() {
@@ -168,6 +170,9 @@ export default {
       supplier: "",
       partName: ""
     }
+  },
+  components: {
+    "app-dialog": Dialog,
   },
   props: {
     editDisable: { required: false },
@@ -199,13 +204,13 @@ export default {
     },
     setData(val) {
       // console.log(val);
-      this.mfgNo = val.orderData.mfgNo;
-      this.number = val.orderData.number;
-      this.supplier = val.orderData["supplierData"].name;
-      this.partName = val.orderData.name;
+      this.mfgNo = val.mfgNo;
+      this.number = val.orderNumber;
+      this.supplier = val.supplierAbbr;
+      this.partName = val.partName;
     },
     // 発注ファイル編集
-    editReceivingProcess() {
+    openDialogReceive() {
       this.clearReceivingProcessError();
       this.setIncremental(this.receivingProcess);
       this.setData(this.receivingProcess);
@@ -215,7 +220,7 @@ export default {
     async submitReceivingProcess() {
       let res = {};
       this.receivingProcess.modifiedBy = this.loginUserData.id;
-      this.receivingProcess.order = this.receivingProcess.orderData.id;
+      this.receivingProcess.order = this.receivingProcess.order;
       // 日付がブランクの場合nullをセットおする
       if(this.receivingProcess.suspenseReceivedDate==="") {
         this.receivingProcess.suspenseReceivedDate = null
@@ -223,40 +228,48 @@ export default {
       if(this.receivingProcess.receivedDate==="") {
         this.receivingProcess.receivedDate = null
       }
-      // console.log(this.receivingProcess);
-      res = await this.putReceivingProcess(this.receivingProcess);
-      if (res.data) {
-        // 更新成功時はモーダルを閉じる
-        this.$refs.dialog.closeDialog();
-        // 登録完了後、親コンポーネントで連携関数を実施する
-        this.$emit("response-function", res);
+
+      // 金額一致確認
+      let check = await this.checkPrice();
+      // console.log(check);
+
+      if(check) {
+        // console.log("OK");
+        // 発注金額と仕入金額が一致しているor空白の場合は更新処理
+        res = await this.putReceivingProcess(this.receivingProcess);
+
+        if (res.data) {
+          // 更新成功時はモーダルを閉じる
+          this.$refs.dialog.closeDialog();
+          // 登録完了後、親コンポーネントで連携関数を実施する
+          this.$emit("response-function", res);
+        } else {
+          // 失敗時
+          console.log("Failed");
+          console.log(res);
+        }
+
       } else {
-        // 失敗時
-        console.log("Failed");
-        console.log(res);
+          // Noの場合はスナックバーにキャンセルの旨を表示
+          res.snack = { snack: "Update is Failed" };
+          this.showSnackbar(res.snack);
       }
     },
     // 仕入ファイルと発注の金額差チェック
     async checkPrice() {
       let res = {};
-      let received = this.receivingProcess.unitPrice;
-      let order = this.receivingProcess.orderData.unitPrice;
-      let bom = "";
-      if (this.receivingProcess.orderData.billOfMaterial) {
-        bom = this.receivingProcess.orderData.billOfMaterial.unitPrice;
+      let received = parseFloat(this.receivingProcess.unitPrice);
+      let order = this.receivingProcess.orderPrice;
+      // 値が0の場合はnullを代入
+      if(received===0) {
+        this.receivingProcess.unitPrice = null;
       }
-      if(received!==order) {
-        // 発注ファイルと部品表で単価が違う場合
+      if(received!==order && received) {
+        // 発注ファイルと部品表で単価が違う場合        
         // アラート文
-        let alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                "\nAre you sure change Order's unit price?");
-        if (bom !== "") {
-          alertText = ("'\Receiving's unit price is '" + received.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                  "'\nOrder's unit price is '" + order.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
-                  "'\nBOM's unit price is   '" + bom.replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
-                  "\nAre you sure change Order's unit price and Bill ob material's unit price?");
-        }
+        let alertText = ("'\Receiving's unit price is '" + parseFloat(received).toFixed(2).toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') +
+                "'\nOrder's unit price is '" + order.toFixed(2).toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g , '$1,') + "'" +
+                "\nYou have to edit Order data first");
         if (
           await this.$refs.confirm.open(
             "Unit Price is different!",
@@ -264,33 +277,18 @@ export default {
             { color: "blue" }
           )
         ) {
-          // Yesの場合は上書き処理
-          this.setMakingOrder(this.receivingProcess.orderData);
-          // 部品表の編集
-          if (bom !== "") {
-            // 部品表の編集
-            this.setBillOfMaterial(orderData.billOfMaterial);
-            this.billOfMaterial.unitPrice = received;
-            this.billOfMaterial.modifiedBy = this.loginUserData.id;
-            res = await this.putBillOfMaterial(this.billOfMaterial);
-            this.makingOrder.billOfMaterialId = orderData.billOfMaterial.id;
-          } else {
-            this.makingOrder.billOfMaterialId = null;
-          }
-          // 発注ファイルの上書き
-          this.makingOrder.unitPrice = received;
-          this.makingOrder.modifiedBy = this.loginUserData.id;
-          // this.makingOrder.billOfMaterialId = this.receivingProcess.orderData.billOfMaterial.id;
-          this.receivingProcess.orderData = this.makingOrder;
-          res = await this.putMakingOrder(this.makingOrder);
-          this.showSnackbar(res.snack);
+          // 同意した場合はnullを代入
+          this.receivingProcess.unitPrice = null;
+          return false;
         } else {
           // Noの場合はスナックバーにキャンセルの旨を表示
           res.snack = { snack: "Price is not changed." };
           this.showSnackbar(res.snack);
+          return false;
         }
       } else {
         // 単価が同じ場合は処理しない
+        return true;
       }
     }
   }

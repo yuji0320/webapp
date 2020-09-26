@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!-- ヘッダー -->
     <app-header class="no_print"></app-header>
     <!-- グローバルsnackbar -->
@@ -17,6 +16,7 @@
 import Header from "@/components/Elements/Header.vue";
 import Footer from "@/components/Elements/Footer.vue";
 import Snackbar from "@/components/Module/Snackbar.vue";
+
 import { mapActions } from "vuex";
 
 export default {
@@ -36,7 +36,7 @@ export default {
   components: {
     "app-header": Header,
     "app-footer": Footer,
-    "app-snackbar": Snackbar
+    "app-snackbar": Snackbar,
   }
 };
 </script>

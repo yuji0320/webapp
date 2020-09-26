@@ -1,25 +1,24 @@
 <template>
-  <v-container fluid grid-list-lg>
-
+  <div class="pa-2">
     <!-- 読み込み中ダイアログコンポーネント -->
     <app-loading-dialog></app-loading-dialog>
 
     <app-card noSearchBar="true">
-      <span slot="card-header-icon"><v-icon>work</v-icon></span>
+      <span slot="card-header-icon"><v-icon large left>work</v-icon></span>
       <span slot="card-header-title">Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
-        <v-btn @click="backToMenu" >
+      <span slot="card-header-button">
+        <v-btn @click="backToMenu" class="me-2">
           <v-icon>reply</v-icon>
           Back to Menu
         </v-btn>
       </span>
 
       <!-- 拡張ボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <!-- 編集ボタン -->
-        <v-btn fab small @click="edit">
+        <v-btn fab small @click="edit" class="me-2">
           <v-icon>edit</v-icon>
         </v-btn>
         <!-- 印刷ボタン  -->
@@ -33,15 +32,15 @@
       <!-- 指図書データ -->
       <span slot="card-content">
         <v-container fluid　grid-list-lg>
-          <table class="table table-bordered">
+          <table border="1">
             <tbody>
                 <tr class="" style="visibility: hidden;">
-                  <td style="width : 100px !important;"></td>
-                  <td style="width : 100px !important;"></td>
-                  <td style="width : 100px !important;"></td>
-                  <td style="width : 100px !important;"></td>
-                  <td style="width : 100px !important;"></td>
-                  <td style="width : 100px !important;"></td>
+                  <td style="width : 300px !important;"></td>
+                  <td style="width : 300px !important;"></td>
+                  <td style="width : 300px !important;"></td>
+                  <td style="width : 300px !important;"></td>
+                  <td style="width : 300px !important;"></td>
+                  <td style="width : 300px !important;"></td>
                 </tr>
                 <tr>
                   <td class="text-center">MFG No.</td>
@@ -107,13 +106,15 @@
             </tbody>
           </table>
 
-          <table class="table table-bordered">
+          <br>
+
+          <table border="1">
             <thead>
               <tr>
-                <td class="text-center" style="width : 400px !important;">Material Cost</td>
-                <td class="text-center" style="width : 240px !important;">Budget</td>
-                <td class="text-center" style="width : 240px !important;">Results</td>
-                <td class="text-center" style="width : 240px !important;">Failure</td>
+                <td class="text-center" style="width : 560px !important;">Material Cost</td>
+                <td class="text-center" style="width : 360px !important;">Budget</td>
+                <td class="text-center" style="width : 360px !important;">Results</td>
+                <td class="text-center" style="width : 360px !important;">Failure</td>
               </tr>
             </thead>
             <tbody>
@@ -173,19 +174,20 @@
               </tr>
             </tbody>
           </table>
-          
-          <p class="text-xs-right">* Time Charge = $ {{ userCompany.timeCharge }} / Hour</p>
+          <br>
 
-          <table class="table table-bordered">
+          <p class="text-right">* Time Charge = $ {{ userCompany.timeCharge }} / Hour</p>
+
+          <table border="1">
             <thead>
               <tr>
-                <td class="text-center" style="width : 400px !important;">Labor Cost</td>
-                <td class="text-center" style="width : 90px !important;">Hours</td>
-                <td class="text-center" style="width : 150px !important;">Budget(予算)</td>
-                <td class="text-center" style="width : 90px !important;">Hours</td>
-                <td class="text-center" style="width : 150px !important;">Results(実績)</td>
-                <td class="text-center" style="width : 90px !important;">Hour</td>
-                <td class="text-center" style="width : 150px !important;">Failure(仕損)</td>
+                <td class="text-center" style="width : 560px !important;">Labor Cost</td>
+                <td class="text-center" style="width : 130px !important;">Hours</td>
+                <td class="text-center" style="width : 230px !important;">Budget(予算)</td>
+                <td class="text-center" style="width : 130px !important;">Hours</td>
+                <td class="text-center" style="width : 230px !important;">Results(実績)</td>
+                <td class="text-center" style="width : 130px !important;">Hour</td>
+                <td class="text-center" style="width : 230px !important;">Failure(仕損)</td>
               </tr>
             </thead>
             <tbody>
@@ -246,13 +248,15 @@
             </tbody>
           </table>
 
-          <table class="table table-bordered">
+          <br>
+
+          <table border="1">
             <thead>
               <tr>
-                <td class="text-center" style="width : 400px !important;"></td>
-                <td class="text-center" style="width : 240px !important;">Budget</td>
-                <td class="text-center" style="width : 240px !important;">Results</td>
-                <td class="text-center" style="width : 240px !important;">Failure</td>
+                <td class="text-center" style="width : 560px !important;"></td>
+                <td class="text-center" style="width : 360px !important;">Budget</td>
+                <td class="text-center" style="width : 360px !important;">Results</td>
+                <td class="text-center" style="width : 360px !important;">Failure</td>
               </tr>
             </thead>
             <tr>
@@ -285,7 +289,7 @@
       </span>
 
     </app-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -423,28 +427,28 @@ export default {
         // 作業指図書発行者
         jobOrder.publisherName = "";
         if(this.jobOrder.publisher){
-          jobOrder.publisherName = this.jobOrder["publisherData"]["staffNumber"] + " : " + this.jobOrder["publisherData"]["fullName"];
+          jobOrder.publisherName = this.jobOrder.publisherName;
         }
         // 設計者
         jobOrder.designerName = "";
         if(this.jobOrder.designer){
-          jobOrder.designerName = this.jobOrder["designerData"]["staffNumber"] + " : " + this.jobOrder["designerData"]["fullName"];
+          jobOrder.designerName = this.jobOrder.designerName;
         }
         // 作業指図書発行者
         jobOrder.customerName = "";
         if(this.jobOrder.customer){
-          jobOrder.customerName = this.jobOrder["customerData"].name;
+          jobOrder.customerName = this.jobOrder["customerName"];
         }
         // 作業指図書発行者
         jobOrder.deliveryDestinationName = "";
         if(this.jobOrder.deliveryDestination){
-          jobOrder.deliveryDestinationName = this.jobOrder["deliveryDestinationData"].name;
+          jobOrder.deliveryDestinationName = this.jobOrder["deliveryDestinationName"];
         }
         // 受注金額
-        jobOrder.orderPriceDisplay = this.jobOrder["orderCurrencyData"].display + " " + this.moneyComma(this.jobOrder["orderPrice"]);
-        jobOrder.orderCurrencyCodeDisplay = this.jobOrder.orderCurrencyData.code;
+        jobOrder.orderPriceDisplay = this.jobOrder["orderCurrencyDisplay"] + " " + this.moneyComma(this.jobOrder["orderPrice"]);
+        jobOrder.orderCurrencyCodeDisplay = this.jobOrder.orderCurrencyCode;
         // レート換算
-        jobOrder.orderRateDisplay = "1" + this.jobOrder.orderCurrencyData.code + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
+        jobOrder.orderRateDisplay = "1" + this.jobOrder.orderCurrencyCode + " = \n" + this.jobOrder.orderRate + this.loginUserData["defaultCurrencyCode"];
         // 受注金額基準通貨
         jobOrder.orderPriceDefault = defaultDisplay + this.jobOrder["defaultCurrencyOrderAmount"];
         // 税額
