@@ -8,7 +8,7 @@
       <span slot="card-header-title">Job Order Detail of {{ jobOrder.mfgNo }} : {{ jobOrder.name }}</span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToMenu" class="me-2">
           <v-icon>reply</v-icon>
           Back to Menu
@@ -16,7 +16,7 @@
       </span>
 
       <!-- 拡張ボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <!-- 編集ボタン -->
         <v-btn fab small @click="edit" class="me-2">
           <v-icon>edit</v-icon>

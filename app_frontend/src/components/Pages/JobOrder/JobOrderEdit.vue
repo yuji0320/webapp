@@ -9,14 +9,14 @@
       </span>
 
       <!-- 戻るボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <v-btn @click="backToList" class="me-2">
           <v-icon>reply</v-icon>
           Back to List
         </v-btn>
       </span>    
       <!-- 拡張ボタン -->
-      <span slot="card-header-buck-button">
+      <span slot="card-header-button">
         <!-- 詳細閲覧ボタン -->
         <v-btn
           fab
