@@ -24,6 +24,7 @@ dev_app_frontend:
   volumes:
     - C:\BMS\webapp\app_frontend:/usr/src/app_frontend
   command: npm run serve
+  # command: /bin/bash
   tty: true
 
 
@@ -32,7 +33,7 @@ dev_nginx:
   restart: always
   ports:
     - "80:80"
-    - "443:443"
+    # - "443:443"
   links:
     - dev_app:app
     - dev_app_frontend:frontend
@@ -42,7 +43,7 @@ dev_nginx:
     - C:\BMS\webapp\nginx\development.conf:/etc/nginx/conf.d/development.conf
     - C:\BMS\webapp\nginx\log:/var/log/nginx
     - C:\BMS\webapp\nginx\uwsgi_params:/etc/nginx/uwsgi_params
-    - C:\BMS\webapp\app_frontend\dist:/usr/dist
+    - C:\BMS\webapp\app_frontend\dist:/var/www/html
     - C:\BMS\webapp\app\static:/usr/src/app/static
   volumes_from:
     - dev_app
