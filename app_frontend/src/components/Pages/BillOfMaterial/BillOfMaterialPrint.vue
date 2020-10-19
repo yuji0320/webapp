@@ -44,6 +44,7 @@
           class="elevation-1"
           hide-default-footer
           dense
+          :items-per-page="partsData(tabs.refine).length"
         >
         </v-data-table>
       </span>
@@ -198,6 +199,7 @@
         partsData.parts = this.partsData(category.id);
         this.dataForPDF.data.push(partsData);
       }
+      console.log(this.dataForPDF);
       this.printPDF(this.createPrintData(this.dataForPDF));
       // 印刷済ステータスの更新
       this.updatePrintStatus(this.billOfMaterials.results);
@@ -221,10 +223,12 @@
       this.$store.commit("systemConfig/setLoading", true);
       await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
+      console.log(this.billOfMaterials);
     },
     // 部品種別毎の部品表仕分け
     partsData(val) {
       if(this.billOfMaterials.results) {
+        console.log(this.billOfMaterials.results.filter(x => x.type === val));
         return this.billOfMaterials.results.filter(x => x.type === val)
       } else {
         return []
