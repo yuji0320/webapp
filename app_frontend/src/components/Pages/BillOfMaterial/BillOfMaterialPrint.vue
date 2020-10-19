@@ -20,7 +20,7 @@
 
 
       <span slot="card-content">
-        *{{ printStatus.cardText }}
+        *{{ printStatus.cardText }} test
         <v-tabs v-model="tabs.tab" align-with-title grow>
 <!--          タブ表示-->
           <v-tabs-slider></v-tabs-slider>
@@ -223,12 +223,12 @@
       this.$store.commit("systemConfig/setLoading", true);
       await this.getBillOfMaterials(data);
       this.$store.commit("systemConfig/setLoading", false);
-      console.log(this.billOfMaterials);
+      // console.log(this.billOfMaterials);
     },
     // 部品種別毎の部品表仕分け
     partsData(val) {
       if(this.billOfMaterials.results) {
-        console.log(this.billOfMaterials.results.filter(x => x.type === val));
+        // console.log(this.billOfMaterials.results.filter(x => x.type === val));
         return this.billOfMaterials.results.filter(x => x.type === val)
       } else {
         return []
