@@ -49,6 +49,7 @@ dev_mysql:
   restart: always
   volumes:
     - ./mysql/backup:/tmp/backup
+    - ./mysql/settings/my.cnf:/etc/mysql/my.cnf
     - ./storage/volume:/var/lib/mysql
   ports:
     - "3306:3306"
