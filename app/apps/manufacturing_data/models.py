@@ -301,3 +301,36 @@ class ManHour(models.Model):
         db_table = 'man_hour'
         verbose_name = _('Man Hour')
         verbose_name_plural = _('Man hours')
+
+
+# 在庫部品マスタ
+class InStockParts(models.Model):
+    # 部品表
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    name = models.CharField(_('Parts name'), max_length=255)  # 部品名
+    manufacturer = models.ForeignKey('system_users.UserPartner',
+                                     related_name='%(class)s_requests_manufacturer',
+                                     on_delete=models.PROTECT,
+                                     blank=True,
+                                     null=True)  # メーカー
+    standard = models.CharField(_('Standard・Model'), max_length=255, blank=True)  # 規格・型式
+    amount = models.DecimalField(_('Amount'), max_digits=17, decimal_places=2, default=1)  # 個数
+    currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
+    rate = models.FloatField(_('Order Rate'), default=1)  # 受注時為替レート
+    unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    notes = models.TextField(_('Notes'), blank=True)  # 備考
+    add_date = models.DateField(_('Add Date'))  # 作業日
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                   related_name='%(class)s_requests_created',
+                                   on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
+
+    class Meta:
+        db_table = 'in_stock_parts'
+        verbose_name = _('In Stock Parts')
+        verbose_name_plural = _('In Stock Parts')

@@ -203,9 +203,11 @@ if DEBUG:
         return True
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+        'INTERCEPT_REDIRECTS': False,
     }
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '0.0.0.0']
+    # INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '0.0.0.0']
+    INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', )
     INSTALLED_APPS += ['debug_toolbar']
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     DEBUG_TOOLBAR_PANELS = [
@@ -221,4 +223,5 @@ if DEBUG:
         'debug_toolbar.panels.signals.SignalsPanel',
         'debug_toolbar.panels.logging.LoggingPanel',
         'debug_toolbar.panels.redirects.RedirectsPanel',
+        'debug_toolbar.panels.profiling.ProfilingPanel',
     ]
