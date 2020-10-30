@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'system_master',
     'system_users',
     'manufacturing_data',
+    'stock_data',
     # 'drf-extensions',
 ]
 

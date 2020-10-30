@@ -7,6 +7,7 @@ from .views import index
 from system_master import urls as system_urls
 from system_users import urls as user_urls
 from manufacturing_data import urls as manufacturing_urls
+from stock_data import urls as stock_urls
 # 認証情報API
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
@@ -23,6 +24,7 @@ routeLists = [
     system_urls.routeList,
     user_urls.routeList,
     manufacturing_urls.routeList,
+    stock_urls.routeList,
 ]
 
 router = routers.DefaultRouter()
