@@ -8,4 +8,11 @@ module.exports = {
     "vuetify"
   ],
   lintOnSave: false,
+  configureWebpack: {
+    devServer: {
+      watchOptions: {
+        poll: true
+      }
+    }
+  }
 }

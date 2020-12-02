@@ -75,7 +75,7 @@
                   hide-default-footer
                   disable-sort
                   class="elevation-1 mb-4"
-                  :items-per-page="summaryList.length"
+                  :items-per-page="list.dataList.length"
                   dense
                 >
                   <!-- footer表示 -->
