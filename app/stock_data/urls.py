@@ -3,7 +3,7 @@ from rest_framework import routers
 
 
 routeList = (
-    # (r'parts_search', PartsSearchAPIView),
+    (r'inventory_master', InventoryMasterAPIView),
 )
 
 router = routers.DefaultRouter()
