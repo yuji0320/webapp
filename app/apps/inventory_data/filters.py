@@ -12,7 +12,7 @@ class InventoryMasterFilter(filters.FilterSet):
     class Meta:
         model = InventoryMaster
         fields = [
-            'id', 'name', 'manufacturer', 'standard', 'material', 'notes', 'is_standard_inventory', 'is_disabled',
+            'id', 'company', 'name', 'manufacturer', 'standard', 'material', 'notes', 'is_standard_inventory', 'is_disabled',
         ]
 
     order_by = filters.OrderingFilter(
