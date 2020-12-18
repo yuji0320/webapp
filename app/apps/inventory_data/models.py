@@ -37,26 +37,28 @@ class InventoryMaster(models.Model):
 
     def __str__(self): return self.name
 
+class LocationMaster(models.Model):
+    # 保管場所マスタ
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
+    number = models.IntegerField('number', unique=True)  # 項目番号
+    name = models.CharField(_('Parts name'), max_length=255)  # 保存場所名
+    notes = models.TextField(_('Notes'), blank=True)  # 備考
+    is_disabled = models.BooleanField(verbose_name='is Disabled', default=False,)
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_created',
+                                    on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
 
-# class LocationMaster(models.Model):
-#     # 保管場所マスタ
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     number = models.IntegerField('number', unique=True)  # 項目番号
-#     name = models.CharField(_('Parts name'), max_length=255)  # 部品名
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     created_by = models.ForeignKey('system_users.User',
-#                                     related_name='%(class)s_requests_created',
-#                                     on_delete=models.PROTECT)  # データ作成者
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#     modified_by = models.ForeignKey('system_users.User',
-#                                     related_name='%(class)s_requests_modified',
-#                                     on_delete=models.PROTECT)  # データ最終更新者
+    class Meta:
+        db_table = 'location_master'
 
-#     class Meta:
-#         db_table = 'location_master'
+    def __str__(self): return self.name
 
-#     def __str__(self): return self.name
 
 # class StockData(models.Model):
 #     # 在庫データ

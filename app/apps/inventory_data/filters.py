@@ -31,3 +31,27 @@ class InventoryMasterFilter(filters.FilterSet):
             ('-drawing_number', '-drawing_number'),
         )
     )
+
+
+class LocationMasterFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+    notes = filters.CharFilter(field_name='notes', lookup_expr='icontains')
+
+    class Meta:
+        model = LocationMaster
+        fields = [
+            'id', 'company', 'name', 'number', 'notes', 'is_disabled',
+        ]
+
+    order_by = filters.OrderingFilter(
+        choices=(
+            ('created_at', 'created_at'),
+            ('-created_at', '-created_at'),
+            ('modified_at', 'modified_at'),
+            ('-modified_at', '-modified_at'),
+            ('name', 'name'),
+            ('-name', '-name'),
+            ('number', 'number'),
+            ('-number', '-number'),
+        )
+    )

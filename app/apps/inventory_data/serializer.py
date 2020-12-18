@@ -38,3 +38,22 @@ class InventoryMasterSerializer(serializers.ModelSerializer):
             # read_only under here
             'manufacturer_abbr',
         )
+
+
+class LocationMasterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationMaster
+        fields = (
+            # 発注ファイル
+            'id',
+            'company',
+            'number',
+            'name',
+            'notes',
+            'is_disabled',
+            'created_at',
+            'created_by',
+            'modified_at',
+            'modified_by',
+            # read_only under here
+        )

@@ -15,3 +15,16 @@ class InventoryMasterAPIView(viewsets.ModelViewSet):
         )
     )
     filter_class = InventoryMasterFilter
+
+
+class LocationMasterAPIView(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = LocationMasterSerializer
+    queryset = (
+        LocationMaster.objects.select_related(
+            'company', 'created_by', 'modified_by'
+        )
+    )
+    filter_class = LocationMasterFilter
