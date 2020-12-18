@@ -238,6 +238,7 @@ export default {
   props: {
     hideButtons: { required: false },
     editDisable: { required: false },
+    isProcessed: { required: false },
   },
   components: {
     "app-dialog": Dialog,
@@ -266,7 +267,7 @@ export default {
     },
     // 加工部品かどうか
     isProcessedParts() {
-      if(this.billOfMaterial.isProcessed) {
+      if(this.billOfMaterial.isProcessed || this.isProcessed) {
         return true;
       } else {
         return false

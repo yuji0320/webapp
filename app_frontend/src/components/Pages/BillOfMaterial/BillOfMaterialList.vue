@@ -22,7 +22,11 @@
           Back to Menu
         </v-btn>
         <!-- 部品表登録編集ダイアログコンポーネント -->
-        <app-bom-dialog @response-function="responseFunction" ref="bom_dialog"></app-bom-dialog>
+        <app-bom-dialog 
+          @response-function="responseFunction" 
+          ref="bom_dialog"
+          :isProcessed="expenseCategory.isProcessedParts"
+        ></app-bom-dialog>
 
         <!-- エクセルアップロード -->
         <v-btn fab small @click="upload" class="ml-2">
