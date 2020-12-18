@@ -299,8 +299,9 @@ export default {
     },
     // デフォルト値設定
     setDefault() {
-      this.setIncremental(this.defaultBillOfMaterial);
-      this.setBillOfMaterial(this.defaultBillOfMaterial);
+      let defaultData = Object.assign({},this.defaultBillOfMaterial);
+      this.setIncremental(defaultData);
+      this.setBillOfMaterial(defaultData);
     },
     // 編集データ設定
     openDialogBOM() {

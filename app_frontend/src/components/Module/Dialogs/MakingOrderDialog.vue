@@ -272,8 +272,9 @@ export default {
     },
     // デフォルト値設定
     setDefault() {
-      this.setIncremental(this.defaultMakingOrder);
-      this.setMakingOrder(this.defaultMakingOrder);
+      let defaultData = Object.assign({},this.defaultBillOfMaterial);
+      this.setIncremental(defaultData);
+      this.setMakingOrder(defaultData);
     },
     // 発注ファイル編集
     openDialogMO() {
