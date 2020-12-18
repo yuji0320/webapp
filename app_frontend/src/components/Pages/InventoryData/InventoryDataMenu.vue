@@ -20,6 +20,11 @@
                   Standard Inventory Master
                 </v-btn>
               </v-flex>
+              <v-flex sm6 xs12>
+                <v-btn large block outlined  :to="{ name: 'LocationMasterList' }">
+                  Location Master
+                </v-btn>
+              </v-flex>
             </v-layout>
           </span>
         </app-card>

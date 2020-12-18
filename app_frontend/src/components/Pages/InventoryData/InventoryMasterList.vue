@@ -153,7 +153,6 @@ export default {
     clearParams() {
       this.refineParams = {};
       this.$refs.manufacturer.clearItem();
-      // console.log("test");
     },
     // 編集データ設定
     editInventoryMaster(val) {
@@ -167,7 +166,7 @@ export default {
       // Snackbar表示
       this.showSnackbar(val.snack);
     },
-    // 部品表削除
+    // 在庫部品マスタ削除
     async deleteInventoryMasterData(val) {
       let res = {};
       // 削除確認
@@ -186,7 +185,6 @@ export default {
       }
       this.responseFunction(res);
     },
-
     // メニューに戻る
     backToMenu() {
       this.$router.push({ name: "InventoryDataMenu" });

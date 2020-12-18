@@ -178,12 +178,9 @@ export default {
       if (res.data) {
         // 更新成功時はモーダルを閉じる
         if (this.$refs.dialog.editedIndex == -1) {
-          // this.clearInventoryMaster();
           this.setDefault();
-          // console.log("setDefault");
         } else {
           this.$refs.dialog.closeDialog();
-          // console.log("closeDialog");
         }
         // 登録完了後、親コンポーネントで連携関数を実施する
         this.$emit("response-function", res);

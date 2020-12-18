@@ -69,6 +69,7 @@ import PartnerUpload from '@/components/Pages/Master/PartnerUpload.vue';
 // 在庫
 import InventoryDataMenu from '@/components/Pages/InventoryData/InventoryDataMenu.vue';
 import InventoryMasterList from '@/components/Pages/InventoryData/InventoryMasterList.vue';
+import LocationMasterList from '@/components/Pages/InventoryData/LocationMasterList.vue';
 
 
 // ユーザー設定
@@ -310,9 +311,15 @@ const router = new Router({
                   // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryDataMenu.vue')
                 },
                 {
-                  path: 'master',
+                  path: 'inventory_master',
                   name: 'InventoryMasterList',
                   component: InventoryMasterList,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryMasterList.vue')
+                },
+                {
+                  path: 'location_master',
+                  name: 'LocationMasterList',
+                  component: LocationMasterList,
                   // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryMasterList.vue')
                 },
               ]
