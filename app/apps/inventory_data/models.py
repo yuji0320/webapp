@@ -15,7 +15,7 @@ class InventoryMaster(models.Model):
                                         on_delete=models.PROTECT,
                                         blank=True,
                                         null=True)  # メーカー
-    standard = models.CharField(_('Standard・Model'), max_length=255, blank=True)  # 規格・型式
+    standard = models.CharField(_('Standard・Model'), max_length=255)  # 規格・型式
     material = models.CharField(_('Material'), max_length=255, blank=True)  # 材質
     unit = models.ForeignKey('system_master.SystemUnitType', on_delete=models.PROTECT)  # 計量単位種別
     notes = models.TextField(_('Notes'), blank=True)  # 備考
