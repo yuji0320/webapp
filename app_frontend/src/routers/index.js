@@ -66,6 +66,11 @@ import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
 import Partner from '@/components/Pages/Master/Partner.vue';
 import PartnerUpload from '@/components/Pages/Master/PartnerUpload.vue';
 
+// 在庫
+import InventoryDataMenu from '@/components/Pages/InventoryData/InventoryDataMenu.vue';
+import InventoryMasterList from '@/components/Pages/InventoryData/InventoryMasterList.vue';
+
+
 // ユーザー設定
 import ChangePassword from '@/components/Pages/UserSettings/ChangePassword.vue';
 
@@ -291,6 +296,25 @@ const router = new Router({
                   component: ManHourList,
                   // component: () => import(/* webpackChunkName: "ManHourList" */ '@/components/Pages/ManHour/ManHourList.vue')
                 },    
+              ]
+            },
+            {
+              path: 'inventory_data',
+              name: 'InventoryData',
+              component: Root,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'InventoryDataMenu',
+                  component: InventoryDataMenu,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryDataMenu.vue')
+                },
+                {
+                  path: 'master',
+                  name: 'InventoryMasterList',
+                  component: InventoryMasterList,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryMasterList.vue')
+                },
               ]
             },
             {
