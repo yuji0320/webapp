@@ -98,6 +98,7 @@ export default {
     // デフォルト値設定
     setDefault() {
       let defaultData = Object.assign({},this.defaultLocationMaster);
+      console.log(defaultData);
       this.setLocationMaster(defaultData);
     },
     // 編集データ設定
@@ -128,6 +129,7 @@ export default {
         // 更新成功時はモーダルを閉じる
         if (this.$refs.dialog.editedIndex == -1) {
           this.clearLocationMaster();
+          this.setDefault();
         } else {
           this.$refs.dialog.closeDialog();
         }
