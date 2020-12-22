@@ -3,11 +3,11 @@ import api from '@/api';
 const inventoryDataState = {
   responseError: {},
   isStandardInventory: false,
+  standardForSearch: '',
   inventoryMasters: {},
   inventoryMaster: {},
   locationMasters: {},
   locationMaster: {},
-  // jobOrderID: '',
   // partsType: '',
   // isProcessed: false,
   // reprint: false,
@@ -24,6 +24,10 @@ export default {
     // 標準在庫かどうか
     setIsStandardInventory(state, payload) {
       state.isStandardInventory = payload;
+    },
+    // 検索用型式設定
+    setStandardForSearch(state, payload) {
+      state.standardForSearch = payload;
     },
     // 在庫部品マスタリスト取得
     setInventoryMasters(state, payload) {
@@ -51,6 +55,10 @@ export default {
     // 標準在庫かどうかセット
     setIsStandardInventory({commit}, data) {
       commit('setIsStandardInventory', data);
+    },
+    // 検索用型式設定
+    setLocationMaster({commit}, data) {
+      commit('setLocationMaster', data);
     },
     // 在庫部品マスタリストセット
     setInventoryMasters({commit}, data) {
