@@ -60,25 +60,24 @@ class LocationMaster(models.Model):
     def __str__(self): return self.name
 
 
-# class StockData(models.Model):
-#     # 在庫データ
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     company = models.ForeignKey('system_users.UserCompany', on_delete=models.PROTECT)  # 紐付け企業
-#     inventory_master = models.OneToOneField('InventoryMaster', on_delete=models.PROTECT,)  # 紐付在庫マスタ
-#     apply_amount = models.DecimalField(_('Apply amount'), max_digits=17, decimal_places=2, default=1)  # 個数
-#     used_amount = models.DecimalField(_('Used amount'), max_digits=17, decimal_places=2, default=1)  # 個数
-#     currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
-#     rate = models.FloatField(_('Order Rate'), default=1)  # 登録時為替レート
-#     unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
-#     location = models.OneToOneField('LocationMaster', on_delete=models.PROTECT,)  # 紐付場所マスタ
-#     created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
-#     created_by = models.ForeignKey('system_users.User',
-#                                     related_name='%(class)s_requests_created',
-#                                     on_delete=models.PROTECT)  # データ作成者
-#     modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
-#     modified_by = models.ForeignKey('system_users.User',
-#                                     related_name='%(class)s_requests_modified',
-#                                     on_delete=models.PROTECT)  # データ最終更新者
+class InStockParts(models.Model):
+    # 在庫データ
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    inventory_master = models.ForeignKey('InventoryMaster', on_delete=models.PROTECT,)  # 紐付在庫マスタ
+    amount = models.DecimalField(_('Apply amount'), max_digits=17, decimal_places=2, default=1)  # 個数
+    # used_amount = models.DecimalField(_('Used amount'), max_digits=17, decimal_places=2, default=0)  # 個数
+    currency = models.ForeignKey('system_master.SystemCurrency', on_delete=models.PROTECT)  # 通貨種別
+    rate = models.FloatField(_('Order Rate'), default=1)  # 登録時為替レート
+    unit_price = models.DecimalField(_('Unit Price'), max_digits=17, decimal_places=2, default=0)  # 単価
+    location = models.ForeignKey('LocationMaster', on_delete=models.PROTECT,)  # 紐付場所マスタ
+    created_at = models.DateTimeField('created time', auto_now_add=True, blank=True)  # 作成日時
+    created_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_created',
+                                    on_delete=models.PROTECT)  # データ作成者
+    modified_at = models.DateTimeField('updated time', auto_now=True, blank=True)  # 更新日時
+    modified_by = models.ForeignKey('system_users.User',
+                                    related_name='%(class)s_requests_modified',
+                                    on_delete=models.PROTECT)  # データ最終更新者
 
-#     class Meta:
-#         db_table = 'stock_data' 
+    class Meta:
+        db_table = 'in_stock_parts' 

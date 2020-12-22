@@ -5,6 +5,7 @@ from rest_framework import routers
 routeList = (
     (r'inventory_master', InventoryMasterAPIView),
     (r'location_master', LocationMasterAPIView),
+    (r'in_stock_parts', InStockPartsAPIView),
 )
 
 router = routers.DefaultRouter()

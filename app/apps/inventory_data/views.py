@@ -11,7 +11,7 @@ class InventoryMasterAPIView(viewsets.ModelViewSet):
     serializer_class = InventoryMasterSerializer
     queryset = (
         InventoryMaster.objects.select_related(
-            'company', 'manufacturer', 'unit', 'created_by', 'modified_by'
+            # 'company', 'manufacturer', 'unit', 'created_by', 'modified_by'
         )
     )
     filter_class = InventoryMasterFilter
@@ -28,3 +28,19 @@ class LocationMasterAPIView(viewsets.ModelViewSet):
         )
     )
     filter_class = LocationMasterFilter
+
+
+class InStockPartsAPIView(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = InStockPartsSerializer
+    queryset = (
+        InStockParts.objects.select_related(
+            # 'inventory_master', 'location', 'inventory_master__unit', 'inventory_master__company', 
+            # 'created_by', 'modified_by', 
+            'currency', 
+            'inventory_master__manufacturer', 
+        )
+    )
+    filter_class = InStockPartsFilter
