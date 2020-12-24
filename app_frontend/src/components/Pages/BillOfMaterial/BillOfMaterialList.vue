@@ -32,6 +32,13 @@
         <v-btn fab small @click="upload" class="ml-2">
           <v-icon>cloud_upload</v-icon>
         </v-btn>
+
+        <!-- エクセルダウンロード -->
+        <app-export-bom
+          :fileName="excelFileName"
+          :bomArray="billOfMaterials.results"
+          class="ml-2"
+        ></app-export-bom>
       </span>
 
       <!-- カード上部検索機能コンポーネント -->
@@ -88,8 +95,6 @@
           </span>
         </app-search-toolbar>
       </div>
-
-
     </app-card-table>
   </v-container>
 </template>
@@ -99,6 +104,7 @@ import { mapState, mapActions } from "vuex";
 import CardTable from '@/components/Module/Cards/CardTable.vue';
 import SearchToolbar from "@/components/Module/Search/SearchToolbar.vue";
 import BillOfMaterialDialog from '@/components/Module/Dialogs/BillOfMaterialDialog.vue';
+import BillOfMaterialExport from '@/components/Pages/BillOfMaterial/BillOfMaterialExport.vue';
 
 export default {
   title: "Bill of Material List",
@@ -106,7 +112,8 @@ export default {
   components: {
     "app-card-table": CardTable,
     "app-search-toolbar": SearchToolbar,
-    "app-bom-dialog": BillOfMaterialDialog
+    "app-bom-dialog": BillOfMaterialDialog,
+    "app-export-bom": BillOfMaterialExport,
   },
   data() {
     return {
@@ -133,7 +140,7 @@ export default {
         { text: "Surface treatment", value: "surfaceTreatment" },
         { text: "Material", value: "material" }
       ],
-      refineParams: {}
+      refineParams: {},
     };
   },
   computed: {
@@ -158,6 +165,11 @@ export default {
         header = this.defaultHeadersTop.concat(this.commercialHeaders, this.defaultHeadersEnd);
       }
       return header;
+    },
+    // エクセル出力用ファイル名
+    excelFileName() {
+      let fileName = this.jobOrder.mfgNo + "_" +  this.expenseCategory.categoryName + "_Bill of material";
+      return fileName;
     }
   },
   methods: {

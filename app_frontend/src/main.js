@@ -11,6 +11,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 // ユーティリティファイルのインポート
 import titleMixin from './util/title';
 import dateFormetMixin from './util/dateFormat';
+import utilFuncMixin from './util/utilFunc';
 
 // ライブラリのインポート
 // 時刻データ操作ライブラリのインポート
@@ -91,6 +92,7 @@ import vuetify from './plugins/vuetify';
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 Vue.mixin(dateFormetMixin);
+Vue.mixin(utilFuncMixin);
 // Vue.use(BootstrapVue);
 
 // 開発ステータスの定義
