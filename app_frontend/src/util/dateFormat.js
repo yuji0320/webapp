@@ -24,8 +24,11 @@ export default {
         isoDate = date.toISOString().split('Z')[0] + '+09:00';
         // 時間を切り取り
         isoDate = isoDate.slice(0, 10);
+        return isoDate;
+      } else {
+        return null;
       }
-      return isoDate;
+      // console.log(isoDate);
     },    
   },
 };

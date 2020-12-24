@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="!hideButton">
     <!-- データ出力用HTML部分 -->
     <!-- <button type="button" v-on:click="onexport">Excel download</button> -->
     <v-btn
@@ -19,14 +19,12 @@ import XLSX from "xlsx";
 export default {
   name: "excelDownload",
   data: function() {
-    return {
-
-    };
+    return {};
   },
   props: {
     fileName: { required: true },
     // 親のモデル情報を取得する
-    // value: { required: true }
+    hideButton: { required: false }
   },
   computed: {},
   methods: {

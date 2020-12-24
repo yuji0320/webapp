@@ -3,21 +3,25 @@
     <v-layout row wrap>
       <!-- 従業員マスタ登録 -->
       <v-flex xs12>
+        <app-excel-upload
+          :headers="headers"
+          @fix-json="fixJson"
+          @submit-all="submitAllData"
+          submitAll="true"
+          hideBackButton="true"
+        >
+          <!-- ヘッダー部分スロット -->
+          <span slot="card-header-icon"><v-icon>list</v-icon></span>
+          <span slot="card-header-title">従業員マスタインポート : </span>
+        </app-excel-upload>
 
-          <app-excel-upload
-            :headers="headers"
-            @fix-json="fixJson"
-            @submit-data="submitData"
-            @submit-all="submitAllData"
-            submitAll="true"
-            hideBackButton="true"
-          >
-            <!-- ヘッダー部分スロット -->
-            <span slot="card-header-icon"><v-icon>list</v-icon></span>
-            <span slot="card-header-title">従業員マスタインポート : </span>
-
-          </app-excel-upload>
-
+        <!-- エクセル出力 -->
+        <app-excel-download
+          :fileName="fileName"
+          :hideButton="true"
+          class="ml-2"
+          ref="export"
+        ></app-excel-download>
       </v-flex>
     </v-layout>
   </v-container>
@@ -40,63 +44,70 @@ export default {
         { text: "dateBirth", value: "dateBirth" },
         { text: "dateJoined", value: "dateJoined" },
         { text: "dateLeft", value: "dateLeft" },
-        // { text: "Action", value: "action", class: "text-center" }
       ],
+      fileName: "result 01 MigrateStaff"
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemConfig", ["excelJson"]),
+    ...mapState("systemUserApi", ["userStaffs"]),
   },
   methods: {
     ...mapActions("systemConfig", ["setExcelJson", "showSnackbar"]),
+    ...mapActions("systemUserApi", ["postStaff"]),
     async fixJson(val) {
       // console.log(this.loginUserData.companyId);
       // 読み取ったJSONの整形
-      for(let i = 0; i < val.length; i++) {
-        // オブジェクトの配列番号をkeyとして設定
-        val[i].key = i;
-
-        // オブジェクトのエラーコードを初期値とともに設定
-        val[i].err = false;
-
-        // アップロードステータスを設定
-        val[i].updated = false;
-
-        // ユーザー情報をレコードに挿入
-        val[i].company = this.loginUserData.companyId;
-        val[i].createdBy = this.loginUserData.id;
-        val[i].modifiedBy = this.loginUserData.id;
-
-        // 取得情報を登録用情報に変換
-        // 社員番号
-        val[i].staffNumber = val[i].staffid;
-        // 名前
-        val[i].fullName = val[i].staffname;
-        // 振り仮名 *便宜上フルネームを代入する
-        val[i].ruby = val[i].staffname;
-        // 携帯番号
-        val[i].mobile = val[i].cellnumber;
-        // メールアドレス *そのままでOK
-        // 住所 *そのままでOK
-        // 誕生日
-        val[i].dateBirth = this.changeISODate(val[i].date_of_birth);        
-        // 入社日
-        val[i].dateJoined = this.changeISODate(val[i].date_of_joining);        
-        // 退職日
-        val[i].dateLeft = this.changeISODate(val[i].date_of_leaving);
-      }
-      // console.log(val);
+      let jsonData = val.map((staff, index) => {
+        return {
+          "key": index,
+          "company": this.loginUserData.companyId,
+          "createdBy": this.loginUserData.id,
+          "modifiedBy": this.loginUserData.id,
+          "staffNumber": staff.staffid,
+          "fullName": staff.staffname,
+          "ruby": staff.staffname,
+          "mobile": staff.cellnumber,
+          "email": staff.email,
+          "address": staff.address,
+          "dateBirth": this.changeISODate(staff.date_of_birth),
+          "dateJoined": this.changeISODate(staff.date_of_joining),
+          "dateLeft": this.changeISODate(staff.date_of_leaving),
+          "err": false,
+          "updated": false,
+        }
+      });
       // データをVuexに格納
-      this.setExcelJson(val);
+      this.setExcelJson(jsonData);
     },
-    // データ単体登録処理
-    async submitData(val) {
-      console.log("single-submit", val);
-    },
-    // データ全権登録処理
+    // データ全件登録処理
     async submitAllData() {
-      console.log("submit-all", this.excelJson);
+      this.$store.commit("systemConfig/setLoading", true);
+      let res = {};
+      // 登録処理
+      res = await this.postStaff(this.excelJson);
+      // 成功か失敗に応じて処理を変更
+      if (res.data) {
+        // 成功した場合
+        for(let i=0,success; success = this.excelJson[i]; i++){
+          success.updated = true;
+        }
+        // 返り値をエクセルで出力
+        this.$refs.export.onExport(res.data);
+      } else {
+        // 失敗した場合
+        for(let i=0,errorData; errorData = this.excelJson[i]; i++){
+          if(Object.keys(res.error.data[i]).length !== 0) {
+            // エラーのフラグを立てる
+            errorData.err = true;
+            // エラーテキストの挿入
+            errorData.errorText = JSON.stringify(res.error.data[i]);
+          }
+        }
+        // エクセルで出力
+        this.$refs.export.onExport(this.excelJson);
+      }
     }
   },
   mounted() {
