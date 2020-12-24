@@ -102,6 +102,10 @@ class UserPartnerAPIView(viewsets.ModelViewSet):
         else:
             return queryset.filter(company=user.staff.company.id)
 
+    @multi_create(serializer_class=UserPartnerSerializer)
+    def create(self, request, **kwargs):
+        pass
+
 
 # class UserExpenseCategoryAPIView(viewsets.ModelViewSet):
 #     serializer_class = UserExpenseCategorySerializer

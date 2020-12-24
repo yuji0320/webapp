@@ -3,7 +3,11 @@
     <v-layout row wrap>
       <!-- 従業員マスタ登録 -->
       <v-flex xs12>
-        <migrate-staff></migrate-staff>
+        <migrate-staff v-if="false"></migrate-staff>
+      </v-flex>
+      <!-- 取引先マスタ登録 -->
+      <v-flex xs12>
+        <migrate-partner></migrate-partner>
       </v-flex>
     </v-layout>
   </v-container>
@@ -11,6 +15,7 @@
 
 <script>
 import MigrateStaff from "./01MigrateStaff.vue";
+import MigratePartner from "./02MigratePartner.vue";
 
 
 export default {
@@ -18,6 +23,7 @@ export default {
   name: "SystemMigrationMenu",
   components: {
     "migrate-staff": MigrateStaff,
+    "migrate-partner": MigratePartner,
   },
 
 }

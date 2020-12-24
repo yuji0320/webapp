@@ -106,7 +106,11 @@ Vue.filter('printDate', function(val) {
 });
 
 Vue.filter('moneyDelemiter', function(value) {
-  return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  let data = ""
+  if(value) {
+    data = value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  }
+  return data
   // return value.toString().replace(/^(-?[0-9]+)(?=\.|$)/, function(s){ return s.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, '$1,');});
 });
 

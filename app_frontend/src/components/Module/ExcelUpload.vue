@@ -46,7 +46,7 @@
     <span slot="card-content">
       <!-- テーブル内容 -->
       <v-data-table
-        :items-per-page="50"
+        :items-per-page="10000"
         :headers="headers"
         :items="excelJson"
         hide-default-footer
