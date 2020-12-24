@@ -4,6 +4,7 @@
     <span slot="card-header-title"><slot name="card-header-title"></slot></span>
     <span slot="card-header-button">
       <v-btn
+        v-show="!hideBackButton"
         @click="backToList"
       >
         <v-icon>reply</v-icon>
@@ -114,7 +115,8 @@ export default {
   props: {
     headers: { required: true },
     errorColumn: { required: false },
-    submitAll: { required: false }
+    submitAll: { required: false },
+    hideBackButton: { required: false }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -159,7 +161,6 @@ export default {
       var fixedJson = [];
       output = this.toJson(workbook);
       this.fixJson(output);
-
     },
     // ファイルの読み込み
     fixData(data) {
@@ -190,6 +191,11 @@ export default {
     // 親コンポーネントにデータを送り、データ内容をチェックする
     fixJson(json) {
       let jsonArray = json.Sheet1;
+      if(!json.Sheet1){
+        // シート名が特殊な場合は最初のシートを読み込む
+        let sheet1Name = Object.keys(json)[0]
+        jsonArray = json[sheet1Name];
+      }
       let fixedData = this.$emit("fix-json", jsonArray);
     },
     // 一覧へ戻る
