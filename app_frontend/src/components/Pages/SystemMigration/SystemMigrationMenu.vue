@@ -11,7 +11,11 @@
       </v-flex>
       <!-- メーカーマスタ登録 -->
       <v-flex xs12>
-        <migrate-manufacturer></migrate-manufacturer>
+        <migrate-manufacturer v-if="false"></migrate-manufacturer>
+      </v-flex>
+      <!-- 作業指図書登録 -->
+      <v-flex xs12>
+        <migrate-joborder></migrate-joborder>
       </v-flex>
     </v-layout>
   </v-container>
@@ -21,6 +25,7 @@
 import MigrateStaff from "./01MigrateStaff.vue";
 import MigratePartner from "./02MigratePartner.vue";
 import MigrateManufacturer from "./03MigrateManufacturer.vue";
+import MigrateJoborder from "./04MigrateJoborder.vue";
 
 
 export default {
@@ -30,6 +35,7 @@ export default {
     "migrate-staff": MigrateStaff,
     "migrate-partner": MigratePartner,
     "migrate-manufacturer": MigrateManufacturer,
+    "migrate-joborder": MigrateJoborder,
   },
 
 }

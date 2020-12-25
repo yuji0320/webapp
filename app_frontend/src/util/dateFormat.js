@@ -16,6 +16,9 @@ export default {
       // console.log(val);
       let isoDate = "";
       if (val !== "NULL") {
+        if(val === "0000-00-00") {
+          return null;
+        }
         // console.log(val);
         let date = val;
         // 日本時間に変換

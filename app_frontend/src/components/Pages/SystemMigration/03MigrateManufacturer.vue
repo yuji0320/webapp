@@ -27,7 +27,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  title: "02MigrateManufacturer",
+  title: "03MigrateManufacturer",
   name: "MigrateManufacturer",
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
         // { text: "isSupplier", value: "isSupplier" },
         { text: "isManufacturer", value: "isManufacturer" },
       ],
-      fileName: "result 02 MigrateManufacturer"
+      fileName: "result 03 MigrateManufacturer"
     }
   },
   computed: {

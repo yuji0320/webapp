@@ -370,7 +370,17 @@ export default {
         taxPercent: 0,
         commercialPartsBudget: 0,
         electricalPartsBudget: 0,
-        processedPartsBudget: 0
+        processedPartsBudget: 0,
+        outsourcingMechanicalDesignBudget: 0,
+        outsourcingElectricalDesignBudget: 0,
+        outsourcingOtherBudget: 0,
+        shippingCostBudget: 0,
+        mechanicalDesignBudgetHours: 0,
+        electricalDesignBudgetHours: 0,
+        assemblyBudgetHours: 0,
+        electricalWiringBudgetHours: 0,
+        installationBudgetHours: 0,
+        shippingCostResult: 0
       },
       valid: true,
       rules: [

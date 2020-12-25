@@ -19,6 +19,9 @@ class JobOrderAPIView(viewsets.ModelViewSet):
     )
     filter_class = JobOrderFilter
 
+    @multi_create(serializer_class=JobOrderSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 class DirectCostBudgetAPIView(viewsets.ModelViewSet):
     permission_classes = (
