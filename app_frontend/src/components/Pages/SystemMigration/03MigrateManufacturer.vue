@@ -10,7 +10,7 @@
     >
       <!-- ヘッダー部分スロット -->
       <span slot="card-header-icon"><v-icon>list</v-icon></span>
-      <span slot="card-header-title">取引先マスタインポート : </span>
+      <span slot="card-header-title">メーカーマスタインポート : </span>
     </app-excel-upload>
 
     <!-- エクセル出力 -->
@@ -27,8 +27,8 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  title: "02MigratePartner",
-  name: "MigratePartner",
+  title: "02MigrateManufacturer",
+  name: "MigrateManufacturer",
   data() {
     return {
       headers: [
@@ -36,54 +36,56 @@ export default {
         { text: "Number", value: "partnerNumber"},
         { text: "Name", value: "name" },
         { text: "Abbr", value: "abbr" },
-        { text: "Phone", value: "phone" },
-        { text: "fax", value: "fax" },
-        { text: "address", value: "address" },
+        // { text: "Phone", value: "phone" },
+        // { text: "fax", value: "fax" },
+        // { text: "address", value: "address" },
         { text: "note", value: "note" },
-        { text: "isCustomer", value: "isCustomer" },
-        { text: "isDeliveryDestination", value: "isDeliveryDestination" },
-        { text: "isSupplier", value: "isSupplier" },
+        // { text: "isCustomer", value: "isCustomer" },
+        // { text: "isDeliveryDestination", value: "isDeliveryDestination" },
+        // { text: "isSupplier", value: "isSupplier" },
         { text: "isManufacturer", value: "isManufacturer" },
       ],
-      fileName: "result 02 MigratePartner"
+      fileName: "result 02 MigrateManufacturer"
     }
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemConfig", ["excelJson"]),
     ...mapState("systemUserApi", ["userPartners"]),
+    params() {
+      return {
+        company: this.loginUserData.companyId,
+        order_by: "-partner_number"
+      };
+    }
   },
   methods: {
     ...mapActions("systemConfig", ["setExcelJson", "showSnackbar"]),
-    ...mapActions("systemUserApi", ["postPartner"]),
+    ...mapActions("systemUserApi", ["postPartner", "getPartners"]),
     async fixJson(val) {
-      let jsonData = val.map((client, index) => {
+      // 取引先番号最後の値を取得
+      let number = this.userPartners.results[0].partnerNumber;
+
+      // データの整形
+      let jsonData = val.map((manufacturer, index) => {
         let returnData = {
           "key": index,
           "company": this.loginUserData.companyId,
           "createdBy": this.loginUserData.id,
           "modifiedBy": this.loginUserData.id,
-          "partnerNumber": client.clientid,
-          "name": client.clientname,
-          "abbr": client.clientname,
-          "address": client.clientaddress,
-          "Phone": client.clientphone,
-          "fax": client.clientfax,
-          "note": client.clientnote,
+          // "partnerNumber": manufacturer.clientid,
+          "name": manufacturer.makername,
+          "abbr": manufacturer.makername,
+          "address": manufacturer.makeraddress,
+          "Phone": manufacturer.makerphone,
+          "fax": manufacturer.makernote,
+          // 便宜上makeridをnoteに突っ込む
+          "note": index,
+          "isManufacturer": true
         }
-        // 取引先種別情報
-        switch(client.clientcode) {
-          case 1:
-            returnData.isCustomer = true;
-            break;
-          case 2:
-            returnData.isSupplier = true;
-            break;
-          case 3:
-            returnData.isDeliveryDestination = true;
-            break;          
-        }
-        // 取引先種別の登録
+        // partnerNumberを自動連番で追加する
+        returnData.partnerNumber = number+index+1;
+
         return returnData
       });
       // データをVuexに格納
@@ -120,6 +122,7 @@ export default {
   },
   mounted() {
     this.setExcelJson([]);
+    this.getPartners({params: this.params})
   }
 }
 </script>

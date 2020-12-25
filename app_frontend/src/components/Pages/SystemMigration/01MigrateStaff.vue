@@ -1,30 +1,26 @@
 <template>
-  <v-container fluid grid-list-lg>
-    <v-layout row wrap>
-      <!-- 従業員マスタ登録 -->
-      <v-flex xs12>
-        <app-excel-upload
-          :headers="headers"
-          @fix-json="fixJson"
-          @submit-all="submitAllData"
-          submitAll="true"
-          hideBackButton="true"
-        >
-          <!-- ヘッダー部分スロット -->
-          <span slot="card-header-icon"><v-icon>list</v-icon></span>
-          <span slot="card-header-title">従業員マスタインポート : </span>
-        </app-excel-upload>
+  <span>
+    <!-- 従業員マスタ登録 -->
+    <app-excel-upload
+      :headers="headers"
+      @fix-json="fixJson"
+      @submit-all="submitAllData"
+      submitAll="true"
+      hideBackButton="true"
+    >
+      <!-- ヘッダー部分スロット -->
+      <span slot="card-header-icon"><v-icon>list</v-icon></span>
+      <span slot="card-header-title">従業員マスタインポート : </span>
+    </app-excel-upload>
 
-        <!-- エクセル出力 -->
-        <app-excel-download
-          :fileName="fileName"
-          :hideButton="true"
-          class="ml-2"
-          ref="export"
-        ></app-excel-download>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <!-- エクセル出力 -->
+    <app-excel-download
+      :fileName="fileName"
+      :hideButton="true"
+      class="ml-2"
+      ref="export"
+    ></app-excel-download>
+  </span>
 </template>
 
 <script>

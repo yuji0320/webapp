@@ -7,7 +7,11 @@
       </v-flex>
       <!-- 取引先マスタ登録 -->
       <v-flex xs12>
-        <migrate-partner></migrate-partner>
+        <migrate-partner v-if="false"></migrate-partner>
+      </v-flex>
+      <!-- メーカーマスタ登録 -->
+      <v-flex xs12>
+        <migrate-manufacturer></migrate-manufacturer>
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,6 +20,7 @@
 <script>
 import MigrateStaff from "./01MigrateStaff.vue";
 import MigratePartner from "./02MigratePartner.vue";
+import MigrateManufacturer from "./03MigrateManufacturer.vue";
 
 
 export default {
@@ -24,6 +29,7 @@ export default {
   components: {
     "migrate-staff": MigrateStaff,
     "migrate-partner": MigratePartner,
+    "migrate-manufacturer": MigrateManufacturer,
   },
 
 }
