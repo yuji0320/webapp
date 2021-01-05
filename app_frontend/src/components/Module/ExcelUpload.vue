@@ -46,7 +46,7 @@
     <span slot="card-content">
       <!-- テーブル内容 -->
       <v-data-table
-        :items-per-page="10000"
+        :items-per-page="itemPerPage"
         :headers="headers"
         :items="excelJson"
         hide-default-footer
@@ -116,7 +116,8 @@ export default {
     headers: { required: true },
     errorColumn: { required: false },
     submitAll: { required: false },
-    hideBackButton: { required: false }
+    hideBackButton: { required: false },
+    itemPerPageManual: { required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -127,6 +128,13 @@ export default {
       } else {
         return false
       }
+    },
+    itemPerPage() {
+      let itemPerPage = 500
+      if(this.itemPerPageManual) {
+        itemPerPage = this.itemPerPageManual
+      }
+      return itemPerPage
     }
   },
   methods: {

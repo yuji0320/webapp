@@ -140,7 +140,36 @@ export default {
         }
         return returnData
       });
-      // console.log(jsonData);
+
+      // エラーデータ紐付け用作業指図書の作成
+      let systemJobOrder = {
+        "company": this.loginUserData.companyId,
+        "createdBy": this.loginUserData.id,
+        "modifiedBy": this.loginUserData.id,
+        "mfgNo": "0",// 工事番号
+        "name": "For error",// 製品名
+        "orderCurrency": this.loginUserData.defaultCurrencyId,// 受注通貨
+        "orderRate": 1,// 受注レート
+        "orderPrice": 0,// 受注金額
+        "taxPercent": 0,// 税率
+        // "relatedPartyMfgNo": jobOrder.wis_id,// 関係会社工事番号 *日本と中国がある場合結合
+        "notes": "作業指図書が消えてしまっているデータの処理用",// 備考
+        "commercialPartsBudget": 0,// 市販部品予算
+        "electricalPartsBudget": 0,// 電気部品予算
+        "processedPartsBudget": 0,// 加工部品予算
+        "outsourcingMechanicalDesignBudget": 0,// 外注機械設計予算額
+        "outsourcingElectricalDesignBudget": 0,// 外注電気設計予算額
+        "outsourcingOtherBudget": 0,// 外注組み立て予算額
+        "mechanicalDesignBudgetHours": 0,// 機械設計予算時間
+        "electricalDesignBudgetHours": 0,// 電気設計予算時間
+        "assemblyBudgetHours": 0,// 組立調整予算時間
+        "electricalWiringBudgetHours": 0,// 電気配線予算時間
+        "installationBudgetHours": 0,// 現地調整予算時間
+        "shippingCostBudget": 0,// 運送費予算額
+        "shippingCostResult": 0,// 運送費実績額
+      }
+
+      jsonData.push(systemJobOrder);
 
       // データをVuexに格納
       this.setExcelJson(jsonData);
