@@ -33,6 +33,7 @@
           class="elevation-1"
           disable-sort
           hide-default-footer
+          :items-per-page="receivingProcesses.results.length"
           :loading="$store.state.systemConfig.loading"
           dense
         >
