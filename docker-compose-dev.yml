@@ -9,9 +9,11 @@ services:
       - "8100:8100"
     volumes:
       - ./app:/usr/src/app
-    # command: uwsgi --ini uwsgi/uwsgi.ini
+    command: uwsgi --ini uwsgi/uwsgi.ini
     # command: ./manage.py runserver 0.0.0.0:8100
-    command: bash -c 
+    # command: 
+    #   bash -c "uwsgi --ini uwsgi/uwsgi.ini && 
+    #   ./manage.py runserver 0.0.0.0:8100"
     networks:
       webbapp_network:
         ipv4_address: 172.28.0.2

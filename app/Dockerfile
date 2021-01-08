@@ -10,6 +10,6 @@ RUN apt-get install -y default-mysql-client
 ADD ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# CMD /bin/bash
+CMD /bin/bash
 # CMD ./manage.py migrate
-CMD ["uwsgi", "--ini", "uwsgi/uwsgi.ini"]
+# CMD ["uwsgi", "--ini", "uwsgi/uwsgi.ini"]
