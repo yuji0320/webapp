@@ -4,6 +4,13 @@
     color="grey lighten-2"
     flat
   >
+    <!-- KSIシステム移行画面 -->
+    <v-card class="d-block pa-2 ma-2" >
+      <v-card-title primary-title>
+        <v-btn :to="{ name: 'SystemMigrationMenu' }">KSIシステム移行画面</v-btn>
+      </v-card-title>
+    </v-card>
+
     <v-card
       class="d-block pa-2 ma-2" 
       v-for="menu in menus"

@@ -103,25 +103,33 @@ class JobOrderSerializer(serializers.ModelSerializer):
     # 取引先略称
     @staticmethod
     def get_customer_abbr(obj):
-        abbr = obj.customer.abbr
+        abbr = ""
+        if obj.customer:
+            abbr = obj.customer.abbr
         return abbr
 
     # 取引先名
     @staticmethod
     def get_customer_name(obj):
-        name = obj.customer.name
+        name = ""
+        if obj.customer:
+            name = obj.customer.name
         return name
 
     # 納入先略称
     @staticmethod
     def get_delivery_destination_abbr(obj):
-        abbr = obj.delivery_destination.abbr
+        abbr = ""
+        if obj.delivery_destination:
+            abbr = obj.delivery_destination.abbr
         return abbr
 
     # 納入先略称
     @staticmethod
     def get_delivery_destination_name(obj):
-        name = obj.delivery_destination.name
+        name = ""
+        if obj.delivery_destination:
+            name = obj.delivery_destination.name
         return name
 
     # 取引通貨記号

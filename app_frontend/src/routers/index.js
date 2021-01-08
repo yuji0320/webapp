@@ -66,6 +66,15 @@ import StaffUpload from '@/components/Pages/Master/StaffUpload.vue';
 import Partner from '@/components/Pages/Master/Partner.vue';
 import PartnerUpload from '@/components/Pages/Master/PartnerUpload.vue';
 
+// 在庫
+import InventoryDataMenu from '@/components/Pages/InventoryData/InventoryDataMenu.vue';
+import InventoryMasterList from '@/components/Pages/InventoryData/InventoryMasterList.vue';
+import LocationMasterList from '@/components/Pages/InventoryData/LocationMasterList.vue';
+
+// システム移行関係
+import SystemMigrationMenu from '@/components/Pages/SystemMigration/SystemMigrationMenu.vue';
+
+
 // ユーザー設定
 import ChangePassword from '@/components/Pages/UserSettings/ChangePassword.vue';
 
@@ -129,6 +138,18 @@ const router = new Router({
                   path: 'change_password',
                   name: 'ChangePassword',
                   component: ChangePassword,
+                },
+              ]
+            },
+            {
+              path: 'system_migration',
+              name: 'SystemMigration',
+              component: Root,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'SystemMigrationMenu',
+                  component: SystemMigrationMenu,
                 },
               ]
             },
@@ -291,6 +312,31 @@ const router = new Router({
                   component: ManHourList,
                   // component: () => import(/* webpackChunkName: "ManHourList" */ '@/components/Pages/ManHour/ManHourList.vue')
                 },    
+              ]
+            },
+            {
+              path: 'inventory_data',
+              name: 'InventoryData',
+              component: Root,
+              children: [
+                {
+                  path: 'menu',
+                  name: 'InventoryDataMenu',
+                  component: InventoryDataMenu,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryDataMenu.vue')
+                },
+                {
+                  path: 'inventory_master',
+                  name: 'InventoryMasterList',
+                  component: InventoryMasterList,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryMasterList.vue')
+                },
+                {
+                  path: 'location_master',
+                  name: 'LocationMasterList',
+                  component: LocationMasterList,
+                  // component: () => import(/* webpackChunkName: "InventoryDataMenu" */ '@/components/Pages/InventoryData/InventoryMasterList.vue')
+                },
               ]
             },
             {

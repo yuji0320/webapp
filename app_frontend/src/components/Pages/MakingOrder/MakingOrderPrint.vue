@@ -56,6 +56,8 @@
               show-select
               item-key="id"
               disable-sort
+              :items-per-page="category.parts.length"
+              dense
             >
               <!-- テーブルデータ -->
               <template slot="items" slot-scope="props">

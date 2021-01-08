@@ -206,6 +206,7 @@ export default {
       res = await this.postBillOfMaterial(this.excelJson);
 
       if (res.data) {
+        // console.log(res.data);
         // console.log("success");
         for(let i=0,success; success = this.excelJson[i]; i++){
           success.updated = true;

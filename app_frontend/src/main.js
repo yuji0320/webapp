@@ -11,6 +11,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 // ユーティリティファイルのインポート
 import titleMixin from './util/title';
 import dateFormetMixin from './util/dateFormat';
+import utilFuncMixin from './util/utilFunc';
 
 // ライブラリのインポート
 // 時刻データ操作ライブラリのインポート
@@ -65,6 +66,7 @@ import vuetify from './plugins/vuetify';
 Vue.use(VeeValidate);
 Vue.mixin(titleMixin);
 Vue.mixin(dateFormetMixin);
+Vue.mixin(utilFuncMixin);
 
 // 開発ステータスの定義
 Vue.config.productionTip = false;
@@ -77,7 +79,11 @@ Vue.filter('printDate', function(val) {
 });
 
 Vue.filter('moneyDelemiter', function(value) {
-  return value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  let data = ""
+  if(value) {
+    data = value.toString().replace(/(\d)(?=(\d{3})+($|\.\d+))/g, '$1,');
+  }
+  return data
   // return value.toString().replace(/^(-?[0-9]+)(?=\.|$)/, function(s){ return s.replace(/([0-9]+?)(?=(?:[0-9]{3})+$)/g, '$1,');});
 });
 

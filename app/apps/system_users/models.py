@@ -184,8 +184,8 @@ class UserPartner(models.Model):
     partner_number = models.IntegerField(_('partner number'))  # 企業内での取引先番号
     name = models.CharField(_('Partner name'), max_length=150)  # 取引先名
     abbr = models.CharField(_('Abbreviation'), max_length=150, blank=True)  # 略称
-    phone = models.CharField(_('Phone number'), max_length=15, blank=True)  # 取引先電話番号
-    fax = models.CharField(_('Fax number'), max_length=15, blank=True)  # 取引先FAX番号
+    phone = models.CharField(_('Phone number'), max_length=20, blank=True)  # 取引先電話番号
+    fax = models.CharField(_('Fax number'), max_length=20, blank=True)  # 取引先FAX番号
     postal_code = models.CharField(_('Postal code'), max_length=20, blank=True)  # 取引先郵便番号
     address = models.TextField(_('Address'), blank=True)  # 取引先住所
     note = models.TextField(_('Note'), blank=True)  # 備考

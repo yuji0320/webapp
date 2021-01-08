@@ -1,4 +1,5 @@
 /* Debug Toolbar CSS Reset, adapted from Eric Meyer's CSS Reset */
+<<<<<<< HEAD
 #djDebug {
     color: #000;
     background: #fff;
@@ -64,6 +65,18 @@
 #djDebug tr,
 #djDebug th,
 #djDebug td,
+=======
+#djDebug {color: #000;background: #FFF;}
+#djDebug, #djDebug div, #djDebug span, #djDebug applet, #djDebug object, #djDebug iframe,
+#djDebug h1, #djDebug h2, #djDebug h3, #djDebug h4, #djDebug h5, #djDebug h6, #djDebug p, #djDebug blockquote, #djDebug pre,
+#djDebug a, #djDebug abbr, #djDebug acronym, #djDebug address, #djDebug big, #djDebug cite, #djDebug code,
+#djDebug del, #djDebug dfn, #djDebug em, #djDebug font, #djDebug img, #djDebug ins, #djDebug kbd, #djDebug q, #djDebug s, #djDebug samp,
+#djDebug small, #djDebug strike, #djDebug strong, #djDebug sub, #djDebug sup, #djDebug tt, #djDebug var,
+#djDebug b, #djDebug u, #djDebug i, #djDebug center,
+#djDebug dl, #djDebug dt, #djDebug dd, #djDebug ol, #djDebug ul, #djDebug li,
+#djDebug fieldset, #djDebug form, #djDebug label, #djDebug legend,
+#djDebug table, #djDebug caption, #djDebug tbody, #djDebug tfoot, #djDebug thead, #djDebug tr, #djDebug th, #djDebug td,
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 #djDebug button {
     margin: 0;
     padding: 0;
@@ -83,7 +96,11 @@
     transition: none;
 }
 
+<<<<<<< HEAD
 #djDebug button {
+=======
+#djDebug button, #djDebug a.button {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     background-color: #eee;
     background-image: linear-gradient(to bottom, #eee, #cccccc);
     border: 1px solid #ccc;
@@ -96,7 +113,11 @@
     text-shadow: 0 1px 0 #eee;
 }
 
+<<<<<<< HEAD
 #djDebug button:hover {
+=======
+#djDebug button:hover, #djDebug a.button:hover {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     background-color: #ddd;
     background-image: linear-gradient(to bottom, #ddd, #bbb);
     border-color: #bbb;
@@ -145,13 +166,22 @@
     width: auto;
 }
 
+<<<<<<< HEAD
 #djDebug #djDebugToolbar input[type="checkbox"] {
+=======
+#djDebug #djDebugToolbar input[type=checkbox] {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     float: right;
     margin: 10px;
 }
 
+<<<<<<< HEAD
 #djDebug #djDebugToolbar li > a,
 #djDebug #djDebugToolbar li > div.djdt-contentless {
+=======
+#djDebug #djDebugToolbar li>a,
+#djDebug #djDebugToolbar li>div.djdt-contentless  {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -160,7 +190,11 @@
     padding: 10px 10px 5px 25px;
     color: #fff;
 }
+<<<<<<< HEAD
 #djDebug #djDebugToolbar li > div.djdt-disabled {
+=======
+#djDebug #djDebugToolbar li>div.djdt-disabled {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     font-style: italic;
     color: #999;
 }
@@ -224,7 +258,11 @@
     background-color: #111;
     border-color: #ffe761;
     cursor: move;
+<<<<<<< HEAD
     opacity: 1;
+=======
+    opacity: 1.0;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 
 #djDebug #djShowToolBarD {
@@ -239,14 +277,22 @@
 
 #djDebug code {
     display: block;
+<<<<<<< HEAD
     font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console",
         monospace;
+=======
+    font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     font-size: 12px;
     white-space: pre;
     overflow: auto;
 }
 
 #djDebug .djdt-panelContent {
+<<<<<<< HEAD
+=======
+    display: none;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     position: fixed;
     margin: 0;
     top: 0;
@@ -289,6 +335,7 @@
 }
 
 #djDebug .djDebugPanelContent .djdt-loader {
+<<<<<<< HEAD
     margin: 80px auto;
     border: 6px solid white;
     border-radius: 50%;
@@ -305,6 +352,10 @@
     100% {
         transform: rotate(360deg);
     }
+=======
+    display: block;
+    margin: 80px auto;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 
 #djDebug .djDebugPanelContent .djdt-scroll {
@@ -358,7 +409,11 @@
     width: 12em;
     text-align: right;
     color: #666;
+<<<<<<< HEAD
     padding-right: 0.5em;
+=======
+    padding-right: .5em;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 
 #djDebug .djTemplateContext {
@@ -366,6 +421,10 @@
 }
 
 #djDebug .djdt-panelContent .djDebugClose {
+<<<<<<< HEAD
+=======
+    display: block;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     position: absolute;
     top: 4px;
     right: 15px;
@@ -380,6 +439,10 @@
     text-align: center;
     font-weight: 900;
     font-size: 20px;
+<<<<<<< HEAD
+=======
+    text-decoration: none;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     box-sizing: content-box;
 }
 
@@ -387,8 +450,12 @@
     background: #c0695d;
 }
 
+<<<<<<< HEAD
 #djDebug .djdt-panelContent dt,
 #djDebug .djdt-panelContent dd {
+=======
+#djDebug .djdt-panelContent dt, #djDebug .djdt-panelContent dd {
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     display: block;
 }
 
@@ -411,9 +478,21 @@
     background-color: #444;
     color: #ffe761;
     border-radius: 3px;
+<<<<<<< HEAD
 }
 
 #djDebug .djDebugCollapsed {
+=======
+}
+
+
+#djDebug .djDebugSqlWrap {
+    position: relative;
+}
+
+#djDebug .djDebugCollapsed {
+    display: none;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     color: #333;
 }
 
@@ -430,11 +509,23 @@
 }
 
 #djDebug .djDebugSql {
+<<<<<<< HEAD
     overflow-wrap: anywhere;
+=======
+    word-break: break-word;
+    z-index: 100000002;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 
 #djDebug .djSQLDetailsDiv tbody th {
     text-align: left;
+<<<<<<< HEAD
+=======
+}
+
+#djDebug .djSqlExplain td {
+    white-space: pre;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 
 #djDebug span.djDebugLineChart {
@@ -449,10 +540,46 @@
 }
 #djDebug span.djDebugLineChartWarning {
     background-color: #900;
+<<<<<<< HEAD
 }
 
 #djDebug .highlight {
     color: #000;
+=======
+}
+
+#djDebug .highlight  { color: #000; }
+#djDebug .highlight .err { color: #000; } /* Error */
+#djDebug .highlight .g { color: #000; } /* Generic */
+#djDebug .highlight .k { color: #000; font-weight: bold } /* Keyword */
+#djDebug .highlight .o { color: #000; } /* Operator */
+#djDebug .highlight .n { color: #000; } /* Name */
+#djDebug .highlight .mi { color: #000; font-weight: bold } /* Literal.Number.Integer */
+#djDebug .highlight .l { color: #000; } /* Literal */
+#djDebug .highlight .x { color: #000; } /* Other */
+#djDebug .highlight .p { color: #000; } /* Punctuation */
+#djDebug .highlight .m { color: #000; font-weight: bold } /* Literal.Number */
+#djDebug .highlight .s { color: #333 } /* Literal.String */
+#djDebug .highlight .w { color: #888888 } /* Text.Whitespace */
+#djDebug .highlight .il { color: #000; font-weight: bold } /* Literal.Number.Integer.Long */
+#djDebug .highlight .na { color: #333 } /* Name.Attribute */
+#djDebug .highlight .nt { color: #000; font-weight: bold } /* Name.Tag */
+#djDebug .highlight .nv { color: #333 } /* Name.Variable */
+#djDebug .highlight .s2 { color: #333 } /* Literal.String.Double */
+#djDebug .highlight .cp { color: #333 } /* Comment.Preproc */
+
+#djDebug .djdt-timeline {
+    width: 30%;
+}
+
+#djDebug svg.djDebugLineChart {
+    width: 100%;
+    height: 1.5em;
+}
+
+#djDebug svg.djDebugLineChartWarning rect {
+    fill: #900;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 #djDebug .highlight .err {
     color: #000;
@@ -514,6 +641,7 @@
     color: #333;
 } /* Comment.Preproc */
 
+<<<<<<< HEAD
 #djDebug svg.djDebugLineChart {
     width: 100%;
     height: 1.5em;
@@ -523,6 +651,8 @@
     fill: #900;
 }
 
+=======
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 #djDebug svg.djDebugLineChartInTransaction rect {
     fill: #d3ff82;
 }
@@ -551,6 +681,10 @@
     border-radius: 0;
     width: 12px;
     color: #777;
+<<<<<<< HEAD
+=======
+    display: inline-block;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
     background: linear-gradient(to bottom, #fff, #dcdcdc);
 }
 #djDebug .djNoToggleSwitch {
@@ -572,8 +706,12 @@
     overflow: auto;
     padding: 2px 3px;
     margin-bottom: 3px;
+<<<<<<< HEAD
     font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console",
         monospace;
+=======
+    font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
+>>>>>>> dbe8f0b05fbfd6a2022cb70ed763e4c3e6d16e31
 }
 #djDebug .djdt-stack span {
     color: #000;
