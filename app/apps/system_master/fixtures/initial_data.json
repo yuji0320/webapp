@@ -1,0 +1,88 @@
+[
+  {
+    "//":"国マスタの追加",
+    "model":"system_master.SystemCountry",
+    "pk":"103391e2-d934-4916-8a0b-dcc1bb808b97",
+    "fields": {
+      "id":"103391e2-d934-4916-8a0b-dcc1bb808b97",
+      "name":"Japan",
+      "code":"JP",
+      "created_at":"2018-09-01T12:00:01",
+      "modified_at":"2018-09-01T12:00:01"
+    }
+  },
+  {
+    "model":"system_master.SystemCountry",
+    "pk":"7a3dfa9a-8ee1-4db4-b8a4-bdd36fe47c69",
+    "fields": {
+      "id":"7a3dfa9a-8ee1-4db4-b8a4-bdd36fe47c69",
+      "name":"United States of America",
+      "code":"US",
+      "created_at":"2018-09-01T12:00:02",
+      "modified_at":"2018-09-01T12:00:02"
+    }
+  },
+  {
+    "model":"system_master.SystemCountry",
+    "pk":"c03beed2-1cf3-4547-b888-96e44eb9ef72",
+    "fields": {
+      "id":"c03beed2-1cf3-4547-b888-96e44eb9ef72",
+      "name":"Indonesia",
+      "code":"ID",
+      "created_at":"2018-09-01T12:00:03",
+      "modified_at":"2018-09-01T12:00:03"
+    }
+  },
+  {
+    "//":"通貨マスタの追加",
+    "model":"system_master.SystemCurrency",
+    "pk":"d897d629-2a83-448b-98a1-d0c723b59e54",
+    "fields":{
+      "id":"d897d629-2a83-448b-98a1-d0c723b59e54",
+      "name": "Japanese yen",
+      "code": "JPY",
+      "display": "¥",
+      "decimal_point": 0,
+      "created_at":"2018-09-01T12:00:04",
+      "modified_at":"2018-09-01T12:00:04"
+    }
+  },
+  {
+    "model":"system_master.SystemCurrency",
+    "pk":"3e412209-c1d8-4a72-8f34-6d0e590498ad",
+    "fields":{
+      "id": "3e412209-c1d8-4a72-8f34-6d0e590498ad",
+      "name": "United States Dollar",
+      "code": "USD",
+      "display": "$",
+      "decimal_point": 2,
+      "created_at":"2018-09-01T12:00:05",
+      "modified_at":"2018-09-01T12:00:05"
+    }
+  },
+  {
+    "model":"system_master.SystemCurrency",
+    "pk":"3fc80130-b993-40f0-8b1f-79c081a70d2e",
+    "fields":{
+      "id": "3fc80130-b993-40f0-8b1f-79c081a70d2e",
+      "name": "Rupiah",
+      "code": "IDR",
+      "display": "Rp",
+      "decimal_point": 0,
+      "created_at":"2018-09-01T12:00:06",
+      "modified_at":"2018-09-01T12:00:06"
+    }
+  },
+  {
+    "//":"単位マスタの追加",
+    "model":"system_master.SystemUnitType",
+    "pk":"bf73d397-4424-46aa-afb3-aa9fe11b1ff0",
+    "fields":{
+      "id": "bf73d397-4424-46aa-afb3-aa9fe11b1ff0",
+      "name": "quantity",
+      "display": "qty",
+      "created_at":"2018-09-01T12:00:07",
+      "modified_at":"2018-09-01T12:00:07"
+    }
+  }
+]
