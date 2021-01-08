@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
 from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
+from core.multi_crud import multi_create
 
 
 class UserCompanySerializer(viewsets.ModelViewSet):
@@ -35,6 +36,10 @@ class UserStaffAPIView(viewsets.ModelViewSet):
             return queryset
         else:
             return queryset.filter(company=user.staff.company.id)
+
+    @multi_create(serializer_class=UserStaffSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 
 class UserAPIView(viewsets.ModelViewSet):
@@ -96,6 +101,10 @@ class UserPartnerAPIView(viewsets.ModelViewSet):
             return queryset
         else:
             return queryset.filter(company=user.staff.company.id)
+
+    @multi_create(serializer_class=UserPartnerSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 
 # class UserExpenseCategoryAPIView(viewsets.ModelViewSet):

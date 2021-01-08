@@ -7,6 +7,7 @@ from .views import index
 from system_master import urls as system_urls
 from system_users import urls as user_urls
 from manufacturing_data import urls as manufacturing_urls
+from inventory_data import urls as stock_urls
 # 認証情報API
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
@@ -23,6 +24,7 @@ routeLists = [
     system_urls.routeList,
     user_urls.routeList,
     manufacturing_urls.routeList,
+    stock_urls.routeList,
 ]
 
 router = routers.DefaultRouter()
@@ -39,6 +41,7 @@ urlpatterns = [
     path('api/system_master/', include(system_urls.router.urls)),
     path('api/system_user/', include(user_urls.router.urls)),
     path('api/manufacturing_data/', include(manufacturing_urls.router.urls)),
+    path('api/inventory_data/', include(stock_urls.router.urls)),
     # 認証関係
     path('api/api-token-auth/', obtain_jwt_token),
     path('api/api-token-refresh/', refresh_jwt_token),
@@ -48,4 +51,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns
+    # urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns
+    urlpatterns += [path('api/', include(debug_toolbar.urls))]
