@@ -3,12 +3,18 @@ services:
   dev_app:
     build: ./app
     # restart: always
-    env_file: ./app/env
+    # env_file: ./app/env
     ports:
       - "8000:8000"
       - "8100:8100"
     volumes:
       - ./app:/usr/src/app
+    environment: 
+      - DB_HOST=172.28.0.5
+      - DB_NAME=bms_backend
+      - DB_USERNAME=root
+      - DB_PASSWORD=
+      - DB_PORT=3306
     # command: uwsgi --ini uwsgi/uwsgi.ini
     # command: ./manage.py runserver 0.0.0.0:8100
     networks:
