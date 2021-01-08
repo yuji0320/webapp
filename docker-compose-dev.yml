@@ -11,6 +11,7 @@ services:
       - ./app:/usr/src/app
     # command: uwsgi --ini uwsgi/uwsgi.ini
     # command: ./manage.py runserver 0.0.0.0:8100
+    command: bash -c 
     networks:
       webbapp_network:
         ipv4_address: 172.28.0.2
