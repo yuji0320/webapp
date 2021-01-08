@@ -11,4 +11,6 @@ ADD ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install django-debug-toolbar
 
-CMD /bin/bash
+# CMD /bin/bash
+# CMD ./manage.py migrate
+CMD ["uwsgi", "--ini", "uwsgi/uwsgi.ini"]
