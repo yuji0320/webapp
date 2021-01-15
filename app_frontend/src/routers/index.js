@@ -98,7 +98,6 @@ const router = new Router({
       name: 'Root',
       component: Root,
       redirect: '/bms',
-
       // "login"と"Top"に分け、階層構造を定義する
       children: [
         {

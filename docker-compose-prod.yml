@@ -6,7 +6,7 @@ services:
     # env_file: ./app/env
     ports:
       - "8000:8000"
-      - "8100:8100"
+      # - "8100:8100"
     volumes:
       - ./app:/usr/src/app
     environment: 
@@ -15,8 +15,8 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=
       - DB_PORT=3306
-    # command: uwsgi --ini uwsgi/uwsgi.ini
-    # command: ./manage.py runserver 0.0.0.0:8100
+    command: uwsgi --ini uwsgi/uwsgi.ini
+    # command: ./manage.py runserver 0.0.0.0:8000
     networks:
       webbapp_network_prod:
         ipv4_address: 172.29.0.2
@@ -31,7 +31,9 @@ services:
     # tty: true
     volumes:
       - "./app_frontend:/usr/src/app_frontend"
-    command: npm run serve
+      - "./logs/frontend_build_logs:/root/.npm/_logs"
+    # command: npm run serve
+    command: vue ui -p 9100 -H 0.0.0.0
     # command: bash -c "npm run serve && vue ui -p 9100 -H 0.0.0.0"
     networks:
       webbapp_network_prod:
@@ -48,8 +50,9 @@ services:
       - ./nginx/production.conf:/etc/nginx/conf.d/production.conf
       - ./nginx/log:/var/log/nginx
       - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
-      - ./app_frontend/dist:/usr/src/app_frontend/dist
+      - ./app_frontend/:/usr/src/app_frontend/
       - ./app/static:/usr/src/app/static
+      - ./app/uwsgi:/usr/src/app/uwsgi
     networks:
       webbapp_network_prod:
         ipv4_address: 172.29.0.4
