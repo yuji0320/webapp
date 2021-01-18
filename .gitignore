@@ -15,3 +15,4 @@ app_frontend/.env.prod
 app_frontend/.env.dev.build
 /storage
 /app/uwsgi/bms_backend.log
+*.log
