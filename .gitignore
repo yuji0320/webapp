@@ -9,10 +9,8 @@ initial_user_data.json
 mysql/.DS_Store
 /nginx/log/
 /mysql/backup/backup/
-/app_frontend/dist
+# /app_frontend/dist
 app_frontend/.env.prod
 *.prod
 app_frontend/.env.dev.build
 /storage
-/app/uwsgi/bms_backend.log
-*.log

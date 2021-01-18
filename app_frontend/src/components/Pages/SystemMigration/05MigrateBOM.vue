@@ -105,12 +105,13 @@ export default {
           "surface_treatment": bom.surface_treatment,
           "unit_number": bom.unit_number,
           "amount": bom.amount,
-          "stockAppropriation": bom.apply_amount,
           "note": bom.bom_id,
           "unit": this.unitTypes.results[0].id// 個数単位
           // 希望納期
           // "isbom": true
         }
+        // 部品名　*部品名なしの場合は"No parts nameと入力"
+
         // 作業指図書
         if(bom.wis_code) {
           returnData.jobOrder = jobOrderList.filter(item => item.mfgNo == bom.wis_code)[0];
@@ -127,6 +128,8 @@ export default {
         if(bom.maker_code) {
           returnData.manufacturer = partnerList.filter(item => item.note == bom.maker_code)[0].id
         }
+        // 在庫充当数
+        (bom.apply_amount === "NULL")?returnData.stockAppropriation=0:returnData.stockAppropriation=bom.apply_amount;
         // 型式 *加工部品の場合は図面番号に入力
         // 単価
         // 通貨
