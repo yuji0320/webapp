@@ -23,7 +23,7 @@ dev_app_frontend:
   #   - dev_app
   volumes:
     - C:\BMS\webapp\app_frontend:/usr/src/app_frontend
-  command: npm run serve
+  command: vue ui -p 9100 -H 0.0.0.0
   # command: /bin/bash
   tty: true
 
@@ -54,11 +54,6 @@ dev_mysql:
   restart: always
   volumes:
     - C:\BMS\webapp\mysql\backup:/tmp/backup
-  # environment:
-  #     MYSQL_DATABASE: bms_backend
-  #     MYSQL_USER: bms_backend
-  #     MYSQL_PASSWORD: password
-  #     MYSQL_ROOT_PASSWORD: rootpassword
   ports:
     - "3306:3306"
   volumes_from:

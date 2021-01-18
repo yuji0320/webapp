@@ -87,6 +87,7 @@ Vue.use(Store);
 const router = new Router({
   mode: 'history',
   base: process.env.VUE_APP_BASE_URL,
+  // base: process.env.BASE_URL,
   routes: [
     {
       path: '*',
@@ -97,7 +98,6 @@ const router = new Router({
       name: 'Root',
       component: Root,
       redirect: '/bms',
-
       // "login"と"Top"に分け、階層構造を定義する
       children: [
         {
