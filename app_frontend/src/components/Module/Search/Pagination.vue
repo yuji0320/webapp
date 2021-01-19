@@ -1,10 +1,11 @@
 <template>
-  <v-pagination
-    v-model="page"
-    :length="pageLength"
-    :total-visible="10"
-    class="d-flex justify-start"
-  ></v-pagination>
+  <span>
+    <v-pagination
+      v-model="page"
+      :length="pageLength"
+      :total-visible="10"
+    ></v-pagination>
+  </span>
 </template>
 
 <script>

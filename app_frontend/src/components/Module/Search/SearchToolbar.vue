@@ -6,6 +6,7 @@
             v-model="pageValue"
             :length="length"
             :count="count"
+            class="d-flex justify-start"
           ></app-pagination>
         </v-col>
         <v-col cols="12" md="4">
