@@ -2,7 +2,14 @@ module.exports = {
   "devServer": {
     "host": "0.0.0.0",
     "port": 9000,
-    "disableHostCheck": true
+    "disableHostCheck": true,
+    proxy: {
+      '/websocket': {
+          target: 'http://localhost:9000',
+          ws: true,
+          changeOrigin: true
+      }
+    }
   },
 
   "transpileDependencies": [
@@ -24,12 +31,6 @@ module.exports = {
       css: {}
     }
   },
-  // loader: 'css-loader',
-  // options: {
-  //   url: false,
-  //   sourceMap: true,
-  //   importLoaders: 2
-  // },
 
   // webpackBundleAnalyzerの出力設定。
   pluginOptions: {
