@@ -66,10 +66,11 @@ export default {
     },
     // 作業指図書単体取得
     getJobOrder({commit}, data) {
-      const url = 'manufacturing_data/job_order/' + data + '/';
+      const url = 'manufacturing_data/job_order/';
       const commitName = 'setJobOrder';
+      const detail = {detail: data}
       return api
-          .get({commit}, url, data, commitName)
+          .get({commit}, url, detail, commitName)
           .then(function(response) {
             return response;
           });

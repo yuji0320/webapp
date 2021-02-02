@@ -411,6 +411,11 @@ export default {
         } else {
           // 更新時
           this.jobOrder.modifiedBy = this.loginUserData.id;
+          // 日付値がblankの場合の修正
+          if(this.jobOrder.orderDate == "") this.jobOrder.orderDate = null; 
+          if(this.jobOrder.deliveryDate == "") this.jobOrder.deliveryDate = null; 
+          if(this.jobOrder.completionDate == "") this.jobOrder.completionDate = null; 
+          if(this.jobOrder.billDate == "") this.jobOrder.billDate = null; 
           res = await this.putJobOrder(this.jobOrder);
         }
         if (res.data) {

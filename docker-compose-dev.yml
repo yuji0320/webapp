@@ -4,7 +4,7 @@ dev_app:
   env_file: ./app/env
   ports:
     - "8000:8000"
-    - "8100:8100"
+    # - "8100:8100"
   links:
     - dev_mysql:db
     - dev_redis:redis
