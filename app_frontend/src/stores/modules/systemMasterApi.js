@@ -70,9 +70,14 @@ export default {
     },
     // 費用種別取得用
     async getExpenseCategory({commit}, data) {
-      const url = 'system_master/expense_categories/' + data + '/';
+      const url = 'system_master/expense_categories/';
       const commitName = 'setExpenseCategory';
-      api.get({commit}, url, data, commitName);
+      const detail = {detail: data}
+      return api
+          .get({commit}, url, detail, commitName)
+          .then(function(response) {
+            return response;
+          });
     },
     // 仕損費種別取得用
     async getFailureCategories({commit}, data) {

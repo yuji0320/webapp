@@ -134,7 +134,7 @@ export default {
         // 工数データ取得
         JobOrder.totalArray = await this.getReceivedList(JobOrder.id);
         JobOrder.totalHours = JobOrder.totalArray.totalHours;
-        JobOrder.totalCosts = this.moneyComma(parseFloat(JobOrder.totalArray.totalCosts).toFixed(2));
+        JobOrder.totalCosts = this.moneyComma(parseFloat(JobOrder.totalArray.totalCosts.replace(/,/g, "")).toFixed(2));
       }
       // 総合計の計算
       let grandTotalArray = {};
