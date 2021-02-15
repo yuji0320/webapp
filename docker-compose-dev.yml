@@ -6,7 +6,7 @@ services:
     # env_file: ./app/env
     ports:
       - "8000:8000"
-      # - "8100:8100"
+      - "8100:8100"
     volumes:
       - ./app:/usr/src/app
     environment: 
@@ -15,6 +15,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=
       - DB_PORT=3306
+      - REDIS=redis://172.28.0.6:6379
     # command: uwsgi --ini uwsgi/uwsgi.ini
     command: ./manage.py runserver 0.0.0.0:8000
     networks:
@@ -30,6 +31,7 @@ services:
     tty: true
     volumes:
       - "./app_frontend:/usr/src/app_frontend"
+      - "./logs/frontend_build_logs:/root/.npm/_logs"
     command: npm run serve
     networks:
       webbapp_network:
@@ -48,6 +50,7 @@ services:
       - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
       - ./app_frontend/dist:/var/www/html
       - ./app/static:/usr/src/app/static
+      - ./app/uwsgi:/usr/src/app/uwsgi
     networks:
       webbapp_network:
         ipv4_address: 172.28.0.4
@@ -66,6 +69,18 @@ services:
     networks:
       webbapp_network:
         ipv4_address: 172.28.0.5
+
+  dev_redis:
+    image: redis:latest
+    # restart: always
+    ports:
+      - "6379:6379"
+    volumes_from:
+      - dev_storage
+    command: redis-server --appendonly yes
+    networks:
+      webbapp_network:
+        ipv4_address: 172.28.0.6
 
   dev_storage:
     build: ./storage

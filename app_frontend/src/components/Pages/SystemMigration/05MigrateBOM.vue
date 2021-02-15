@@ -25,7 +25,7 @@
       ref="export"
     ></app-excel-download>
 
-    <!-- {{ jobOrders.results[0] }} -->
+    <!-- {{ expenseCategories.results }} -->
   </span>
 </template>
 
@@ -92,6 +92,7 @@ export default {
     async fixJson(val) {
       let partnerList = this.userPartners.results;
       let jobOrderList = this.jobOrders.results;
+      let expenseCategoryList = this.expenseCategories.results;
       // データの整形
       let jsonData = val.map((bom, index) => {
         let returnData = {
@@ -101,7 +102,6 @@ export default {
           "modifiedBy": this.loginUserData.id,
           "name": bom.part_name,
           "material": bom.material,
-          "partnerNumber": bom.clientid,
           "surface_treatment": bom.surface_treatment,
           "unit_number": bom.unit_number,
           "amount": bom.amount,
@@ -121,18 +121,25 @@ export default {
             returnData.jobOrder = "No jobOrder";
           }
         }
-        // 部品分類
 
+        // 部品分類
+        returnData.typeDetail = expenseCategoryList.filter(item => item.categoryNumber == bom.component_kind_type)[0];
+        returnData.type = returnData.typeDetail.id;
 
         // メーカー *取引先マスタから挿入
         if(bom.maker_code) {
           returnData.manufacturer = partnerList.filter(item => item.note == bom.maker_code)[0].id
         }
+
         // 在庫充当数
         (bom.apply_amount === "NULL")?returnData.stockAppropriation=0:returnData.stockAppropriation=bom.apply_amount;
+
         // 型式 *加工部品の場合は図面番号に入力
-        // 単価
+        (returnData.typeDetail.isProcessedParts)?returnData.drawingNumber=bom.standard:returnData.standard=bom.standard;
+
         // 通貨
+
+        // 単価
         // レート *USDの場合は換算
         // 印刷フラグ
         // 仕損品
@@ -179,7 +186,9 @@ export default {
     this.getUnitTypes({params: {number: 0}});
     this.getJobOrders({params: {company: this.loginUserData.companyId, page_size: 1000}});
     this.getPartners({params: {company: this.loginUserData.companyId, page_size: 1000, is_manufacturer: true}});
-    // this.getPartners({params: this.params})
+    this.getExpenseCategories({params: {order_by: "category_number"}});
+
+  // this.getPartners({params: this.params})
   }
 }
 </script>

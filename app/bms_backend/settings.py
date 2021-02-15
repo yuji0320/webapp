@@ -103,11 +103,21 @@ DATABASES = {
         'USER': os.environ['DB_USERNAME'],
         'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': os.environ['DB_HOST'],
-        # 'HOST': '172.28.0.5',
         'PORT': os.environ['DB_PORT'],
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+    }
+}
+
+# redisへの接続設定
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.environ['REDIS'],
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
     }
 }
 
