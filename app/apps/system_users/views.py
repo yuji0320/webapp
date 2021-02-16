@@ -65,9 +65,9 @@ class UserAPIView(viewsets.ModelViewSet):
         else:
             return User.objects.all().filter(staff__company=user.staff.company)
 
-    @method_decorator(cache_page(CACHE_TTL))    
-    def dispatch(self, *args, **kwargs):
-        return super(UserAPIView, self).dispatch(*args, **kwargs)
+    # @method_decorator(cache_page(CACHE_TTL))    
+    # def dispatch(self, *args, **kwargs):
+    #     return super(UserAPIView, self).dispatch(*args, **kwargs)
 
     # ユーザー情報の確認用API
     @action(methods=['get'], detail=False)
