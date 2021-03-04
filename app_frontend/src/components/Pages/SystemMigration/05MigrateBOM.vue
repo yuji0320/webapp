@@ -25,7 +25,7 @@
       ref="export"
     ></app-excel-download>
 
-    <!-- {{ expenseCategories.results }} -->
+    <!-- {{ loginUserData.defaultCurrencyId }} -->
   </span>
 </template>
 
@@ -93,6 +93,7 @@ export default {
       let partnerList = this.userPartners.results;
       let jobOrderList = this.jobOrders.results;
       let expenseCategoryList = this.expenseCategories.results;
+      let usdId = (this.currencies.results).filter(item => item.code == "USD")[0].id;
       // データの整形
       let jsonData = val.map((bom, index) => {
         let returnData = {
@@ -112,37 +113,54 @@ export default {
         }
         // 部品名　*部品名なしの場合は"No parts nameと入力"
 
-        // 作業指図書
+
+        // // 作業指図書
         if(bom.wis_code) {
-          returnData.jobOrder = jobOrderList.filter(item => item.mfgNo == bom.wis_code)[0];
-          if (returnData.jobOrder){
-            returnData.jobOrder = returnData.jobOrder.id;
-          } else {
-            returnData.jobOrder = "No jobOrder";
-          }
+          let jobOrderData = jobOrderList.filter(item => item.mfgNo == bom.wis_code)[0];
+          // 工事番号が元データに存在しない場合、エラー用工事番号を設定
+          (jobOrderData)?returnData.jobOrder = jobOrderData.id:returnData.jobOrder = jobOrderList.filter(item => item.mfgNo == 0)[0].id;
         }
 
         // 部品分類
-        returnData.typeDetail = expenseCategoryList.filter(item => item.categoryNumber == bom.component_kind_type)[0];
-        returnData.type = returnData.typeDetail.id;
+        let typeDetail = expenseCategoryList.filter(item => item.categoryNumber == bom.component_kind_type)[0];
+        (typeDetail)?returnData.type = typeDetail.id:returnData.type="No type";
 
         // メーカー *取引先マスタから挿入
         if(bom.maker_code) {
-          returnData.manufacturer = partnerList.filter(item => item.note == bom.maker_code)[0].id
+          let manufacturer_data = partnerList.filter(item => item.note == bom.maker_code)[0];
+          (manufacturer_data)?returnData.manufacturer = manufacturer_data.id:returnData.manufacturer="No manufacturer";
         }
 
         // 在庫充当数
         (bom.apply_amount === "NULL")?returnData.stockAppropriation=0:returnData.stockAppropriation=bom.apply_amount;
 
         // 型式 *加工部品の場合は図面番号に入力
-        (returnData.typeDetail.isProcessedParts)?returnData.drawingNumber=bom.standard:returnData.standard=bom.standard;
+        (typeDetail.isProcessedParts)?returnData.drawingNumber=bom.standard:returnData.standard=bom.standard;
 
-        // 通貨
+        // 通貨・単価
+        if(bom.unit_price_us && bom.unit_price_us!="NULL"){
+          // USDの場合
+          // レートの計算
+          let n = 10;  //小数点以下n桁未満を切り捨て
+          let rateCalculation = Math.floor((bom.unit_price_us / bom.unit_price) * Math.pow(10, n)) / Math.pow(10, n);
+          (!isFinite(rateCalculation))?returnData.rate=1:returnData.rate=rateCalculation; //単価が0の場合はレートに1を代入
+          returnData.unitPrice = bom.unit_price_us // USD単価の挿入
+          returnData.currency = usdId; // 通貨種別の挿入
+        } else {
+          // IDRの場合
+          returnData.unitPrice = bom.unit_price // IDR単価の挿入
+          returnData.rate = 1.0 //レートの挿入
+          returnData.currency = this.loginUserData.defaultCurrencyId; // 通貨種別の挿入
+        };
 
-        // 単価
-        // レート *USDの場合は換算
+        // 希望納期
+        
+
         // 印刷フラグ
+        (bom.bom_flag === 0)?returnData.isPrinted = false:returnData.isPrinted = true;
+
         // 仕損品
+
 
         return returnData
       });
@@ -184,6 +202,7 @@ export default {
     this.$store.commit("systemConfig/setLoading", false);
     this.setExcelJson([]);
     this.getUnitTypes({params: {number: 0}});
+    this.getCurrencies();
     this.getJobOrders({params: {company: this.loginUserData.companyId, page_size: 1000}});
     this.getPartners({params: {company: this.loginUserData.companyId, page_size: 1000, is_manufacturer: true}});
     this.getExpenseCategories({params: {order_by: "category_number"}});

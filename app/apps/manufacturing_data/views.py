@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from manufacturing_data.filters import *
 from .serializer import *
 from core.multi_crud import multi_create
+from system_users.models import *
 
 
 class JobOrderAPIView(viewsets.ModelViewSet):

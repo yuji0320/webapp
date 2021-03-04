@@ -146,13 +146,13 @@ export default {
       if(this.isAdmin) {
         title += "(Admin)";
         params = {
-          staff__company: this.loginUserData.staffId,
+          staff__company: this.loginUserData.companyId,
           order_by: this.orderBy
         };
       } else {
         title += "(Personal)";
         params = {
-          staff__company: this.loginUserData.staffId,
+          staff__company: this.loginUserData.companyId,
           staff: this.loginUserData.staffId,
           order_by: this.orderBy
         };

@@ -212,6 +212,7 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'designer_name',
         )
         read_only_fields = [
+            'id',
             'default_currency_order_amount',
             'costs',
             'incremental_field',
@@ -334,6 +335,7 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'manufacturer_abbr'
         )
         read_only_fields = [
+            'id',
             'default_currency_price',
             'total_default_currency_price',
             'display_price',

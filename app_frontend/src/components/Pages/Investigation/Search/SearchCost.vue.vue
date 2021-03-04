@@ -188,7 +188,7 @@ export default {
     // データ検索用共通パラメータを格納
     params() {
       return {
-        company: this.loginUserData["companyId"],
+        order__company: this.loginUserData["companyId"],
         order_by: this.orderBy
       };
     },
@@ -211,6 +211,7 @@ export default {
     async getList(data) {
       this.$store.commit("systemConfig/setLoading", true);
       await this.getReceivingProcesses(data);
+      console.log(data);
       this.$store.commit("systemConfig/setLoading", false);
     },
     // 検索フォーム初期化
