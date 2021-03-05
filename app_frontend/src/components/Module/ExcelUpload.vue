@@ -45,7 +45,7 @@
     <span slot="card-content">
       <!-- テーブル内容 -->
       <v-data-table
-        :items-per-page="50"
+        :items-per-page="itemPerPage"
         :headers="headers"
         :items="excelJson"
         hide-default-footer
@@ -114,7 +114,8 @@ export default {
   props: {
     headers: { required: true },
     errorColumn: { required: false },
-    submitAll: { required: false }
+    submitAll: { required: false },
+    itemPerPageManual: { required: false },
   },
   computed: {
     ...mapState("auth", ["loginUserData"]),
@@ -125,6 +126,13 @@ export default {
       } else {
         return false
       }
+    },
+    itemPerPage() {
+      let itemPerPage = 500
+      if(this.itemPerPageManual) {
+        itemPerPage = this.itemPerPageManual
+      }
+      return itemPerPage
     }
   },
   methods: {
