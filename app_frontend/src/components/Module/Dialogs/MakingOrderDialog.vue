@@ -145,7 +145,7 @@
             v-model="makingOrder.unitPrice"
             :error-messages="responseError.unitPrice"
             class="right-input"
-            @keyup="checkPrice"
+            @blur="checkPrice"
             :disabled="editDisable"
           ></v-text-field >
         </v-col>

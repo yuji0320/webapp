@@ -107,9 +107,9 @@ class JobOrder(models.Model):
         verbose_name_plural = _('Job Order')
         unique_together = (("company", "mfg_no"),)  # 会社ごとの工事番号ユニーク
 
-    def __str__(self):
-        title = self.mfg_no + ':' + self.name
-        return title
+    # def __str__(self):
+    #     title = self.mfg_no + ':' + self.name
+    #     return title
 
 
 class DirectCostBudget(models.Model):

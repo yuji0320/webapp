@@ -227,6 +227,20 @@ class JobOrderSerializer(serializers.ModelSerializer):
         ]
 
 
+class BillOfMaterialSerializerList(serializers.ListSerializer):
+    def create(self, validated_data):
+        job_order_cache = {job_order['name']: job_order['id'] for job_order in list(JobOrder.objects.all().values('mfg_no', 'id'))}
+
+        data_objects = []
+        for data in validated_data:
+            data['job_order_id'] = job_order_cache.get(data['job_order'])
+            del data['job_order']
+            data_objects.append(BillOfMaterial(**data))
+        bulk_created_list = BillOfMaterial.objects.bulk_create(data_objects)
+
+        return BillOfMaterial.objects.filter(id__in=[record.id for record in bulk_created_list]).prefetch_related(
+                                        'job_order')
+
 # 部品表
 class BillOfMaterialSerializer(serializers.ModelSerializer):
     default_currency_price = serializers.SerializerMethodField()
@@ -294,6 +308,18 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
         if obj.manufacturer:
             manufacturer_abbr = obj.manufacturer.abbr
         return manufacturer_abbr
+
+    # 外部キー
+    # company = serializers.CharField()
+    # job_order = serializers.UUIDField()
+    # type = serializers.CharField()
+    # # manufacturer = serializers.CharField()
+    # unit = serializers.CharField()
+    # currency = serializers.CharField()
+    # rate = serializers.CharField()
+    # # failure = serializers.CharField()
+    # created_by = serializers.CharField()
+    # modified_by = serializers.CharField()
 
     class Meta:
         model = BillOfMaterial

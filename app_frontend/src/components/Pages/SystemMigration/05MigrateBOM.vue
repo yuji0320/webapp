@@ -67,7 +67,7 @@ export default {
     ...mapState("auth", ["loginUserData"]),
     ...mapState("systemConfig", ["excelJson"]),
     ...mapState("systemUserApi", ["userPartners"]),
-    ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory", "currencies"]),
+    ...mapState("systemMasterApi", ["unitTypes", "expenseCategories", "expenseCategory", "currencies", "failureCategories"]),
     ...mapState("jobOrderAPI", ["jobOrders"]),
     ...mapState("billOfMaterialAPI", [
       "responseError",
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     ...mapActions("systemConfig", ["setExcelJson", "showSnackbar"]),
-    ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getCurrencies"]),
+    ...mapActions("systemMasterApi", ["getUnitTypes", "getExpenseCategories", "getCurrencies", "getFailureCategories"]),
     ...mapActions("systemUserApi", ["getPartners"]),
     ...mapActions("jobOrderAPI", ["getJobOrders"]),
     ...mapActions("billOfMaterialAPI", ["postBillOfMaterial"]),
@@ -94,6 +94,8 @@ export default {
       let jobOrderList = this.jobOrders.results;
       let expenseCategoryList = this.expenseCategories.results;
       let usdId = (this.currencies.results).filter(item => item.code == "USD")[0].id;
+      let failureId = this.failureCategories.results[0].id
+      // console.log(val);
       // データの整形
       let jsonData = val.map((bom, index) => {
         let returnData = {
@@ -101,18 +103,16 @@ export default {
           "company": this.loginUserData.companyId,
           "createdBy": this.loginUserData.id,
           "modifiedBy": this.loginUserData.id,
-          "name": bom.part_name,
           "material": bom.material,
           "surface_treatment": bom.surface_treatment,
           "unit_number": bom.unit_number,
           "amount": bom.amount,
           "note": bom.bom_id,
           "unit": this.unitTypes.results[0].id// 個数単位
-          // 希望納期
           // "isbom": true
         }
         // 部品名　*部品名なしの場合は"No parts nameと入力"
-
+        (bom.part_name)?returnData.name = bom.part_name:returnData.name = "No parts name";
 
         // // 作業指図書
         if(bom.wis_code) {
@@ -154,13 +154,13 @@ export default {
         };
 
         // 希望納期
-        
+        returnData.desiredDeliveryDate = this.changeISODate(bom.time_of_delivery);
 
         // 印刷フラグ
         (bom.bom_flag === 0)?returnData.isPrinted = false:returnData.isPrinted = true;
 
         // 仕損品
-
+        (bom.bom_failure === 0)?returnData.failure = null:returnData.failure = failureId;
 
         return returnData
       });
@@ -206,7 +206,7 @@ export default {
     this.getJobOrders({params: {company: this.loginUserData.companyId, page_size: 1000}});
     this.getPartners({params: {company: this.loginUserData.companyId, page_size: 1000, is_manufacturer: true}});
     this.getExpenseCategories({params: {order_by: "category_number"}});
-
+    this.getFailureCategories({params: {order_by: "category_number"}});
   // this.getPartners({params: this.params})
   }
 }

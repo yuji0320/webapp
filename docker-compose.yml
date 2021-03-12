@@ -1,72 +1,103 @@
-dev_app:
-  build: ./app
-  restart: always
-  env_file: ./app/env
-  ports:
-    - "8000:8000"
-  links:
-    - dev_mysql:db
-    - dev_redis:redis
-  volumes:
-    - C:\BMS\webapp\app:/usr/src/app
-  # command: python3 manage.py runserver 0.0.0.0:8000
-  command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b :8000
-  tty: true
+version: '3'
+services:
+  prod_app:
+    build: ./app
+    restart: always
+    env_file: ./app/env
+    ports:
+      - "8000:8000"
+    volumes:
+      - C:\BMS\webapp\app:/usr/src/app
+    environment: 
+      - DB_HOST=172.29.0.5
+      - DB_NAME=bms_backend
+      - DB_USERNAME=root
+      - DB_PASSWORD=
+      - DB_PORT=3306
+    # command: python3 manage.py runserver 0.0.0.0:8000
+    # command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b :8000
+    command: uwsgi --ini uwsgi/uwsgi.ini
+    tty: true
+    networks:
+      webbapp_network_prod:
+        ipv4_address: 172.29.0.2
 
-dev_app_frontend:
-  build: ./app_frontend
-  restart: always
-  ports:
-    - "9000:9000"
-    - "9100:9100"
-  # links:
-  #   - dev_app
-  volumes:
-    - C:\BMS\webapp\app_frontend:/usr/src/app_frontend
-  command: vue ui -p 9100 -H 0.0.0.0
-  # command: /bin/bash
-  tty: true
+  prod_app_frontend:
+    build: ./app_frontend
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9100:9100"
+    # links:
+    #   - prod_app
+    volumes:
+      - C:\BMS\webapp\app_frontend:/usr/src/app_frontend
+      - C:\BMS\webapp\frontend_build_logs:/root/.npm/_logs
+    command: vue ui -p 9100 -H 0.0.0.0
+    # command: /bin/bash
+    tty: true
+    networks:
+      webbapp_network_prod:
+        ipv4_address: 172.29.0.3
 
+  prod_nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+      # - "443:443"
+    links:
+      - prod_app:app
+      - prod_app_frontend:frontend
+    volumes:
+      - C:\BMS\webapp\nginx\nginx.conf:/etc/nginx/nginx.conf
+      # - C:\BMS\webapp\nginx\ssl:/etc/nginx/ssl
+      - C:\BMS\webapp\nginx\production.conf:/etc/nginx/conf.d/production.conf
+      - C:\BMS\webapp\nginx\log:/var/log/nginx
+      - C:\BMS\webapp\nginx\uwsgi_params:/etc/nginx/uwsgi_params
+      # - C:\BMS\webapp\app_frontend\dist:/var/www/html
+      # - C:\BMS\webapp\app\static:/usr/src/app/static
+      - C:\BMS\webapp\app_frontend:/usr/src/app_frontend/
+      - C:\BMS\webapp\app\static:/usr/src/app/static
+      - C:\BMS\webapp\app\uwsgi:/usr/src/app/uwsgi
+    networks:
+      webbapp_network_prod:
+        ipv4_address: 172.29.0.4
 
-dev_nginx:
-  build: ./nginx
-  restart: always
-  ports:
-    - "80:80"
-    # - "443:443"
-  links:
-    - dev_app:app
-    - dev_app_frontend:frontend
-  volumes:
-    - C:\BMS\webapp\nginx\nginx.conf:/etc/nginx/nginx.conf
-    - C:\BMS\webapp\nginx\ssl:/etc/nginx/ssl
-    - C:\BMS\webapp\nginx\development.conf:/etc/nginx/conf.d/development.conf
-    - C:\BMS\webapp\nginx\log:/var/log/nginx
-    - C:\BMS\webapp\nginx\uwsgi_params:/etc/nginx/uwsgi_params
-    - C:\BMS\webapp\app_frontend\dist:/var/www/html
-    - C:\BMS\webapp\app\static:/usr/src/app/static
-  volumes_from:
-    - dev_app
-    - dev_app_frontend
+  prod_mysql:
+    build: ./mysql
+    restart: always
+    volumes:
+      - C:\BMS\webapp\mysql\backup:/tmp/backup
+      - C:\BMS\webapp\mysql\settings\my.cnf:/etc/mysql/my.cnf
+      - C:\BMS\webapp\storage\volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - prod_storage
+    networks:
+      webbapp_network_prod:
+        ipv4_address: 172.29.0.5
 
-dev_mysql:
-  build: ./mysql
-  restart: always
-  volumes:
-    - C:\BMS\webapp\mysql\backup:/tmp/backup
-  ports:
-    - "3306:3306"
-  volumes_from:
-    - dev_storage
+  prod_redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes_from:
+      - prod_storage
+    command: redis-server --appendonly yes
+    networks:
+      webbapp_network:
+        ipv4_address: 172.29.0.6
 
-dev_redis:
-  image: redis:latest
-  restart: always
-  ports:
-    - "6379:6379"
-  volumes_from:
-    - dev_storage
-  command: redis-server --appendonly yes
+  prod_storage:
+    build: ./storage
 
-dev_storage:
-  build: ./storage
+networks:
+  webbapp_network_prod:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 172.29.0.0/24
