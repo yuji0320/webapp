@@ -6,6 +6,7 @@ services:
     env_file: ./app/env
     ports:
       - "8000:8000"
+      - "8100:8100"
     volumes:
       - C:\BMS\webapp\app:/usr/src/app
     environment: 
