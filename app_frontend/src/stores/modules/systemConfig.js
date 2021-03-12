@@ -46,17 +46,17 @@ const systemConfigState = {
         },
       ],
     },
-    {
-      icon: 'list_alt',
-      title: 'Inventory Data',
-      subMenus: [
-        {
-          icon: 'list_alt',
-          title: 'Inv. Menu',
-          url: {name: 'InventoryDataMenu'},
-        },
-      ],
-    },
+    // {
+    //   icon: 'list_alt',
+    //   title: 'Inventory Data',
+    //   subMenus: [
+    //     {
+    //       icon: 'list_alt',
+    //       title: 'Inv. Menu',
+    //       url: {name: 'InventoryDataMenu'},
+    //     },
+    //   ],
+    // },
     {
       icon: 'search',
       title: 'Investigation',
