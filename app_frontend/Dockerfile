@@ -5,7 +5,7 @@ WORKDIR /usr/src/app_frontend
 ENV HOST 0.0.0.0
 
 RUN apk update && \
-    apk add curl curl-dev jq bash python3 make g++ && \
+    apk add curl curl-dev jq bash python python3 make g++ && \
     npm install -g npm&& \
     # npm uninstall -g vue-cli&& \
     npm install -g @vue/cli&& \

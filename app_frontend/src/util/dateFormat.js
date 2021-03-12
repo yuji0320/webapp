@@ -11,5 +11,27 @@ export default {
       // var MILLIS_DIFFERENCE = 9 * 60 * 60 * 1000; //UTCとJSTの時差 (ミリ秒)
       return (val - DATES_OFFSET) * COEFFICIENT; // シリアル値→UNIX時間(ミリ秒)
     },
+    // 日付フォーマットの変換
+    changeISODate(val) {
+      // console.log(val);
+      let isoDate = "";
+      if (val !== "NULL") {
+        if(val === "0000-00-00") {
+          return null;
+        }
+        // console.log(val);
+        let date = val;
+        // 日本時間に変換
+        date.setHours(date.getHours() + 9);
+        // ISO日付に変換
+        isoDate = date.toISOString().split('Z')[0] + '+09:00';
+        // 時間を切り取り
+        isoDate = isoDate.slice(0, 10);
+        return isoDate;
+      } else {
+        return null;
+      }
+      // console.log(isoDate);
+    },    
   },
 };

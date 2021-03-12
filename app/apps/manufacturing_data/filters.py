@@ -165,6 +165,7 @@ class ManHourFilter(filters.FilterSet):
         model = ManHour
         fields = [
             'id', 'job_order', 'staff', 'type', 'date', 'failure', 'work_date_range', 'name', 'mfg_no', 'date_icontains',
+            'staff__company',
         ]
 
     order_by = filters.OrderingFilter(

@@ -9,6 +9,7 @@ RUN apt-get update
 RUN apt-get install -y default-mysql-client
 ADD ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install django-debug-toolbar
 
 CMD /bin/bash
+# CMD ./manage.py migrate
+# CMD ["uwsgi", "--ini", "uwsgi/uwsgi.ini"]

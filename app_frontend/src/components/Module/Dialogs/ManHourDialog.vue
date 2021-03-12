@@ -159,7 +159,7 @@ export default {
     },
     // デフォルト値設定
     setDefault() {
-      const defaultData = Object.assign({}, this.defaultManHour);
+      let defaultData = Object.assign({}, this.defaultManHour);
       // console.log(defaultData);
       this.setIncremental(defaultData);
       this.setManHour(defaultData);

@@ -103,25 +103,33 @@ class JobOrderSerializer(serializers.ModelSerializer):
     # 取引先略称
     @staticmethod
     def get_customer_abbr(obj):
-        abbr = obj.customer.abbr
+        abbr = ""
+        if obj.customer:
+            abbr = obj.customer.abbr
         return abbr
 
     # 取引先名
     @staticmethod
     def get_customer_name(obj):
-        name = obj.customer.name
+        name = ""
+        if obj.customer:
+            name = obj.customer.name
         return name
 
     # 納入先略称
     @staticmethod
     def get_delivery_destination_abbr(obj):
-        abbr = obj.delivery_destination.abbr
+        abbr = ""
+        if obj.delivery_destination:
+            abbr = obj.delivery_destination.abbr
         return abbr
 
     # 納入先略称
     @staticmethod
     def get_delivery_destination_name(obj):
-        name = obj.delivery_destination.name
+        name = ""
+        if obj.delivery_destination:
+            name = obj.delivery_destination.name
         return name
 
     # 取引通貨記号
@@ -203,7 +211,35 @@ class JobOrderSerializer(serializers.ModelSerializer):
             'publisher_name',
             'designer_name',
         )
+        read_only_fields = [
+            'id',
+            'default_currency_order_amount',
+            'costs',
+            'incremental_field',
+            'customer_abbr',
+            'customer_name',
+            'delivery_destination_abbr',
+            'delivery_destination_name',
+            'order_currency_code',
+            'order_currency_display',
+            'publisher_name',
+            'designer_name',
+        ]
 
+
+class BillOfMaterialSerializerList(serializers.ListSerializer):
+    def create(self, validated_data):
+        job_order_cache = {job_order['name']: job_order['id'] for job_order in list(JobOrder.objects.all().values('mfg_no', 'id'))}
+
+        data_objects = []
+        for data in validated_data:
+            data['job_order_id'] = job_order_cache.get(data['job_order'])
+            del data['job_order']
+            data_objects.append(BillOfMaterial(**data))
+        bulk_created_list = BillOfMaterial.objects.bulk_create(data_objects)
+
+        return BillOfMaterial.objects.filter(id__in=[record.id for record in bulk_created_list]).prefetch_related(
+                                        'job_order')
 
 # 部品表
 class BillOfMaterialSerializer(serializers.ModelSerializer):
@@ -273,6 +309,18 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             manufacturer_abbr = obj.manufacturer.abbr
         return manufacturer_abbr
 
+    # 外部キー
+    # company = serializers.CharField()
+    # job_order = serializers.UUIDField()
+    # type = serializers.CharField()
+    # # manufacturer = serializers.CharField()
+    # unit = serializers.CharField()
+    # currency = serializers.CharField()
+    # rate = serializers.CharField()
+    # # failure = serializers.CharField()
+    # created_by = serializers.CharField()
+    # modified_by = serializers.CharField()
+
     class Meta:
         model = BillOfMaterial
         fields = (
@@ -312,6 +360,17 @@ class BillOfMaterialSerializer(serializers.ModelSerializer):
             'parts_detail',
             'manufacturer_abbr'
         )
+        read_only_fields = [
+            'id',
+            'default_currency_price',
+            'total_default_currency_price',
+            'display_price',
+            'order_amount',
+            'mfg_no',
+            'is_processed',
+            'parts_detail',
+            'manufacturer_abbr'
+        ]
 
 
 # 発注ファイル
@@ -486,6 +545,20 @@ class MakingOrderSerializer(serializers.ModelSerializer):
             'bom_price',
             'currency_display',
         )
+        read_only_fields = [
+            'total_default_currency_price',
+            'display_total_default_currency_price',
+            'total_price',
+            'display_price',
+            'display_price_total',
+            'mfg_no',
+            'job_order',
+            'is_processed',
+            'manufacturer_abbr',
+            'supplier_abbr',
+            'bom_price',
+            'currency_display',
+        ]
 
 
 class ReceivingProcessSerializer(serializers.ModelSerializer):
@@ -675,7 +748,24 @@ class ReceivingProcessSerializer(serializers.ModelSerializer):
             'part_type',
             'ordered_date',
         )
-
+        read_only_fields = [
+            'order_number',
+            'part_name',
+            'part_detail',
+            'part_detail_other',
+            'desired_delivery_date',
+            'order_amount',
+            'order_price',
+            'order_price_display',
+            'total_default_currency_price',
+            'display_total_default_currency_price',
+            'mfg_no',
+            'manufacturer_abbr',
+            'supplier',
+            'supplier_abbr',
+            'part_type',
+            'ordered_date',
+        ]
 
 class ManHourSerializer(serializers.ModelSerializer):
     mfg_no = serializers.SerializerMethodField()
@@ -732,7 +822,12 @@ class ManHourSerializer(serializers.ModelSerializer):
             'staff_name',
             'job_type',
         )
-
+        read_only_fields = [
+            'mfg_no',
+            'product_name',
+            'staff_name',
+            'job_type',
+        ]
 
 class PartsSearchSerializer(serializers.ModelSerializer):
     mfg_no = serializers.SerializerMethodField()

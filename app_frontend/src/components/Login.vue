@@ -35,7 +35,7 @@
               <v-alert 
                 :value="true"
                 type="error"
-                outline
+                outlined
                 v-if="errors.has('username')"
               >
                 {{ errors.first('username') }}
@@ -52,7 +52,7 @@
               <v-alert 
                 :value="true"
                 type="error"
-                outline
+                outlined
                 v-if="errors.has('password')"
               >
                 {{ errors.first('password') }}

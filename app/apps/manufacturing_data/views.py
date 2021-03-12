@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from manufacturing_data.filters import *
 from .serializer import *
 from core.multi_crud import multi_create
+from system_users.models import *
 
 
 class JobOrderAPIView(viewsets.ModelViewSet):
@@ -19,10 +20,9 @@ class JobOrderAPIView(viewsets.ModelViewSet):
     )
     filter_class = JobOrderFilter
 
-    # @multi_create(serializer_class=JobOrderSerializer)
-    # def create(self, request):
-    #     pass
-
+    @multi_create(serializer_class=JobOrderSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 class DirectCostBudgetAPIView(viewsets.ModelViewSet):
     permission_classes = (
@@ -40,7 +40,7 @@ class BillOfMaterialAPIView(viewsets.ModelViewSet):
     queryset = (
         BillOfMaterial.objects.select_related(
             'company', 'job_order', 'type', 'manufacturer', 'unit', 'currency', 'failure',
-            # 'created_by', 'modified_by'
+            'created_by', 'modified_by'
         )
     )
     filter_class = BillOfMaterialFilter
@@ -82,7 +82,6 @@ class ReceivingProcessAPIView(viewsets.ModelViewSet):
             'order__bill_of_material__currency', 'order__bill_of_material__type', 
         )
     )
-    # queryset = (ReceivingProcess.objects.select_related('order',))
     filter_class = ReceivingProcessFilter
 
 
@@ -99,11 +98,3 @@ class ManHourAPIView(viewsets.ModelViewSet):
     )
     filter_class = ManHourFilter
 
-
-# class PartsSearchAPIView(viewsets.ModelViewSet):
-#     permission_classes = (
-#         IsAuthenticated,
-#     )
-#     serializer_class = PartsSearchSerializer
-#     queryset = BillOfMaterial.objects.all()
-#     filter_class = PartsSearchFilter

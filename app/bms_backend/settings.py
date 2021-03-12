@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'system_master',
     'system_users',
     'manufacturing_data',
+    'inventory_data',
     # 'drf-extensions',
 ]
 
@@ -106,6 +107,17 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+    }
+}
+
+# redisへの接続設定
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.environ['REDIS'],
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
     }
 }
 
@@ -203,9 +215,11 @@ if DEBUG:
         return True
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+        'INTERCEPT_REDIRECTS': False,
     }
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '0.0.0.0']
+    # INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '0.0.0.0']
+    INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', )
     INSTALLED_APPS += ['debug_toolbar']
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     DEBUG_TOOLBAR_PANELS = [
@@ -221,4 +235,5 @@ if DEBUG:
         'debug_toolbar.panels.signals.SignalsPanel',
         'debug_toolbar.panels.logging.LoggingPanel',
         'debug_toolbar.panels.redirects.RedirectsPanel',
+        'debug_toolbar.panels.profiling.ProfilingPanel',
     ]

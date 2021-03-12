@@ -84,7 +84,6 @@ export default {
       url = url + data.detail + '/';
     }
     const response = await this.request('get', url, data);
-    // console.log(test);
     if (response.data) {
       commit(commitName, response.data);
       return response.data;

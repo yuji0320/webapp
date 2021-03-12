@@ -330,17 +330,23 @@ export default {
       let directCost = 0;
       let failure = [];
       let directFailure = 0;
-      for(let c in categories) {
+
+      for (let i = 0; i < categories.length; i++) {
         // 部品毎集計
-        let t = (Math.round(this.calcPartsTotal(this.partsList(categories[c].id)) * 100) / 100);
+        let t = (Math.round(this.calcPartsTotal(this.partsList(categories[i].id)) * 100) / 100);
         // 合計金額への加算
         directCost += t;
         results.push(t);
         // 仕損費集計
-        let f = (Math.round(this.calcPartsFailureTotal(this.partsList(categories[c].id)) * 100) / 100);
+        let f = (Math.round(this.calcPartsFailureTotal(this.partsList(categories[i].id)) * 100) / 100);
         directFailure += f;
         failure.push(f);
       }
+      
+      // for (let i = 0; i < val.length; i++) {
+      //   total += val[i].totalDefaultCurrencyPrice;
+      // }
+
       directCost = Math.round( (directCost + parseFloat(this.jobOrder.shippingCostResult) ) * 100) / 100;
       let orderAmount = Number(this.jobOrder["defaultCurrencyOrderAmount"].split(',').join(''));
       let limitProfit = (Math.round(( orderAmount - directCost) * 100) / 100);

@@ -7,7 +7,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializer import *
 from .filters import UserCompanyFilter, UserStaffFilter, UserPartnerFilter
+from core.multi_crud import multi_create
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
+CACHE_TTL = 60 * 60
 
 class UserCompanySerializer(viewsets.ModelViewSet):
     serializer_class = UserCompanySerializer
@@ -17,6 +21,10 @@ class UserCompanySerializer(viewsets.ModelViewSet):
         )
     )
     filter_class = UserCompanyFilter
+
+    @method_decorator(cache_page(CACHE_TTL))    
+    def dispatch(self, *args, **kwargs):
+        return super(UserCompanySerializer, self).dispatch(*args, **kwargs)
 
 
 class UserStaffAPIView(viewsets.ModelViewSet):
@@ -36,6 +44,14 @@ class UserStaffAPIView(viewsets.ModelViewSet):
         else:
             return queryset.filter(company=user.staff.company.id)
 
+    @method_decorator(cache_page(CACHE_TTL))    
+    def dispatch(self, *args, **kwargs):
+        return super(UserStaffAPIView, self).dispatch(*args, **kwargs)
+
+    @multi_create(serializer_class=UserStaffSerializer)
+    def create(self, request, **kwargs):
+        pass
+
 
 class UserAPIView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
@@ -48,6 +64,10 @@ class UserAPIView(viewsets.ModelViewSet):
             return User.objects.all()
         else:
             return User.objects.all().filter(staff__company=user.staff.company)
+
+    # @method_decorator(cache_page(CACHE_TTL))    
+    # def dispatch(self, *args, **kwargs):
+    #     return super(UserAPIView, self).dispatch(*args, **kwargs)
 
     # ユーザー情報の確認用API
     @action(methods=['get'], detail=False)
@@ -96,6 +116,10 @@ class UserPartnerAPIView(viewsets.ModelViewSet):
             return queryset
         else:
             return queryset.filter(company=user.staff.company.id)
+
+    @multi_create(serializer_class=UserPartnerSerializer)
+    def create(self, request, **kwargs):
+        pass
 
 
 # class UserExpenseCategoryAPIView(viewsets.ModelViewSet):
