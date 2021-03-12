@@ -14,6 +14,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=
       - DB_PORT=3306
+      - REDIS=redis://172.29.0.6:6379
     # command: python3 manage.py runserver 0.0.0.0:8000
     # command: /usr/local/bin/gunicorn bms_backend.wsgi:application -w 2 -b :8000
     command: uwsgi --ini uwsgi/uwsgi.ini
