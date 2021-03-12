@@ -88,7 +88,7 @@ services:
       - prod_storage
     command: redis-server --appendonly yes
     networks:
-      webbapp_network:
+      webbapp_network_prod:
         ipv4_address: 172.29.0.6
 
   prod_storage:
